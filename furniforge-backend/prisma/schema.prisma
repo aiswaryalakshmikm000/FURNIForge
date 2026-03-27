@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"  // Prisma 6 uses "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  clientRegNo  String?  @unique
+  role         Role
+  firstName    String
+  lastName     String
+  email        String   @unique
+  phone        String   @unique
+  avatar       String?
+  passwordHash String
+  isVerified   Boolean  @default(false)
+  oauthProvider String?
+  oauthId      String?
+  address      Json?
+  occupation   String?
+  education    String?
+  rating       Float?   @default(0)
+  isActive     Boolean  @default(true)
+  isBlocked    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+  DESIGNER
+}
