@@ -9,8 +9,9 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
 
   DATABASE_URL: z.string().optional(),
-
   FRONTEND_URL: z.string().optional(),
+
+  BCRYPT_SALT_ROUNDS: z.string().default("10"),
 })
 
 //parse and validate
@@ -34,4 +35,6 @@ export const env = {
   CORS: {
     ORIGIN: parsedEnv.data.FRONTEND_URL,
   },
+
+  BCRYPT_SALT_ROUNDS: Number(parsedEnv.data.BCRYPT_SALT_ROUNDS),
 }
