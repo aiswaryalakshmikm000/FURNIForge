@@ -7,6 +7,8 @@ import { UserRepository } from "@infrastructure/database/prisma/repositories/Use
 import { BcryptPasswordService } from "@shared/utils/passwordHasher.js";
 import { UserMapper } from "@application/mappers/UserMapper.js";
 import { OtpService } from "@infrastructure/external-services/OtpService.js";
+import { RedisOTPRepository } from "@infrastructure/redis/RedisOTPRepository.js";
+import { RedisPendingUserRepository } from "@infrastructure/redis/PendingUserRepository.js";
 
 const router = express.Router();
 const userMapper = new UserMapper();
@@ -17,6 +19,8 @@ const controller = new AuthController(
     new BcryptPasswordService(),
     userMapper,
     new OtpService(),
+    new RedisOTPRepository(),
+    new RedisPendingUserRepository(),
   ),
 );
 
