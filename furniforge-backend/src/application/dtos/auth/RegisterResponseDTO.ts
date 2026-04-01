@@ -3,7 +3,7 @@ import { z } from "zod";
 export const RegisterResponseDTOSchema = z.object({
   id: z.string(),
   firstName: z.string(),
-  LastName: z.string(),
+  lastName: z.string(),
   email: z.string().email(),
 });
 

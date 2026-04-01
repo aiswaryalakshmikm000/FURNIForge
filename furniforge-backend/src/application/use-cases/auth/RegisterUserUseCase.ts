@@ -10,12 +10,14 @@ import { IRegisterUserUseCase } from "./interfaces/IRegisterUserUseCase.js";
 import { IUserMapper } from "@application/mappers/interfaces/IUserMapper.js";
 import { ConflictError, InternalServerError } from "@domain/errors/AppError.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
+import { IOtpService } from "@domain/services/IOtpservice.js";
 
 export class RegisterUserUseCase implements IRegisterUserUseCase {
   constructor(
     private userRepository: IUserRepository,
     private passwordService: IPasswordService,
-    private userMapper: IUserMapper
+    private userMapper: IUserMapper,
+    private otpService: IOtpService,
   ) {}
 
   async execute(data: RegisterUserDTO): Promise<RegisterResponseDTO> {
@@ -23,17 +25,22 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
       const emailVO = new Email(data.email);
       const passwordVO = new Password(data.password);
 
-      //check existing user
       const existingUser = await this.userRepository.findByEmail(emailVO.value);
       if (existingUser) {
         throw new ConflictError(ERROR_MESSAGES.USER.ALREADY_EXISTS);
       }
 
-      const hashedPassword = await this.passwordService.hash(
-        passwordVO.value,
-      );
+      const existingUserByPhone = await this.userRepository.findByPhone(data.phone);
+      if (existingUserByPhone) {
+        throw new ConflictError(ERROR_MESSAGES.AUTH.PHONE_ALREADY_EXISTS);
+      }
 
-      //create entity
+      const hashedPassword = await this.passwordService.hash(passwordVO.value);
+
+      const otpCode = this.otpService.generateOTP();
+
+      console.log("OTP:", otpCode);
+
       const user = User.create({
         firstName: data.firstName,
         lastName: data.lastName,
@@ -42,18 +49,17 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         passwordHash: hashedPassword,
       });
 
-      //save
       const createdUser = await this.userRepository.create(user);
 
-      //map response
       return this.userMapper.toRegisterResponse(createdUser);
-
     } catch (error) {
       if (error instanceof AppError) {
         throw error;
       }
       console.log("RegisterUserUseCase Error:", error);
-      throw new InternalServerError(ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR);
+      throw new InternalServerError(
+        ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

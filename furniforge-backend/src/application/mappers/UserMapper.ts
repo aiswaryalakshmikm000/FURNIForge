@@ -21,7 +21,7 @@ export class UserMapper implements IUserMapper {
     return {
       id: user.id,
       firstName: user.firstName,
-      LastName: user.lastName,
+    lastName: user.lastName,
       email: user.email,
     };
   }
