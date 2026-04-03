@@ -21,7 +21,7 @@ export class UserMapper implements IUserMapper {
     return {
       id: user.id,
       firstName: user.firstName,
-    lastName: user.lastName,
+      lastName: user.lastName,
       email: user.email,
     };
   }
@@ -41,14 +41,13 @@ export class UserMapper implements IUserMapper {
 
   // DB → ENTITY
   toDomain(raw: any): User {
-    return new User(
-      raw.id,
-      raw.firstName,
-      raw.lastName,
-      raw.email,
-      raw.phone,
-      raw.passwordHash,
-      raw.role
-    );
+    return User.create({
+      firstName: raw.firstName,
+      lastName: raw.lastName,
+      email: raw.email,
+      phone: raw.phone,
+      passwordHash: raw.passwordHash,
+      isVerified: raw.isVerified,
+    });
   }
 }

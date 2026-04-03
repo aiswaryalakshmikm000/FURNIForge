@@ -1,14 +1,15 @@
 import { UserRole } from "@domain/enums/UserRole.js";
 
 export class User {
-  constructor(
+  private constructor(
     public id: string,
     public firstName: string,
     public lastName: string,
     public email: string,
     public phone: string,
     public passwordHash: string,
-    public role: UserRole = UserRole.CLIENT
+    public role: UserRole = UserRole.CLIENT,
+    public isVerified: boolean,
   ) {}
 
   static create(data: {
@@ -17,7 +18,8 @@ export class User {
     email: string;
     phone: string;
     passwordHash: string;
-  }) {
+    isVerified?: boolean,
+}) {
     return new User(
       crypto.randomUUID(),
       data.firstName,
@@ -25,7 +27,8 @@ export class User {
       data.email,
       data.phone,
       data.passwordHash,
-      UserRole.CLIENT
+      UserRole.CLIENT,
+      data.isVerified ?? false,
     );
   }
 }

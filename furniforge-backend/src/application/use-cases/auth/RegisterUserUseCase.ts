@@ -31,37 +31,50 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
       const passwordVO = new Password(data.password);
 
       const existingUser = await this.userRepository.findByEmail(emailVO.value);
-      if (existingUser) {
+      if (existingUser && existingUser.isVerified) {
         throw new ConflictError(ERROR_MESSAGES.USER.ALREADY_EXISTS);
       }
 
-      const existingUserByPhone = await this.userRepository.findByPhone(
-        data.phone,
-      );
+      const existingUserByPhone = await this.userRepository.findByPhone(data.phone);
       if (existingUserByPhone) {
         throw new ConflictError(ERROR_MESSAGES.AUTH.PHONE_ALREADY_EXISTS);
       }
 
+      const pendingUser = await this.pendingUserRepository.get(emailVO.value);
+      if (pendingUser) {
+        const existingOtp = await this.otpRepository.getByUserId(pendingUser.tempUserId);
+        if(existingOtp){
+          await this.otpRepository.delete(existingOtp)
+        }
+        console.log("Resending OTP and overwriting pending user...");
+      }
+
       const hashedPassword = await this.passwordService.hash(passwordVO.value);
 
+      const tempUserId = `temp_${Date.now()}_${emailVO.value}`;
+
       await this.pendingUserRepository.save(
-        data.email,
+        emailVO.value,
         {
+          tempUserId: tempUserId,
           firstName: data.firstName,
           lastName: data.lastName,
-          email: data.email,
+          email: emailVO.value,
           phone: data.phone,
           passwordHash: hashedPassword,
+          isVerified: false,
+          createdAt: Date.now(),
         },
         300,
       );
 
       const otpCode = this.otpService.generateOTP();
-      const otpToken = OtpToken.create(data.email, otpCode);
+      const otpToken = OtpToken.create(tempUserId, emailVO.value, otpCode, 300);
+      
       await this.otpRepository.save(otpToken, 300);
 
       console.log("OTP:", otpCode);
-      console.log("OTP:", otpCode);
+      console.log("OTP:", otpToken);
 
       // const user = User.create({
       //   firstName: data.firstName,
@@ -69,18 +82,19 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
       //   email: emailVO.value,
       //   phone: data.phone,
       //   passwordHash: hashedPassword,
+      //   isVerified: true,
       // });
 
       // const createdUser = await this.userRepository.create(user);
 
       // return this.userMapper.toRegisterResponse(createdUser);
 
-      return {
-        id: "temp-id",
+      return this.userMapper.toRegisterResponse({
+        id: tempUserId,
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
-      };
+        email: emailVO.value,
+      } as any);
     } catch (error) {
       if (error instanceof AppError) {
         throw error;
