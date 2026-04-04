@@ -4,5 +4,6 @@ export interface IOTPRepository {
   save(token: OtpToken, ttlSeconds: number): Promise<void>;
   getByUserId(userId: string): Promise<OtpToken  | null>;
   getByCode(otp: string, email: string): Promise <OtpToken | null>;
+  update(token: OtpToken, ttlSeconds?: number): Promise<void>;
   delete(token: OtpToken): Promise<void>;
 }

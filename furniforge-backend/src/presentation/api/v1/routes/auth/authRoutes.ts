@@ -9,18 +9,17 @@ import { UserMapper } from "@application/mappers/UserMapper.js";
 import { OtpService } from "@infrastructure/external-services/OtpService.js";
 import { RedisOTPRepository } from "@infrastructure/redis/RedisOTPRepository.js";
 import { RedisPendingUserRepository } from "@infrastructure/redis/PendingUserRepository.js";
+import { PendingUserService } from "@infrastructure/external-services/PendingUserService.js";
 
 const router = express.Router();
-const userMapper = new UserMapper();
 
 const controller = new AuthController(
   new RegisterUserUseCase(
-    new UserRepository(userMapper),
+    new UserRepository(new UserMapper()),
     new BcryptPasswordService(),
-    userMapper,
-    new OtpService(),
-    new RedisOTPRepository(),
-    new RedisPendingUserRepository(),
+    new UserMapper(),
+    new OtpService(new RedisOTPRepository()),
+    new PendingUserService(new RedisPendingUserRepository()),
   ),
 );
 

@@ -12,8 +12,7 @@ import { IUserMapper } from "@application/mappers/interfaces/IUserMapper.js";
 import { ConflictError, InternalServerError } from "@domain/errors/AppError.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 import { IOtpService } from "@domain/services/IOtpservice.js";
-import { IOTPRepository } from "@domain/repositories/IOTPRepository.js";
-import { IPendingUserRepository } from "@domain/repositories/IPendingUserRepository.js";
+import { IPendingUserService } from "@domain/services/IPendingUserService.js";
 
 export class RegisterUserUseCase implements IRegisterUserUseCase {
   constructor(
@@ -21,8 +20,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
     private passwordService: IPasswordService,
     private userMapper: IUserMapper,
     private otpService: IOtpService,
-    private otpRepository: IOTPRepository,
-    private pendingUserRepository: IPendingUserRepository,
+    private pendingUserService: IPendingUserService,
   ) {}
 
   async execute(data: RegisterUserDTO): Promise<RegisterResponseDTO> {
@@ -36,45 +34,22 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
       }
 
       const existingUserByPhone = await this.userRepository.findByPhone(data.phone);
-      if (existingUserByPhone) {
+      if (existingUserByPhone && existingUserByPhone.isVerified) {
         throw new ConflictError(ERROR_MESSAGES.AUTH.PHONE_ALREADY_EXISTS);
-      }
-
-      const pendingUser = await this.pendingUserRepository.get(emailVO.value);
-      if (pendingUser) {
-        const existingOtp = await this.otpRepository.getByUserId(pendingUser.tempUserId);
-        if(existingOtp){
-          await this.otpRepository.delete(existingOtp)
-        }
-        console.log("Resending OTP and overwriting pending user...");
       }
 
       const hashedPassword = await this.passwordService.hash(passwordVO.value);
 
-      const tempUserId = `temp_${Date.now()}_${emailVO.value}`;
+      const { tempUserId } = await this.pendingUserService.createOrUpdate({
+        email: emailVO.value,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phone: data.phone,
+        passwordHash: hashedPassword,
+      });
 
-      await this.pendingUserRepository.save(
-        emailVO.value,
-        {
-          tempUserId: tempUserId,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: emailVO.value,
-          phone: data.phone,
-          passwordHash: hashedPassword,
-          isVerified: false,
-          createdAt: Date.now(),
-        },
-        300,
-      );
-
-      const otpCode = this.otpService.generateOTP();
-      const otpToken = OtpToken.create(tempUserId, emailVO.value, otpCode, 300);
-      
-      await this.otpRepository.save(otpToken, 300);
-
-      console.log("OTP:", otpCode);
-      console.log("OTP:", otpToken);
+      const otp = await this.otpService.generateAndHandleOtp(tempUserId, emailVO.value)
+      console.log("OTP:", otp.otp);
 
       // const user = User.create({
       //   firstName: data.firstName,
@@ -96,13 +71,10 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         email: emailVO.value,
       } as any);
     } catch (error) {
-      if (error instanceof AppError) {
-        throw error;
-      }
+      if (error instanceof AppError) throw error;
+
       console.log("RegisterUserUseCase Error:", error);
-      throw new InternalServerError(
-        ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR,
-      );
+      throw new InternalServerError(ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR);
     }
   }
 }

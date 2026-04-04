@@ -11,7 +11,7 @@ export class RedisOTPRepository implements IOTPRepository {
     const otpKey = `otp:${token.otpId}`;
     const userKey = `otp:user:${token.userId}`;
     const codeKey = `otp:code:${token.email}:${token.otp}`;
-    const data = JSON.stringify(token);
+    const data = JSON.stringify({token});
 
     pipeline.setex(otpKey, ttlSeconds, data) //store full otp object
     pipeline.setex(userKey, ttlSeconds, token.otpId) //map user to otpId
@@ -27,9 +27,7 @@ export class RedisOTPRepository implements IOTPRepository {
   const data = await this.client.get(`otp:${otpId}`);
   if (!data) return null;
 
-  const parsed = JSON.parse(data);
-
-  return OtpToken.fromPersistence(parsed)
+  return OtpToken.fromPersistence(JSON.parse(data))
 }
 
   async getByCode(otp: string, email: string): Promise<OtpToken | null> {
