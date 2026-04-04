@@ -1,20 +1,25 @@
 import express from "express";
-import { AuthController } from "@presentation/api/v1/controllers/AuthController.js";
+import { AuthController } from "@presentation/api/v1/controllers/auth/AuthController.js";
 import { validateBody } from "@presentation/api/middlewares/validationMiddleware.js";
 import { RegisterSchema } from "@application/dtos/auth/RegisterUserDTO.js";
 import { RegisterUserUseCase } from "@application/use-cases/auth/RegisterUserUseCase.js";
 import { UserRepository } from "@infrastructure/database/prisma/repositories/UserRepository.js";
 import { BcryptPasswordService } from "@shared/utils/passwordHasher.js";
 import { UserMapper } from "@application/mappers/UserMapper.js";
+import { OtpService } from "@infrastructure/external-services/OtpService.js";
+import { RedisOTPRepository } from "@infrastructure/redis/RedisOTPRepository.js";
+import { RedisPendingUserRepository } from "@infrastructure/redis/PendingUserRepository.js";
+import { PendingUserService } from "@infrastructure/external-services/PendingUserService.js";
 
 const router = express.Router();
-const userMapper = new UserMapper();
 
 const controller = new AuthController(
   new RegisterUserUseCase(
-    new UserRepository(userMapper),
+    new UserRepository(new UserMapper()),
     new BcryptPasswordService(),
-    userMapper,
+    new UserMapper(),
+    new OtpService(new RedisOTPRepository()),
+    new PendingUserService(new RedisPendingUserRepository()),
   ),
 );
 

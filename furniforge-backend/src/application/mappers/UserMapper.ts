@@ -11,7 +11,7 @@ export class UserMapper implements IUserMapper {
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email,
+      email: user.email.value,
       phone: user.phone,
       role: user.role,
     };
@@ -21,8 +21,8 @@ export class UserMapper implements IUserMapper {
     return {
       id: user.id,
       firstName: user.firstName,
-      LastName: user.lastName,
-      email: user.email,
+      lastName: user.lastName,
+      email: user.email.value,
     };
   }
 
@@ -32,7 +32,7 @@ export class UserMapper implements IUserMapper {
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email,
+      email: user.email.value,
       phone: user.phone,
       passwordHash: user.passwordHash,
       role: user.role,
@@ -41,14 +41,6 @@ export class UserMapper implements IUserMapper {
 
   // DB → ENTITY
   toDomain(raw: any): User {
-    return new User(
-      raw.id,
-      raw.firstName,
-      raw.lastName,
-      raw.email,
-      raw.phone,
-      raw.passwordHash,
-      raw.role
-    );
+  return User.fromPersistence(raw)
   }
 }

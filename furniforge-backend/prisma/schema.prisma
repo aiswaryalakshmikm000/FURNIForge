@@ -8,6 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
+// --- Custom Models ---
+
+
 model User {
   id           String   @id @default(uuid())
   clientRegNo  String?  @unique
@@ -30,6 +35,8 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+// -----------ENUM---------------------
 
 enum Role {
   ADMIN

@@ -11,6 +11,11 @@ export class UserRepository implements IUserRepository {
     return raw ? this.userMapper.toDomain(raw) : null;
   }
 
+  async findByPhone(phone: string) {
+  const raw = await prisma.user.findUnique({ where: { phone } });
+  return raw ? this.userMapper.toDomain(raw) : null;
+}
+
   async create(user: User) {
     const raw = await prisma.user.create({
       data: this.userMapper.toPersistence(user),
