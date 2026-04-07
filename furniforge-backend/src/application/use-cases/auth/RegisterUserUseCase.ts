@@ -1,36 +1,37 @@
 import { IUserRepository } from "@domain/repositories/IUserRepository.js";
 import { RegisterUserDTO } from "@application/dtos/auth/RegisterUserDTO.js";
 import { AppError } from "@domain/errors/AppError.js";
-import { User } from "@domain/entities/User.js";
-import { OtpToken } from "@domain/entities/OtpToken.js";
-import { RegisterResponseDTO } from "@application/dtos/auth/RegisterResponseDTO.js";
 import { IPasswordService } from "@domain/services/IPasswordService.js";
 import { Email } from "@domain/value-objects/Email.js";
 import { Password } from "@domain/value-objects/Password.js";
 import { IRegisterUserUseCase } from "./interfaces/IRegisterUserUseCase.js";
-import { IUserMapper } from "@application/mappers/interfaces/IUserMapper.js";
 import { ConflictError, InternalServerError } from "@domain/errors/AppError.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 import { IOtpService } from "@domain/services/IOtpservice.js";
 import { IPendingUserService } from "@domain/services/IPendingUserService.js";
+import { IEmailService } from "@domain/services/IEmailService.js";
+import { AuthActionResponseDTO } from "@application/dtos/auth/AuthActionResponseDTO.js";
+import {inject, injectable } from 'inversify';
+import { TYPES } from "@infrastructure/di/types.js";
 
+@injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {
   constructor(
-    private userRepository: IUserRepository,
-    private passwordService: IPasswordService,
-    private userMapper: IUserMapper,
-    private otpService: IOtpService,
-    private pendingUserService: IPendingUserService,
+    @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
+    @inject(TYPES.IPasswordService) private passwordService: IPasswordService,
+    @inject(TYPES.IOtpService) private otpService: IOtpService,
+    @inject(TYPES.IPendingUserService) private pendingUserService: IPendingUserService,
+    @inject(TYPES.IEmailService) private emailService: IEmailService,
   ) {}
 
-  async execute(data: RegisterUserDTO): Promise<RegisterResponseDTO> {
+  async execute(data: RegisterUserDTO): Promise<AuthActionResponseDTO > {
     try {
       const emailVO = new Email(data.email);
       const passwordVO = new Password(data.password);
 
       const existingUser = await this.userRepository.findByEmail(emailVO.value);
       if (existingUser && existingUser.isVerified) {
-        throw new ConflictError(ERROR_MESSAGES.USER.ALREADY_EXISTS);
+        throw new ConflictError(ERROR_MESSAGES.AUTH.EMAIL_ALREADY_EXISTS);
       }
 
       const existingUserByPhone = await this.userRepository.findByPhone(data.phone);
@@ -49,27 +50,21 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
       });
 
       const otp = await this.otpService.generateAndHandleOtp(tempUserId, emailVO.value)
-      console.log("OTP:", otp.otp);
 
-      // const user = User.create({
-      //   firstName: data.firstName,
-      //   lastName: data.lastName,
-      //   email: emailVO.value,
-      //   phone: data.phone,
-      //   passwordHash: hashedPassword,
-      //   isVerified: true,
-      // });
+      try{
+        await this.emailService.sendOTPEmail(emailVO.value, otp.otp, data.firstName);
+      } catch (error) {
+        await this.pendingUserService.delete(emailVO.value);
+        throw error;
+      }
 
-      // const createdUser = await this.userRepository.create(user);
-
-      // return this.userMapper.toRegisterResponse(createdUser);
-
-      return this.userMapper.toRegisterResponse({
-        id: tempUserId,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: emailVO.value,
-      } as any);
+      return {
+      message: "OTP sent successfully",
+      meta: {
+        tempUserId,
+        email: emailVO.value
+      }
+    };
     } catch (error) {
       if (error instanceof AppError) throw error;
 

@@ -1,9 +1,14 @@
+import { BadRequestError, TooManyRequestsError } from "@domain/errors/AppError.js";
+import { env } from "@infrastructure/config/env.js";
+import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
+import { OTP } from "@domain/value-objects/OTP.js";
+
 export class OtpToken {
   private constructor(
-    public otpId: string,
-    public userId: string,
-    public email: string,
-    private _otp: string,
+    public readonly  otpId: string,
+    public readonly userId: string,
+    public readonly  email: string,
+    private _otp: OTP,
     private _attempts: number,
     private _maxAttempts: number,
     private _isVerified: boolean,
@@ -11,16 +16,16 @@ export class OtpToken {
     private _createdAt: number,
   ) {}
 
-  static create(userId: string, email: string, otp: string, ttlSeconds: number = 300) {
+  static create(userId: string, email: string, otp: string, ttlSeconds: number = env.OTP.EXPIRY): OtpToken {
     const otpId = `otp_${Date.now()}_${Math.random()}`;
 
     return new OtpToken(
       otpId,
       userId,
       email,
-      otp,
+      new OTP(otp),
       0,
-      3,
+      env.OTP.MAX_ATTEMPTS,
       false,
       Date.now() + ttlSeconds * 1000,
       Date.now(),
@@ -32,28 +37,32 @@ export class OtpToken {
       raw.otpId,
       raw.userId,
       raw.email,
-      raw._otp,
-      raw._attempts,
-      raw._maxAttempts,
-      raw._isVerified,
+      new OTP(raw._otp._value),
+      raw._attempts ?? 0,
+      raw._maxAttempts ?? env.OTP.MAX_ATTEMPTS,
+      raw._isVerified ?? false,
       raw._expiresAt,
       raw._createdAt
     );
   }
 
   verify(input: string) {
-    if (this._isVerified) throw new Error("OTP already used");
-
-    if (this.isExpired()) throw new Error("OTP expired");
-
-    if (!this.canRetry()) throw new Error("Max attempts reached");
-
-    if (this._otp !== input) {
-      this._attempts++;
-      throw new Error("Invalid OTP");
+    const inputOtp = new OTP(input)
+    if (this._isVerified) throw new BadRequestError("OTP already used");
+    if (this.isExpired()) throw new BadRequestError(ERROR_MESSAGES.AUTH.OTP_EXPIRED);
+    if (!this.canRetry()) {
+    throw new TooManyRequestsError(ERROR_MESSAGES.AUTH.OTP_MAX_ATTEMPTS);
+  }
+    if (!this._otp.equals(inputOtp)) {
+      this.incrementAttempts();
+        if (!this.canRetry()) {
+          throw new TooManyRequestsError(ERROR_MESSAGES.AUTH.OTP_MAX_ATTEMPTS);
+        }
+      throw new BadRequestError(ERROR_MESSAGES.AUTH.INVALID_OTP);
     }
 
     this._isVerified = true;
+    return true;
   }
 
   isExpired(): boolean {
@@ -64,11 +73,14 @@ export class OtpToken {
     return this._attempts < this._maxAttempts;
   }
 
-  get otp() {
-    return this._otp;
-  }
-
   incrementAttempts(): void {
     this._attempts++;
   }
+
+  get remainingTime(): number { return Math.max(0, this._expiresAt - Date.now()) }
+  get remainingAttempts(): number { return this._maxAttempts - this._attempts }
+  get otp() { return this._otp.value }
+  get attempts(): number { return this._attempts }
+  get isVerified(): boolean { return this._isVerified }
+  get expiresAt(): Date { return new Date(this._expiresAt) }
 }

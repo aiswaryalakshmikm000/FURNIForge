@@ -9,10 +9,6 @@ export class Password {
     if (!value) {
       throw new ValidationError(ERROR_MESSAGES.AUTH.PASSWORD_REQUIRED);
     }
-
-    if (value.length < 6) {
-      throw new ValidationError(ERROR_MESSAGES.AUTH.PASSWORD_MIN_LENGTH);
-    }
     
     if (!this.isValid(value)) {
       throw new ValidationError(ERROR_MESSAGES.AUTH.PASSWORD_INVALID);

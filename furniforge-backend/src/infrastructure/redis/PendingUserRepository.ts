@@ -1,6 +1,6 @@
 import RedisClient from "./RedisClient.js";
 import { IPendingUserRepository } from "@domain/repositories/IPendingUserRepository.js";
-import { PendingUser } from "@application/types/PendingUser.js";
+import { PendingUser } from "@domain/entities/PendingUser.js";
 
 export class RedisPendingUserRepository implements IPendingUserRepository {
   private client = RedisClient.getInstance();
@@ -17,9 +17,11 @@ export class RedisPendingUserRepository implements IPendingUserRepository {
     );
   }
 
-  async get(email: string): Promise<PendingUser  | null> {
+  async get(email: string): Promise<PendingUser | null> {
     const data = await this.client.get(this.getKey(email));
-    return data ? JSON.parse(data) : null;
+    if(!data) return null
+    const parsed = JSON.parse(data);
+    return PendingUser.fromPersistence(parsed) 
   }
 
   async delete(email: string): Promise<void> {

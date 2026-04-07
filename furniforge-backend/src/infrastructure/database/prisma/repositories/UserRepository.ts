@@ -2,9 +2,14 @@ import prisma from "../client.js";
 import { IUserRepository } from "@domain/repositories/IUserRepository.js";
 import { User } from "@domain/entities/User.js";
 import { IUserMapper } from "@application/mappers/interfaces/IUserMapper.js";
+import { injectable, inject } from "inversify";
+import { TYPES } from "@infrastructure/di/types.js";
 
+@injectable()
 export class UserRepository implements IUserRepository {
-  constructor(private userMapper: IUserMapper) {}
+  constructor(
+    @inject(TYPES.IUserMapper) private userMapper: IUserMapper
+  ) {}
 
   async findByEmail(email: string) {
     const raw = await prisma.user.findUnique({ where: { email } });

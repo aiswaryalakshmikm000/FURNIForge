@@ -3,7 +3,7 @@ import { AppError } from '@domain/errors/AppError.js';
 import { ERROR_MESSAGES } from '@infrastructure/config/messages.js';
 
 export const errorHandlerMiddleware = (
-  err: Error,
+  err: unknown,
   req: Request,
   res: Response,
   next: NextFunction
@@ -16,10 +16,15 @@ export const errorHandlerMiddleware = (
         code: err.code,
         details: err.details ?? null,
       },
+      meta: err.meta || null
     });
   }
 
-  console.error("Unhandled Error:", err);
+  if (err instanceof Error) {
+    console.error("Unhandled Error:", err.message);
+  } else {
+    console.error("Unknown thrown value:", err);
+  }
 
   return res.status(500).json({
     success: false,
@@ -28,5 +33,6 @@ export const errorHandlerMiddleware = (
       code: "INTERNAL_SERVER_ERROR",
       details: null,
     },
+    meta: null
   });
 };

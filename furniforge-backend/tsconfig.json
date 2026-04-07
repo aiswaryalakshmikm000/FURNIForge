@@ -22,6 +22,9 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
 
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
