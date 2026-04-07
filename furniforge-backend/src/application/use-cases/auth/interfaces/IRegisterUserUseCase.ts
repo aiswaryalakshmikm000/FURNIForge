@@ -1,6 +1,6 @@
+import { AuthActionResponseDTO } from "@application/dtos/auth/AuthActionResponseDTO.js";
 import { RegisterUserDTO } from "@application/dtos/auth/RegisterUserDTO.js";
-import { RegisterResponseDTO } from "@application/dtos/auth/RegisterResponseDTO.js";
 
 export interface IRegisterUserUseCase {
-  execute(data: RegisterUserDTO): Promise<RegisterResponseDTO>;
+  execute(data: RegisterUserDTO): Promise<AuthActionResponseDTO>;
 }

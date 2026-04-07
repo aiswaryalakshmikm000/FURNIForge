@@ -2,27 +2,15 @@ import express from "express";
 import { AuthController } from "@presentation/api/v1/controllers/auth/AuthController.js";
 import { validateBody } from "@presentation/api/middlewares/validationMiddleware.js";
 import { RegisterSchema } from "@application/dtos/auth/RegisterUserDTO.js";
-import { RegisterUserUseCase } from "@application/use-cases/auth/RegisterUserUseCase.js";
-import { UserRepository } from "@infrastructure/database/prisma/repositories/UserRepository.js";
-import { BcryptPasswordService } from "@shared/utils/passwordHasher.js";
-import { UserMapper } from "@application/mappers/UserMapper.js";
-import { OtpService } from "@infrastructure/external-services/OtpService.js";
-import { RedisOTPRepository } from "@infrastructure/redis/RedisOTPRepository.js";
-import { RedisPendingUserRepository } from "@infrastructure/redis/PendingUserRepository.js";
-import { PendingUserService } from "@infrastructure/external-services/PendingUserService.js";
+import { VerifyOtpSchema } from "@application/dtos/auth/VerifyOtpDTO.js";
+import { container } from "@infrastructure/di/container.js";
+import { TYPES } from "@infrastructure/di/types.js";
 
 const router = express.Router();
 
-const controller = new AuthController(
-  new RegisterUserUseCase(
-    new UserRepository(new UserMapper()),
-    new BcryptPasswordService(),
-    new UserMapper(),
-    new OtpService(new RedisOTPRepository()),
-    new PendingUserService(new RedisPendingUserRepository()),
-  ),
-);
+const controller = container.get<AuthController>(TYPES.AuthController);
 
 router.post("/register", validateBody(RegisterSchema), controller.register.bind(controller));
+router.post("/verify-otp", validateBody(VerifyOtpSchema), controller.verifyOtp.bind(controller));
 
 export default router;

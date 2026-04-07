@@ -1,11 +1,12 @@
 import { User } from "@domain/entities/User.js";
 import { UserResponseDTO } from "@application/dtos/user/userResponseDTO.js";
 import { IUserMapper } from "./interfaces/IUserMapper.js";
-import { RegisterResponseDTO } from "@application/dtos/auth/RegisterResponseDTO.js";
+import {User as PrismaUser} from "../../generated/prisma/index.js"
+
 
 export class UserMapper implements IUserMapper {
 
-    // ENTITY → RESPONSE (hide sensitive fields)
+    // ENTITY → RESPONSE 
     toResponse(user: User): UserResponseDTO {
     return {
       id: user.id,
@@ -14,15 +15,7 @@ export class UserMapper implements IUserMapper {
       email: user.email.value,
       phone: user.phone,
       role: user.role,
-    };
-  }
-
-  toRegisterResponse(user: User): RegisterResponseDTO {
-    return {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email.value,
+      isVerified: user.isVerified,
     };
   }
 
@@ -36,11 +29,12 @@ export class UserMapper implements IUserMapper {
       phone: user.phone,
       passwordHash: user.passwordHash,
       role: user.role,
+      isVerified: user.isVerified,
     };
   }
 
   // DB → ENTITY
-  toDomain(raw: any): User {
+  toDomain(raw: PrismaUser): User {
   return User.fromPersistence(raw)
   }
 }

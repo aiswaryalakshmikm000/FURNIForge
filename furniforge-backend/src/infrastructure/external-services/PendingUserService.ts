@@ -1,12 +1,16 @@
 import { IPendingUserService } from "@domain/services/IPendingUserService.js";
 import { IPendingUserRepository } from "@domain/repositories/IPendingUserRepository.js";
-import { PendingUser } from "@application/types/PendingUser.js";
+import { PendingUser } from "@domain/entities/PendingUser.js";
+import { env } from "@infrastructure/config/env.js";
+import { injectable, inject } from "inversify";
+import { TYPES } from "@infrastructure/di/types.js";
 
+@injectable()
 export class PendingUserService implements IPendingUserService {
-  private readonly TTL = 300;
+  private readonly TTL = env.OTP.EXPIRY;
 
   constructor(
-    private pendingUserRepository: IPendingUserRepository
+    @inject(TYPES.IPendingUserRepository) private pendingUserRepository: IPendingUserRepository
   ) {}
 
   async createOrUpdate(data: {
@@ -35,6 +39,9 @@ export class PendingUserService implements IPendingUserService {
     );
 
     await this.pendingUserRepository.save(data.email, pendingUser, this.TTL);
+    console.log("PEnding user:", `GET pending:user:${data.email}`)
+    console.log("PEnding user:", `TTL pending:user:${data.email}`)
+    console.log("TEMPUSERID:", `GET pending:user:${tempUserId}`)
 
     return { tempUserId };
   }

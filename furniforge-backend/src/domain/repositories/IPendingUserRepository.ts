@@ -1,4 +1,4 @@
-import { PendingUser } from "@application/types/PendingUser.js";
+import { PendingUser } from "@domain/entities/PendingUser.js";
 
 export interface IPendingUserRepository {
   save(email: string, data: PendingUser, ttl: number): Promise<void>;

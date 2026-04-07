@@ -2,17 +2,21 @@ import { ValidationError } from "@domain/errors/AppError.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 
 export class OTP {
-  private readonly value: string;
+  private readonly _value: string;
 
   constructor(value: string) {
     if (!/^\d{6}$/.test(value)) {
-      throw new ValidationError(ERROR_MESSAGES.AUTH.OTP_INVALID);
+      throw new ValidationError(ERROR_MESSAGES.AUTH.INVALID_OTP);
     }
 
-    this.value = value;
+    this._value = value;
   }
 
-  getValue(): string {
-    return this.value;
+  get value(): string {
+    return this._value;
+  }
+
+  equals(other: OTP): boolean{
+    return this._value === other._value
   }
 }

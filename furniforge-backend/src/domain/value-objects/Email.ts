@@ -5,21 +5,24 @@ export class Email {
   private readonly _value: string;
 
   constructor(value: string) {
-    const normalized = value.toLowerCase().trim();
+    const normalized = value.trim().toLowerCase();
 
     if (!normalized) {
       throw new ValidationError(ERROR_MESSAGES.AUTH.EMAIL_REQUIRED);
     }
 
     if (!this.isValid(normalized)) {
-      throw new ValidationError(ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS);
+      throw new ValidationError(ERROR_MESSAGES.AUTH.INVALID_EMAIL);
     }
 
     this._value = normalized;
   }
 
   private isValid(email: string): boolean {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const basic = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    // const domain = email.split("@")[1];
+    return basic
+    // return basic && domain === "gmail.com";
   }
 
   get value(): string {

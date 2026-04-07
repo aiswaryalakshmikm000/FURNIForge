@@ -12,6 +12,15 @@ const envSchema = z.object({
   FRONTEND_URL: z.string().optional(),
 
   BCRYPT_SALT_ROUNDS: z.string().default("10"),
+
+  BREVO_URL: z.string().url("Invalid Brevo API URL"),
+  BREVO_API_KEY: z.string().min(1, "BREVO_API_KEY is required."),
+  BREVO_SENDER_EMAIL: z.string().email("Invalid sender email."),
+  BREVO_APP_NAME: z.string().min(1, "APP_NAME is required."),
+
+  OTP_EXPIRY: z.string().default("300"),
+  OTP_RESEND_DELAY: z.string().default("30"),
+  OTP_MAX_ATTEMPTS: z.string().default("3"),
 })
 
 //parse and validate
@@ -37,4 +46,18 @@ export const env = {
   },
 
   BCRYPT_SALT_ROUNDS: Number(parsedEnv.data.BCRYPT_SALT_ROUNDS),
+
+  BREVO: {
+    URL: parsedEnv.data.BREVO_URL,
+    API_KEY: parsedEnv.data.BREVO_API_KEY,
+    SENDER_EMAIL: parsedEnv.data.BREVO_SENDER_EMAIL,
+    APP_NAME: parsedEnv.data.BREVO_APP_NAME
+  },
+
+  OTP: {
+  EXPIRY: Number(parsedEnv.data.OTP_EXPIRY),          
+  RESEND_DELAY: Number(parsedEnv.data.OTP_RESEND_DELAY), 
+  MAX_ATTEMPTS: Number(parsedEnv.data.OTP_MAX_ATTEMPTS),
+  },
+
 }

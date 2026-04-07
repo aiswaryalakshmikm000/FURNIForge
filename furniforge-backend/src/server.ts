@@ -1,5 +1,6 @@
 import app from "./app.js";
 import { env } from "./infrastructure/config/env.js";
+import "reflect-metadata";
 
 const startServer = async () => {
     try {
