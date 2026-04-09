@@ -1,18 +1,20 @@
 import { IOtpService } from "@domain/services/IOtpservice.js";
 import { IOTPRepository } from "@domain/repositories/IOTPRepository.js";
 import { OtpToken } from "@domain/entities/OtpToken.js";
-import { ConflictError, BadRequestError, TooManyRequestsError } from "@domain/errors/AppError.js";
+import { BadRequestError, TooManyRequestsError } from "@domain/errors/AppError.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 import { env } from "@infrastructure/config/env.js";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@infrastructure/di/types.js";
+import { Logger } from "winston";
 
 @injectable()
 export class OtpService implements IOtpService {
   private readonly TTL = env.OTP.EXPIRY;
 
   constructor(
-    @inject(TYPES.IOTPRepository) private otpRepository: IOTPRepository
+    @inject(TYPES.IOTPRepository) private otpRepository: IOTPRepository,
+    @inject(TYPES.Logger) private logger: Logger,
   ) {}
 
   generateOTP(): string {
@@ -22,16 +24,20 @@ export class OtpService implements IOtpService {
   async generateAndHandleOtp(userId: string, email: string): Promise<OtpToken> {
     const existing = await this.otpRepository.getByUserId(userId);
 
-    if (existing && !existing.isExpired()) {
-      throw new ConflictError(ERROR_MESSAGES.AUTH.OTP_ALREADY_SENT);
-    }
+    if(existing){
+      const now = Date.now();
+      const diffSeconds = (now - existing.createdAt.getTime()) / 1000
 
-    if (existing) {
+      if(diffSeconds < env.OTP.RESEND_DELAY){
+        const remaining = Math.ceil(env.OTP.RESEND_DELAY - diffSeconds);
+
+        throw new TooManyRequestsError(`Please wait ${remaining}s before requesting a new OTP`, null, {remainingSeconds: remaining})
+      }
+
       await this.otpRepository.delete(existing);
     }
 
     const otpCode = this.generateOTP();
-
     const otpToken = OtpToken.create(userId, email, otpCode, this.TTL);
 
     await this.otpRepository.save(otpToken, this.TTL);
@@ -70,9 +76,7 @@ export class OtpService implements IOtpService {
       if(err instanceof TooManyRequestsError){
         await this.otpRepository.delete(existing)
       }
-      err.meta = {
-        remainingAttempts: existing.remainingAttempts
-      }
+      err.meta = { remainingAttempts: existing.remainingAttempts }
       throw err;
     }
     

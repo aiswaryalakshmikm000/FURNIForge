@@ -10,11 +10,7 @@ export class RedisPendingUserRepository implements IPendingUserRepository {
   }
 
   async save(email: string, data: PendingUser, ttl: number): Promise<void> {
-    await this.client.setex(
-      this.getKey(email),
-      ttl,
-      JSON.stringify(data)
-    );
+    await this.client.setex( this.getKey(email), ttl, JSON.stringify(data) );
   }
 
   async get(email: string): Promise<PendingUser | null> {

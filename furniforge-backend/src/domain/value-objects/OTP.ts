@@ -6,6 +6,7 @@ export class OTP {
 
   constructor(value: string) {
     if (!/^\d{6}$/.test(value)) {
+      console.log("Otp validation error from value objects")
       throw new ValidationError(ERROR_MESSAGES.AUTH.INVALID_OTP);
     }
 

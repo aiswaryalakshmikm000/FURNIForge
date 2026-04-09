@@ -4,13 +4,15 @@ import { PendingUser } from "@domain/entities/PendingUser.js";
 import { env } from "@infrastructure/config/env.js";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@infrastructure/di/types.js";
+import type { Logger } from "winston";
 
 @injectable()
 export class PendingUserService implements IPendingUserService {
   private readonly TTL = env.OTP.EXPIRY;
 
   constructor(
-    @inject(TYPES.IPendingUserRepository) private pendingUserRepository: IPendingUserRepository
+    @inject(TYPES.IPendingUserRepository) private pendingUserRepository: IPendingUserRepository,
+    @inject(TYPES.Logger) private logger: Logger,
   ) {}
 
   async createOrUpdate(data: {
@@ -22,28 +24,19 @@ export class PendingUserService implements IPendingUserService {
   }): Promise <{ tempUserId: string }> {
     const existing = await this.pendingUserRepository.get(data.email);
 
-    if(existing){
+    if(existing && !existing.isExpired(this.TTL)){
       return {tempUserId: existing.tempUserId}
     } 
-    const tempUserId = `temp_${Date.now()}_${data.email}`;
 
-    const pendingUser = new PendingUser(
-      tempUserId,
-      data.email,
-      data.firstName,
-      data.lastName,
-      data.phone,
-      data.passwordHash,
-      Date.now(),
-      false
-    );
+    const pendingUser = PendingUser.create(data);
 
     await this.pendingUserRepository.save(data.email, pendingUser, this.TTL);
+
     console.log("PEnding user:", `GET pending:user:${data.email}`)
     console.log("PEnding user:", `TTL pending:user:${data.email}`)
-    console.log("TEMPUSERID:", `GET pending:user:${tempUserId}`)
+    console.log("TEMPUSERID:", `GET pending:user:${pendingUser.tempUserId}`)
 
-    return { tempUserId };
+    return { tempUserId: pendingUser.tempUserId };
   }
 
 

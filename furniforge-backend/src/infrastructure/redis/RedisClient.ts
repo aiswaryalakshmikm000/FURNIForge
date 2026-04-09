@@ -1,4 +1,5 @@
 import { Redis } from "ioredis";
+import { logger } from "@shared/utils/logger.js";
 
 class RedisClient {
   private static instance: Redis;
@@ -11,11 +12,11 @@ class RedisClient {
       });
 
       this.instance.on("connect", () => {
-        console.log("✅ Redis connected");
+        logger.info("✅ Redis connected successfully");
       });
 
       this.instance.on("error", (err: Error) => {
-        console.error("❌ Redis error:", err);
+        logger.error("❌ Redis connection  error:", {error: err});
       });
     }
 

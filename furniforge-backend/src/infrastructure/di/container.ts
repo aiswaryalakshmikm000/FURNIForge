@@ -1,5 +1,6 @@
 import { Container } from "inversify";
 import { TYPES } from "./types.js";
+import { logger } from "@shared/utils/logger.js";
 import { UserMapper } from "@application/mappers/UserMapper.js";
 import { UserRepository } from "@infrastructure/database/prisma/repositories/UserRepository.js";
 import { RedisOTPRepository } from "@infrastructure/redis/RedisOTPRepository.js";
@@ -11,8 +12,12 @@ import { EmailService } from "@infrastructure/external-services/EmailService.js"
 import { RegisterUserUseCase } from "@application/use-cases/auth/RegisterUserUseCase.js";
 import { VerifyOtpUseCase } from "@application/use-cases/auth/VerifyOtpUseCase.js";
 import { AuthController } from "@presentation/api/v1/controllers/auth/AuthController.js";
+import { ResendOtpUseCase } from "@application/use-cases/auth/ResendOtpUseCase.js";
 
 const container = new Container();
+
+//logger
+container.bind(TYPES.Logger).toConstantValue(logger);
 
 // Mappers
 container.bind(TYPES.IUserMapper).to(UserMapper);
@@ -31,6 +36,7 @@ container.bind(TYPES.IEmailService).to(EmailService);
 // Use Cases
 container.bind(TYPES.RegisterUserUseCase).to(RegisterUserUseCase);
 container.bind(TYPES.VerifyOtpUseCase).to(VerifyOtpUseCase);
+container.bind(TYPES.ResendOtpUseCase).to(ResendOtpUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

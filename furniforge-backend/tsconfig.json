@@ -8,6 +8,7 @@
     "outDir": "dist",
 
     "baseUrl": "src",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@domain/*": ["domain/*"],
       "@application/*": ["application/*"],
