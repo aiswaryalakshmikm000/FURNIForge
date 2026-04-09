@@ -2,6 +2,7 @@ import { UserRole } from "@domain/enums/UserRole.js";
 import { Email } from "@domain/value-objects/Email.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 import { BadRequestError } from "@domain/errors/AppError.js";
+import { User as PrismaUser } from "../../generated/prisma/index.js";
 
 export class User {
   private constructor(
@@ -40,7 +41,7 @@ export class User {
   }
 
   // ✅ For DB → ENTITY 
-  static fromPersistence(raw: any): User {
+  static fromPersistence(raw: PrismaUser): User {
     return new User(
       raw.id,
       raw.firstName,
@@ -48,7 +49,7 @@ export class User {
       new Email(raw.email),
       raw.phone,
       raw.passwordHash,
-      raw.role,
+      UserRole[raw.role as keyof typeof UserRole],
       raw.isVerified,
       new Date(raw.createdAt),
       new Date(raw.updatedAt)

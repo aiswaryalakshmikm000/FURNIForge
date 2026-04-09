@@ -6,6 +6,7 @@ export const SUCCESS_MESSAGES = {
     VERIFY_OTP_SUCCESS: 'Email verified successfully. Welcome to FURNIForge!',
     RESEND_OTP_SUCCESS: 'A new verification code has been sent to your email',
     LOGOUT_SUCCESS: 'Logged out successfully',
+    OTP_SUCCESS: "OTP sent successfully"
   },
 
   GENERAL: {
@@ -24,7 +25,7 @@ export const ERROR_MESSAGES = {
     VALIDATION_FAILED: 'Validation Failed',
     NOT_FOUND: "Resource not found",
     CONFLICT: "Conflict occurred",
-    TOO_MANY_REQUESTS: "Too many requests",
+    TOO_MANY_REQUESTS: "Too many requests, please try again later",
     UNPROCESSABLE_ENTITY: "Unprocessable entity",
     EMAIL_SEND_FAILED: 'Failed to send email. Please try again',
   },

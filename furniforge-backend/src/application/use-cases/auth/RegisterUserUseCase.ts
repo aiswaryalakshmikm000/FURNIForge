@@ -6,13 +6,14 @@ import { Email } from "@domain/value-objects/Email.js";
 import { Password } from "@domain/value-objects/Password.js";
 import { IRegisterUserUseCase } from "./interfaces/IRegisterUserUseCase.js";
 import { ConflictError, InternalServerError } from "@domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "@infrastructure/config/messages.js";
 import { IOtpService } from "@domain/services/IOtpservice.js";
 import { IPendingUserService } from "@domain/services/IPendingUserService.js";
 import { IEmailService } from "@domain/services/IEmailService.js";
 import { AuthActionResponseDTO } from "@application/dtos/auth/AuthActionResponseDTO.js";
 import {inject, injectable } from 'inversify';
 import { TYPES } from "@infrastructure/di/types.js";
+import type { Logger } from "winston";
 
 @injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {
@@ -22,6 +23,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
     @inject(TYPES.IOtpService) private otpService: IOtpService,
     @inject(TYPES.IPendingUserService) private pendingUserService: IPendingUserService,
     @inject(TYPES.IEmailService) private emailService: IEmailService,
+    @inject(TYPES.Logger) private logger: Logger,
   ) {}
 
   async execute(data: RegisterUserDTO): Promise<AuthActionResponseDTO > {
@@ -50,7 +52,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
       });
 
       const otp = await this.otpService.generateAndHandleOtp(tempUserId, emailVO.value)
-
+      
       try{
         await this.emailService.sendOTPEmail(emailVO.value, otp.otp, data.firstName);
       } catch (error) {
@@ -58,17 +60,13 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         throw error;
       }
 
-      return {
-      message: "OTP sent successfully",
-      meta: {
-        tempUserId,
-        email: emailVO.value
-      }
-    };
+      return {message: SUCCESS_MESSAGES.AUTH.OTP_SUCCESS, meta: { tempUserId, email: emailVO.value }};
+
     } catch (error) {
       if (error instanceof AppError) throw error;
 
-      console.log("RegisterUserUseCase Error:", error);
+      this.logger.error(`RegisterUserUseCase Error: ${error instanceof Error ? error.message : error}`);
+
       throw new InternalServerError(ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR);
     }
   }

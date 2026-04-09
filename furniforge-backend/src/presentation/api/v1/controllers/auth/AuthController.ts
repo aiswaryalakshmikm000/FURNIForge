@@ -4,14 +4,17 @@ import { IRegisterUserUseCase } from "@application/use-cases/auth/interfaces/IRe
 import { SUCCESS_MESSAGES } from "@infrastructure/config/messages.js";
 import { HttpStatusCode } from "@domain/enums/HttpStatusCode.js";
 import { IVerifyOtpUseCase } from "@application/use-cases/auth/interfaces/IVerifyOtpUseCase.js";
+import { ResendOtpUseCase } from "@application/use-cases/auth/ResendOtpUseCase.js";
 import {inject, injectable } from 'inversify';
 import { TYPES } from "@infrastructure/di/types.js";
+import { IResendOtpUseCase } from "@application/use-cases/auth/interfaces/IResendOtpUseCase.js";
 
 @injectable()
 export class AuthController {
   constructor(
     @inject(TYPES.RegisterUserUseCase) private registerUseCase: IRegisterUserUseCase,
     @inject(TYPES.VerifyOtpUseCase) private verifyOtpUseCase: IVerifyOtpUseCase,
+    @inject(TYPES.ResendOtpUseCase) private resendOtpUseCase: IResendOtpUseCase
   ) {}
 
   /**
@@ -27,12 +30,8 @@ export class AuthController {
     try {
       const result = await this.registerUseCase.execute(req.body);
 
-      const response = ResponseBuilder.created(
-        result,
-        SUCCESS_MESSAGES.AUTH.REGISTER_SUCCESS,
-      ).build();
-
-      res.status(HttpStatusCode.CREATED).json(response);
+      res.status(HttpStatusCode.CREATED).json(ResponseBuilder.created(result, SUCCESS_MESSAGES.AUTH.REGISTER_SUCCESS).build());
+      
     } catch (error: unknown) {
       next(error);
     }
@@ -51,16 +50,31 @@ export class AuthController {
     try {
       const result = await this.verifyOtpUseCase.execute(req.body);
 
-      const response = ResponseBuilder.success(
-            result,
-            SUCCESS_MESSAGES.AUTH.VERIFY_OTP_SUCCESS
-          ).build();
+      res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.VERIFY_OTP_SUCCESS).build());
 
-          res.status(HttpStatusCode.OK).json(response);
     } catch (error: unknown) {
       next(error);
     }
   }
+
+  /**
+   * 
+   * @param req 
+   * @param res 
+   * @param next 
+   */
+  
+  async resendOtp(req: Request, res: Response, next: NextFunction) {
+    try{
+      const result = await this.resendOtpUseCase.execute(req.body);
+
+      res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.RESEND_OTP_SUCCESS).build());
+    } catch (error) {
+      next(error)
+    }
+  }
 }
+
+
 
 

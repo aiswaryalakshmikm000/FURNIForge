@@ -21,6 +21,15 @@ const envSchema = z.object({
   OTP_EXPIRY: z.string().default("300"),
   OTP_RESEND_DELAY: z.string().default("30"),
   OTP_MAX_ATTEMPTS: z.string().default("3"),
+
+  RATE_LIMIT_WINDOW_MS: z.string().default("900000"), // 15 min
+  RATE_LIMIT_MAX: z.string().default("100"),
+
+  AUTH_RATE_LIMIT_WINDOW_MS: z.string().default("900000"),
+  AUTH_RATE_LIMIT_MAX: z.string().default("5"),
+
+  OTP_RATE_LIMIT_WINDOW_MS: z.string().default("600000"),
+  OTP_RATE_LIMIT_MAX: z.string().default("3"),
 })
 
 //parse and validate
@@ -60,4 +69,19 @@ export const env = {
   MAX_ATTEMPTS: Number(parsedEnv.data.OTP_MAX_ATTEMPTS),
   },
 
+  RATE_LIMIT: {
+    WINDOW_MS: Number(parsedEnv.data.RATE_LIMIT_WINDOW_MS),
+    MAX: Number(parsedEnv.data.RATE_LIMIT_MAX),
+  },
+
+  AUTH_RATE_LIMIT: {
+    WINDOW_MS: Number(parsedEnv.data.AUTH_RATE_LIMIT_WINDOW_MS),
+    MAX: Number(parsedEnv.data.AUTH_RATE_LIMIT_MAX),
+  },
+
+  OTP_RATE_LIMIT: {
+    WINDOW_MS: Number(parsedEnv.data.OTP_RATE_LIMIT_WINDOW_MS),
+    MAX: Number(parsedEnv.data.OTP_RATE_LIMIT_MAX),
+  },
+  
 }

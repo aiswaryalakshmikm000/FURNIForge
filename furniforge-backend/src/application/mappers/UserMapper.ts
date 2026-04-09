@@ -1,7 +1,7 @@
 import { User } from "@domain/entities/User.js";
 import { UserResponseDTO } from "@application/dtos/user/userResponseDTO.js";
 import { IUserMapper } from "./interfaces/IUserMapper.js";
-import {User as PrismaUser} from "../../generated/prisma/index.js"
+import {User as PrismaUser, Prisma} from "../../generated/prisma/index.js"
 
 
 export class UserMapper implements IUserMapper {
@@ -20,7 +20,7 @@ export class UserMapper implements IUserMapper {
   }
 
   // ENTITY → DB
-  toPersistence(user: User) {
+  toPersistence(user: User): Prisma.UserCreateInput {
     return {
       id: user.id,
       firstName: user.firstName,

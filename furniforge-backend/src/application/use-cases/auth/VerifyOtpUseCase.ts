@@ -15,6 +15,7 @@ import { AppError } from "@domain/errors/AppError.js";
 import { IVerifyOtpUseCase } from "./interfaces/IVerifyOtpUseCase.js";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@infrastructure/di/types.js";
+import { Logger } from "winston";
 
 @injectable()
 export class VerifyOtpUseCase implements IVerifyOtpUseCase {
@@ -24,6 +25,7 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
     @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
     @inject(TYPES.IUserMapper) private userMapper: IUserMapper,
     @inject(TYPES.IEmailService) private emailService: IEmailService,
+    @inject(TYPES.Logger) private logger: Logger
   ) {}
 
   async execute(data: VerifyOtpDTO): Promise<UserResponseDTO> {
@@ -36,11 +38,7 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
         throw new NotFoundError(ERROR_MESSAGES.AUTH.USER_NOT_FOUND);
       }
 
-      await this.otpService.verifyOtp(
-        pendingUser.tempUserId,
-        emailVO.value,
-        otpVO.value
-      );
+      await this.otpService.verifyOtp(pendingUser.tempUserId, emailVO.value, otpVO.value);
 
       const user = User.create({
         firstName: pendingUser.firstName,
@@ -57,21 +55,17 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
       await this.pendingUserService.delete(emailVO.value);
 
       try {
-        await this.emailService.sendWelcomeEmail(
-          createdUser.email.value,
-          createdUser.firstName
-        )
+        await this.emailService.sendWelcomeEmail(createdUser.email.value, createdUser.firstName)
       } catch (error){
-        console.log("Welcome email failed:", error)
+        this.logger.error("Welcome email failed", {email: createdUser.email.value, error});
       }
 
-      let response = this.userMapper.toResponse(createdUser);
-      return response
+      return this.userMapper.toResponse(createdUser);
 
     } catch (error) {
       if (error instanceof AppError) throw error;
 
-      console.log("VerifyOtpUseCase Error:", error);
+      this.logger.error("Unexpected error in VerifyOtpUseCase", {error})
       throw new InternalServerError(ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR);
     
     }

@@ -12,8 +12,8 @@ export class OtpToken {
     private _attempts: number,
     private _maxAttempts: number,
     private _isVerified: boolean,
-    private _expiresAt: number,
-    private _createdAt: number,
+    private _expiresAt: Date,
+    private _createdAt: Date,
   ) {}
 
   static create(userId: string, email: string, otp: string, ttlSeconds: number = env.OTP.EXPIRY): OtpToken {
@@ -27,8 +27,8 @@ export class OtpToken {
       0,
       env.OTP.MAX_ATTEMPTS,
       false,
-      Date.now() + ttlSeconds * 1000,
-      Date.now(),
+      new Date(new Date().getTime() + ttlSeconds * 1000),
+      new Date(),
     );
   }
 
@@ -37,12 +37,12 @@ export class OtpToken {
       raw.otpId,
       raw.userId,
       raw.email,
-      new OTP(raw._otp._value),
+      new OTP(raw._otp?._value),
       raw._attempts ?? 0,
       raw._maxAttempts ?? env.OTP.MAX_ATTEMPTS,
       raw._isVerified ?? false,
-      raw._expiresAt,
-      raw._createdAt
+      new Date(raw._expiresAt),
+      new Date(raw._createdAt)
     );
   }
 
@@ -66,7 +66,7 @@ export class OtpToken {
   }
 
   isExpired(): boolean {
-    return Date.now() > this._expiresAt;
+    return new Date() > this._expiresAt;
   }
 
   canRetry(): boolean {
@@ -77,10 +77,11 @@ export class OtpToken {
     this._attempts++;
   }
 
-  get remainingTime(): number { return Math.max(0, this._expiresAt - Date.now()) }
+  get remainingTime(): number { return Math.max(0, this._expiresAt.getTime() - Date.now()) }
   get remainingAttempts(): number { return this._maxAttempts - this._attempts }
   get otp() { return this._otp.value }
   get attempts(): number { return this._attempts }
   get isVerified(): boolean { return this._isVerified }
   get expiresAt(): Date { return new Date(this._expiresAt) }
+  get createdAt(): Date {return this._createdAt}
 }

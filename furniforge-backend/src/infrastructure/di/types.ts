@@ -1,15 +1,20 @@
 export const TYPES = {
-  IUserRepository: Symbol.for("IUserRepository"),
+  Logger: Symbol.for("Logger"),
+  
   IUserMapper: Symbol.for("IUserMapper"),
+
+  IUserRepository: Symbol.for("IUserRepository"),
+  IOTPRepository: Symbol.for("IOTPRepository"),
+  IPendingUserRepository: Symbol.for("IPendingUserRepository"),
+
   IPasswordService: Symbol.for("IPasswordService"),
   IOtpService: Symbol.for("IOtpService"),
-  IOTPRepository: Symbol.for("IOTPRepository"),
   IPendingUserService: Symbol.for("IPendingUserService"),
-  IPendingUserRepository: Symbol.for("IPendingUserRepository"),
   IEmailService: Symbol.for("IEmailService"),
 
   RegisterUserUseCase: Symbol.for("RegisterUserUseCase"),
   VerifyOtpUseCase: Symbol.for("VerifyOtpUseCase"),
+  ResendOtpUseCase: Symbol.for("ResendOtpUseCase"),
 
   AuthController: Symbol.for("AuthController"),
 };
