@@ -13,6 +13,11 @@ import { RegisterUserUseCase } from "@application/use-cases/auth/RegisterUserUse
 import { VerifyOtpUseCase } from "@application/use-cases/auth/VerifyOtpUseCase.js";
 import { AuthController } from "@presentation/api/v1/controllers/auth/AuthController.js";
 import { ResendOtpUseCase } from "@application/use-cases/auth/ResendOtpUseCase.js";
+import { JwtService } from "@infrastructure/external-services/JwtService.js";
+import { RedisSessionRepository } from "@infrastructure/redis/RedisSessionRepository.ts.js";
+import {RefreshTokenUseCase} from "@application/use-cases/auth/RefreshTokenUseCase.js"
+import { LogoutUseCase } from "@application/use-cases/auth/LogoutUseCase.js";
+import { LoginUseCase } from "@application/use-cases/auth/LoginUseCase.js";
 
 const container = new Container();
 
@@ -32,11 +37,16 @@ container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
 container.bind(TYPES.IOtpService).to(OtpService);
 container.bind(TYPES.IPendingUserService).to(PendingUserService);
 container.bind(TYPES.IEmailService).to(EmailService);
+container.bind(TYPES.ITokenService).to(JwtService);
+container.bind(TYPES.ISessionService).to(RedisSessionRepository);
 
 // Use Cases
-container.bind(TYPES.RegisterUserUseCase).to(RegisterUserUseCase);
-container.bind(TYPES.VerifyOtpUseCase).to(VerifyOtpUseCase);
-container.bind(TYPES.ResendOtpUseCase).to(ResendOtpUseCase)
+container.bind(TYPES.IRegisterUserUseCase).to(RegisterUserUseCase);
+container.bind(TYPES.IVerifyOtpUseCase).to(VerifyOtpUseCase);
+container.bind(TYPES.IResendOtpUseCase).to(ResendOtpUseCase);
+container.bind(TYPES.IRefreshTokenUseCase).to(RefreshTokenUseCase);
+container.bind(TYPES.ILogoutUseCase).to(LogoutUseCase);
+container.bind(TYPES.ILoginUseCase).to(LoginUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

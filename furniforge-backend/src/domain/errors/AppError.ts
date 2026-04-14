@@ -78,7 +78,7 @@ export class UnprocessableEntityError extends AppError {
   constructor(
     message: string = ERROR_MESSAGES.GENERAL.UNPROCESSABLE_ENTITY, details?: any, meta?: any,
   ) {
-    super(message, HttpStatusCode.UNPROCESSABLE_ENTITY, "UNPROCESSABLE_ENITY_ERROR",details, meta);
+    super(message, HttpStatusCode.UNPROCESSABLE_ENTITY, "UNPROCESSABLE_ENTITY_ERROR",details, meta);
   }
 }
 

@@ -4,7 +4,6 @@ import { IUserRepository } from "@domain/repositories/IUserRepository.js";
 import { IUserMapper } from "@application/mappers/interfaces/IUserMapper.js";
 import { IEmailService } from "@domain/services/IEmailService.js";
 import { VerifyOtpDTO } from "@application/dtos/auth/VerifyOtpDTO.js";
-import { UserResponseDTO } from "@application/dtos/user/userResponseDTO.js";
 import { NotFoundError } from "@domain/errors/AppError.js";
 import { User } from "@domain/entities/User.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
@@ -16,6 +15,10 @@ import { IVerifyOtpUseCase } from "./interfaces/IVerifyOtpUseCase.js";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@infrastructure/di/types.js";
 import { Logger } from "winston";
+import { ITokenService } from "@domain/services/ITokenService.js";
+import { ISessionService } from "@domain/services/ISessionService.js";
+import { AuthResult } from "@application/dtos/auth/AuthResult.js";
+import { REFRESH_TOKEN_EXPIRES_DAYS } from "@infrastructure/config/cookies.js";
 
 @injectable()
 export class VerifyOtpUseCase implements IVerifyOtpUseCase {
@@ -25,17 +28,19 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
     @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
     @inject(TYPES.IUserMapper) private userMapper: IUserMapper,
     @inject(TYPES.IEmailService) private emailService: IEmailService,
-    @inject(TYPES.Logger) private logger: Logger
+    @inject(TYPES.Logger) private logger: Logger,
+    @inject(TYPES.ITokenService) private tokenService: ITokenService,
+    @inject(TYPES.ISessionService) private sessionService: ISessionService
   ) {}
 
-  async execute(data: VerifyOtpDTO): Promise<UserResponseDTO> {
+  async execute(data: VerifyOtpDTO): Promise<AuthResult> {
     try {
       const emailVO = new Email(data.email)  
       const otpVO = new OTP(data.otp)
 
       const pendingUser = await this.pendingUserService.get(emailVO.value);
       if (!pendingUser) {
-        throw new NotFoundError(ERROR_MESSAGES.AUTH.USER_NOT_FOUND);
+        throw new NotFoundError(ERROR_MESSAGES.AUTH.PENDING_USER_NOT_FOUND);
       }
 
       await this.otpService.verifyOtp(pendingUser.tempUserId, emailVO.value, otpVO.value);
@@ -51,8 +56,16 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
       user.verifyEmail();
 
       const createdUser = await this.userRepository.create(user);
-
       await this.pendingUserService.delete(emailVO.value);
+
+      const sessionId = crypto.randomUUID();
+      const payload = {sub: createdUser.id, email: createdUser.email.value, role: createdUser.role, sessionId}
+
+      const accessToken = this.tokenService.generateAccessToken(payload);
+
+      const refreshToken = this.tokenService.generateRefreshToken(payload);
+
+      await this.sessionService.create( sessionId, { userId: createdUser.id, status: "active" }, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 );
 
       try {
         await this.emailService.sendWelcomeEmail(createdUser.email.value, createdUser.firstName)
@@ -60,7 +73,8 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
         this.logger.error("Welcome email failed", {email: createdUser.email.value, error});
       }
 
-      return this.userMapper.toResponse(createdUser);
+      return {user: this.userMapper.toResponse(createdUser), accessToken, refreshToken}
+      
 
     } catch (error) {
       if (error instanceof AppError) throw error;

@@ -29,6 +29,7 @@ export const RegisterSchema = z.object({
   .regex(/^[0-9]{10}$/, "Invalid phone number"),
   password: z
     .string()
+    .min(1, { message: ERROR_MESSAGES.AUTH.PASSWORD_REQUIRED })
     .min(6, { message: ERROR_MESSAGES.AUTH.PASSWORD_MIN_LENGTH })
 });
 

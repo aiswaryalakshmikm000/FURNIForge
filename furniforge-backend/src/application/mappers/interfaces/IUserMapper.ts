@@ -4,6 +4,7 @@ import {User as PrismaUser, Prisma} from "../../../generated/prisma/index.js"
 
 export interface IUserMapper {
   toResponse(user: User): UserResponseDTO;
-  toPersistence(user: User): Prisma.UserCreateInput;
+  toCreatePersistence(user: User): Prisma.UserCreateInput;
   toDomain(raw: PrismaUser): User;
+  toUpdatePersistence(user: Partial<User>): Prisma.UserUpdateInput
 }

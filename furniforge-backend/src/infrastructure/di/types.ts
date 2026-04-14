@@ -1,3 +1,4 @@
+
 export const TYPES = {
   Logger: Symbol.for("Logger"),
   
@@ -11,10 +12,15 @@ export const TYPES = {
   IOtpService: Symbol.for("IOtpService"),
   IPendingUserService: Symbol.for("IPendingUserService"),
   IEmailService: Symbol.for("IEmailService"),
+  ITokenService: Symbol.for("ITokenService"),
+  ISessionService: Symbol.for("ISessionService"),
 
-  RegisterUserUseCase: Symbol.for("RegisterUserUseCase"),
-  VerifyOtpUseCase: Symbol.for("VerifyOtpUseCase"),
-  ResendOtpUseCase: Symbol.for("ResendOtpUseCase"),
+  IRegisterUserUseCase: Symbol.for("IRegisterUserUseCase"),
+  IVerifyOtpUseCase: Symbol.for("IVerifyOtpUseCase"),
+  IResendOtpUseCase: Symbol.for("IResendOtpUseCase"),
+  IRefreshTokenUseCase: Symbol.for("IRefreshTokenUseCase"),
+  ILogoutUseCase: Symbol.for("ILogoutUseCase"),
+  ILoginUseCase : Symbol.for("ILoginUseCase "),
 
   AuthController: Symbol.for("AuthController"),
 };

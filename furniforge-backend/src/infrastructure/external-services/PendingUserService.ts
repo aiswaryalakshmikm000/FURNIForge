@@ -8,7 +8,7 @@ import type { Logger } from "winston";
 
 @injectable()
 export class PendingUserService implements IPendingUserService {
-  private readonly TTL = env.OTP.EXPIRY;
+  private readonly TTL = env.OTP.EXPIRY; 
 
   constructor(
     @inject(TYPES.IPendingUserRepository) private pendingUserRepository: IPendingUserRepository,

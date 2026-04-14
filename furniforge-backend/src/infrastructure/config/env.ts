@@ -28,8 +28,16 @@ const envSchema = z.object({
   AUTH_RATE_LIMIT_WINDOW_MS: z.string().default("900000"),
   AUTH_RATE_LIMIT_MAX: z.string().default("5"),
 
-  OTP_RATE_LIMIT_WINDOW_MS: z.string().default("600000"),
-  OTP_RATE_LIMIT_MAX: z.string().default("3"),
+  OTP_RATE_LIMIT_WINDOW_MS: z.string().default("600000"), 
+  OTP_RATE_LIMIT_MAX: z.string().default("5"),
+
+  JWT_ACCESS_SECRET: z.string().min(1, "JWT_ACCESS_SECRET is required"),
+  JWT_ACCESS_EXPIRY: z.string().default("15m"),
+
+  JWT_REFRESH_SECRET: z.string().min(1, "JWT_REFRESH_SECRET is required"),
+  JWT_REFRESH_EXPIRY: z.string().default("7d"),
+
+  REFRESH_TOKEN_EXPIRES_DAYS: z.string().default("7")
 })
 
 //parse and validate
@@ -84,4 +92,12 @@ export const env = {
     MAX: Number(parsedEnv.data.OTP_RATE_LIMIT_MAX),
   },
   
+  JWT: {
+    ACCESS_SECRET: parsedEnv.data.JWT_ACCESS_SECRET,
+    ACCESS_EXPIRY: parsedEnv.data.JWT_ACCESS_EXPIRY,
+    REFRESH_SECRET: parsedEnv.data.JWT_REFRESH_SECRET,
+    REFRESH_EXPIRY: parsedEnv.data.JWT_REFRESH_EXPIRY,
+  },
+
+  REFRESH_TOKEN_EXPIRES_DAYS: parsedEnv.data.REFRESH_TOKEN_EXPIRES_DAYS
 }

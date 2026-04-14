@@ -7,7 +7,7 @@ import {User as PrismaUser, Prisma} from "../../generated/prisma/index.js"
 export class UserMapper implements IUserMapper {
 
     // ENTITY → RESPONSE 
-    toResponse(user: User): UserResponseDTO {
+  toResponse(user: User): UserResponseDTO {
     return {
       id: user.id,
       firstName: user.firstName,
@@ -20,7 +20,7 @@ export class UserMapper implements IUserMapper {
   }
 
   // ENTITY → DB
-  toPersistence(user: User): Prisma.UserCreateInput {
+  toCreatePersistence(user: User): Prisma.UserCreateInput {
     return {
       id: user.id,
       firstName: user.firstName,
@@ -36,5 +36,15 @@ export class UserMapper implements IUserMapper {
   // DB → ENTITY
   toDomain(raw: PrismaUser): User {
   return User.fromPersistence(raw)
+  }
+
+  toUpdatePersistence(user: Partial<User>): Prisma.UserUpdateInput {
+    return {
+      ...(user.firstName && { firstName: user.firstName }),
+      ...(user.lastName && { lastName: user.lastName }),
+      ...(user.phone && { phone: user.phone }),
+      ...(user.passwordHash && { passwordHash: user.passwordHash }),
+      ...(user.isVerified !== undefined && { isVerified: user.isVerified }),
+    };
   }
 }

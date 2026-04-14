@@ -26,7 +26,7 @@ export class ResendOtpUseCase {
       const pendingUser = await this.pendingUserService.get(emailVO.value);
 
       if (!pendingUser) {
-       throw new NotFoundError(ERROR_MESSAGES.AUTH.USER_NOT_FOUND);
+       throw new NotFoundError(ERROR_MESSAGES.AUTH.PENDING_USER_NOT_FOUND);
       }
 
       const otp = await this.otpService.generateAndHandleOtp(pendingUser.tempUserId, pendingUser.email);
