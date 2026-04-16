@@ -2,8 +2,8 @@
 export abstract class BaseRepository<TDomain, TPrisma, TCreateInput, TUpdateInput> {
   protected abstract model: {
     create(args: { data: TCreateInput }): Promise<TPrisma>;
-    findUnique(args: any): Promise<TPrisma | null>;
-    findMany(args?: any): Promise<TPrisma[]>;
+    findUnique(args: any): Promise<TPrisma | null>; //not any? use what needed
+    findMany(args?: any): Promise<TPrisma[]>; //not any? use what needed
     update(args: { where: any; data: TUpdateInput }): Promise<TPrisma>;
     delete(args: { where: any }): Promise<TPrisma>;
     count(args: { where?: any }): Promise<number>;

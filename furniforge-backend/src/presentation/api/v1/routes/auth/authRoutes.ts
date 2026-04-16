@@ -9,19 +9,18 @@ import { ResendOtpSchema } from "@application/dtos/auth/ResendOtpDTO.js";
 import { otpLimiter, authLimiter } from "@infrastructure/security/rateLimiter.js";
 import { authMiddleware } from "@presentation/api/middlewares/authMiddleware.js";
 import { LoginSchema } from "@application/dtos/auth/LoginUserDTO.js";
+import { asyncHandler } from "@shared/utils/asyncHandler.js";
 
 const router = express.Router();
 
 //di activation
 const controller = container.get<AuthController>(TYPES.AuthController);
 
-router.post("/register", otpLimiter, validateBody(RegisterSchema), controller.register.bind(controller));
-router.post("/verify-otp", otpLimiter, validateBody(VerifyOtpSchema), controller.verifyOtp.bind(controller));
-router.post("/resend-otp", otpLimiter, validateBody(ResendOtpSchema), controller.resendOtp.bind(controller))
-router.post("/refresh-token", authLimiter, controller.refreshToken.bind(controller))
-router.post('/logout', authMiddleware, controller.logout.bind(controller))
-router.post("/login", authLimiter, validateBody(LoginSchema), controller.login.bind(controller))
-// router.post("/forgot-password", )
-// router.post("/verify-reset-password", )
+router.post("/register", otpLimiter, validateBody(RegisterSchema), asyncHandler(controller.register));
+router.post("/verify-otp", otpLimiter, validateBody(VerifyOtpSchema), asyncHandler(controller.verifyOtp));
+router.post("/resend-otp", otpLimiter, validateBody(ResendOtpSchema), asyncHandler(controller.resendOtp))
+router.post("/refresh-token", authLimiter, asyncHandler(controller.refreshToken))
+router.post('/logout', authMiddleware, asyncHandler(controller.logout))
+router.post("/login", authLimiter, validateBody(LoginSchema), asyncHandler(controller.login))
 
 export default router;

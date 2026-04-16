@@ -1,15 +1,15 @@
 import app from "./app.js";
 import { env } from "@infrastructure/config/env.js";
 import "reflect-metadata";
-import { logger } from "@shared/utils/logger.js";
+import { loggerInstance } from "@infrastructure/logger/WinstonLogger.js";
 
 const startServer = async () => {
     try {
         app.listen(env.PORT, () => {
-            logger.info(`Server running on port ${env.PORT}`)
+            loggerInstance.info(`Server running on port ${env.PORT}`)
         })
     } catch (error) {
-        logger.error(error)
+        loggerInstance.error("Server start failed", {error})
         process.exit(1)
     }
 }

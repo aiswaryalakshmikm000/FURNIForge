@@ -1,9 +1,9 @@
 import rateLimit from "express-rate-limit";
-import RedisClient from "@infrastructure/redis/RedisClient.js";
+import { redisInstance } from "@infrastructure/redis/RedisClient.js";
 import { env } from "@infrastructure/config/env.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 
-const redis = RedisClient.getInstance();
+const redis = redisInstance;
 
 const createRedisStore = (prefix: string, windowMs: number) => ({
   async increment(key: string) {
@@ -28,7 +28,6 @@ const createRedisStore = (prefix: string, windowMs: number) => ({
     await redis.del(`${prefix}:${key}`);
   },
 });
-
 
 
 export const generalLimiter = rateLimit({

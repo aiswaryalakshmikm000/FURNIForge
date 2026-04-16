@@ -2,8 +2,8 @@ import { ISessionService } from "@domain/services/ISessionService.js";
 import { ITokenService } from "@domain/services/ITokenService.js";
 import { UnauthorizedError } from "@domain/errors/AppError.js";
 import { IUserRepository } from "@domain/repositories/IUserRepository.js";
-import IRefreshTokenUseCase from "@application/use-cases/auth/interfaces/IRefreshTokenUseCase.js"
-import {inject, injectable } from 'inversify';
+import { IRefreshTokenUseCase } from "@application/use-cases/auth/interfaces/IRefreshTokenUseCase.js"
+import { inject, injectable } from 'inversify';
 import { TYPES } from "@infrastructure/di/types.js";
 import { RefreshTokenResultDTO } from "@application/dtos/auth/RefreshTokenResultDTO.js";
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";

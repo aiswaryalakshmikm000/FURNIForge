@@ -1,13 +1,13 @@
 import morgan from "morgan";
-import { logger } from "@shared/utils/logger.js";
 import { env } from "./env.js";
+import { loggerInstance } from "@infrastructure/logger/WinstonLogger.js";
 
 const morganFormat = env.NODE_ENV === "development" ? "dev" : "combined";
 
 export const morganConfig = morgan(morganFormat, {
   stream: {
     write: (message: string) => {
-      logger.info(message.trim());
+      loggerInstance.info(message.trim());
     },
   },
 });

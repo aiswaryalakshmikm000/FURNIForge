@@ -4,15 +4,15 @@ import { IRegisterUserUseCase } from "@application/use-cases/auth/interfaces/IRe
 import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 import { HttpStatusCode } from "@domain/enums/HttpStatusCode.js";
 import { IVerifyOtpUseCase } from "@application/use-cases/auth/interfaces/IVerifyOtpUseCase.js";
-import {inject, injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { TYPES } from "@infrastructure/di/types.js";
 import { IResendOtpUseCase } from "@application/use-cases/auth/interfaces/IResendOtpUseCase.js";
 import { UnauthorizedError } from "@domain/errors/AppError.js";
-import IRefreshTokenUseCase from "@application/use-cases/auth/interfaces/IRefreshTokenUseCase.js";
+import { IRefreshTokenUseCase } from "@application/use-cases/auth/interfaces/IRefreshTokenUseCase.js";
 import { ILogoutUseCase } from "@application/use-cases/auth/interfaces/ILogoutUseCase.js";
 import { AuthRequest } from "@presentation/api/middlewares/authMiddleware.js";
 import { ILoginUseCase } from "@application/use-cases/auth/interfaces/ILoginUseCase.js";
-import { REFRESH_COOKIE_OPTIONS } from "@infrastructure/config/cookies.js";
+import { setRefreshTokenCookie , clearRefreshTokenCookie} from "@infrastructure/config/cookies.js";
 
 @injectable()
 export class AuthController {
@@ -33,15 +33,9 @@ export class AuthController {
    * @param next - Express next middleware function for error handling
    */
 
-  async register(req: Request, res: Response, next: NextFunction) {
-    try {
+  register = async(req: Request, res: Response, next: NextFunction) => {
       const result = await this.registerUseCase.execute(req.body);
-
       res.status(HttpStatusCode.CREATED).json(ResponseBuilder.created(result, SUCCESS_MESSAGES.AUTH.REGISTER_SUCCESS).build());
-      
-    } catch (error: unknown) {
-      next(error);
-    }
   }
 
   /**
@@ -52,19 +46,13 @@ export class AuthController {
   * @param next - Express next middleware function for error handling
   */
 
-  async verifyOtp(req: Request, res: Response, next: NextFunction) {
-    try {
+  verifyOtp = async(req: Request, res: Response, next: NextFunction) => {
       const result = await this.verifyOtpUseCase.execute(req.body);
 
-      res.cookie("refreshToken", result.refreshToken, REFRESH_COOKIE_OPTIONS);
+      setRefreshTokenCookie(res, result.refreshToken)
 
       const {refreshToken, ...safeResponse} = result
-
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.VERIFY_OTP_SUCCESS).build());
-
-    } catch (error: unknown) {
-      next(error);
-    }
   }
 
   /**
@@ -76,15 +64,9 @@ export class AuthController {
    * @param next - Error handler
    */
   
-  async resendOtp(req: Request, res: Response, next: NextFunction) {
-    try{
+  resendOtp = async(req: Request, res: Response, next: NextFunction) => {
       const result = await this.resendOtpUseCase.execute(req.body);
-
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.RESEND_OTP_SUCCESS).build());
-
-    } catch (error) {
-      next(error);
-    }
   }
 
   /**
@@ -95,23 +77,16 @@ export class AuthController {
    * @param next -  Error handler
    */
 
-  async refreshToken(req: Request, res: Response, next: NextFunction) {
-    try {
+  refreshToken = async(req: Request, res: Response, next: NextFunction) => {
       const oldRefreshToken = req.cookies?.refreshToken;
-
       if(!oldRefreshToken) throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.REFRESH_FAILED);
 
       const result = await this.refreshTokenUseCase.execute(oldRefreshToken);
 
-      res.cookie("refreshToken", result.refreshToken, REFRESH_COOKIE_OPTIONS)
+      setRefreshTokenCookie(res, result.refreshToken)
 
       const { refreshToken, ...safeResponse } = result;
-
-      res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.TOKEN_REFRESH_SUCCESS).build());//where is response builder..also is it safe to return response with the refreshtoken fro mthe usecase
-
-    } catch (error) {
-      next(error)
-    }
+      res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.TOKEN_REFRESH_SUCCESS).build());
   }
 
   /**
@@ -121,17 +96,12 @@ export class AuthController {
    * @param next - Error handler
    */
 
-  async logout(req: AuthRequest, res: Response, next: NextFunction) {
-    try{
+  logout = async(req: AuthRequest, res: Response, next: NextFunction) => {
       if(!req.user) throw new UnauthorizedError()
       await this.logoutUseCase.execute(req.user.sessionId);
       
-      res.clearCookie("refreshToken", REFRESH_COOKIE_OPTIONS);
+      clearRefreshTokenCookie(res); 
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(null, SUCCESS_MESSAGES.AUTH.LOGOUT_SUCCESS).build())
-
-    } catch (error) {
-      next(error);
-    }
   }
 
   /**
@@ -140,18 +110,13 @@ export class AuthController {
    * @param next 
    */
 
-  async login (req: Request, res: Response, next: NextFunction) {
-    try{
+  login = async(req: Request, res: Response, next: NextFunction) => {
       const result = await this.loginUseCase.execute(req.body);
 
-      res.cookie("refreshToken", result.refreshToken, REFRESH_COOKIE_OPTIONS )
+      setRefreshTokenCookie(res, result.refreshToken)
 
       const {refreshToken, ...safeResponse} = result;
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.LOGIN_SUCCESS).build());
-
-    } catch (error) {
-      next(error)
-    }
   }
 
 }

@@ -1,9 +1,13 @@
-import { pipeline } from "node:stream";
-import RedisClient from "./RedisClient.js";
 import { ISessionService, SessionData } from "@domain/services/ISessionService.js";
+import { inject, injectable } from "inversify";
+import { TYPES } from "@infrastructure/di/types.js";
+import type { Redis } from "ioredis";
 
+@injectable()
 export class RedisSessionRepository implements ISessionService {
-  private client = RedisClient.getInstance();
+  constructor(
+    @inject(TYPES.Redis) private redis: Redis
+  ){}
 
   private sessionKey(sessionId: string) { //session data
     return `session:${sessionId}`;
@@ -14,7 +18,7 @@ export class RedisSessionRepository implements ISessionService {
   }
 
   async create(sessionId: string, data: SessionData, ttl: number): Promise<void> {
-    const pipeline = this.client.pipeline();
+    const pipeline = this.redis.pipeline();
 
     pipeline.setex(this.sessionKey(sessionId), ttl, JSON.stringify(data));
     pipeline.sadd(this.userSessionsKey(data.userId), sessionId); //user -session mapping
@@ -24,7 +28,7 @@ export class RedisSessionRepository implements ISessionService {
   }
 
   async get(sessionId: string): Promise<SessionData | null> {
-    const data = await this.client.get(this.sessionKey(sessionId));
+    const data = await this.redis.get(this.sessionKey(sessionId));
     return data ? JSON.parse(data) : null;
   }
 
@@ -32,10 +36,10 @@ export class RedisSessionRepository implements ISessionService {
     const session = await this.get(sessionId);
     if (!session) return;
 
-    const ttl = await this.client.ttl(this.sessionKey(sessionId));
+    const ttl = await this.redis.ttl(this.sessionKey(sessionId));
     if (ttl <= 0) return;
 
-    await this.client.setex(
+    await this.redis.setex(
       this.sessionKey(sessionId),
       ttl,
       JSON.stringify({ ...session, status: "rotated" })
@@ -43,11 +47,11 @@ export class RedisSessionRepository implements ISessionService {
   }
 
   async invalidateAllUserSessions(userId: string): Promise<void> {
-    const sessionIds = await this.client.smembers(this.userSessionsKey(userId));
+    const sessionIds = await this.redis.smembers(this.userSessionsKey(userId));
 
     if (!sessionIds.length) return;
 
-    const pipeline = this.client.pipeline();
+    const pipeline = this.redis.pipeline();
 
     for (const sessionId of sessionIds) {
       pipeline.set(
@@ -65,10 +69,10 @@ export class RedisSessionRepository implements ISessionService {
     const session = await this.get(sessionId);
     if (!session) return;
 
-    const ttl = await this.client.ttl(this.sessionKey(sessionId));
+    const ttl = await this.redis.ttl(this.sessionKey(sessionId));
     if (ttl <= 0) return;
 
-    await this.client.setex(
+    await this.redis.setex(
       this.sessionKey(sessionId),
       ttl,
       JSON.stringify({ ...session, status: "revoked" })

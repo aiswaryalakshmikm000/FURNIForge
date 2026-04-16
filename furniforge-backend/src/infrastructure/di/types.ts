@@ -1,8 +1,8 @@
 
 export const TYPES = {
-  Logger: Symbol.for("Logger"),
+  Redis: Symbol.for("Redis"),
   
-  IUserMapper: Symbol.for("IUserMapper"),
+  ILogger: Symbol.for("ILogger"),
 
   IUserRepository: Symbol.for("IUserRepository"),
   IOTPRepository: Symbol.for("IOTPRepository"),
@@ -20,7 +20,7 @@ export const TYPES = {
   IResendOtpUseCase: Symbol.for("IResendOtpUseCase"),
   IRefreshTokenUseCase: Symbol.for("IRefreshTokenUseCase"),
   ILogoutUseCase: Symbol.for("ILogoutUseCase"),
-  ILoginUseCase : Symbol.for("ILoginUseCase "),
+  ILoginUseCase : Symbol.for("ILoginUseCase"),
 
   AuthController: Symbol.for("AuthController"),
 };

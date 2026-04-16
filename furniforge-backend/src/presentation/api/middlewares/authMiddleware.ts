@@ -45,6 +45,10 @@ export const authMiddleware = async (
       throw new UnauthorizedError("Session invalid");
     } 
 
+    if (!Object.values(UserRole).includes(payload.role)) {
+      throw new UnauthorizedError("Invalid role");
+    }
+
     req.user = {
       userId: payload.sub,
       email: payload.email,

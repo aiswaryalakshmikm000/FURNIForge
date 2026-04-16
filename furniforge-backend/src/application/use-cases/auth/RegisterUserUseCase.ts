@@ -12,8 +12,8 @@ import { IPendingUserService } from "@domain/services/IPendingUserService.js";
 import { IEmailService } from "@domain/services/IEmailService.js";
 import { AuthActionResponseDTO } from "@application/dtos/auth/AuthActionResponseDTO.js";
 import {inject, injectable } from 'inversify';
+import { ILogger } from "@domain/services/ILogger.js";
 import { TYPES } from "@infrastructure/di/types.js";
-import type { Logger } from "winston";
 
 @injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {
@@ -23,7 +23,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
     @inject(TYPES.IOtpService) private otpService: IOtpService,
     @inject(TYPES.IPendingUserService) private pendingUserService: IPendingUserService,
     @inject(TYPES.IEmailService) private emailService: IEmailService,
-    @inject(TYPES.Logger) private logger: Logger,
+    @inject(TYPES.ILogger) private logger: ILogger,
   ) {}
 
   async execute(data: RegisterUserDTO): Promise<AuthActionResponseDTO > {

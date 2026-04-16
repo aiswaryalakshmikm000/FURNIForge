@@ -43,8 +43,8 @@ export const ERROR_MESSAGES = {
     EMAIL_ALREADY_VERIFIED: "Email already verified",
 
     PASSWORD_REQUIRED: 'Password is required',
-    PASSWORD_MIN_LENGTH: "Password must be at least 6 characters",
-    PASSWORD_INVALID: "Password must contain uppercase, lowercase, number and min 6 chars",
+    PASSWORD_MIN_LENGTH: "Password must be at least 8 characters",
+    PASSWORD_INVALID: "Password must contain uppercase, lowercase, number and min 8 chars",
 
     PHONE_ALREADY_EXISTS: "User with this phone already exists",
 

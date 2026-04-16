@@ -4,7 +4,6 @@ import { IUserRepository } from "@domain/repositories/IUserRepository.js";
 import { IPasswordService } from "@domain/services/IPasswordService.js";
 import { ITokenService } from "@domain/services/ITokenService.js";
 import { ISessionService } from "@domain/services/ISessionService.js";
-import { IUserMapper } from "@application/mappers/interfaces/IUserMapper.js";
 import { AuthResult } from "@application/dtos/auth/AuthResult.js";
 import { LoginDTO } from "@application/dtos/auth/LoginUserDTO.js";
 import { Email } from "@domain/value-objects/Email.js";
@@ -12,6 +11,7 @@ import { UnauthorizedError } from "@domain/errors/AppError.js";
 import { TYPES } from "@infrastructure/di/types.js"
 import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 import { REFRESH_TOKEN_EXPIRES_DAYS } from "@infrastructure/config/cookies.js";
+import { UserMapper } from "@application/mappers/UserMapper.js";
 
 @injectable()
 export class LoginUseCase implements ILoginUseCase {
@@ -20,7 +20,6 @@ export class LoginUseCase implements ILoginUseCase {
     @inject(TYPES.IPasswordService) private passwordService: IPasswordService,
     @inject(TYPES.ITokenService) private tokenService: ITokenService,
     @inject(TYPES.ISessionService) private sessionService: ISessionService,
-    @inject(TYPES.IUserMapper) private userMapper: IUserMapper,
   ) {}
 
   async execute(data: LoginDTO): Promise<AuthResult> {
@@ -51,5 +50,5 @@ export class LoginUseCase implements ILoginUseCase {
 
     await this.sessionService.create( sessionId, { userId: user.id, status: "active" }, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 );
 
-    return { user: this.userMapper.toResponse(user), accessToken, refreshToken } }
+    return { user: UserMapper.toResponse(user), accessToken, refreshToken } }
 }

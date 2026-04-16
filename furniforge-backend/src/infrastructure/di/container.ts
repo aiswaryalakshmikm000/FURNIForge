@@ -1,7 +1,5 @@
 import { Container } from "inversify";
 import { TYPES } from "./types.js";
-import { logger } from "@shared/utils/logger.js";
-import { UserMapper } from "@application/mappers/UserMapper.js";
 import { UserRepository } from "@infrastructure/database/prisma/repositories/UserRepository.js";
 import { RedisOTPRepository } from "@infrastructure/redis/RedisOTPRepository.js";
 import { RedisPendingUserRepository } from "@infrastructure/redis/PendingUserRepository.js";
@@ -14,18 +12,21 @@ import { VerifyOtpUseCase } from "@application/use-cases/auth/VerifyOtpUseCase.j
 import { AuthController } from "@presentation/api/v1/controllers/auth/AuthController.js";
 import { ResendOtpUseCase } from "@application/use-cases/auth/ResendOtpUseCase.js";
 import { JwtService } from "@infrastructure/external-services/JwtService.js";
-import { RedisSessionRepository } from "@infrastructure/redis/RedisSessionRepository.ts.js";
-import {RefreshTokenUseCase} from "@application/use-cases/auth/RefreshTokenUseCase.js"
+import { RedisSessionRepository } from "@infrastructure/redis/RedisSessionRepository.js";
+import { RefreshTokenUseCase } from "@application/use-cases/auth/RefreshTokenUseCase.js"
 import { LogoutUseCase } from "@application/use-cases/auth/LogoutUseCase.js";
 import { LoginUseCase } from "@application/use-cases/auth/LoginUseCase.js";
+import { loggerInstance } from "@infrastructure/logger/WinstonLogger.js";
+import { redisInstance } from "@infrastructure/redis/RedisClient.js";
+import type { Redis } from "ioredis";
 
 const container = new Container();
 
-//logger
-container.bind(TYPES.Logger).toConstantValue(logger);
+//redis
+container.bind<Redis>(TYPES.Redis).toConstantValue(redisInstance);
 
-// Mappers
-container.bind(TYPES.IUserMapper).to(UserMapper);
+//logger
+container.bind(TYPES.ILogger).toConstantValue(loggerInstance);
 
 // Repositories
 container.bind(TYPES.IUserRepository).to(UserRepository);
