@@ -1,31 +1,34 @@
 import prisma from "../client.js";
 import { IUserRepository } from "@domain/repositories/IUserRepository.js";
 import { User } from "@domain/entities/User.js";
-import { IUserMapper } from "@application/mappers/interfaces/IUserMapper.js";
+import { BaseRepository } from "./BaseRepository.js";
 import { injectable, inject } from "inversify";
-import { TYPES } from "@infrastructure/di/types.js";
+import { UserMapper } from "@application/mappers/UserMapper.js";
+import {User as PrismaUser, Prisma} from "../../../../generated/prisma/index.js";
 
 @injectable()
-export class UserRepository implements IUserRepository {
-  constructor(
-    @inject(TYPES.IUserMapper) private userMapper: IUserMapper
-  ) {}
+export class UserRepository extends BaseRepository<User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput> implements IUserRepository {
+  protected model = prisma.user;
 
-  async findByEmail(email: string) {
-    const raw = await prisma.user.findUnique({ where: { email } });
-    return raw ? this.userMapper.toDomain(raw) : null;
+  protected toDomain(raw: PrismaUser): User {
+    return UserMapper.toDomain(raw);
   }
 
-  async findByPhone(phone: string) {
-  const raw = await prisma.user.findUnique({ where: { phone } });
-  return raw ? this.userMapper.toDomain(raw) : null;
-}
+  protected toCreate(entity: User): Prisma.UserCreateInput {
+    return UserMapper.toCreatePersistence(entity);
+  }
 
-  async create(user: User) {
-    const raw = await prisma.user.create({
-      data: this.userMapper.toPersistence(user),
-    });
+  protected toUpdate(entity: Partial<User>): Prisma.UserUpdateInput {
+    return UserMapper.toUpdatePersistence(entity);
+  }
 
-    return this.userMapper.toDomain(raw);
+  async findByEmail(email: string): Promise<User | null> {
+    const raw = await this.model.findUnique({ where: { email } });
+    return raw ? this.toDomain(raw) : null;
+  }
+
+  async findByPhone(phone: string): Promise<User | null> {
+    const raw = await this.model.findUnique({ where: { phone } });
+    return raw ? this.toDomain(raw) : null;
   }
 }

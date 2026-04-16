@@ -7,7 +7,7 @@ import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "@infrastructure/config/message
 import { env } from "@infrastructure/config/env.js";
 import { inject, injectable } from "inversify";
 import { TYPES} from "@infrastructure/di/types.js"
-import { Logger } from "winston";
+import { ILogger } from "@domain/services/ILogger.js";
 import { Email } from "@domain/value-objects/Email.js";
 import { ResendOtpDTO } from "@application/dtos/auth/ResendOtpDTO.js";
 
@@ -17,7 +17,7 @@ export class ResendOtpUseCase {
     @inject(TYPES.IPendingUserService) private pendingUserService: IPendingUserService,
     @inject(TYPES.IOtpService) private otpService: IOtpService,
     @inject(TYPES.IEmailService) private emailService: IEmailService,
-    @inject(TYPES.Logger) private logger: Logger
+    @inject(TYPES.ILogger) private logger: ILogger
   ) {}
 
   async execute(data: ResendOtpDTO): Promise<AuthActionResponseDTO> {
@@ -26,7 +26,7 @@ export class ResendOtpUseCase {
       const pendingUser = await this.pendingUserService.get(emailVO.value);
 
       if (!pendingUser) {
-       throw new NotFoundError(ERROR_MESSAGES.AUTH.USER_NOT_FOUND);
+       throw new NotFoundError(ERROR_MESSAGES.AUTH.PENDING_USER_NOT_FOUND);
       }
 
       const otp = await this.otpService.generateAndHandleOtp(pendingUser.tempUserId, pendingUser.email);

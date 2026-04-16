@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '@domain/errors/AppError.js';
 import { ERROR_MESSAGES } from '@infrastructure/config/messages.js';
-import { logger } from "@shared/utils/logger.js";
+import { loggerInstance } from '@infrastructure/logger/WinstonLogger.js';
 
 export const errorHandlerMiddleware = (
   err: unknown,
@@ -22,9 +22,9 @@ export const errorHandlerMiddleware = (
   }
 
   if (err instanceof Error) {
-    logger.error("Unhandled Error", {message: err.message, stack: err.stack, path: req.path, method: req.method});
+    loggerInstance.error("Unhandled Error", {message: err.message, stack: err.stack, path: req.path, method: req.method});
   } else {
-    logger.error("Unknown thrown value:", {err});
+    loggerInstance.error("Unknown thrown value:", {err});
   }
 
   return res.status(500).json({

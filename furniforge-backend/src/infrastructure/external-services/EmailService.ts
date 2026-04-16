@@ -4,13 +4,13 @@ import { InternalServerError } from "@domain/errors/AppError.js";
 import { env } from "@infrastructure/config/env.js";
 import { injectable, inject } from "inversify";
 import {TYPES} from "@infrastructure/di/types.js"
-import { Logger } from "winston";
+import { ILogger } from "@domain/services/ILogger.js";
 
 @injectable()
 export class EmailService implements IEmailService {
 
   constructor(
-    @inject(TYPES.Logger) private logger: Logger,
+    @inject(TYPES.ILogger) private logger: ILogger,
   ) {}
 
   private readonly BREVO_URL = env.BREVO.URL;

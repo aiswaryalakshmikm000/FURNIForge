@@ -24,12 +24,17 @@ export const RegisterSchema = z.object({
     .email({ message: ERROR_MESSAGES.AUTH.INVALID_EMAIL })
     .transform((val) => val.trim().toLowerCase()),
   phone: z
-  .string()
-  .min(10)
-  .regex(/^[0-9]{10}$/, "Invalid phone number"),
+    .string()
+    .min(10)
+    .regex(/^[0-9]{10}$/, "Invalid phone number"),
   password: z
     .string()
-    .min(6, { message: ERROR_MESSAGES.AUTH.PASSWORD_MIN_LENGTH })
-});
+    .min(8, { message: ERROR_MESSAGES.AUTH.PASSWORD_MIN_LENGTH })
+    .regex(/[A-Z]/, "Must contain uppercase")
+    .regex(/[a-z]/, "Must contain lowercase")
+    .regex(/[0-9]/, "Must contain number")
+    .regex(/[\W]/, "Must contain special character"),
+  }
+);
 
 export type RegisterUserDTO = z.infer<typeof RegisterSchema>;

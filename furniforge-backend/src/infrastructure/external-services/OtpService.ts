@@ -6,7 +6,7 @@ import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
 import { env } from "@infrastructure/config/env.js";
 import { injectable, inject } from "inversify";
 import { TYPES } from "@infrastructure/di/types.js";
-import { Logger } from "winston";
+import { ILogger } from "@domain/services/ILogger.js";
 
 @injectable()
 export class OtpService implements IOtpService {
@@ -14,7 +14,7 @@ export class OtpService implements IOtpService {
 
   constructor(
     @inject(TYPES.IOTPRepository) private otpRepository: IOTPRepository,
-    @inject(TYPES.Logger) private logger: Logger,
+    @inject(TYPES.ILogger) private logger: ILogger,
   ) {}
 
   generateOTP(): string {

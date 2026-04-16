@@ -19,10 +19,11 @@ export class Password {
 
   private isValid(password: string): boolean {
     return (
-      password.length >= 6 &&
+      password.length >= 8 &&
       /[A-Z]/.test(password) &&
       /[a-z]/.test(password) &&
-      /[0-9]/.test(password)
+      /[0-9]/.test(password) &&
+      /[\W]/.test(password)
     );
   }
 
