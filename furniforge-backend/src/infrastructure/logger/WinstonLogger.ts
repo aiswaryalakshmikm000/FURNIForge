@@ -1,7 +1,7 @@
 import winston from "winston";
 import "winston-daily-rotate-file";
-import { ILogger } from "@domain/services/ILogger.js";
-import { env } from "@infrastructure/config/env.js";
+import { ILogger } from "../../domain/services/ILogger.js";
+import { env } from "../../infrastructure/config/env.js";
 
 const { combine, timestamp, printf, colorize } = winston.format;
 

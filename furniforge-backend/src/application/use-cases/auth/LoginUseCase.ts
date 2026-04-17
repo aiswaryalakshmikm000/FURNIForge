@@ -1,17 +1,17 @@
 import { injectable, inject } from "inversify";
 import { ILoginUseCase } from "./interfaces/ILoginUseCase.js";
-import { IUserRepository } from "@domain/repositories/IUserRepository.js";
-import { IPasswordService } from "@domain/services/IPasswordService.js";
-import { ITokenService } from "@domain/services/ITokenService.js";
-import { ISessionService } from "@domain/services/ISessionService.js";
-import { AuthResult } from "@application/dtos/auth/AuthResult.js";
-import { LoginDTO } from "@application/dtos/auth/LoginUserDTO.js";
-import { Email } from "@domain/value-objects/Email.js";
-import { UnauthorizedError } from "@domain/errors/AppError.js";
-import { TYPES } from "@infrastructure/di/types.js"
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { REFRESH_TOKEN_EXPIRES_DAYS } from "@infrastructure/config/cookies.js";
-import { UserMapper } from "@application/mappers/UserMapper.js";
+import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
+import { IPasswordService } from "../../../domain/services/IPasswordService.js";
+import { ITokenService } from "../../../domain/services/ITokenService.js";
+import { ISessionService } from "../../../domain/services/ISessionService.js";
+import { AuthResult } from "../../../application/dtos/auth/AuthResult.js";
+import { LoginDTO } from "../../../application/dtos/auth/LoginUserDTO.js";
+import { Email } from "../../../domain/value-objects/Email.js";
+import { UnauthorizedError } from "../../../domain/errors/AppError.js";
+import { TYPES } from "../../../infrastructure/di/types.js"
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies.js";
+import { UserMapper } from "../../../application/mappers/UserMapper.js";
 
 @injectable()
 export class LoginUseCase implements ILoginUseCase {

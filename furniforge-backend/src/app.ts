@@ -1,10 +1,10 @@
 import express from "express"
 import { corsConfig } from "./infrastructure/config/corsConfig.js"
-import { helmetConfig } from "@infrastructure/config/helmetConfig.js"
-import { errorHandlerMiddleware } from "@presentation/api/middlewares/errorHandlerMiddleware.js"
-import authRoutes from "@presentation/api/v1/routes/auth/authRoutes.js";
-import { SUCCESS_MESSAGES } from "@infrastructure/config/messages.js";
-import { morganConfig } from "@infrastructure/config/morgan.js";
+import { helmetConfig } from "./infrastructure/config/helmetConfig.js"
+import { errorHandlerMiddleware } from "./presentation/api/middlewares/errorHandlerMiddleware.js"
+import authRoutes from "./presentation/api/v1/routes/auth/authRoutes.js";
+import { SUCCESS_MESSAGES } from "./infrastructure/config/messages.js";
+import { morganConfig } from "./infrastructure/config/morgan.js";
 
 const app = express()
 

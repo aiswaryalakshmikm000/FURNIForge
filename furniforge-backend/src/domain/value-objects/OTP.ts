@@ -1,5 +1,5 @@
-import { ValidationError } from "@domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
+import { ValidationError } from "../../domain/errors/AppError.js";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
 
 export class OTP {
   private readonly _value: string;

@@ -1,23 +1,23 @@
 import { Container } from "inversify";
 import { TYPES } from "./types.js";
-import { UserRepository } from "@infrastructure/database/prisma/repositories/UserRepository.js";
-import { RedisOTPRepository } from "@infrastructure/redis/RedisOTPRepository.js";
-import { RedisPendingUserRepository } from "@infrastructure/redis/PendingUserRepository.js";
-import { BcryptPasswordService } from "@infrastructure/external-services/BcryptPasswordService.js";
-import { OtpService } from "@infrastructure/external-services/OtpService.js";
-import { PendingUserService } from "@infrastructure/external-services/PendingUserService.js";
-import { EmailService } from "@infrastructure/external-services/EmailService.js";
-import { RegisterUserUseCase } from "@application/use-cases/auth/RegisterUserUseCase.js";
-import { VerifyOtpUseCase } from "@application/use-cases/auth/VerifyOtpUseCase.js";
-import { AuthController } from "@presentation/api/v1/controllers/auth/AuthController.js";
-import { ResendOtpUseCase } from "@application/use-cases/auth/ResendOtpUseCase.js";
-import { JwtService } from "@infrastructure/external-services/JwtService.js";
-import { RedisSessionRepository } from "@infrastructure/redis/RedisSessionRepository.js";
-import { RefreshTokenUseCase } from "@application/use-cases/auth/RefreshTokenUseCase.js"
-import { LogoutUseCase } from "@application/use-cases/auth/LogoutUseCase.js";
-import { LoginUseCase } from "@application/use-cases/auth/LoginUseCase.js";
-import { loggerInstance } from "@infrastructure/logger/WinstonLogger.js";
-import { redisInstance } from "@infrastructure/redis/RedisClient.js";
+import { UserRepository } from "../../infrastructure/database/prisma/repositories/UserRepository.js";
+import { RedisOTPRepository } from "../../infrastructure/redis/RedisOTPRepository.js";
+import { RedisPendingUserRepository } from "../../infrastructure/redis/PendingUserRepository.js";
+import { BcryptPasswordService } from "../../infrastructure/external-services/BcryptPasswordService.js";
+import { OtpService } from "../../infrastructure/external-services/OtpService.js";
+import { PendingUserService } from "../../infrastructure/external-services/PendingUserService.js";
+import { EmailService } from "../../infrastructure/external-services/EmailService.js";
+import { RegisterUserUseCase } from "../../application/use-cases/auth/RegisterUserUseCase.js";
+import { VerifyOtpUseCase } from "../../application/use-cases/auth/VerifyOtpUseCase.js";
+import { AuthController } from "../../presentation/api/v1/controllers/auth/AuthController.js";
+import { ResendOtpUseCase } from "../../application/use-cases/auth/ResendOtpUseCase.js";
+import { JwtService } from "../../infrastructure/external-services/JwtService.js";
+import { RedisSessionRepository } from "../../infrastructure/redis/RedisSessionRepository.js";
+import { RefreshTokenUseCase } from "../../application/use-cases/auth/RefreshTokenUseCase.js"
+import { LogoutUseCase } from "../../application/use-cases/auth/LogoutUseCase.js";
+import { LoginUseCase } from "../../application/use-cases/auth/LoginUseCase.js";
+import { loggerInstance } from "../../infrastructure/logger/WinstonLogger.js";
+import { redisInstance } from "../../infrastructure/redis/RedisClient.js";
 import type { Redis } from "ioredis";
 
 const container = new Container();

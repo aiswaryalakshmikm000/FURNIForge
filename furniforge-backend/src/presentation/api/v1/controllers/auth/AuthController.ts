@@ -1,18 +1,18 @@
 import { Request, Response, NextFunction } from "express";
-import { ResponseBuilder } from "@shared/responses/ApiResponse.js";
-import { IRegisterUserUseCase } from "@application/use-cases/auth/interfaces/IRegisterUserUseCase.js";
-import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { HttpStatusCode } from "@domain/enums/HttpStatusCode.js";
-import { IVerifyOtpUseCase } from "@application/use-cases/auth/interfaces/IVerifyOtpUseCase.js";
+import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse.js";
+import { IRegisterUserUseCase } from "../../../../../application/use-cases/auth/interfaces/IRegisterUserUseCase.js";
+import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "../../../../../infrastructure/config/messages.js";
+import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode.js";
+import { IVerifyOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IVerifyOtpUseCase.js";
 import { inject, injectable } from 'inversify';
-import { TYPES } from "@infrastructure/di/types.js";
-import { IResendOtpUseCase } from "@application/use-cases/auth/interfaces/IResendOtpUseCase.js";
-import { UnauthorizedError } from "@domain/errors/AppError.js";
-import { IRefreshTokenUseCase } from "@application/use-cases/auth/interfaces/IRefreshTokenUseCase.js";
-import { ILogoutUseCase } from "@application/use-cases/auth/interfaces/ILogoutUseCase.js";
-import { AuthRequest } from "@presentation/api/middlewares/authMiddleware.js";
-import { ILoginUseCase } from "@application/use-cases/auth/interfaces/ILoginUseCase.js";
-import { setRefreshTokenCookie , clearRefreshTokenCookie} from "@infrastructure/config/cookies.js";
+import { TYPES } from "../../../../../infrastructure/di/types.js";
+import { IResendOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IResendOtpUseCase.js";
+import { UnauthorizedError } from "../../../../../domain/errors/AppError.js";
+import { IRefreshTokenUseCase } from "../../../../../application/use-cases/auth/interfaces/IRefreshTokenUseCase.js";
+import { ILogoutUseCase } from "../../../../../application/use-cases/auth/interfaces/ILogoutUseCase.js";
+import { AuthRequest } from "../../../../../presentation/api/middlewares/authMiddleware.js";
+import { ILoginUseCase } from "../../../../../application/use-cases/auth/interfaces/ILoginUseCase.js";
+import { setRefreshTokenCookie , clearRefreshTokenCookie} from "../../../../../infrastructure/config/cookies.js";
 
 @injectable()
 export class AuthController {

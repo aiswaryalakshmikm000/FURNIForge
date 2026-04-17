@@ -1,7 +1,7 @@
 import rateLimit from "express-rate-limit";
-import { redisInstance } from "@infrastructure/redis/RedisClient.js";
-import { env } from "@infrastructure/config/env.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
+import { redisInstance } from "../../infrastructure/redis/RedisClient.js";
+import { env } from "../../infrastructure/config/env.js";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
 
 const redis = redisInstance;
 

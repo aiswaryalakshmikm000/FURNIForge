@@ -1,7 +1,7 @@
-import { BadRequestError, TooManyRequestsError } from "@domain/errors/AppError.js";
-import { env } from "@infrastructure/config/env.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { OTP } from "@domain/value-objects/OTP.js";
+import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError.js";
+import { env } from "../../infrastructure/config/env.js";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
+import { OTP } from "../../domain/value-objects/OTP.js";
 
 export class OtpToken {
   private constructor(

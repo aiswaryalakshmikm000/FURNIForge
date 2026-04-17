@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
-import { container } from "@infrastructure/di/container.js";
-import { TYPES } from "@infrastructure/di/types.js";
-import { ITokenService } from "@domain/services/ITokenService.js";
-import { ISessionService } from "@domain/services/ISessionService.js";
-import { UnauthorizedError } from "@domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { UserRole } from "@domain/enums/UserRole.js";
+import { container } from "../../../infrastructure/di/container.js";
+import { TYPES } from "../../../infrastructure/di/types.js";
+import { ITokenService } from "../../../domain/services/ITokenService.js";
+import { ISessionService } from "../../../domain/services/ISessionService.js";
+import { UnauthorizedError } from "../../../domain/errors/AppError.js";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { UserRole } from "../../../domain/enums/UserRole.js";
 
 const tokenService = container.get<ITokenService>(TYPES.ITokenService);
 const sessionService = container.get<ISessionService>(TYPES.ISessionService);
@@ -19,11 +19,7 @@ export interface AuthRequest extends Request {
   };
 }
 
-export const authMiddleware = async (
-  req: AuthRequest,
-  _res: Response,
-  next: NextFunction
-) => {
+export const authMiddleware = async ( req: AuthRequest,_res: Response, next: NextFunction ) => {
   try {
     const header = req.headers.authorization;
 

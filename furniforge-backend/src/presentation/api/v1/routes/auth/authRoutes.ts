@@ -1,15 +1,15 @@
 import express from "express";
-import { AuthController } from "@presentation/api/v1/controllers/auth/AuthController.js";
-import { validateBody } from "@presentation/api/middlewares/validationMiddleware.js";
-import { RegisterSchema } from "@application/dtos/auth/RegisterUserDTO.js";
-import { VerifyOtpSchema } from "@application/dtos/auth/VerifyOtpDTO.js";
-import { container } from "@infrastructure/di/container.js";
-import { TYPES } from "@infrastructure/di/types.js";
-import { ResendOtpSchema } from "@application/dtos/auth/ResendOtpDTO.js";
-import { otpLimiter, authLimiter } from "@infrastructure/security/rateLimiter.js";
-import { authMiddleware } from "@presentation/api/middlewares/authMiddleware.js";
-import { LoginSchema } from "@application/dtos/auth/LoginUserDTO.js";
-import { asyncHandler } from "@shared/utils/asyncHandler.js";
+import { AuthController } from "../../../../../presentation/api/v1/controllers/auth/AuthController.js";
+import { validateBody } from "../../../../../presentation/api/middlewares/validationMiddleware.js";
+import { RegisterSchema } from "../../../../../application/dtos/auth/RegisterUserDTO.js";
+import { VerifyOtpSchema } from "../../../../../application/dtos/auth/VerifyOtpDTO.js";
+import { container } from "../../../../../infrastructure/di/container.js";
+import { TYPES } from "../../../../../infrastructure/di/types.js";
+import { ResendOtpSchema } from "../../../../../application/dtos/auth/ResendOtpDTO.js";
+import { otpLimiter, authLimiter } from "../../../../../infrastructure/security/rateLimiter.js";
+import { authMiddleware } from "../../../../../presentation/api/middlewares/authMiddleware.js";
+import { LoginSchema } from "../../../../../application/dtos/auth/LoginUserDTO.js";
+import { asyncHandler } from "../../../../../shared/utils/asyncHandler.js";
 
 const router = express.Router();
 

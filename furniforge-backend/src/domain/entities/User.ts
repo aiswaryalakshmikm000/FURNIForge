@@ -1,7 +1,7 @@
-import { UserRole } from "@domain/enums/UserRole.js";
-import { Email } from "@domain/value-objects/Email.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { BadRequestError } from "@domain/errors/AppError.js";
+import { UserRole } from "../../domain/enums/UserRole.js";
+import { Email } from "../../domain/value-objects/Email.js";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
+import { BadRequestError } from "../../domain/errors/AppError.js";
 import { User as PrismaUser } from "../../generated/prisma/index.js";
 
 export class User {

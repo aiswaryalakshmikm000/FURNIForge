@@ -1,4 +1,3 @@
-
 export type SessionStatus = "active" | "rotated" | "revoked";
 
 export interface SessionData {

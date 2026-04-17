@@ -1,24 +1,24 @@
-import { IOtpService } from "@domain/services/IOtpservice.js";
-import { IPendingUserService } from "@domain/services/IPendingUserService.js";
-import { IUserRepository } from "@domain/repositories/IUserRepository.js";
-import { IEmailService } from "@domain/services/IEmailService.js";
-import { VerifyOtpDTO } from "@application/dtos/auth/VerifyOtpDTO.js";
-import { NotFoundError } from "@domain/errors/AppError.js";
-import { User } from "@domain/entities/User.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { Email } from "@domain/value-objects/Email.js";
-import { OTP } from "@domain/value-objects/OTP.js";
-import { InternalServerError } from "@domain/errors/AppError.js";
-import { AppError } from "@domain/errors/AppError.js";
+import { IOtpService } from "../../../domain/services/IOtpservice.js";
+import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
+import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
+import { IEmailService } from "../../../domain/services/IEmailService.js";
+import { VerifyOtpDTO } from "../../../application/dtos/auth/VerifyOtpDTO.js";
+import { NotFoundError } from "../../../domain/errors/AppError.js";
+import { User } from "../../../domain/entities/User.js";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { Email } from "../../../domain/value-objects/Email.js";
+import { OTP } from "../../../domain/value-objects/OTP.js";
+import { InternalServerError } from "../../../domain/errors/AppError.js";
+import { AppError } from "../../../domain/errors/AppError.js";
 import { IVerifyOtpUseCase } from "./interfaces/IVerifyOtpUseCase.js";
 import { injectable, inject } from "inversify";
-import { TYPES } from "@infrastructure/di/types.js";
-import { ILogger } from "@domain/services/ILogger.js";
-import { ITokenService } from "@domain/services/ITokenService.js";
-import { ISessionService } from "@domain/services/ISessionService.js";
-import { AuthResult } from "@application/dtos/auth/AuthResult.js";
-import { REFRESH_TOKEN_EXPIRES_DAYS } from "@infrastructure/config/cookies.js";
-import { UserMapper } from "@application/mappers/UserMapper.js";
+import { TYPES } from "../../../infrastructure/di/types.js";
+import { ILogger } from "../../../domain/services/ILogger.js";
+import { ITokenService } from "../../../domain/services/ITokenService.js";
+import { ISessionService } from "../../../domain/services/ISessionService.js";
+import { AuthResult } from "../../../application/dtos/auth/AuthResult.js";
+import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies.js";
+import { UserMapper } from "../../../application/mappers/UserMapper.js";
 
 @injectable()
 export class VerifyOtpUseCase implements IVerifyOtpUseCase {

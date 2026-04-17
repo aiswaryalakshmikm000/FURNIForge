@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
 
 export const RegisterSchema = z.object({
   firstName: z

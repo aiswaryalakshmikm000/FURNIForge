@@ -1,19 +1,19 @@
-import { IUserRepository } from "@domain/repositories/IUserRepository.js";
-import { RegisterUserDTO } from "@application/dtos/auth/RegisterUserDTO.js";
-import { AppError } from "@domain/errors/AppError.js";
-import { IPasswordService } from "@domain/services/IPasswordService.js";
-import { Email } from "@domain/value-objects/Email.js";
-import { Password } from "@domain/value-objects/Password.js";
+import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
+import { RegisterUserDTO } from "../../../application/dtos/auth/RegisterUserDTO.js";
+import { AppError } from "../../../domain/errors/AppError.js";
+import { IPasswordService } from "../../../domain/services/IPasswordService.js";
+import { Email } from "../../../domain/value-objects/Email.js";
+import { Password } from "../../../domain/value-objects/Password.js";
 import { IRegisterUserUseCase } from "./interfaces/IRegisterUserUseCase.js";
-import { ConflictError, InternalServerError } from "@domain/errors/AppError.js";
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "@infrastructure/config/messages.js";
-import { IOtpService } from "@domain/services/IOtpservice.js";
-import { IPendingUserService } from "@domain/services/IPendingUserService.js";
-import { IEmailService } from "@domain/services/IEmailService.js";
-import { AuthActionResponseDTO } from "@application/dtos/auth/AuthActionResponseDTO.js";
+import { ConflictError, InternalServerError } from "../../../domain/errors/AppError.js";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { IOtpService } from "../../../domain/services/IOtpservice.js";
+import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
+import { IEmailService } from "../../../domain/services/IEmailService.js";
+import { AuthActionResponseDTO } from "../../../application/dtos/auth/AuthActionResponseDTO.js";
 import {inject, injectable } from 'inversify';
-import { ILogger } from "@domain/services/ILogger.js";
-import { TYPES } from "@infrastructure/di/types.js";
+import { ILogger } from "../../../domain/services/ILogger.js";
+import { TYPES } from "../../../infrastructure/di/types.js";
 
 @injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {

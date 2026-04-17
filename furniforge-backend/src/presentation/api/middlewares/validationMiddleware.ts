@@ -1,7 +1,7 @@
 import { ZodSchema } from "zod";
 import { Request, Response, NextFunction } from "express";
-import { ValidationError } from "@domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
+import { ValidationError } from "../../../domain/errors/AppError.js";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
 
 export const validateBody = (schema: ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {

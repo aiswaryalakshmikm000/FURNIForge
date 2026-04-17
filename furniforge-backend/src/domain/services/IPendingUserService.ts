@@ -1,4 +1,4 @@
-import { PendingUser } from "@domain/entities/PendingUser.js";
+import { PendingUser } from "../../domain/entities/PendingUser.js";
 
 export interface IPendingUserService {
   createOrUpdate(data: {

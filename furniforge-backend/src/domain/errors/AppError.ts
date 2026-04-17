@@ -1,5 +1,5 @@
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { HttpStatusCode } from "@domain/enums/HttpStatusCode.js";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
+import { HttpStatusCode } from "../../domain/enums/HttpStatusCode.js";
 
 export class AppError extends Error {
   public statusCode: number;
