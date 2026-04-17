@@ -1,7 +1,7 @@
 import app from "./app.js";
-import { env } from "@infrastructure/config/env.js";
+import { env } from "./infrastructure/config/env.js";
 import "reflect-metadata";
-import { loggerInstance } from "@infrastructure/logger/WinstonLogger.js";
+import { loggerInstance } from "./infrastructure/logger/WinstonLogger.js";
 
 const startServer = async () => {
     try {

@@ -1,10 +1,10 @@
-import { IPendingUserService } from "@domain/services/IPendingUserService.js";
-import { IPendingUserRepository } from "@domain/repositories/IPendingUserRepository.js";
-import { PendingUser } from "@domain/entities/PendingUser.js";
-import { env } from "@infrastructure/config/env.js";
+import { IPendingUserService } from "../../domain/services/IPendingUserService.js";
+import { IPendingUserRepository } from "../../domain/repositories/IPendingUserRepository.js";
+import { PendingUser } from "../../domain/entities/PendingUser.js";
+import { env } from "../../infrastructure/config/env.js";
 import { injectable, inject } from "inversify";
-import { TYPES } from "@infrastructure/di/types.js";
-import { ILogger } from "@domain/services/ILogger.js";
+import { TYPES } from "../../infrastructure/di/types.js";
+import { ILogger } from "../../domain/services/ILogger.js";
 
 @injectable()
 export class PendingUserService implements IPendingUserService {

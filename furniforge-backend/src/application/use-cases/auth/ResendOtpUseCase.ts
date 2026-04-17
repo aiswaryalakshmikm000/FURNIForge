@@ -1,15 +1,15 @@
-import { IOtpService } from "@domain/services/IOtpservice.js";
-import { IPendingUserService } from "@domain/services/IPendingUserService.js";
-import { IEmailService } from "@domain/services/IEmailService.js";
-import { AuthActionResponseDTO } from "@application/dtos/auth/AuthActionResponseDTO.js";
-import { AppError, NotFoundError, InternalServerError } from "@domain/errors/AppError.js";
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "@infrastructure/config/messages.js";
-import { env } from "@infrastructure/config/env.js";
+import { IOtpService } from "../../../domain/services/IOtpservice.js";
+import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
+import { IEmailService } from "../../../domain/services/IEmailService.js";
+import { AuthActionResponseDTO } from "../../../application/dtos/auth/AuthActionResponseDTO.js";
+import { AppError, NotFoundError, InternalServerError } from "../../../domain/errors/AppError.js";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { env } from "../../../infrastructure/config/env.js";
 import { inject, injectable } from "inversify";
-import { TYPES} from "@infrastructure/di/types.js"
-import { ILogger } from "@domain/services/ILogger.js";
-import { Email } from "@domain/value-objects/Email.js";
-import { ResendOtpDTO } from "@application/dtos/auth/ResendOtpDTO.js";
+import { TYPES} from "../../../infrastructure/di/types.js"
+import { ILogger } from "../../../domain/services/ILogger.js";
+import { Email } from "../../../domain/value-objects/Email.js";
+import { ResendOtpDTO } from "../../../application/dtos/auth/ResendOtpDTO.js";
 
 @injectable()
 export class ResendOtpUseCase {

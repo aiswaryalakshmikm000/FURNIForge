@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { injectable } from "inversify";
-import { env } from "@infrastructure/config/env.js";
-import { ITokenService, TokenPayload } from "@domain/services/ITokenService.js";
+import { env } from "../../infrastructure/config/env.js";
+import { ITokenService, TokenPayload } from "../../domain/services/ITokenService.js";
 
 
 @injectable()

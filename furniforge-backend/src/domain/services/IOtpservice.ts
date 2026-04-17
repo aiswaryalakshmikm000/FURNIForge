@@ -1,4 +1,4 @@
-import { OtpToken } from "@domain/entities/OtpToken.js";
+import { OtpToken } from "../../domain/entities/OtpToken.js";
 
 export interface IOtpService {
   generateOTP(): string;

@@ -1,7 +1,7 @@
-import { IOTPRepository } from "@domain/repositories/IOTPRepository.js";
-import { OtpToken } from "@domain/entities/OtpToken.js";
+import { IOTPRepository } from "../../domain/repositories/IOTPRepository.js";
+import { OtpToken } from "../../domain/entities/OtpToken.js";
 import { inject, injectable } from "inversify";
-import { TYPES } from "@infrastructure/di/types.js";
+import { TYPES } from "../../infrastructure/di/types.js";
 import type { Redis } from "ioredis";
 
 @injectable()

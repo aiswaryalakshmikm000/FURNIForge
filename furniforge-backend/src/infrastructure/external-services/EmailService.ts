@@ -1,10 +1,10 @@
 import axios from "axios";
-import { IEmailService } from "@domain/services/IEmailService.js";
-import { InternalServerError } from "@domain/errors/AppError.js";
-import { env } from "@infrastructure/config/env.js";
+import { IEmailService } from "../../domain/services/IEmailService.js";
+import { InternalServerError } from "../../domain/errors/AppError.js";
+import { env } from "../../infrastructure/config/env.js";
 import { injectable, inject } from "inversify";
-import {TYPES} from "@infrastructure/di/types.js"
-import { ILogger } from "@domain/services/ILogger.js";
+import {TYPES} from "../../infrastructure/di/types.js"
+import { ILogger } from "../../domain/services/ILogger.js";
 
 @injectable()
 export class EmailService implements IEmailService {

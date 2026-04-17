@@ -1,12 +1,12 @@
-import { IOtpService } from "@domain/services/IOtpservice.js";
-import { IOTPRepository } from "@domain/repositories/IOTPRepository.js";
-import { OtpToken } from "@domain/entities/OtpToken.js";
-import { BadRequestError, TooManyRequestsError } from "@domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "@infrastructure/config/messages.js";
-import { env } from "@infrastructure/config/env.js";
+import { IOtpService } from "../../domain/services/IOtpservice.js";
+import { IOTPRepository } from "../../domain/repositories/IOTPRepository.js";
+import { OtpToken } from "../../domain/entities/OtpToken.js";
+import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError.js";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
+import { env } from "../../infrastructure/config/env.js";
 import { injectable, inject } from "inversify";
-import { TYPES } from "@infrastructure/di/types.js";
-import { ILogger } from "@domain/services/ILogger.js";
+import { TYPES } from "../../infrastructure/di/types.js";
+import { ILogger } from "../../domain/services/ILogger.js";
 
 @injectable()
 export class OtpService implements IOtpService {

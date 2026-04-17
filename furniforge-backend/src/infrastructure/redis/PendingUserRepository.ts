@@ -1,7 +1,7 @@
-import { IPendingUserRepository } from "@domain/repositories/IPendingUserRepository.js";
-import { PendingUser } from "@domain/entities/PendingUser.js";
+import { IPendingUserRepository } from "../../domain/repositories/IPendingUserRepository.js";
+import { PendingUser } from "../../domain/entities/PendingUser.js";
 import { injectable, inject } from "inversify";
-import { TYPES } from "@infrastructure/di/types.js";
+import { TYPES } from "../../infrastructure/di/types.js";
 import type { Redis } from "ioredis";
 
 @injectable()
