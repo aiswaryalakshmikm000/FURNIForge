@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 50% 96%;
+    --foreground: 16 41% 22%;
+
+    --card: 30 33% 98%;
+    --card-foreground: 16 41% 22%;
+
+    --popover: 30 33% 98%;
+    --popover-foreground: 16 41% 22%;
+
+    --primary: 16 41% 29%;
+    --primary-foreground: 30 50% 96%;
+
+    --secondary: 36 30% 88%;
+    --secondary-foreground: 16 41% 29%;
+
+    --muted: 36 25% 91%;
+    --muted-foreground: 16 20% 48%;
+
+    --accent: 14 48% 69%;
+    --accent-foreground: 16 41% 15%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 36 25% 87%;
+    --input: 36 25% 87%;
+    --ring: 14 48% 69%;
+
+    --radius: 0.75rem;
+
+    --rose: 14 48% 69%;
+    --rose-light: 14 50% 80%;
+    --rose-dark: 14 45% 55%;
+    --sand: 36 30% 81%;
+    --sand-light: 36 30% 88%;
+    --sand-dark: 36 25% 72%;
+    --cream: 30 50% 96%;
+    --cream-dark: 30 40% 92%;
+    --chocolate: 16 41% 29%;
+    --chocolate-light: 16 30% 38%;
+    --chocolate-deep: 16 50% 18%;
+    --mustard: 40 85% 55%;
+
+    --sidebar-background: 16 41% 29%;
+    --sidebar-foreground: 30 50% 96%;
+    --sidebar-primary: 14 48% 69%;
+    --sidebar-primary-foreground: 16 41% 15%;
+    --sidebar-accent: 16 30% 38%;
+    --sidebar-accent-foreground: 30 50% 96%;
+    --sidebar-border: 16 30% 35%;
+    --sidebar-ring: 14 48% 69%;
+
+    /* Status colors */
+    --status-confirmed: 16 41% 29%;
+    --status-confirmed-bg: 30 40% 92%;
+    --status-paid: 16 41% 29%;
+    --status-paid-bg: 30 40% 92%;
+    --status-due: 14 48% 69%;
+    --status-overdue: 0 72% 51%;
+    --status-pending: 40 85% 55%;
+    --status-scheduled: 14 48% 69%;
+    --status-new: 220 60% 55%;
+  }
+
+  .dark {
+    --background: 16 35% 8%;
+    --foreground: 30 40% 92%;
+    --card: 16 30% 12%;
+    --card-foreground: 30 40% 92%;
+    --popover: 16 30% 12%;
+    --popover-foreground: 30 40% 92%;
+    --primary: 30 40% 92%;
+    --primary-foreground: 16 35% 8%;
+    --secondary: 16 20% 18%;
+    --secondary-foreground: 30 40% 92%;
+    --muted: 16 18% 18%;
+    --muted-foreground: 16 15% 60%;
+    --accent: 14 48% 69%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 16 18% 22%;
+    --input: 16 18% 22%;
+    --ring: 14 48% 69%;
+    --mustard: 40 85% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Themed scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--sand-light));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--rose) / 0.4);
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--rose) / 0.6);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--rose) / 0.4) hsl(var(--sand-light));
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .font-body {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .gradient-rose {
+    background: linear-gradient(135deg, hsl(14 48% 69%), hsl(14 50% 80%));
+  }
+
+  .gradient-chocolate {
+    background: linear-gradient(135deg, hsl(16 41% 29%), hsl(16 30% 38%));
+  }
+
+  .gradient-hero {
+    background: linear-gradient(180deg, hsl(16 50% 12%) 0%, hsl(16 41% 22%) 100%);
+  }
+
+  .gradient-sand {
+    background: linear-gradient(135deg, hsl(36 30% 81%), hsl(30 50% 96%));
+  }
+
+  .shadow-warm {
+    box-shadow: 0 4px 24px -4px hsl(16 41% 29% / 0.08);
+  }
+
+  .shadow-warm-lg {
+    box-shadow: 0 12px 40px -8px hsl(16 41% 29% / 0.14);
+  }
+
+  .shadow-rose {
+    box-shadow: 0 4px 24px -4px hsl(14 48% 69% / 0.35);
+  }
+
+  .text-gradient-rose {
+    background: linear-gradient(135deg, hsl(14 48% 69%), hsl(14 45% 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-chocolate {
+    background: linear-gradient(135deg, hsl(16 41% 29%), hsl(16 30% 38%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Keep old class names as aliases for compatibility */
+  .gradient-copper {
+    background: linear-gradient(135deg, hsl(14 48% 69%), hsl(14 50% 80%));
+  }
+
+  .gradient-espresso {
+    background: linear-gradient(135deg, hsl(16 41% 29%), hsl(16 30% 38%));
+  }
+
+  .shadow-copper {
+    box-shadow: 0 4px 24px -4px hsl(14 48% 69% / 0.35);
+  }
+
+  .text-gradient-copper {
+    background: linear-gradient(135deg, hsl(14 48% 69%), hsl(14 45% 55%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Status badge utilities */
+  .badge-confirmed {
+    background: hsl(var(--status-confirmed-bg));
+    color: hsl(var(--status-confirmed));
+  }
+
+  .badge-paid {
+    background: hsl(var(--status-paid-bg));
+    color: hsl(var(--status-paid));
+  }
+
+  .badge-due {
+    background: hsl(var(--rose-light) / 0.3);
+    color: hsl(var(--rose-dark));
+  }
+
+  .badge-overdue {
+    background: hsl(0 72% 51% / 0.1);
+    color: hsl(0 72% 51%);
+  }
+
+  .badge-pending {
+    background: hsl(var(--mustard) / 0.15);
+    color: hsl(35 80% 40%);
+  }
+
+  .badge-scheduled {
+    background: hsl(var(--rose) / 0.15);
+    color: hsl(var(--rose-dark));
+  }
+
+  .badge-new {
+    background: hsl(var(--status-new) / 0.1);
+    color: hsl(var(--status-new));
+  }
+
+  .badge-completed {
+    background: hsl(var(--status-confirmed-bg));
+    color: hsl(var(--status-confirmed));
+  }
+
+  .badge-declined {
+    background: hsl(0 72% 51% / 0.1);
+    color: hsl(0 72% 51%);
+  }
+
+  .badge-in-progress {
+    background: hsl(var(--rose) / 0.15);
+    color: hsl(var(--rose-dark));
+  }
+}
