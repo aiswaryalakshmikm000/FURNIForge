@@ -13,4 +13,5 @@ export type LoginResponseDTO = {
     name: string;
     role: UserRole;
   };
+  message: string,
 };

@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/use-login";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../validation/login.schema";
-import type { LoginFormValues } from "../validation/login.schema";
+import { loginSchema, type LoginFormValues } from "../validation/login.schema";
 import { Input } from "../../../shared/components/ui/input";
 
 export const LoginForm = () => {
