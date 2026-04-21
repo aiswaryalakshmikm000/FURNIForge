@@ -6,6 +6,7 @@ import { tokenService } from "../../../core/auth/token-service";
 import { setAuth } from "../store/auth.slice";
 import { toast } from "sonner";
 import type { LoginRequestDTO, LoginResponseDTO } from "../../../types/auth/login.type";
+import { mapLoginResponse } from "../mappers/login.mapper";
 
 export const useLogin = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,13 @@ export const useLogin = () => {
     mutationFn: (data: LoginRequestDTO) => loginApi(data),
 
     onSuccess: (res: LoginResponseDTO) => {
+      const mapped = mapLoginResponse(res);
+      tokenService.set(mapped.accessToken);
 
-      tokenService.set(res.accessToken);
-
-      const {user, accessToken} = res
+      const {user, accessToken, message} = mapped
       dispatch(setAuth({user, accessToken}));
 
-      toast.success(res.message);
+      toast.success(message);
       navigate("/")
     },
 
