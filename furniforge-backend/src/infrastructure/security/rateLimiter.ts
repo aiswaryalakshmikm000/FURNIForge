@@ -43,7 +43,14 @@ export const authLimiter = rateLimit({
   windowMs: env.AUTH_RATE_LIMIT.WINDOW_MS,
   max: env.AUTH_RATE_LIMIT.MAX,
   message: "Too many login attempts",
-  skipSuccessfulRequests: true,
+  skipSuccessfulRequests: true, //decrement happens here 
+  keyGenerator: (req) => {
+    const email = req.body?.email?.toLowerCase().trim();
+    if(email) {
+      return `${req.ip}:${email}`;
+    }
+    return req.ip || "unknown-ip";
+  },
   store: createRedisStore("rl:auth", env.AUTH_RATE_LIMIT.WINDOW_MS)
 });
 
@@ -51,5 +58,12 @@ export const otpLimiter = rateLimit({
   windowMs: env.OTP_RATE_LIMIT.WINDOW_MS,
   max: env.OTP_RATE_LIMIT.MAX,
   message: "Too many OTP requests",
+  keyGenerator: (req) => {
+    const email = req.body?.email?.toLowerCase().trim();
+    if(email) {
+      return `${req.ip}:${email}`;
+    }
+    return req.ip || "unknown-ip";
+  },
   store: createRedisStore("rl:otp", env.OTP_RATE_LIMIT.WINDOW_MS)
 });

@@ -10,9 +10,10 @@ import { TYPES} from "../../../infrastructure/di/types.js"
 import { ILogger } from "../../../domain/services/ILogger.js";
 import { Email } from "../../../domain/value-objects/Email.js";
 import { ResendOtpDTO } from "../../../application/dtos/auth/ResendOtpDTO.js";
+import { IResendOtpUseCase } from "./interfaces/IResendOtpUseCase.js";
 
 @injectable()
-export class ResendOtpUseCase {
+export class ResendOtpUseCase implements IResendOtpUseCase{
   constructor(
     @inject(TYPES.IPendingUserService) private pendingUserService: IPendingUserService,
     @inject(TYPES.IOtpService) private otpService: IOtpService,

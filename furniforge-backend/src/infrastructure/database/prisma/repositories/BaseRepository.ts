@@ -1,5 +1,6 @@
+import { IBaseRepository } from "../../../../domain/repositories/IBaseRepository.js";
 
-export abstract class BaseRepository<TDomain, TPrisma, TCreateInput, TUpdateInput> {
+export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInput> implements IBaseRepository <TDomain> {
   protected abstract model: {
     create(args: { data: TCreateInput }): Promise<TPrisma>;
     findUnique(args: any): Promise<TPrisma | null>; //not any? use what needed

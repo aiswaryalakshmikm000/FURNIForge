@@ -14,7 +14,7 @@ app.use(morganConfig)
 app.use(corsConfig)
 app.use(helmetConfig)
 
-app.use("/api/v1/client", authRoutes)
+app.use("/api/v1", authRoutes)
 
 app.use(errorHandlerMiddleware)
 
