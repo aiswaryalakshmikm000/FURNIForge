@@ -21,13 +21,7 @@ export interface AuthRequest extends Request {
 
 export const authMiddleware = async ( req: AuthRequest,_res: Response, next: NextFunction ) => {
   try {
-    const header = req.headers.authorization;
-
-    if (!header || !header.startsWith("Bearer ")) {
-      throw new UnauthorizedError("Missing access token");
-    }
-
-    const token = header.split(" ")[1];
+    const token = req.cookies?.accessToken;
 
     const payload = tokenService.verifyAccessToken(token);
 

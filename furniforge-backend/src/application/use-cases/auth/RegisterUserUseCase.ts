@@ -10,7 +10,7 @@ import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../infrastructure/config
 import { IOtpService } from "../../../domain/services/IOtpservice.js";
 import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
 import { IEmailService } from "../../../domain/services/IEmailService.js";
-import { AuthActionResponseDTO } from "../../../application/dtos/auth/AuthActionResponseDTO.js";
+import { RegisterResponseDTO } from "../../dtos/auth/RegisterResponseDTOSchema.js";
 import {inject, injectable } from 'inversify';
 import { ILogger } from "../../../domain/services/ILogger.js";
 import { TYPES } from "../../../infrastructure/di/types.js";
@@ -26,7 +26,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
     @inject(TYPES.ILogger) private logger: ILogger,
   ) {}
 
-  async execute(data: RegisterUserDTO): Promise<AuthActionResponseDTO > {
+  async execute(data: RegisterUserDTO): Promise<RegisterResponseDTO > {
     try {
       const emailVO = new Email(data.email);
       const passwordVO = new Password(data.password);

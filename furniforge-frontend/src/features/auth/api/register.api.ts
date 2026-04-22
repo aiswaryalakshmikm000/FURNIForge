@@ -4,7 +4,7 @@ import type { ApiResponse } from "../../../types/api/api-response.type";
 
 export const registerApi = async (data: RegisterRequestDTO): Promise<ApiResponse<RegisterResponseDTO>> => {
   const res = await httpClient.post("/register", data);
-
+  
   return res.data;
 };
 

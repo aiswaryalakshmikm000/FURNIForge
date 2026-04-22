@@ -1,12 +1,11 @@
 import type { UserRole } from "../enums/user-role.enum";
 
-export type LoginRequestDTO = {
+export interface LoginRequestDTO {
   email: string;
   password: string;
 };
 
-export type LoginResponseDTO = {
-  accessToken: string;
+export interface LoginResponseDTO {
   user: {
     id: string;
     email: string;
