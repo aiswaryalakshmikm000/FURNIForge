@@ -24,7 +24,7 @@ export class ResendOtpUseCase implements IResendOtpUseCase{
   async execute(data: ResendOtpDTO): Promise<AuthActionResponseDTO> {
     try {
       const emailVO = new Email(data.email)
-      const pendingUser = await this.pendingUserService.get(emailVO.value);
+      const pendingUser = await this.pendingUserService.getByEmail(emailVO.value);
 
       if (!pendingUser) {
        throw new NotFoundError(ERROR_MESSAGES.AUTH.PENDING_USER_NOT_FOUND);

@@ -1,14 +1,16 @@
+import type { ApiResponse } from "../../../types/api/api-response.type";
 import type { LoginResponseDTO } from "../../../types/auth/login.type";
 
-export const mapLoginResponse = (api: any): LoginResponseDTO => {
-  const user = api.data.user;
+export const mapLoginResponse = (api: ApiResponse<LoginResponseDTO>): LoginResponseDTO => {
+  const {user, accessToken} = api.data;
 
   return {
-    accessToken: api.data.accessToken,
+    accessToken: accessToken,
     user: {
       id: user.id,
       email: user.email,
-      name: `${user.firstName} ${user.lastName}`,
+      firstName: user.firstName,
+      lastName: user.lastName,
       role: user.role,
     },
     message: api.message,

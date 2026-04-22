@@ -4,6 +4,10 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import type { RegisterRequestDTO, RegisterResponseDTO } from "../../../types/auth/register.type";
 import { mapRegisterResponse } from "../mappers/register.mapper";
+import { sessionManager } from "../../../core/auth/session-manager";
+import type { ApiResponse } from "../../../types/api/api-response.type";
+import { getErrorMessage } from "../../../types/api/api-error.type";
+import type { AppAxiosError } from "../../../types/api/api-error.type";
 
 export const useRegister = () => {
   const navigate = useNavigate();
@@ -11,16 +15,18 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: (data: RegisterRequestDTO) => registerApi(data),
 
-    onSuccess: (res: RegisterResponseDTO) => {
+    onSuccess: (res: ApiResponse<RegisterResponseDTO>) => {
       const mapped = mapRegisterResponse(res);
       const {message, meta} = mapped
 
+      sessionManager.setTempUserId(meta.tempUserId)
       toast.success(message);
-      navigate("/verify-otp", {state: {email: meta.email, tempUserId: meta.tempUserId}}); 
+
+      navigate("/verify-otp"); 
     },
 
-    onError: (error: any) => {
-      toast.error(error?.response?.data?.message || "Registration failed");
+    onError: (error: AppAxiosError) => {
+      toast.error(getErrorMessage(error))
     },
   });
 };

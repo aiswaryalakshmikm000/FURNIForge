@@ -43,7 +43,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
 
       const hashedPassword = await this.passwordService.hash(passwordVO.value);
 
-      const { tempUserId } = await this.pendingUserService.createOrUpdate({
+      const { tempUserId, email } = await this.pendingUserService.createOrUpdate({
         email: emailVO.value,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -51,16 +51,16 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         passwordHash: hashedPassword,
       });
 
-      const otp = await this.otpService.generateAndHandleOtp(tempUserId, emailVO.value)
+      const otp = await this.otpService.generateAndHandleOtp(tempUserId, email)
       
       try{
-        await this.emailService.sendOTPEmail(emailVO.value, otp.otp, data.firstName);
+        await this.emailService.sendOTPEmail(email, otp.otp, data.firstName);
       } catch (error) {
-        await this.pendingUserService.delete(emailVO.value);
+        await this.pendingUserService.delete(email, tempUserId);
         throw error;
       }
 
-      return {message: SUCCESS_MESSAGES.AUTH.OTP_SUCCESS, meta: { tempUserId, email: emailVO.value }};
+      return { meta: { tempUserId }};
 
     } catch (error) {
       if (error instanceof AppError) throw error;

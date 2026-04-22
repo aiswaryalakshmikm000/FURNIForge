@@ -7,98 +7,86 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginFormValues } from "../validation/login.schema";
 import { Input } from "../../../shared/components/ui/input";
+import { Armchair } from "lucide-react";
+import { SocialAuth } from "../../../shared/components/auth/social-auth";
 
 export const LoginForm = () => {
   const [showPw, setShowPw] = useState(false);
-  const loginMutation = useLogin();
+  const { mutate, isPending } = useLogin();
 
-  const {register, handleSubmit, formState: {errors, isValid}} = useForm<LoginFormValues>({
-      resolver: zodResolver(loginSchema),
-      mode: "onChange"
-    })
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    mode: "onChange",
+  });
 
   const onSubmit = (data: LoginFormValues) => {
-    loginMutation.mutate(data);
+    mutate(data);
   };
 
   return (
     <div className="bg-card rounded-2xl shadow-warm-lg p-8 border border-border">
-
       {/* HEADER */}
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold">Welcome Back</h1>
-        <p className="text-sm text-muted-foreground mt-2">
+        <div className="w-12 h-12 rounded-xl gradient-copper mx-auto flex items-center justify-center text-accent-foreground mb-4">
+          <Armchair size={24} />
+        </div>
+
+        <h1 className="text-2xl font-bold text-foreground font-display">
+          Welcome Back
+        </h1>
+
+        <p className="text-sm text-muted-foreground mt-2 font-sans">
           Log in to your FURNIForge account
         </p>
       </div>
 
       {/* FORM */}
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-        
         {/* EMAIL */}
         <div>
-          <label className="text-sm font-medium">Email</label>
-          <Input
-            type="email"
-            {...register("email")}
-            placeholder="john@example.com"
-          />
-          <p className="text-red-500 text-xs mt-1">
-            {errors.email?.message}
-          </p>
+          <label className="text-sm font-medium text-foreground font-sans">
+            Email
+          </label>
+
+          <Input type="email" {...register("email")} placeholder="john@example.com" />
+          <p className="text-red-500 text-xs mt-1">{errors.email?.message}</p>
+
         </div>
 
         {/* PASSWORD */}
         <div>
-          <label className="text-sm font-medium">Password</label>
+          <label className="text-sm font-medium text-foreground font-sans">
+            Password
+          </label>
 
           <div className="relative">
-            <Input
-              type={showPw ? "text" : "password"}
-              {...register("password")}
-              placeholder="Enter your password"
-            />
+            <Input type={showPw ? "text" : "password"} {...register("password")} placeholder="Enter your password" className="pr-10" />
 
-            <button
-              type="button"
-              onClick={() => setShowPw(!showPw)}
-              className="absolute right-3 top-1/2 -translate-y-1/2"
-            >
+            <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5 text-muted-foreground">
               {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
-          <p className="text-red-500 text-xs mt-1">
-            {errors.password?.message}
-          </p>
+          <p className="text-red-500 text-xs mt-1"> {errors.password?.message} </p>
 
           <div className="text-right mt-2">
-            <Link to="/forgot-password" className="text-sm text-accent">
+            <Link to="/forgot-password" className="text-sm text-accent hover:underline font-sans" >
               Forgot Password?
             </Link>
           </div>
         </div>
 
         {/* BUTTON */}
-        <Button variant="copper" className="w-full" type="submit" disabled={!isValid || loginMutation.isPending}>
-          {loginMutation.isPending ? "Logging in..." : "Log In"} <ArrowRight size={16} />
+        <Button variant="copper" className="w-full" size="lg"  type="submit" disabled={!isValid || isPending}>
+          {isPending ? "Logging in..." : "Log In"} <ArrowRight size={16} />
         </Button>
       </form>
 
-      {/* SOCIAL */}
-      <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-border" /></div>
-              <div className="relative flex justify-center text-xs"><span className="bg-card px-3 text-muted-foreground font-sans">or continue with</span></div>
-            </div>
+      <SocialAuth/>
 
-      <div className="grid grid-cols-2 gap-3">
-        <button className="border rounded-xl py-2 text-sm">Google</button>
-        <button className="border rounded-xl py-2 text-sm">Facebook</button>
-      </div>
-
-      {/* REGISTER */}
-      <p className="text-center text-sm mt-6">
+      {/* FOOTER */}
+      <p className="text-center text-sm text-muted-foreground mt-6 font-sans">
         Don't have an account?{" "}
-        <Link to="/register" className="text-accent">
+        <Link to="/register" className="text-accent font-medium hover:underline" >
           Register
         </Link>
       </p>
