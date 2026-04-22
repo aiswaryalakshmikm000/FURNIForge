@@ -4,6 +4,7 @@ import { ValidationError } from "../../../domain/errors/AppError.js";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
 
 export const validateBody = (schema: ZodSchema) => {
+  console.log("WERWEREWRWEREWREWRW validation hit")
   return (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.body);
 
@@ -12,6 +13,7 @@ export const validateBody = (schema: ZodSchema) => {
     field: e.path.join("."),
     message: e.message
   }));
+  console.log(errors)
       return next(new ValidationError(ERROR_MESSAGES.GENERAL.VALIDATION_FAILED, { fields: errors }));
     }
 

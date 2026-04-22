@@ -10,7 +10,8 @@ export type LoginResponseDTO = {
   user: {
     id: string;
     email: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     role: UserRole;
   };
   message: string,

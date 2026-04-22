@@ -21,30 +21,34 @@ export class PendingUserService implements IPendingUserService {
     lastName: string;
     phone: string;
     passwordHash: string;
-  }): Promise <{ tempUserId: string }> {
-    const existing = await this.pendingUserRepository.get(data.email);
+  }): Promise <{ tempUserId: string, email: string }> {
+    const existing = await this.pendingUserRepository.getByEmail(data.email);
 
     if(existing && !existing.isExpired(this.TTL)){
-      return {tempUserId: existing.tempUserId}
+      return {tempUserId: existing.tempUserId, email: existing.email}
     } 
 
     const pendingUser = PendingUser.create(data);
 
-    await this.pendingUserRepository.save(data.email, pendingUser, this.TTL);
+    await this.pendingUserRepository.save(pendingUser.email, pendingUser, this.TTL);
 
     console.log("PEnding user:", `GET pending:user:${data.email}`)
     console.log("PEnding user:", `TTL pending:user:${data.email}`)
     console.log("TEMPUSERID:", `GET pending:user:${pendingUser.tempUserId}`)
 
-    return { tempUserId: pendingUser.tempUserId };
+    return { tempUserId: pendingUser.tempUserId, email: pendingUser.email };
   }
 
 
-  async get(email: string): Promise<PendingUser | null>{
-    return this.pendingUserRepository.get(email);
+  async getByEmail(email: string): Promise<PendingUser | null>{
+    return this.pendingUserRepository.getByEmail(email);
   }
 
-  async delete(email: string): Promise<void> {
-    return this.pendingUserRepository.delete(email);
+  async getByTempUserId(tempUserId: string): Promise<PendingUser | null>{
+    return this.pendingUserRepository.getByTempUserId(tempUserId);
+  }
+
+  async delete(email: string, tempUserId: string): Promise<void> {
+    return this.pendingUserRepository.delete(email, tempUserId);
   }
 }

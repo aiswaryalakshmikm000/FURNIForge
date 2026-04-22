@@ -15,17 +15,34 @@ export class RedisPendingUserRepository implements IPendingUserRepository {
   }
 
   async save(email: string, data: PendingUser, ttl: number): Promise<void> {
-    await this.redis.setex( this.getKey(email), ttl, JSON.stringify(data) );
+    const pipeline = this.redis.pipeline();
+
+    pipeline.setex(`pending:user:${email}`, ttl, JSON.stringify(data) );
+    pipeline.setex(`pending:user:${data.tempUserId}`, ttl, JSON.stringify(data));
+
+    await pipeline.exec();
   }
 
-  async get(email: string): Promise<PendingUser | null> {
+  async getByEmail(email: string): Promise<PendingUser | null> {
     const data = await this.redis.get(this.getKey(email));
     if(!data) return null
     const parsed = JSON.parse(data);
     return PendingUser.fromPersistence(parsed) 
   }
 
-  async delete(email: string): Promise<void> {
-    await this.redis.del(this.getKey(email));
+  async getByTempUserId(tempUserId: string): Promise<PendingUser | null> {
+    const data = await this.redis.get(`pending:user:${tempUserId}`);
+    if(!data) return null;
+    return PendingUser.fromPersistence(JSON.parse(data))
+
+  }
+
+  async delete(email: string, tempUserId: string): Promise<void> {
+    const pipeline = this.redis.pipeline();
+
+    pipeline.del(this.getKey(email));
+    pipeline.del(`pending:user:${tempUserId}`);
+
+    await pipeline.exec();
   }
 }

@@ -6,6 +6,10 @@ import { tokenService } from "../../../core/auth/token-service";
 import { setAuth } from "../store/auth.slice";
 import { toast } from "sonner";
 import type { LoginRequestDTO, LoginResponseDTO } from "../../../types/auth/login.type";
+import { mapLoginResponse } from "../mappers/login.mapper";
+import type { ApiResponse } from "../../../types/api/api-response.type";
+import { getErrorMessage } from "../../../types/api/api-error.type";
+import type { AppAxiosError } from "../../../types/api/api-error.type";
 
 export const useLogin = () => {
   const dispatch = useDispatch();
@@ -14,19 +18,19 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: (data: LoginRequestDTO) => loginApi(data),
 
-    onSuccess: (res: LoginResponseDTO) => {
+    onSuccess: (res: ApiResponse<LoginResponseDTO>) => {
+      const mapped = mapLoginResponse(res);
+      tokenService.set(mapped.accessToken);
 
-      tokenService.set(res.accessToken);
-
-      const {user, accessToken} = res
+      const {user, accessToken, message} = mapped
       dispatch(setAuth({user, accessToken}));
 
-      toast.success(res.message);
+      toast.success(message);
       navigate("/")
     },
 
-    onError: (error: any) => {
-      toast.error(error?.response?.data?.message);
+    onError: (error: AppAxiosError) => {
+      toast.error(getErrorMessage(error))
     }
   });
 };

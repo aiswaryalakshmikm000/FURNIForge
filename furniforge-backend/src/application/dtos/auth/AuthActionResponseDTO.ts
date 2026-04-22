@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 export const AuthActionResponseDTOSchema = z.object({
-  message: z.string(),
-  meta: z.record(z.string(), z.any()).optional()
+  meta: z.object({
+    tempUserId: z.string
+  })
 });
 
 export type AuthActionResponseDTO = z.infer<typeof AuthActionResponseDTOSchema>;

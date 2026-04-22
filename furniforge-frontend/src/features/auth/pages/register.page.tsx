@@ -1,8 +1,8 @@
 import { Navbar } from "../../../shared/components/layout/navbar";
 import { motion } from "framer-motion";
-import { LoginForm } from "../components/login-form";
+import { RegisterForm } from "../components/register-form";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -13,11 +13,11 @@ const LoginPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <LoginForm />
+          <RegisterForm />
         </motion.div>
       </main>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

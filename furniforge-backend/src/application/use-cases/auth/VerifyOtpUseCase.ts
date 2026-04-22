@@ -6,7 +6,6 @@ import { VerifyOtpDTO } from "../../../application/dtos/auth/VerifyOtpDTO.js";
 import { NotFoundError } from "../../../domain/errors/AppError.js";
 import { User } from "../../../domain/entities/User.js";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { Email } from "../../../domain/value-objects/Email.js";
 import { OTP } from "../../../domain/value-objects/OTP.js";
 import { InternalServerError } from "../../../domain/errors/AppError.js";
 import { AppError } from "../../../domain/errors/AppError.js";
@@ -34,15 +33,14 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
 
   async execute(data: VerifyOtpDTO): Promise<AuthResult> {
     try {
-      const emailVO = new Email(data.email)  
       const otpVO = new OTP(data.otp)
 
-      const pendingUser = await this.pendingUserService.get(emailVO.value);
+      const pendingUser = await this.pendingUserService.getByTempUserId(data.tempUserId);
       if (!pendingUser) {
         throw new NotFoundError(ERROR_MESSAGES.AUTH.PENDING_USER_NOT_FOUND);
       }
 
-      await this.otpService.verifyOtp(pendingUser.tempUserId, emailVO.value, otpVO.value);
+      await this.otpService.verifyOtp(pendingUser.tempUserId, pendingUser.email, otpVO.value);
 
       const user = User.create({
         firstName: pendingUser.firstName,
@@ -55,7 +53,7 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
       user.verifyEmail();
 
       const createdUser = await this.userRepository.create(user);
-      await this.pendingUserService.delete(emailVO.value);
+      await this.pendingUserService.delete(pendingUser.email, pendingUser.tempUserId);
 
       const sessionId = crypto.randomUUID();
       const payload = {sub: createdUser.id, email: createdUser.email.value, role: createdUser.role, sessionId}

@@ -7,9 +7,11 @@ export interface IPendingUserService {
     lastName: string;
     phone: string;
     passwordHash: string;
-  }): Promise<{ tempUserId: string }>;
+  }): Promise<{ tempUserId: string, email: string }>;
 
-  get(email: string): Promise<PendingUser | null>;
+  getByEmail(email: string): Promise<PendingUser | null>;
+
+  getByTempUserId(tempUserId: string): Promise<PendingUser | null>;
   
-  delete(email: string): Promise<void>;
+  delete(email: string, tempUserId: string): Promise<void>;
 }
