@@ -12,7 +12,7 @@ import { IRefreshTokenUseCase } from "../../../../../application/use-cases/auth/
 import { ILogoutUseCase } from "../../../../../application/use-cases/auth/interfaces/ILogoutUseCase.js";
 import { AuthRequest } from "../../../../../presentation/api/middlewares/authMiddleware.js";
 import { ILoginUseCase } from "../../../../../application/use-cases/auth/interfaces/ILoginUseCase.js";
-import { setRefreshTokenCookie , clearRefreshTokenCookie} from "../../../../../infrastructure/config/cookies.js";
+import { setRefreshTokenCookie , clearRefreshTokenCookie, setAccessTokenCookie, clearAccessTokenCookie} from "../../../../../infrastructure/config/cookies.js";
 
 @injectable()
 export class AuthController {
@@ -49,9 +49,10 @@ export class AuthController {
   verifyOtp = async(req: Request, res: Response, next: NextFunction) => {
       const result = await this.verifyOtpUseCase.execute(req.body);
 
-      setRefreshTokenCookie(res, result.refreshToken)
+      setAccessTokenCookie(res, result.accessToken);
+      setRefreshTokenCookie(res, result.refreshToken);
 
-      const {refreshToken, ...safeResponse} = result
+      const {refreshToken, accessToken, ...safeResponse} = result
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.VERIFY_OTP_SUCCESS).build());
   }
 
@@ -83,7 +84,8 @@ export class AuthController {
 
       const result = await this.refreshTokenUseCase.execute(oldRefreshToken);
 
-      setRefreshTokenCookie(res, result.refreshToken)
+      setAccessTokenCookie(res, result.accessToken);
+      setRefreshTokenCookie(res, result.refreshToken);
 
       const { refreshToken, ...safeResponse } = result;
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.TOKEN_REFRESH_SUCCESS).build());
@@ -100,7 +102,9 @@ export class AuthController {
       if(!req.user) throw new UnauthorizedError()
       await this.logoutUseCase.execute(req.user.sessionId);
       
+      clearAccessTokenCookie(res);
       clearRefreshTokenCookie(res); 
+      
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(null, SUCCESS_MESSAGES.AUTH.LOGOUT_SUCCESS).build())
   }
 
@@ -113,9 +117,10 @@ export class AuthController {
   login = async(req: Request, res: Response, next: NextFunction) => {
       const result = await this.loginUseCase.execute(req.body);
 
-      setRefreshTokenCookie(res, result.refreshToken)
+      setAccessTokenCookie(res, result.accessToken);
+      setRefreshTokenCookie(res, result.refreshToken);
 
-      const {refreshToken, ...safeResponse} = result;
+      const {refreshToken, accessToken, ...safeResponse} = result;
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.LOGIN_SUCCESS).build());
   }
 

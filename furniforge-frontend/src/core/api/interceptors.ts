@@ -1,8 +1,8 @@
 import { httpClient } from "./http-client";
-import { tokenService } from "../auth/token-service";
+import { store } from "../../app/store";
+import { logout } from "../../features/auth/store/auth.slice";
 
 let isRefreshing = false;
-let queue: any[] = [];
 
 httpClient.interceptors.response.use(
   (res) => res,
@@ -12,31 +12,15 @@ httpClient.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      if (isRefreshing) {
-        return new Promise((resolve) => {
-          queue.push((token: string) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            resolve(httpClient(originalRequest));
-          });
-        });
-      }
-
-      isRefreshing = true;
-
       try {
-        const res = await httpClient.post("/refresh-token");
-
-        const newAccessToken = res.data.accessToken;
-
-        tokenService.set(newAccessToken);
-
-        queue.forEach((cb) => cb(newAccessToken));
-        queue = [];
-
+        await httpClient.post("/refresh-token", {}, {
+          withCredentials: true,
+        });
         return httpClient(originalRequest);
       } catch (err) {
-        tokenService.clear();
-        window.location.href = "/login";
+        store.dispatch(logout())
+
+        window.location.replace("/login");
       } finally {
         isRefreshing = false;
       }

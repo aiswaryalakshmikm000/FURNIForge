@@ -3,7 +3,6 @@ import { registerApi } from "../api/register.api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import type { RegisterRequestDTO, RegisterResponseDTO } from "../../../types/auth/register.type";
-import { mapRegisterResponse } from "../mappers/register.mapper";
 import { sessionManager } from "../../../core/auth/session-manager";
 import type { ApiResponse } from "../../../types/api/api-response.type";
 import { getErrorMessage } from "../../../types/api/api-error.type";
@@ -16,10 +15,9 @@ export const useRegister = () => {
     mutationFn: (data: RegisterRequestDTO) => registerApi(data),
 
     onSuccess: (res: ApiResponse<RegisterResponseDTO>) => {
-      const mapped = mapRegisterResponse(res);
-      const {message, meta} = mapped
+      const {message, data} = res
 
-      sessionManager.setTempUserId(meta.tempUserId)
+      sessionManager.setTempUserId(data.meta.tempUserId)
       toast.success(message);
 
       navigate("/verify-otp"); 

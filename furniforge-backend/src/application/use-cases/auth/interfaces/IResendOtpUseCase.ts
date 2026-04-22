@@ -1,6 +1,6 @@
-import { AuthActionResponseDTO } from "../../../../application/dtos/auth/AuthActionResponseDTO.js";
+import { ResendOtpResponseDTO } from "../../../dtos/auth/ResendOtpResponseDTO.js";
 import { ResendOtpDTO } from "../../../../application/dtos/auth/ResendOtpDTO.js";
 
 export interface IResendOtpUseCase {
- execute(data: ResendOtpDTO): Promise<AuthActionResponseDTO> 
+ execute(data: ResendOtpDTO): Promise<ResendOtpResponseDTO> 
 }

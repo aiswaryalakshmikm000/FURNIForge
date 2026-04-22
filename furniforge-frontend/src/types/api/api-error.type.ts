@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 
-export type ApiErrorResponse<TDetails = unknown> = {
+export interface ApiErrorResponse<TDetails = unknown> {
   success: false;
   message: string;
   error: {

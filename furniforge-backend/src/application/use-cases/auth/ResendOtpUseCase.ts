@@ -1,16 +1,15 @@
 import { IOtpService } from "../../../domain/services/IOtpservice.js";
 import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
 import { IEmailService } from "../../../domain/services/IEmailService.js";
-import { AuthActionResponseDTO } from "../../../application/dtos/auth/AuthActionResponseDTO.js";
 import { AppError, NotFoundError, InternalServerError } from "../../../domain/errors/AppError.js";
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
 import { env } from "../../../infrastructure/config/env.js";
 import { inject, injectable } from "inversify";
 import { TYPES} from "../../../infrastructure/di/types.js"
 import { ILogger } from "../../../domain/services/ILogger.js";
-import { Email } from "../../../domain/value-objects/Email.js";
 import { ResendOtpDTO } from "../../../application/dtos/auth/ResendOtpDTO.js";
 import { IResendOtpUseCase } from "./interfaces/IResendOtpUseCase.js";
+import { ResendOtpResponseDTO } from "../../dtos/auth/ResendOtpResponseDTO.js";
 
 @injectable()
 export class ResendOtpUseCase implements IResendOtpUseCase{
@@ -21,10 +20,9 @@ export class ResendOtpUseCase implements IResendOtpUseCase{
     @inject(TYPES.ILogger) private logger: ILogger
   ) {}
 
-  async execute(data: ResendOtpDTO): Promise<AuthActionResponseDTO> {
+  async execute(data: ResendOtpDTO): Promise<ResendOtpResponseDTO> {
     try {
-      const emailVO = new Email(data.email)
-      const pendingUser = await this.pendingUserService.getByEmail(emailVO.value);
+      const pendingUser = await this.pendingUserService.getByTempUserId(data.tempUserId);
 
       if (!pendingUser) {
        throw new NotFoundError(ERROR_MESSAGES.AUTH.PENDING_USER_NOT_FOUND);
@@ -35,7 +33,6 @@ export class ResendOtpUseCase implements IResendOtpUseCase{
       await this.emailService.sendOTPEmail(pendingUser.email, otp.otp, pendingUser.firstName);
 
       return {
-        message: SUCCESS_MESSAGES.AUTH.RESEND_OTP_SUCCESS,
         meta: { email: pendingUser.email, cooldown: env.OTP.RESEND_DELAY }
       };
     } catch (error) {
