@@ -7,7 +7,7 @@ class SessionManager {
   }
 
   setEmailId(id: string) {
-    sessionStorage.setItem(this._email, id)
+    sessionStorage.setItem(this._email, id);
   }
 
   getTempUserId() {
@@ -15,11 +15,20 @@ class SessionManager {
   }
 
   getEmailId() {
-    return sessionStorage.getItem(this._email)
+    return sessionStorage.getItem(this._email);
   }
 
   clearTempUserId() {
     sessionStorage.removeItem(this._tempUserKey);
+  }
+
+  clearEmailId() {
+    sessionStorage.removeItem(this._email);
+  }
+
+  clearAll() {
+    this.clearTempUserId();
+    this.clearEmailId();
   }
 }
 
