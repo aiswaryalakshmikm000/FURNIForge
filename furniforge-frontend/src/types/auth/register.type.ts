@@ -10,5 +10,6 @@ export interface RegisterResponseDTO {
   message: string;
   meta: {
     tempUserId: string;
+    email: string;
   };
 }

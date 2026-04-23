@@ -2,8 +2,6 @@ import { httpClient } from "./http-client";
 import { store } from "../../app/store";
 import { logout } from "../../features/auth/store/auth.slice";
 
-let isRefreshing = false;
-
 httpClient.interceptors.response.use(
   (res) => res,
   async (error) => {
@@ -21,9 +19,7 @@ httpClient.interceptors.response.use(
         store.dispatch(logout())
 
         window.location.replace("/login");
-      } finally {
-        isRefreshing = false;
-      }
+      } 
     }
 
     return Promise.reject(error);

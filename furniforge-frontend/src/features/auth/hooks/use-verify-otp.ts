@@ -14,6 +14,7 @@ export const useVerifyOtp = () => {
 
     return useMutation({
         mutationFn: (data: VerifyOtpRequestDTO) => verifyOtpApi(data),
+
         onSuccess: (res: ApiResponse<VerifyOtpResponseDTO>) => {
             const {user} = res.data
             console.log(user, res.message)
@@ -21,6 +22,7 @@ export const useVerifyOtp = () => {
             toast.success(res.message)
             navigate("/dashboard")
         },
+        
         onError: (error: AppAxiosError) => {
             toast.error(getErrorMessage(error))
         }
