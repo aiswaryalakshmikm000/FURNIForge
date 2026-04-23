@@ -7,6 +7,7 @@ import type { VerifyOtpRequestDTO, VerifyOtpResponseDTO } from "../../../types/a
 import type { ApiResponse } from "../../../types/api/api-response.type";
 import { toast } from "sonner";
 import { getErrorMessage, type AppAxiosError } from "../../../types/api/api-error.type";
+import { sessionManager } from "../../../core/auth/session-manager";
 
 export const useVerifyOtp = () => {
     const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export const useVerifyOtp = () => {
             console.log(user, res.message)
             dispatch(setAuth({user}))
             toast.success(res.message)
+            sessionManager.clearAll();
             navigate("/dashboard")
         },
         

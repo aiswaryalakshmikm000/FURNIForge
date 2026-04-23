@@ -20,6 +20,7 @@ export const TYPES = {
   IResendOtpUseCase: Symbol.for("IResendOtpUseCase"),
   IRefreshTokenUseCase: Symbol.for("IRefreshTokenUseCase"),
   ILogoutUseCase: Symbol.for("ILogoutUseCase"),
+  ILogoutAllDevicesUseCase: Symbol.for("ILogoutAllDevicesUseCase"),
   ILoginUseCase : Symbol.for("ILoginUseCase"),
 
   AuthController: Symbol.for("AuthController"),

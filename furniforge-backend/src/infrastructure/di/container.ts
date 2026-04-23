@@ -19,6 +19,7 @@ import { LoginUseCase } from "../../application/use-cases/auth/LoginUseCase.js";
 import { loggerInstance } from "../../infrastructure/logger/WinstonLogger.js";
 import { redisInstance } from "../../infrastructure/redis/RedisClient.js";
 import type { Redis } from "ioredis";
+import { LogoutAllDevicesUseCase } from "../../application/use-cases/auth/LogoutAllDevicesUseCase.js";
 
 const container = new Container();
 
@@ -47,6 +48,7 @@ container.bind(TYPES.IVerifyOtpUseCase).to(VerifyOtpUseCase);
 container.bind(TYPES.IResendOtpUseCase).to(ResendOtpUseCase);
 container.bind(TYPES.IRefreshTokenUseCase).to(RefreshTokenUseCase);
 container.bind(TYPES.ILogoutUseCase).to(LogoutUseCase);
+container.bind(TYPES.ILogoutAllDevicesUseCase).to(LogoutAllDevicesUseCase)
 container.bind(TYPES.ILoginUseCase).to(LoginUseCase)
 
 // Controller

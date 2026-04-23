@@ -21,6 +21,8 @@ router.post("/verify-otp", otpLimiter, validateBody(VerifyOtpSchema), asyncHandl
 router.post("/resend-otp", otpLimiter, validateBody(ResendOtpSchema), asyncHandler(controller.resendOtp))
 router.post("/refresh-token", authLimiter, asyncHandler(controller.refreshToken))
 router.post('/logout', authMiddleware, asyncHandler(controller.logout))
+router.post('/logout-all', authMiddleware, asyncHandler(controller.logoutAll))
 router.post("/login", authLimiter, validateBody(LoginSchema), asyncHandler(controller.login))
+
 
 export default router;
