@@ -14,6 +14,7 @@ import { AuthRequest } from "../../../../../presentation/api/middlewares/authMid
 import { ILoginUseCase } from "../../../../../application/use-cases/auth/interfaces/ILoginUseCase.js";
 import { setRefreshTokenCookie , clearRefreshTokenCookie, setAccessTokenCookie, clearAccessTokenCookie} from "../../../../../infrastructure/config/cookies.js";
 import { ILogoutAllDevicesUseCase } from "../../../../../application/use-cases/auth/interfaces/ILogoutAllDevicesUseCase.js";
+import { IGetMeUseCase } from "../../../../../application/use-cases/auth/interfaces/IGetMeUseCase.js";
 
 @injectable()
 export class AuthController {
@@ -24,8 +25,9 @@ export class AuthController {
     @inject(TYPES.IRefreshTokenUseCase) private refreshTokenUseCase: IRefreshTokenUseCase,
     @inject(TYPES.ILogoutUseCase) private logoutUseCase: ILogoutUseCase,
     @inject(TYPES.ILogoutAllDevicesUseCase) private logoutAllUseCase: ILogoutAllDevicesUseCase,
-    @inject(TYPES.ILoginUseCase) private loginUseCase: ILoginUseCase
-  ) {}
+    @inject(TYPES.ILoginUseCase) private loginUseCase: ILoginUseCase,
+    @inject(TYPES.IGetMeUseCase) private getMeUseCase: IGetMeUseCase
+  ) {};
 
   /**
    * haandles user registration request.
@@ -133,6 +135,13 @@ export class AuthController {
 
       const {refreshToken, accessToken, ...safeResponse} = result;
       res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.LOGIN_SUCCESS).build());
+  }
+
+  me = async (req: AuthRequest, res: Response) => {
+    if(!req.user) throw new UnauthorizedError();
+    const result = await this.getMeUseCase.execute(req.user.userId);
+
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.ME_FETCH).build())
   }
 
 }

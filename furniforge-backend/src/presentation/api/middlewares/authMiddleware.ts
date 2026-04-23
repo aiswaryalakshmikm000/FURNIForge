@@ -20,8 +20,10 @@ export interface AuthRequest extends Request {
 }
 
 export const authMiddleware = async ( req: AuthRequest,_res: Response, next: NextFunction ) => {
+  console.log("middleware hiut")
   try {
     const token = req.cookies?.accessToken;
+    console.log(token)
 
     const payload = tokenService.verifyAccessToken(token);
 
