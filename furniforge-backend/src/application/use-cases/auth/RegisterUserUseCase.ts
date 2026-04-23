@@ -60,7 +60,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         throw error;
       }
 
-      return { meta: { tempUserId }};
+      return { meta: { tempUserId , email}};
 
     } catch (error) {
       if (error instanceof AppError) throw error;

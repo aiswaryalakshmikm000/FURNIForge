@@ -9,7 +9,7 @@ type OtpFormProps = {
   onVerify: (otp: string) => void;
   onResend: () => void;
   isLoading?: boolean;
-  resendDelay?: number; 
+  resendDelay?: number;
   title?: string;
   subtitle?: string;
 };
@@ -18,13 +18,18 @@ export const OtpForm = ({
   onVerify,
   onResend,
   isLoading = false,
-  resendDelay = 30,
+  resendDelay = 30, //why 30 here.. its already send fro mthe page
   title = "Verify Your Account",
   subtitle = "We've sent a 6-digit OTP",
 }: OtpFormProps) => {
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const [timer, setTimer] = useState(resendDelay);
   const [canResend, setCanResend] = useState(false);
+
+  useEffect(() => {
+    setTimer(resendDelay);
+    setCanResend(false);
+  }, [resendDelay]);
 
   useEffect(() => {
     if (timer <= 0) {
@@ -34,6 +39,22 @@ export const OtpForm = ({
     const interval = setInterval(() => setTimer((t) => t - 1), 1000);
     return () => clearInterval(interval);
   }, [timer]);
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const pasteData = e.clipboardData.getData("text").trim();
+
+    if (!/^\d+$/.test(pasteData)) return;
+
+    const digits = pasteData.slice(0, OTP_LENGTH).split("");
+
+    const newOtp = Array(OTP_LENGTH).fill("");
+    digits.forEach((d, i) => (newOtp[i] = d));
+
+    setOtp(newOtp);
+
+    const lastIndex = digits.length - 1;
+    document.getElementById(`otp-${lastIndex}`)?.focus();
+  };
 
   const handleResend = useCallback(() => {
     if (!canResend) return;
@@ -55,18 +76,18 @@ export const OtpForm = ({
     }
   };
 
-  // ⌨️ Backspace
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       document.getElementById(`otp-${index - 1}`)?.focus();
     }
   };
 
-  // ⏱ Format time
   const formatTime = (s: number) =>
     `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 
-  // ✅ Submit
   const handleSubmit = () => {
     const otpValue = otp.join("");
     if (otpValue.length === OTP_LENGTH) {
@@ -93,13 +114,18 @@ export const OtpForm = ({
           {subtitle}
         </p>
 
-        {/* OTP Inputs */}
         <div className="flex gap-3 justify-center mt-8">
           {otp.map((digit, i) => (
-            <input key={i} id={`otp-${i}`} type="text" inputMode="numeric"
-              maxLength={1} value={digit}
+            <input
+              key={i}
+              id={`otp-${i}`}
+              type="text"
+              inputMode="numeric"
+              maxLength={1}
+              value={digit}
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
+              onPaste={handlePaste}
               className="w-12 h-14 text-center text-xl font-bold rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-accent font-sans"
             />
           ))}
@@ -110,7 +136,10 @@ export const OtpForm = ({
           {!canResend ? (
             <p className="text-sm text-muted-foreground font-sans">
               Resend OTP in{" "}
-              <span className="font-bold text-accent"> {formatTime(timer)} </span>
+              <span className="font-bold text-accent">
+                {" "}
+                {formatTime(timer)}{" "}
+              </span>
             </p>
           ) : (
             <p className="text-sm text-green-600 font-sans font-medium">
@@ -120,15 +149,22 @@ export const OtpForm = ({
         </div>
 
         {/* Verify Button */}
-        <Button onClick={handleSubmit} variant="copper" className="w-full mt-6" size="lg" disabled={otp.some((d) => !d) || isLoading} >
-          {isLoading ? "Verifying..." : "Verify OTP"}{" "}
-          <ArrowRight size={16} />
+        <Button
+          onClick={handleSubmit}
+          variant="copper"
+          className="w-full mt-6"
+          size="lg"
+          disabled={otp.some((d) => !d) || isLoading}
+        >
+          {isLoading ? "Verifying..." : "Verify OTP"} <ArrowRight size={16} />
         </Button>
 
         {/* Resend */}
         <p className="text-sm text-muted-foreground mt-6 font-sans">
           Didn't receive the code?{" "}
-          <button onClick={handleResend} disabled={!canResend}
+          <button
+            onClick={handleResend}
+            disabled={!canResend}
             className={`font-medium ${
               canResend
                 ? "text-accent hover:underline cursor-pointer"

@@ -2,7 +2,8 @@ import { z } from "zod";
 
 export const RegisterResponseDTOSchema  = z.object({
   meta: z.object({
-    tempUserId: z.string()
+    tempUserId: z.string(),
+    email: z.string()
   })
 });
 

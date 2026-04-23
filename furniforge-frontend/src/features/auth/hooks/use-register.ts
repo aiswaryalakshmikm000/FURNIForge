@@ -18,6 +18,7 @@ export const useRegister = () => {
       const {message, data} = res
 
       sessionManager.setTempUserId(data.meta.tempUserId)
+      sessionManager.setEmailId(data.meta.email);
       toast.success(message);
 
       navigate("/verify-otp"); 
