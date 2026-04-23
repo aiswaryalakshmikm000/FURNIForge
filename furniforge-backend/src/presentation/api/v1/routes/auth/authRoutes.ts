@@ -18,11 +18,11 @@ const controller = container.get<AuthController>(TYPES.AuthController);
 
 router.post("/register", otpLimiter, validateBody(RegisterSchema), asyncHandler(controller.register));
 router.post("/verify-otp", otpLimiter, validateBody(VerifyOtpSchema), asyncHandler(controller.verifyOtp));
-router.post("/resend-otp", otpLimiter, validateBody(ResendOtpSchema), asyncHandler(controller.resendOtp))
-router.post("/refresh-token", authLimiter, asyncHandler(controller.refreshToken))
-router.post('/logout', authMiddleware, asyncHandler(controller.logout))
-router.post('/logout-all', authMiddleware, asyncHandler(controller.logoutAll))
-router.post("/login", authLimiter, validateBody(LoginSchema), asyncHandler(controller.login))
-
+router.post("/resend-otp", otpLimiter, validateBody(ResendOtpSchema), asyncHandler(controller.resendOtp));
+router.post("/refresh-token", authLimiter, asyncHandler(controller.refreshToken));
+router.post('/logout', authMiddleware, asyncHandler(controller.logout));
+router.post('/logout-all', authMiddleware, asyncHandler(controller.logoutAll));
+router.post("/login", authLimiter, validateBody(LoginSchema), asyncHandler(controller.login));
+router.get('/me', authMiddleware, asyncHandler(controller.me));
 
 export default router;

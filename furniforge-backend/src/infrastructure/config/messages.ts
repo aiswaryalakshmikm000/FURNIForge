@@ -12,6 +12,7 @@ export const SUCCESS_MESSAGES = {
     LOGIN_SUCCESS: "Login successful",
     
     TOKEN_REFRESH_SUCCESS: "Access token refreshed successfully",
+    ME_FETCH: "User fetched successfully"
   },
 
   GENERAL: {
