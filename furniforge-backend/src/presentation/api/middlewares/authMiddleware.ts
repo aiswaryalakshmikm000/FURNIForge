@@ -20,10 +20,11 @@ export interface AuthRequest extends Request {
 }
 
 export const authMiddleware = async ( req: AuthRequest,_res: Response, next: NextFunction ) => {
-  console.log("middleware hiut")
+ 
   try {
     const token = req.cookies?.accessToken;
-    console.log(token)
+
+    if(!token) throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.ACCESS_TOKEN_MISSING)
 
     const payload = tokenService.verifyAccessToken(token);
 
@@ -34,11 +35,11 @@ export const authMiddleware = async ( req: AuthRequest,_res: Response, next: Nex
     }
 
     if (session.status !== "active") {
-      throw new UnauthorizedError("Session invalid");
+      throw new UnauthorizedError(ERROR_MESSAGES.AUTH.SESSION_INVALID);
     } 
 
     if (!Object.values(UserRole).includes(payload.role)) {
-      throw new UnauthorizedError("Invalid role");
+      throw new UnauthorizedError(ERROR_MESSAGES.AUTH.INVALID_ROLE);
     }
 
     req.user = {

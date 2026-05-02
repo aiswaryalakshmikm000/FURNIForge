@@ -4,11 +4,14 @@ import { useDispatch } from "react-redux";
 import { setAuth, logout } from "../store/auth.slice";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { type AppAxiosError } from "../../../types/api/api-error.type";
+import type { MeResponseDTO } from "../../../types/auth/me";
+import type { ApiResponse } from "../../../types/api/api-response.type";
 
 export const useAuth = () => {
   const dispatch = useDispatch();
 
-  const query = useQuery({
+  const query = useQuery<ApiResponse<MeResponseDTO>, AppAxiosError>({
     queryKey: ["me"],
     queryFn: meApi,
     retry: false,
@@ -23,9 +26,8 @@ export const useAuth = () => {
 
     if (query.isError) {
       dispatch(logout());
-      toast.error("Session Expired");
     }
-  }, [query.isSuccess, query.isError]);
+  }, [query.status]);
 
   return query;
 };

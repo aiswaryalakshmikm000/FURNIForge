@@ -3,12 +3,10 @@ import { logoutApi } from "../api/logout.api";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
-import {
-  getErrorMessage,
-  type AppAxiosError,
-} from "../../../types/api/api-error.type";
 import type { ApiResponse } from "../../../types/api/api-response.type";
 import { toast } from "sonner";
+import { normalizeError } from "../../../core/error/error-handler";
+import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 
 export const useLogout = () => {
   const dispatch = useDispatch();
@@ -21,13 +19,15 @@ export const useLogout = () => {
       const { message } = res;
       dispatch(logout());
       toast.success(message);
-      navigate("/login");
+      navigate(APP_ROUTES.AUTH.LOGIN);
     },
 
-    onError: (error: AppAxiosError) => {
+    onError: (error: unknown) => {
+      const appError = normalizeError(error);
+
       dispatch(logout());
-      toast.error(getErrorMessage(error));
-      navigate("/login");
+      toast.error(appError.message);
+      navigate(APP_ROUTES.AUTH.LOGIN);
     },
   });
 };

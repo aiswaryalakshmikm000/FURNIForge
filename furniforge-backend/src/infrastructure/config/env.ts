@@ -37,6 +37,9 @@ const envSchema = z.object({
   JWT_REFRESH_SECRET: z.string().min(1, "JWT_REFRESH_SECRET is required"),
   JWT_REFRESH_EXPIRY: z.string().default("7d"),
 
+  JWT_RESET_SECRET: z.string().min(1, "JWT_RESET_SECRET is required"),
+  JWT_RESET_EXPIRY: z.string().default("10m"),
+
   REFRESH_TOKEN_EXPIRES_DAYS: z.string().default("7"),
   ACCESS_TOKEN_EXPIRES_DAYS: z.string().default("15")
 })
@@ -98,6 +101,8 @@ export const env = {
     ACCESS_EXPIRY: parsedEnv.data.JWT_ACCESS_EXPIRY,
     REFRESH_SECRET: parsedEnv.data.JWT_REFRESH_SECRET,
     REFRESH_EXPIRY: parsedEnv.data.JWT_REFRESH_EXPIRY,
+    RESET_SECRET: parsedEnv.data.JWT_RESET_SECRET,
+    RESET_EXPIRY: parsedEnv.data.JWT_RESET_EXPIRY,
   },
 
   REFRESH_TOKEN_EXPIRES_DAYS: parsedEnv.data.REFRESH_TOKEN_EXPIRES_DAYS,

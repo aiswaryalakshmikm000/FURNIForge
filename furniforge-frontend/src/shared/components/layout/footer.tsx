@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 
 export const Footer = () => {
   return (
@@ -21,9 +22,9 @@ export const Footer = () => {
           <div>
             <h4 className="text-xs font-semibold mb-5 font-body uppercase tracking-[0.2em] opacity-50">Company</h4>
             <div className="flex flex-col gap-3">
-              <Link to="/about" className="text-sm opacity-60 hover:opacity-100 transition-opacity font-body">About Us</Link>
-              <Link to="/our-work" className="text-sm opacity-60 hover:opacity-100 transition-opacity font-body">Our Work</Link>
-              <Link to="/how-it-works" className="text-sm opacity-60 hover:opacity-100 transition-opacity font-body">How It Works</Link>
+              <Link to={APP_ROUTES.AUTH.LOGIN} className="text-sm opacity-60 hover:opacity-100 transition-opacity font-body">About Us</Link>
+              <Link to={APP_ROUTES.COMMON.OUR_WORK} className="text-sm opacity-60 hover:opacity-100 transition-opacity font-body">Our Work</Link>
+              <Link to={APP_ROUTES.COMMON.HOW_IT_WORKS} className="text-sm opacity-60 hover:opacity-100 transition-opacity font-body">How It Works</Link>
             </div>
           </div>
           <div>

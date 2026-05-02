@@ -1,18 +1,24 @@
 //========================SUCCESS MESSAGES=============================
 
+import { INVALID } from "zod/v3";
+
 export const SUCCESS_MESSAGES = {
   AUTH: {
     REGISTER_SUCCESS: "Registration successful. Please check your email for verification code",
 
-    VERIFY_OTP_SUCCESS: 'Email verified successfully',
-    RESEND_OTP_SUCCESS: 'A new verification code has been sent to your email',
-    OTP_SUCCESS: "OTP sent successfully",
+    VERIFY_EMAIL_SUCCESS: 'Email verified successfully',
+    RESEND_OTP_SUCCESS: 'A new OTP has been sent to your email',
+    OTP_SUCCESS: "OTP sent to email",
+    VERIFY_OTP_SUCCESS: "OTP verified successfully",
+
     
     LOGOUT_SUCCESS: 'Logged out successfully',
     LOGIN_SUCCESS: "Login successful",
     
     TOKEN_REFRESH_SUCCESS: "Access token refreshed successfully",
-    ME_FETCH: "User fetched successfully"
+    ME_FETCH: "User fetched successfully",
+    FORGOT_PASSWORD: "If an account with this email exists, a reset OTP has been sent",
+    PASSWORD_RESET_SUCCESS: "Password reset successful",
   },
 
   GENERAL: {
@@ -57,18 +63,24 @@ export const ERROR_MESSAGES = {
 
     PENDING_USER_NOT_FOUND: 'No pending verification found. Please register again', 
 
-    SESSION_INVALID: "Session mismatch",
+    SESSION_INVALID: "Session invalid",
     SESSION_CONFLICT: "Session already used or rotated",
     SESSION_EXPIRED: "Session expired",
     SESSION_NOT_FOUND: "Session not found",
+
+    INVALID_ROLE: "Invalid role",
 
     USER_INVALID: "User no longer valid",
 
     ACCOUNT_NOT_VERIFIED: "Please verify your account",
 
+    OLD_PASSWORD: "Cannot reuse old password",
+    PASSWORD_CONFLICT: "Passwords do not match",
+
     TOKEN: {
-      REFRESH_FAILED: "No refresh token"
-    }
+      REFRESH_FAILED: "No refresh token",
+      ACCESS_TOKEN_MISSING: "Access token missing"
+    },
   },
 
   USER: {

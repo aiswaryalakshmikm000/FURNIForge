@@ -23,6 +23,11 @@ export const TYPES = {
   ILogoutAllDevicesUseCase: Symbol.for("ILogoutAllDevicesUseCase"),
   ILoginUseCase : Symbol.for("ILoginUseCase"),
   IGetMeUseCase: Symbol.for("IGetMeUseCase"),
+  IForgotPasswordUseCase: Symbol.for("IForgotPasswordUseCase"),
+  IVerifyResetOtpUseCase: Symbol.for("IVerifyResetOtpUseCase"),
+  IResetPasswordUseCase: Symbol.for("IResetPasswordUseCase"),
+  IResendForgotPasswordOtpUseCase: Symbol.for("IResendForgotPasswordOtpUseCase"),
+
 
   AuthController: Symbol.for("AuthController"),
 };

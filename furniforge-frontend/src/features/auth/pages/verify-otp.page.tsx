@@ -5,28 +5,72 @@ import { useResendOtp } from "../hooks/use-resend-otp";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { sessionManager } from "../../../core/auth/session-manager";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../store/auth.slice";
+import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+import { getDashboardRoute } from "../../../core/utils/routes.utils";
 
 const VerifyOtpPage = () => {
-  const navigate = useNavigate();
   const [cooldown, setCooldown] = useState(0);
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const tempUserId = sessionManager.getTempUserId();
   const email = sessionManager.getEmailId();
 
-  const { mutate: verifyOtp, isPending } = useVerifyOtp();
-  const { mutate: resendOtp } = useResendOtp({
-    onSuccess: (res) => {
-      setCooldown(res.data.meta.cooldown);
-    },
-  });
+  const { mutate: verifyOtp, isPending: isVerifying } = useVerifyOtp();
+  const { mutate: resendOtp, isPending: isResending } = useResendOtp();
 
   useEffect(() => {
     if (!tempUserId) {
-      navigate("/register");
+      navigate(APP_ROUTES.AUTH.REGISTER, {replace: true});
     }
   }, [tempUserId, navigate]);
 
+  useEffect(() => {
+    const storedExpiry = sessionManager.getSignupCooldown();
+
+    if (storedExpiry) {
+      const remaining = Math.floor((Number(storedExpiry) - Date.now()) / 1000);
+      setCooldown(remaining > 0 ? remaining : 0);
+    } else {
+      setCooldown(0);
+    }
+  }, []);
+
   if (!tempUserId) return null; 
+
+  const handleVerify = (otp: string) => {
+    verifyOtp(
+      { tempUserId, otp },
+      {
+        onSuccess: (res) => {
+          const { user } = res.data;
+          dispatch(setAuth({ user }));
+          sessionManager.clearSignupCooldown?.();
+          sessionManager.clearTempUserId?.();   
+          sessionManager.clearEmailId?.();
+          navigate(getDashboardRoute(user.role));
+        },
+      }
+    );
+  };
+
+  const handleResend = () => {
+    resendOtp(
+      { tempUserId },
+      {
+        onSuccess: (res) => {
+          const newCooldown = res.data.meta?.cooldown ?? 30;
+          const expiry = Date.now() + newCooldown*1000;
+          sessionManager.setSignupCooldown(expiry.toString());
+          setCooldown(newCooldown);
+        },
+      }
+    );
+  };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -36,14 +80,11 @@ const VerifyOtpPage = () => {
         <OtpForm
           title="Verify Your Email"
           subtitle={email ? `We've sent a 6-digit OTP to ${email}` : `We've sent a 6-digit OTP`}
-          isLoading={isPending}
+          isLoading={isVerifying}
+          isResending={isResending}
           resendDelay={cooldown}
-          onVerify={(otp) => {
-            verifyOtp({ tempUserId, otp });
-          }}
-          onResend={() => {
-            resendOtp({ tempUserId });
-          }}
+          onVerify={handleVerify}
+          onResend={handleResend}
         />
       </main>
     </div>

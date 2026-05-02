@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "../../../shared/components/ui/button";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../hooks/use-login";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,10 +9,15 @@ import { loginSchema, type LoginFormValues } from "../validation/login.schema";
 import { Input } from "../../../shared/components/ui/input";
 import { Armchair } from "lucide-react";
 import { SocialAuth } from "../../../shared/components/auth/social-auth";
+import { setAuth } from "../store/auth.slice";
+import { useDispatch } from "react-redux";
+import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 
 export const LoginForm = () => {
   const [showPw, setShowPw] = useState(false);
   const { mutate, isPending } = useLogin();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors, isValid } } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -20,7 +25,13 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (data: LoginFormValues) => {
-    mutate(data);
+    mutate(data, {
+      onSuccess: (res) => {
+        const {user} = res.data;
+        dispatch(setAuth({user}))
+        navigate(APP_ROUTES.COMMON.ROOT)
+      }
+    });
   };
 
   return (
@@ -69,7 +80,7 @@ export const LoginForm = () => {
           <p className="text-red-500 text-xs mt-1"> {errors.password?.message} </p>
 
           <div className="text-right mt-2">
-            <Link to="/forgot-password" className="text-sm text-accent hover:underline font-sans" >
+            <Link to={APP_ROUTES.AUTH.FORGOT_PASSWORD} className="text-sm text-accent hover:underline font-sans" >
               Forgot Password?
             </Link>
           </div>
@@ -86,7 +97,7 @@ export const LoginForm = () => {
       {/* FOOTER */}
       <p className="text-center text-sm text-muted-foreground mt-6 font-sans">
         Don't have an account?{" "}
-        <Link to="/register" className="text-accent font-medium hover:underline" >
+        <Link to={APP_ROUTES.AUTH.REGISTER} className="text-accent font-medium hover:underline" >
           Register
         </Link>
       </p>
