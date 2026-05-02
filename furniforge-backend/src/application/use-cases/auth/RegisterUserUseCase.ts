@@ -14,6 +14,7 @@ import { RegisterResponseDTO } from "../../dtos/auth/RegisterResponseDTOSchema.j
 import {inject, injectable } from 'inversify';
 import { ILogger } from "../../../domain/services/ILogger.js";
 import { TYPES } from "../../../infrastructure/di/types.js";
+import { env } from "../../../infrastructure/config/env.js";
 
 @injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {
@@ -60,7 +61,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         throw error;
       }
 
-      return { meta: { tempUserId , email}};
+      return { meta: { tempUserId , email, cooldown: env.OTP.RESEND_DELAY }};
 
     } catch (error) {
       if (error instanceof AppError) throw error;

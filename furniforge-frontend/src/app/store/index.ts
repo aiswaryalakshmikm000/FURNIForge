@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from '../../features/auth/store/auth.slice'
+import { rootReducer } from "./root-reducer";
 
 export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-  },
+  reducer: rootReducer,
+  //for analytics debugging, api retry logic
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware().concat(customMiddleware),
 });

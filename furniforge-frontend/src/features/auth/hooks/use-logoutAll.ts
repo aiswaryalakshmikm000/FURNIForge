@@ -4,7 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { logoutAllApi } from "../api/logoutAll.api";
 import { logout } from "../store/auth.slice";
 import { toast } from "sonner";
-import { getErrorMessage } from "../../../types/api/api-error.type";
+import { normalizeError } from "../../../core/error/error-handler";
+import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 
 export const useLogoutAll = () => {
   const dispatch = useDispatch();
@@ -16,13 +17,14 @@ export const useLogoutAll = () => {
     onSuccess: (res) => {
       dispatch(logout());
       toast.success(res.message);
-      navigate("/login");
+      navigate(APP_ROUTES.AUTH.LOGIN);
     },
 
-    onError: (error) => {
+    onError: (error: unknown) => {
+      const appError = normalizeError(error);
       dispatch(logout());
-      toast.error(getErrorMessage(error));
-      navigate("/login");
+      toast.error(appError.message);
+      navigate(APP_ROUTES.AUTH.LOGIN);
     },
   });
 };

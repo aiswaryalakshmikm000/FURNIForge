@@ -7,19 +7,32 @@ import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { Button } from "../../../shared/components/ui/button";
 import { Input } from "../../../shared/components/ui/input";
 import { SocialAuth } from "../../../shared/components/auth/social-auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { sessionManager } from "../../../core/auth/session-manager";
+import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 
 export const RegisterForm = () => {
   const [showPw, setShowPw] = useState(false);
+  const navigate = useNavigate();
+
   const {mutate, isPending} = useRegister();
 
-  const { register, handleSubmit, formState: { errors, isValid },
-  } = useForm<RegisterFormValues>({
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema), mode: "onChange",
   });
 
   const onSubmit = (data: RegisterFormValues) => {
-    mutate(data);
+    mutate(data, {
+      onSuccess: (res) => {
+        const {tempUserId, email, cooldown} = res.data.meta;
+        sessionManager.setTempUserId(tempUserId);
+        const expiry = Date.now() + cooldown * 1000;
+
+        sessionManager.setEmailId(email);
+        sessionManager.setSignupCooldown(expiry.toString())
+        navigate(APP_ROUTES.AUTH.VERIFY_OTP)
+      }
+    });
   };
 
   return (
@@ -27,7 +40,7 @@ export const RegisterForm = () => {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="w-12 h-12 rounded-xl gradient-copper mx-auto flex items-center justify-center text-accent-foreground font-bold text-xl font-display mb-4">
-          C
+          F
         </div>
         <h1 className="text-2xl font-bold text-foreground font-display">
           Create Your Account
@@ -106,7 +119,7 @@ export const RegisterForm = () => {
       {/* FOOTER */}
       <p className="text-center text-sm text-muted-foreground mt-6 font-sans">
         Already have an account?{" "}
-        <Link to="/login" className="text-accent font-medium hover:underline" >
+        <Link to={APP_ROUTES.AUTH.LOGIN} className="text-accent font-medium hover:underline" >
           Log In
         </Link>
       </p>

@@ -9,26 +9,33 @@ type OtpFormProps = {
   onVerify: (otp: string) => void;
   onResend: () => void;
   isLoading?: boolean;
+  isResending?: boolean;
   resendDelay?: number;
   title?: string;
   subtitle?: string;
+  children?: React.ReactNode;
+  logoText?: string;
 };
 
 export const OtpForm = ({
   onVerify,
   onResend,
   isLoading = false,
-  resendDelay = 30, //why 30 here.. its already send fro mthe page
+  isResending = false,
+  resendDelay = 0,
   title = "Verify Your Account",
   subtitle = "We've sent a 6-digit OTP",
+  children,
+  logoText = "F",
 }: OtpFormProps) => {
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const [timer, setTimer] = useState(resendDelay);
   const [canResend, setCanResend] = useState(false);
 
   useEffect(() => {
-    setTimer(resendDelay);
-    setCanResend(false);
+    const newTimer = Math.max(0, resendDelay);
+    setTimer(newTimer);
+    setCanResend(newTimer <= 0);
   }, [resendDelay]);
 
   useEffect(() => {
@@ -36,7 +43,17 @@ export const OtpForm = ({
       setCanResend(true);
       return;
     }
-    const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+
+    const interval = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 1) {
+          setCanResend(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
     return () => clearInterval(interval);
   }, [timer]);
 
@@ -57,12 +74,11 @@ export const OtpForm = ({
   };
 
   const handleResend = useCallback(() => {
-    if (!canResend) return;
+    if (!canResend || isResending) return;
+
     onResend();
-    setTimer(resendDelay);
-    setCanResend(false);
-    setOtp(Array(OTP_LENGTH).fill(""));
-  }, [canResend, onResend, resendDelay]);
+  
+  }, [canResend, onResend, isResending]);
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d?$/.test(value)) return;
@@ -103,7 +119,7 @@ export const OtpForm = ({
     >
       <div className="bg-card rounded-2xl shadow-warm-lg p-8 border border-border text-center">
         <div className="w-12 h-12 rounded-xl gradient-copper mx-auto flex items-center justify-center text-accent-foreground font-bold text-xl font-display mb-4">
-          C
+          {logoText}
         </div>
 
         <h1 className="text-2xl font-bold text-foreground font-display">
@@ -131,6 +147,8 @@ export const OtpForm = ({
           ))}
         </div>
 
+        {children}
+
         {/* Timer */}
         <div className="mt-4">
           {!canResend ? (
@@ -156,7 +174,7 @@ export const OtpForm = ({
           size="lg"
           disabled={otp.some((d) => !d) || isLoading}
         >
-          {isLoading ? "Verifying..." : "Verify OTP"} <ArrowRight size={16} />
+          {isLoading ? "Processing..." : "Verify OTP"} <ArrowRight size={16} />
         </Button>
 
         {/* Resend */}
@@ -164,14 +182,14 @@ export const OtpForm = ({
           Didn't receive the code?{" "}
           <button
             onClick={handleResend}
-            disabled={!canResend}
+            disabled={!canResend || isResending}
             className={`font-medium ${
-              canResend
+              canResend && !isResending
                 ? "text-accent hover:underline cursor-pointer"
                 : "text-muted-foreground/50 cursor-not-allowed"
             }`}
           >
-            Resend OTP
+            {isResending ? "Resending..." : "Resend OTP"}
           </button>
         </p>
       </div>

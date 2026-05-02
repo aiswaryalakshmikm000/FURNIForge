@@ -21,6 +21,10 @@ import { redisInstance } from "../../infrastructure/redis/RedisClient.js";
 import type { Redis } from "ioredis";
 import { LogoutAllDevicesUseCase } from "../../application/use-cases/auth/LogoutAllDevicesUseCase.js";
 import { GetMeUseCase } from "../../application/use-cases/auth/GetMeUseCase.js";
+import { ForgotPasswordUseCase } from "../../application/use-cases/auth/ForgotPasswordUseCase.js";
+import { ResetPasswordUseCase } from "../../application/use-cases/auth/ResetPasswordUseCase.js";
+import { ResendForgotPasswordOtpUseCase } from "../../application/use-cases/auth/ResendForgotPasswordOtpUseCase.js";
+import { verifyResetOtpUseCase } from "../../application/use-cases/auth/VerifyResetOtpUseCase.js";
 
 const container = new Container();
 
@@ -52,6 +56,10 @@ container.bind(TYPES.ILogoutUseCase).to(LogoutUseCase);
 container.bind(TYPES.ILogoutAllDevicesUseCase).to(LogoutAllDevicesUseCase)
 container.bind(TYPES.ILoginUseCase).to(LoginUseCase);
 container.bind(TYPES.IGetMeUseCase).to(GetMeUseCase);
+container.bind(TYPES.IForgotPasswordUseCase).to(ForgotPasswordUseCase);
+container.bind(TYPES.IResetPasswordUseCase).to(ResetPasswordUseCase);
+container.bind(TYPES.IResendForgotPasswordOtpUseCase).to(ResendForgotPasswordOtpUseCase);
+container.bind(TYPES.IVerifyResetOtpUseCase).to(verifyResetOtpUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

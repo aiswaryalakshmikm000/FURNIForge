@@ -10,6 +10,8 @@ import { otpLimiter, authLimiter } from "../../../../../infrastructure/security/
 import { authMiddleware } from "../../../../../presentation/api/middlewares/authMiddleware.js";
 import { LoginSchema } from "../../../../../application/dtos/auth/LoginUserDTO.js";
 import { asyncHandler } from "../../../../../shared/utils/asyncHandler.js";
+import { ForgotPasswordSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO.js";
+import { ResetPasswordSchema, VerifyResetOtpSchema, ResendForgotPasswordOtpSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO.js";
 
 const router = express.Router();
 
@@ -24,5 +26,10 @@ router.post('/logout', authMiddleware, asyncHandler(controller.logout));
 router.post('/logout-all', authMiddleware, asyncHandler(controller.logoutAll));
 router.post("/login", authLimiter, validateBody(LoginSchema), asyncHandler(controller.login));
 router.get('/me', authMiddleware, asyncHandler(controller.me));
+router.post("/forgot-password", otpLimiter, validateBody(ForgotPasswordSchema), asyncHandler(controller.forgotPassword));
+router.post("/verify-reset-otp", otpLimiter, validateBody(VerifyResetOtpSchema), asyncHandler(controller.verifyResetOtp))
+router.post("/reset-password", otpLimiter, validateBody(ResetPasswordSchema), asyncHandler(controller.resetPassword));
+router.post("/resend-forgot-password-otp", otpLimiter, validateBody(ResendForgotPasswordOtpSchema), asyncHandler(controller.resendForgotPasswordOtp));
+
 
 export default router;
