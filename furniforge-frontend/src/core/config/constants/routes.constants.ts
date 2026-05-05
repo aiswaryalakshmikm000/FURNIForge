@@ -17,19 +17,16 @@ export const APP_ROUTES = {
   },
 
   ADMIN: {
-    ROOT: "/admin",
     DASHBOARD: "/admin/dashboard",
     USERS: "/admin/users",
   },
 
   CLIENT: {
-    ROOT: "/",
     HOME: "/home",
     DASHBOARD: "/dashboard",
   },
 
   DESIGNER: {
-    ROOT: "/designer",
     DASHBOARD: "/designer/dashboard",
   },
 };

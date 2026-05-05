@@ -1,26 +1,70 @@
-import ErrorPage from "../../../features/auth/pages/error.page";
-import ForgotPasswordPage from "../../../features/auth/pages/forgot-password.page";
-import LoginPage from "../../../features/auth/pages/login.page";
-import RegisterPage from "../../../features/auth/pages/register.page";
-import VerifyOtpPage from "../../../features/auth/pages/verify-otp.page";
-import ResetPasswordPage from "../../../features/auth/pages/ResetPasswordPage";
-import VerifyResetOtpPage from "../../../features/auth/pages/verify-reset-otp.page";
-import AuthLayout from "../../../layouts/auth.layout";
+import { lazy } from "react";
+import type { RouteObject } from "react-router-dom";
 
-export const authRoutes = [
+const ErrorPage = lazy(() => import("../../../features/auth/pages/error.page"));
+const LoginPage = lazy(() => import("../../../features/auth/pages/login.page"));
+const RegisterPage = lazy(() => import("../../../features/auth/pages/register.page"));
+const VerifyOtpPage = lazy(() => import("../../../features/auth/pages/verify-otp.page"));
+const ForgotPasswordPage = lazy(() => import("../../../features/auth/pages/forgot-password.page"));
+const VerifyResetOtpPage = lazy(() => import("../../../features/auth/pages/verify-reset-otp.page"));
+const ResetPasswordPage = lazy(() => import("../../../features/auth/pages/ResetPasswordPage"),);
+const AuthLayout = lazy(() => import("../../../layouts/auth.layout"));
+import { PublicOnlyRoute } from "../public-only.route";
+import { AuthFlowRoute } from "../auth-flow.route";
+
+export const authRoutes: RouteObject[] = [
   {
-    path: "/",
     element: <AuthLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <LoginPage /> },
-
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
-      { path: "verify-otp", element: <VerifyOtpPage /> },
-      { path: "forgot-password", element: <ForgotPasswordPage /> },
-      { path: "verify-reset-otp", element: <VerifyResetOtpPage/>},
-      { path: "reset-password", element: <ResetPasswordPage /> },
+      {
+        path: "/login",
+        element: (
+          <PublicOnlyRoute>
+            <LoginPage />
+          </PublicOnlyRoute>
+        ),
+      },
+      {
+        path: "/register",
+        element: (
+          <PublicOnlyRoute>
+            <RegisterPage />
+          </PublicOnlyRoute>
+        ),
+      },
+      {
+        path: "/verify-otp",
+        element: (
+          <AuthFlowRoute type="verify-otp">
+            <VerifyOtpPage />
+          </AuthFlowRoute>
+        ),
+      },
+      {
+        path: "/forgot-password",
+        element: (
+          <PublicOnlyRoute>
+            <ForgotPasswordPage />
+          </PublicOnlyRoute>
+        ),
+      },
+      {
+        path: "/verify-reset-otp",
+        element: (
+          <AuthFlowRoute type="verify-otp">
+            <VerifyResetOtpPage />
+          </AuthFlowRoute>
+        ),
+      },
+      {
+        path: "/reset-password",
+        element: (
+          <AuthFlowRoute type="reset-password">
+            <ResetPasswordPage />
+          </AuthFlowRoute>
+        ),
+      },
     ],
   },
 ];

@@ -1,13 +1,14 @@
 import { z } from "zod";
+import { ERROR_MESSAGES } from "../../../core/config/constants/messages.constants";
 
 export const registerSchema = z.object({
   firstName: z.string().min(2, "First name required"),
   lastName: z.string(),
-  email: z.string().email("Invalid email format"),
-  phone: z.string().min(10, "Invalid phone"),
+  email: z.string().email(ERROR_MESSAGES.AUTH.INVALID_EMAIL),
+  phone: z.string().min(10, ERROR_MESSAGES.AUTH.INVALID_PHONE),
   password: z
     .string()
-    .min(8, "Password must be at least 8 characters")
+    .min(8, ERROR_MESSAGES.AUTH.PASSWORD_LENGTH)
     .regex(/[A-Z]/, "Must include uppercase")
     .regex(/[a-z]/, "Must include lowercase")
     .regex(/[0-9]/, "Must include number")
