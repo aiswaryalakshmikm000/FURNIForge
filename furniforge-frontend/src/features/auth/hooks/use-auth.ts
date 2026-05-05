@@ -27,7 +27,7 @@ export const useAuth = () => {
     if (query.isError) {
       dispatch(logout());
     }
-  }, [query.status]);
+  }, [query.isSuccess, query.isError]);
 
   return query;
 };

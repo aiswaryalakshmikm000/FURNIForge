@@ -1,38 +1,41 @@
 import { Navbar } from "../../../shared/components/layout/navbar";
 import { PasswordResetFields } from "../components/password-reset-fields";
 import { useResetPassword } from "../hooks/use-reset-password";
-import { useState } from "react";
 import { Button } from "../../../shared/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { Logo } from "../../../shared/components/ui/logo";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { sessionManager } from "../../../core/auth/session-manager";
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
-import { ERROR_MESSAGES } from "../../../core/config/constants/messages.constants";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { resetPasswordSchema, type ResetPasswordFormValues } from "../validation/reset-password.schema";
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const resetToken = sessionManager.getResetToken();
 
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { mutate: resetPassword, isPending } = useResetPassword();
 
-  if (!resetToken) return null
+  if (!resetToken) return null;
 
-  const handleSubmit = () => {
-    if(!password || !confirmPassword) return toast.error(ERROR_MESSAGES.AUTH.PASSWORD_REQUIRED);
-    if(password !== confirmPassword) return toast.error(ERROR_MESSAGES.AUTH.PASSWORD_MISMATCH);
+  const { register, handleSubmit, formState: { errors, isValid }} = useForm<ResetPasswordFormValues>({
+    resolver: zodResolver(resetPasswordSchema),
+    mode: "onChange", 
+  });
 
+  const onSubmit = (data: ResetPasswordFormValues) => {
     resetPassword(
-      {resetToken, password, confirmPassword},
-      {onSuccess: (res) => {
-        navigate(APP_ROUTES.AUTH.LOGIN);
-      }
-    })}
+      { resetToken, password: data.password, confirmPassword: data.confirmPassword },
+      {
+        onSuccess: () => {
+          navigate(APP_ROUTES.AUTH.LOGIN);
+        },
+      },
+    );
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,24 +62,20 @@ const ResetPasswordPage = () => {
             </div>
 
             {/* FORM */}
-            <PasswordResetFields
-              password={password}
-              setPassword={setPassword}
-              confirmPassword={confirmPassword}
-              setConfirmPassword={setConfirmPassword}
-            />
+            <form onSubmit={handleSubmit(onSubmit)}>
+            <PasswordResetFields register={register} errors={errors}/>
 
             {/* BUTTON */}
             <Button
               variant="copper"
               size="lg"
               className="w-full mt-6"
-              disabled={isPending}
-              onClick={handleSubmit}
+              disabled={!isValid || isPending}
             >
               {isPending ? "Updating..." : "Reset Password"}
               <ArrowRight size={16} />
             </Button>
+            </form>
 
             {/* BACK */}
             <div className="text-center mt-6">
