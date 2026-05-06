@@ -8,11 +8,12 @@ import heroImg from "../../../assets/heroLivingRoom.jpg";
 import { useSelector } from "react-redux";
 import { getDashboardRoute } from "../../../core/utils/routes.utils";
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+import type { RootState } from "../../../app/store/store.types";
 
 export const HeroSection = () => {
-  const { isAuthenticated, user } = useSelector((state: any) => state.auth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
-  const primaryRoute = isAuthenticated ? getDashboardRoute(user.role) : APP_ROUTES.AUTH.REGISTER;
+  const primaryRoute = isAuthenticated && user?.role ? getDashboardRoute(user.role) : APP_ROUTES.AUTH.REGISTER;
 
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({

@@ -1,6 +1,10 @@
 import { lazy } from "react";
 import type { RouteObject } from "react-router-dom";
 
+import { PublicOnlyRoute } from "../public-only.route";
+import { AuthFlowRoute } from "../auth-flow.route";
+import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+
 const ErrorPage = lazy(() => import("../../../features/auth/pages/error.page"));
 const LoginPage = lazy(() => import("../../../features/auth/pages/login.page"));
 const RegisterPage = lazy(() => import("../../../features/auth/pages/register.page"));
@@ -9,8 +13,6 @@ const ForgotPasswordPage = lazy(() => import("../../../features/auth/pages/forgo
 const VerifyResetOtpPage = lazy(() => import("../../../features/auth/pages/verify-reset-otp.page"));
 const ResetPasswordPage = lazy(() => import("../../../features/auth/pages/ResetPasswordPage"),);
 const AuthLayout = lazy(() => import("../../../layouts/auth.layout"));
-import { PublicOnlyRoute } from "../public-only.route";
-import { AuthFlowRoute } from "../auth-flow.route";
 
 export const authRoutes: RouteObject[] = [
   {
@@ -18,7 +20,7 @@ export const authRoutes: RouteObject[] = [
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/login",
+        path: APP_ROUTES.AUTH.LOGIN,
         element: (
           <PublicOnlyRoute>
             <LoginPage />
@@ -26,7 +28,7 @@ export const authRoutes: RouteObject[] = [
         ),
       },
       {
-        path: "/register",
+        path: APP_ROUTES.AUTH.REGISTER,
         element: (
           <PublicOnlyRoute>
             <RegisterPage />
@@ -34,7 +36,7 @@ export const authRoutes: RouteObject[] = [
         ),
       },
       {
-        path: "/verify-otp",
+        path: APP_ROUTES.AUTH.VERIFY_OTP,
         element: (
           <AuthFlowRoute type="verify-otp">
             <VerifyOtpPage />
@@ -42,7 +44,7 @@ export const authRoutes: RouteObject[] = [
         ),
       },
       {
-        path: "/forgot-password",
+        path: APP_ROUTES.AUTH.FORGOT_PASSWORD,
         element: (
           <PublicOnlyRoute>
             <ForgotPasswordPage />
@@ -50,7 +52,7 @@ export const authRoutes: RouteObject[] = [
         ),
       },
       {
-        path: "/verify-reset-otp",
+        path: APP_ROUTES.AUTH.VERIFY_RESET_OTP,
         element: (
           <AuthFlowRoute type="verify-otp">
             <VerifyResetOtpPage />
@@ -58,7 +60,7 @@ export const authRoutes: RouteObject[] = [
         ),
       },
       {
-        path: "/reset-password",
+        path: APP_ROUTES.AUTH.RESET_PASSWORD,
         element: (
           <AuthFlowRoute type="reset-password">
             <ResetPasswordPage />

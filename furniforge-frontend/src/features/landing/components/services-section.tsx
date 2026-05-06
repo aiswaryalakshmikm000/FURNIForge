@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../shared/components/ui/button";
 import { useRef } from "react";
+
 import cardWardrobe from "../../../assets/cardWardrobe.jpg";
 import cardTvunit from "../../../assets/cardTvunit.jpg";
 import cardDesk from "../../../assets/cardDesk.jpg";
@@ -11,7 +12,11 @@ import cardBed from "../../../assets/cardBed.jpg";
 import bannerBedroom from "../../../assets/bannerBedroom.jpg";
 import bannerDining from "../../../assets/bannerDining.jpg";
 import bannerLiving from "../../../assets/bannerLiving.jpg";
+
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+import { useSelector } from "react-redux";
+import { UserRole } from "../../../types/enums/user-role.enum";
+import type { RootState } from "../../../app/store/store.types";
 
 const furnitureTypes = [
   { title: "Wardrobe", desc: "Sliding, hinged & walk-in designs", icon: "👔", image: cardWardrobe },
@@ -68,6 +73,16 @@ const ScrollReveal = ({ children, delay = 0, className = "" }: { children: React
 );
 
 export const ServicesSection = () => {
+
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth)
+
+  const getCTAPath = () => {
+    if(!isAuthenticated) return APP_ROUTES.AUTH.REGISTER;
+    if(user?.role === UserRole.CLIENT) return APP_ROUTES.CLIENT.REQUIREMENTS ;
+    return null
+  }
+  const ctaPath = getCTAPath()
+
   return (
     <>
       <section className="py-28 bg-sand-light/50">
@@ -94,11 +109,13 @@ export const ServicesSection = () => {
               </ScrollReveal>
             ))}
           </div>
-          <ScrollReveal delay={0.4} className="text-center mt-14">
-            <Link to={APP_ROUTES.AUTH.REGISTER}>
-              <Button variant="copper" size="lg" className="font-body">Start Your Furniture Project</Button>
-            </Link>
+          {ctaPath && (
+            <ScrollReveal delay={0.4} className="text-center mt-14">
+              <Link to={ctaPath}>
+                <Button variant="copper" size="lg" className="font-body">Start Your Furniture Project</Button>
+              </Link>
           </ScrollReveal>
+          )}
         </div>
       </section>
 

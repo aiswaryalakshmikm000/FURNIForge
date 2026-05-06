@@ -7,6 +7,7 @@ import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 import { NAV_LINKS } from "../../../core/config/constants/navigation.constants";
 import { useSelector } from "react-redux";
 import { getDashboardRoute } from "../../../core/utils/routes.utils";
+import type { RootState } from "../../../app/store/store.types";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,7 @@ export const Navbar = () => {
   const location = useLocation();
   const isLanding = location.pathname === "/";
 
-  const { isAuthenticated, user } = useSelector((state: any) => state.auth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -89,11 +90,11 @@ export const Navbar = () => {
                 <Button variant="nav-cta">Get Started</Button>
               </Link>
             </>
-          ) : (
+          ) : user?.role ?(
             <Link to={getDashboardRoute(user.role)}>
               <Button variant="nav-cta">Go to Dashboard</Button>
             </Link>
-          )}
+          ): null}
         </div>
 
         <button

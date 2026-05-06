@@ -5,11 +5,12 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { getDashboardRoute } from "../../../core/utils/routes.utils";
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+import type { RootState } from "../../../app/store/store.types";
 
 export const CTASection = () => {
-  const { isAuthenticated, user } = useSelector((state: any) => state.auth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
-const ctaRoute = isAuthenticated ? getDashboardRoute(user.role) : APP_ROUTES.AUTH.REGISTER;
+const ctaRoute = isAuthenticated && user?.role ? getDashboardRoute(user.role) : APP_ROUTES.AUTH.REGISTER;
 
   return (
     <section className="py-28 gradient-chocolate relative overflow-hidden">

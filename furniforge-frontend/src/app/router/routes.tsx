@@ -1,5 +1,5 @@
 import { authRoutes } from "./routes/auth.routes";
-// import { adminRoutes } from "./routes/admin.routes";
+import { adminRoutes } from "./routes/admin.routes";
 // import { clientRoutes } from "./routes/client.routes";
 // import { designerRoutes } from "./routes/designer.routes";
 import { publicRoutes } from "./routes/public.routes";
@@ -12,9 +12,9 @@ export const routes = [
     children: [
       ...publicRoutes,
       ...authRoutes,
-      // ...adminRoutes,
-      // ...clientRoutes,
+      ...adminRoutes,
       // ...designerRoutes,
+      // ...clientRoutes,
       { path: "*", element: <NotFoundPage /> },
     ],
   },
