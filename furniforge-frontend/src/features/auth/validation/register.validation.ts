@@ -5,7 +5,7 @@ export const registerSchema = z.object({
   firstName: z.string().min(2, "First name required"),
   lastName: z.string(),
   email: z.string().email(ERROR_MESSAGES.AUTH.INVALID_EMAIL),
-  phone: z.string().min(10, ERROR_MESSAGES.AUTH.INVALID_PHONE),
+  phone: z.string().regex(/^\d{10}$/, ERROR_MESSAGES.AUTH.INVALID_PHONE),
   password: z
     .string()
     .min(8, ERROR_MESSAGES.AUTH.PASSWORD_LENGTH)

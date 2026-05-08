@@ -28,7 +28,7 @@ const ctaRoute = isAuthenticated && user?.role ? getDashboardRoute(user.role) : 
           <h2 className="text-4xl md:text-6xl font-bold text-cream mb-6 font-display leading-tight">
             Ready to Transform<br />Your Space?
           </h2>
-          <p className="text-lg text-cream/60 max-w-xl mx-auto mb-12 font-body font-light">
+          <p className="text-lg text-cream/60 max-w-xl mx-auto mb-12 font-sans font-light">
             Book a free consultation with our design experts and get started on your dream furniture.
           </p>
           <Link to={ctaRoute}>

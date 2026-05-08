@@ -61,7 +61,7 @@ export const HeroSection = () => {
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-accent/30 bg-chocolate-light/40 backdrop-blur-sm mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <span className="text-sm text-cream/80 font-body">
+            <span className="text-sm text-cream/80 font-sans">
               Trusted by 1000+ homeowners across India
             </span>
           </motion.div>
@@ -75,7 +75,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg md:text-xl text-cream/65 max-w-2xl mx-auto mb-12 font-body font-light"
+            className="text-lg md:text-xl text-cream/65 max-w-2xl mx-auto mb-12 font-sans font-light"
           >
             Premium wardrobes, TV units, sofas, desks & beds. From concept to
             installation, we bring your dream furniture to life.
@@ -119,7 +119,7 @@ export const HeroSection = () => {
                 suffix={stat.suffix}
                 className="text-3xl md:text-4xl font-bold text-gradient-rose font-display"
               />
-              <p className="text-xs text-cream/50 mt-1 font-body uppercase tracking-wider">
+              <p className="text-xs text-cream/50 mt-1 font-sans uppercase tracking-wider">
                 {stat.label}
               </p>
             </div>
