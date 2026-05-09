@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { APP_ROUTES } from "../../core/config/constants/routes.constants";
 import type { ReactNode } from "react";
+import type { RootState } from "../store/store.types";
 
 type RoleRouteProps = {
   children: ReactNode;
@@ -9,14 +10,14 @@ type RoleRouteProps = {
 };
 
 export const RoleRoute = ({ children, allowedRoles }: RoleRouteProps) => {
-  const { user } = useSelector((state: any) => state.auth);
+  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  if (!user) {
+  if (!user || !isAuthenticated) {
     return <Navigate to={APP_ROUTES.AUTH.LOGIN} replace />;
   }
 
   if (!allowedRoles.includes(user.role)) {
-    return <Navigate to={APP_ROUTES.AUTH.LOGIN} replace />;
+    return <Navigate to={APP_ROUTES.COMMON.ROOT} replace />;
   }
 
   return children;

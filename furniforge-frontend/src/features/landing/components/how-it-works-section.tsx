@@ -1,4 +1,4 @@
-import { motion, useScroll } from "framer-motion";
+import { motion, MotionValue, useScroll } from "framer-motion";
 import { ClipboardList, FileCheck, Wrench, Home } from "lucide-react";
 import { useRef } from "react";
 
@@ -88,7 +88,7 @@ const StepItem = ({
 }: {
   step: (typeof steps)[0];
   index: number;
-  scrollProgress: any;
+  scrollProgress: MotionValue<number>;
 }) => {
 
   return (

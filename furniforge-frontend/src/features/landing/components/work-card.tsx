@@ -3,6 +3,7 @@ import { Heart, MapPin, Star } from "lucide-react";
 import { ERROR_MESSAGES } from "../../../core/config/constants/messages.constants";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store/store.types";
 
 
 interface WorkCardProps {
@@ -23,7 +24,7 @@ interface WorkCardProps {
 }
 
 export const WorkCard = ({ project, onSave, isSaved }: WorkCardProps) => {
-    const { isAuthenticated } = useSelector((state: any) => state.auth);
+    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
     const handleSaveClick = () => {
     if (!isAuthenticated) {

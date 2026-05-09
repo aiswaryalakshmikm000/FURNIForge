@@ -70,6 +70,18 @@ class SessionManager {
     sessionStorage.removeItem(this._resetOtpExpiry);
   }
 
+  clearSignupFlow() {
+  this.clearTempUserId();
+  this.clearEmailId();
+  this.clearSignupCooldown();
+}
+
+clearForgotPasswordFlow() {
+  this.clearEmailId();
+  this.clearResetToken();
+  this.clearResetCooldown();
+}
+
   //clear all,
   clearAll() {
     this.clearTempUserId();

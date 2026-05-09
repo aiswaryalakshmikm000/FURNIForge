@@ -1,14 +1,31 @@
 import { Navigate } from "react-router-dom";
+import type { ReactNode } from "react";
+
 import { sessionManager } from "../../core/auth/session-manager";
 import { APP_ROUTES } from "../../core/config/constants/routes.constants";
 
-export const AuthFlowRoute = ({ children, type }: any) => {
-  // example checks
+type AuthFlowRouteProps = {
+  children: ReactNode;
+  type: "verify-otp" |  "verify-reset-otp" | "reset-password";
+};
+
+
+export const AuthFlowRoute = ({ children, type }: AuthFlowRouteProps) => {
+
   if (type === "verify-otp") {
     const tempUser = sessionManager.getTempUserId();
 
     if (!tempUser) {
+      console.log("no temp user redirecting to the register")
       return <Navigate to={APP_ROUTES.AUTH.REGISTER} replace />;
+    }
+  }
+
+  if (type === "verify-reset-otp") {
+    const email = sessionManager.getEmailId();
+
+    if (!email) {
+      return <Navigate to={APP_ROUTES.AUTH.FORGOT_PASSWORD} replace />;
     }
   }
 

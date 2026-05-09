@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { SectionIntro } from "./section-intro";
 import { WorkCard } from "./work-card";
-import { PaginationControl } from "../../../shared/components/common/PaginationControl";
+import { PaginationControl } from "../../../shared/components/common/pagination-control";
 import { usePagination } from "../../../shared/hooks/use-pagination";
 import { EmptyState } from "../../../shared/components/common/EmptyState";
 import { WorkFilters } from "./work-filters";

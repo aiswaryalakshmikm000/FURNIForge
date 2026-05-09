@@ -57,7 +57,7 @@ const LandingPage = () => {
                   <span className="text-3xl font-bold text-foreground font-display leading-none">
                     100%
                   </span>
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground font-body mt-2">
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground font-sans mt-2">
                     Accurate Renders
                   </span>
                 </div>
@@ -68,7 +68,7 @@ const LandingPage = () => {
                   <span className="text-3xl font-bold text-foreground font-display leading-none">
                     48hrs
                   </span>
-                  <span className="text-xs uppercase tracking-widest text-muted-foreground font-body mt-2">
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground font-sans mt-2">
                     Turnaround Time
                   </span>
                 </div>

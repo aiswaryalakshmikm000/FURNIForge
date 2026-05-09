@@ -15,19 +15,25 @@ export const useAuth = () => {
     queryKey: ["me"],
     queryFn: meApi,
     retry: false,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 
   useEffect(() => {
     if (query.isSuccess) {
       const { user } = query.data.data;
+      console.log("user from useauth", user)
       dispatch(setAuth({ user }));
       toast.success(query.data.message);
     }
-
     if (query.isError) {
-      dispatch(logout());
+      const status = (query.error as any)?.response?.status;
+      if (status === 401 || status === 403) {
+        dispatch(logout());
+      }
     }
-  }, [query.isSuccess, query.isError]);
+
+  }, [query.isSuccess, query.isError, query.data, query.error, dispatch]);
 
   return query;
 };

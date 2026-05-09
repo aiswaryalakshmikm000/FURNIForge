@@ -1,37 +1,57 @@
-import { httpClient } from "./http-client";
-import { store } from "../../app/store";
-import { logout } from "../../features/auth/store/auth.slice";
-import { refreshTokenApi } from "../../features/auth/api/refresh-token.api";
+// import { httpClient } from "./http-client";
+// import { store } from "../../app/store";
+// import { logout } from "../../features/auth/store/auth.slice";
+// import { refreshTokenApi } from "../../features/auth/api/refresh-token.api";
+// import { AxiosError, type InternalAxiosRequestConfig } from "axios";
 
-let isRefreshing = false;
+// let isRefreshing = false;
+// let failedQueue: Array<{
+//   resolve: (value?: any) => void;
+//   reject: (error?: any) => void;
+// }> = [];
 
-httpClient.interceptors.response.use(
-  (res) => res,
-  async (error) => {
-    const originalRequest = error.config;
+// const processQueue = (error: any = null) => {
+//   failedQueue.forEach((prom) => {
+//     if (error) prom.reject(error);
+//     else prom.resolve(null);
+//   });
+//   failedQueue = [];
+// };
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+// // ==================== RESPONSE INTERCEPTOR ====================
+// httpClient.interceptors.response.use(
+//   (response) => response,
 
-      if (isRefreshing) {
-        return Promise.reject(error); 
-      }
+//   async (error: AxiosError) => {
+//     const originalRequest = error.config as InternalAxiosRequestConfig & {
+//       _retry?: boolean;
+//     };
 
-      isRefreshing = true;
+//     // Not 401 or already retried
+//     if (error.response?.status !== 401 || originalRequest._retry) {
+//       return Promise.reject(error);
+//     }
 
-      try {
-        await refreshTokenApi()
-        return httpClient(originalRequest);
-      } catch (err) {
-        store.dispatch(logout())
+//     if (isRefreshing) {
+//       return new Promise((resolve, reject) => {
+//         failedQueue.push({ resolve, reject });
+//       }).then(() => httpClient(originalRequest))
+//         .catch((err) => Promise.reject(err));
+//     }
 
-        window.location.replace("/login");
-        return Promise.reject(err);
-      } finally {
-        isRefreshing = false;
-      }
-    }
+//     originalRequest._retry = true;
+//     isRefreshing = true;
 
-    return Promise.reject(error);
-  }
-);
+//     try {
+//       await refreshTokenApi();
+//       processQueue();
+//       return httpClient(originalRequest);
+//     } catch (refreshError) {
+//       processQueue(refreshError);
+//       store.dispatch(logout());
+//       return Promise.reject(refreshError);
+//     } finally {
+//       isRefreshing = false;
+//     }
+//   }
+// );

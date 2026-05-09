@@ -19,6 +19,7 @@ export const useLogout = () => {
       const { message } = res;
       dispatch(logout());
       toast.success(message);
+
       navigate(APP_ROUTES.AUTH.LOGIN);
     },
 

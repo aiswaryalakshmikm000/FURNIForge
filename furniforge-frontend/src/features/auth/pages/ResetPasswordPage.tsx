@@ -31,6 +31,7 @@ const ResetPasswordPage = () => {
       { resetToken, password: data.password, confirmPassword: data.confirmPassword },
       {
         onSuccess: () => {
+          sessionManager.clearForgotPasswordFlow()
           navigate(APP_ROUTES.AUTH.LOGIN);
         },
       },

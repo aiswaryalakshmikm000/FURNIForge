@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../shared/components/ui/button";
 import { useRef } from "react";
+
 import cardWardrobe from "../../../assets/cardWardrobe.jpg";
 import cardTvunit from "../../../assets/cardTvunit.jpg";
 import cardDesk from "../../../assets/cardDesk.jpg";
@@ -11,7 +12,11 @@ import cardBed from "../../../assets/cardBed.jpg";
 import bannerBedroom from "../../../assets/bannerBedroom.jpg";
 import bannerDining from "../../../assets/bannerDining.jpg";
 import bannerLiving from "../../../assets/bannerLiving.jpg";
+
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+import { useSelector } from "react-redux";
+import { UserRole } from "../../../types/enums/user-role.enum";
+import type { RootState } from "../../../app/store/store.types";
 
 const furnitureTypes = [
   { title: "Wardrobe", desc: "Sliding, hinged & walk-in designs", icon: "👔", image: cardWardrobe },
@@ -68,15 +73,25 @@ const ScrollReveal = ({ children, delay = 0, className = "" }: { children: React
 );
 
 export const ServicesSection = () => {
+
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth)
+
+  const getCTAPath = () => {
+    if(!isAuthenticated) return APP_ROUTES.AUTH.REGISTER;
+    if(user?.role === UserRole.CLIENT) return APP_ROUTES.CLIENT.REQUIREMENTS ;
+    return null
+  }
+  const ctaPath = getCTAPath()
+
   return (
     <>
       <section className="py-28 bg-sand-light/50">
         <div className="container mx-auto px-4">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <span className="text-sm font-semibold text-accent uppercase tracking-[0.2em] font-body">Our Expertise</span>
+              <span className="text-sm font-semibold text-accent uppercase tracking-[0.2em] font-sans">Our Expertise</span>
               <h2 className="text-4xl md:text-6xl font-bold text-foreground mt-4 font-display">Custom Furniture Solutions</h2>
-              <p className="text-muted-foreground mt-4 max-w-xl mx-auto font-body font-light">Designed with precision, built with the finest materials and world-class hardware.</p>
+              <p className="text-muted-foreground mt-4 max-w-xl mx-auto font-sans font-light">Designed with precision, built with the finest materials and world-class hardware.</p>
             </div>
           </ScrollReveal>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-6xl mx-auto">
@@ -88,17 +103,19 @@ export const ServicesSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-chocolate-deep/85 via-chocolate/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-5">
                     <h3 className="text-xl font-bold text-cream font-display">{item.title}</h3>
-                    <p className="text-xs text-cream/60 mt-1 font-body">{item.desc}</p>
+                    <p className="text-xs text-cream/60 mt-1 font-sans">{item.desc}</p>
                   </div>
                 </motion.div>
               </ScrollReveal>
             ))}
           </div>
-          <ScrollReveal delay={0.4} className="text-center mt-14">
-            <Link to={APP_ROUTES.AUTH.REGISTER}>
-              <Button variant="copper" size="lg" className="font-body">Start Your Furniture Project</Button>
-            </Link>
+          {ctaPath && (
+            <ScrollReveal delay={0.4} className="text-center mt-14">
+              <Link to={ctaPath}>
+                <Button variant="copper" size="lg" className="font-sans">Start Your Furniture Project</Button>
+              </Link>
           </ScrollReveal>
+          )}
         </div>
       </section>
 
@@ -110,7 +127,7 @@ export const ServicesSection = () => {
         <div className="container mx-auto px-4 max-w-5xl">
           <ScrollReveal>
             <div className="text-center mb-14">
-              <span className="text-sm font-semibold text-accent uppercase tracking-[0.2em] font-body">Testimonials</span>
+              <span className="text-sm font-semibold text-accent uppercase tracking-[0.2em] font-sans">Testimonials</span>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mt-4 font-display">What Our Clients Say</h2>
             </div>
           </ScrollReveal>
@@ -125,10 +142,10 @@ export const ServicesSection = () => {
                       {Array.from({ length: 5 }).map((_, j) => (
                         <Star key={j} size={14} className={j < Math.floor(review.rating) ? "text-[hsl(40,85%,55%)] fill-[hsl(40,85%,55%)]" : "text-cream/30"} />
                       ))}
-                      <span className="text-xs text-cream/60 font-body ml-1">{review.rating}</span>
+                      <span className="text-xs text-cream/60 font-sans ml-1">{review.rating}</span>
                     </div>
-                    <p className="text-sm text-cream/90 font-body italic mb-3 leading-relaxed">"{review.review}"</p>
-                    <p className="text-xs text-cream/50 font-body font-medium tracking-wide">— {review.name}, {review.location}</p>
+                    <p className="text-sm text-cream/90 font-sans italic mb-3 leading-relaxed">"{review.review}"</p>
+                    <p className="text-xs text-cream/50 font-sans font-medium tracking-wide">— {review.name}, {review.location}</p>
                   </div>
                 </motion.div>
               </ScrollReveal>
@@ -154,7 +171,7 @@ const BrandSection = ({ section }: { section: typeof brandSections[0]; index: nu
       <div className="relative container mx-auto px-4 max-w-6xl">
         <ScrollReveal>
           <h3 className="text-3xl md:text-5xl font-bold text-cream font-display text-center">{section.title}</h3>
-          <p className="text-cream/60 text-center mt-4 font-body text-lg font-light">{section.subtitle}</p>
+          <p className="text-cream/60 text-center mt-4 font-sans text-lg font-light">{section.subtitle}</p>
         </ScrollReveal>
         <div className="flex flex-wrap justify-center gap-4 mt-14">
           {section.items.map((brand, i) => (

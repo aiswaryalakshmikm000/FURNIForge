@@ -12,9 +12,9 @@ export const validateBody = (schema: ZodSchema) => {
     field: e.path.join("."),
     message: e.message
   }));
-  console.log(errors)
-      return next(new ValidationError(ERROR_MESSAGES.GENERAL.VALIDATION_FAILED, { fields: errors }));
-    }
+    console.log(errors)
+    return next(new ValidationError(ERROR_MESSAGES.GENERAL.VALIDATION_FAILED, { fields: errors }));
+  }
 
     req.body = result.data;
     next();

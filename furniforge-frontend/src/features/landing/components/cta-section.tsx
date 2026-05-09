@@ -5,11 +5,12 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { getDashboardRoute } from "../../../core/utils/routes.utils";
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+import type { RootState } from "../../../app/store/store.types";
 
 export const CTASection = () => {
-  const { isAuthenticated, user } = useSelector((state: any) => state.auth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
-const ctaRoute = isAuthenticated ? getDashboardRoute(user.role) : APP_ROUTES.AUTH.REGISTER;
+const ctaRoute = isAuthenticated && user?.role ? getDashboardRoute(user.role) : APP_ROUTES.AUTH.REGISTER;
 
   return (
     <section className="py-28 gradient-chocolate relative overflow-hidden">
@@ -27,7 +28,7 @@ const ctaRoute = isAuthenticated ? getDashboardRoute(user.role) : APP_ROUTES.AUT
           <h2 className="text-4xl md:text-6xl font-bold text-cream mb-6 font-display leading-tight">
             Ready to Transform<br />Your Space?
           </h2>
-          <p className="text-lg text-cream/60 max-w-xl mx-auto mb-12 font-body font-light">
+          <p className="text-lg text-cream/60 max-w-xl mx-auto mb-12 font-sans font-light">
             Book a free consultation with our design experts and get started on your dream furniture.
           </p>
           <Link to={ctaRoute}>
