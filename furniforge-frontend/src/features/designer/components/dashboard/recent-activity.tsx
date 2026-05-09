@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Clock } from "lucide-react";
+import { AnimatedContainer } from "../../../../shared/components/common/animated-container";
 
 type Activity = {
   text: string;
@@ -12,11 +13,7 @@ type RecentActivityProps = {
 
 export const RecentActivity = ({activities}: RecentActivityProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-card rounded-2xl p-6 shadow-warm border border-border"
-    >
+    <AnimatedContainer className="bg-card rounded-2xl p-6 shadow-warm border border-border">
       <h2 className="text-lg font-bold text-foreground font-display mb-4">Recent Activity</h2>
 
       <div className="space-y-3">
@@ -41,6 +38,6 @@ export const RecentActivity = ({activities}: RecentActivityProps) => {
           </motion.div>
         ))}
       </div>
-    </motion.div>
+    </AnimatedContainer>
   );
 };

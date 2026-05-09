@@ -1,14 +1,8 @@
 import { motion } from "framer-motion";
-import {
-  CalendarCheck,
-  ArrowRight,
-  Calculator,
-  MessageSquare,
-} from "lucide-react";
-
+import { CalendarCheck, ArrowRight, Calculator, MessageSquare} from "lucide-react";
 import { Link } from "react-router-dom";
-
 import { Button } from "../../../../shared/components/ui/button";
+import { APP_ROUTES } from "../../../../core/config/constants/routes.constants";
 
 type Schedule = {
   customer: string;
@@ -35,7 +29,7 @@ export const UpcomingSchedule = ({schedules}: UpcomingScheduleProps) => {
           Upcoming Schedule
         </h2>
 
-        <Link to="/designer/schedule">
+        <Link to={APP_ROUTES.DESIGNER.SCHEDULES}>
           <Button
             variant="ghost"
             size="sm"
@@ -83,7 +77,7 @@ export const UpcomingSchedule = ({schedules}: UpcomingScheduleProps) => {
         </h3>
 
         <div className="grid grid-cols-2 gap-2">
-          <Link to="/designer/calculator">
+          <Link to={APP_ROUTES.DESIGNER.CALCULATOR}>
             <Button
               variant="outline"
               size="sm"
@@ -94,7 +88,7 @@ export const UpcomingSchedule = ({schedules}: UpcomingScheduleProps) => {
             </Button>
           </Link>
 
-          <Link to="/designer/messages">
+          <Link to={APP_ROUTES.DESIGNER.MESSAGES}>
             <Button
               variant="outline"
               size="sm"

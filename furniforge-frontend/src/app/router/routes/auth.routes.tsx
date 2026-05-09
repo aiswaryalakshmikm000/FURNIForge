@@ -54,7 +54,7 @@ export const authRoutes: RouteObject[] = [
       {
         path: APP_ROUTES.AUTH.VERIFY_RESET_OTP,
         element: (
-          <AuthFlowRoute type="verify-otp">
+          <AuthFlowRoute type="verify-reset-otp">
             <VerifyResetOtpPage />
           </AuthFlowRoute>
         ),

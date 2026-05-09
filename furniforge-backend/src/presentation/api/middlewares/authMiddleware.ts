@@ -24,6 +24,8 @@ export const authMiddleware = async ( req: AuthRequest,_res: Response, next: Nex
   try {
     const token = req.cookies?.accessToken;
 
+    console.log("token from the middleware: ",token)
+
     if(!token) throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.ACCESS_TOKEN_MISSING)
 
     const payload = tokenService.verifyAccessToken(token);

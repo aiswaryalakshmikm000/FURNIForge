@@ -5,6 +5,7 @@ import type { RouteObject } from "react-router-dom";
 import { RoleRoute } from "../role.route";
 import { ClientLayout } from "../../../layouts/client/client.layout";
 import ClientDashboardPage from "../../../features/client/pages/client.dashboard";
+import ErrorPage from "../../../features/auth/pages/error.page";
 
 export const clientRoutes: RouteObject[] = [
   {
@@ -16,6 +17,7 @@ export const clientRoutes: RouteObject[] = [
         </RoleRoute>
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true, 

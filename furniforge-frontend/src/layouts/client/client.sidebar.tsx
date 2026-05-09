@@ -1,8 +1,10 @@
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter} from "../../shared/components/ui/sidebar";
-import { LogOut } from "lucide-react";
 
 import NavLink from "../../shared/components/common/nav-links";
 import { CLIENT_NAV } from "./client.nav";
+import { APP_ROUTES } from "../../core/config/constants/routes.constants";
+import { LogoutButton } from "../../shared/components/common/logout-button";
+import { LogoutAllButton } from "../../shared/components/common/logout-all-button";
 
 export const ClientSidebar = () => {
   return (
@@ -28,7 +30,7 @@ export const ClientSidebar = () => {
                     <SidebarMenuButton asChild>
                       <NavLink
                         to={item.path}
-                        end={item.path === "/client"}
+                        end={item.path === APP_ROUTES.CLIENT.ROOT}
                         className="flex items-center gap-2"
                         activeClassName="bg-sidebar-accent text-white"
                       >
@@ -45,10 +47,8 @@ export const ClientSidebar = () => {
       </SidebarContent>
 
       <SidebarFooter className="p-4 border-t border-sidebar-border">
-        <button className="flex items-center gap-2 text-sm text-muted-foreground">
-          <LogOut className="h-4 w-4" />
-          Sign Out
-        </button>
+        <LogoutButton/>
+        <LogoutAllButton/>
       </SidebarFooter>
     </Sidebar>
   );

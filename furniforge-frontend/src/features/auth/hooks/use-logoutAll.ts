@@ -17,6 +17,7 @@ export const useLogoutAll = () => {
     onSuccess: (res) => {
       dispatch(logout());
       toast.success(res.message);
+
       navigate(APP_ROUTES.AUTH.LOGIN);
     },
 

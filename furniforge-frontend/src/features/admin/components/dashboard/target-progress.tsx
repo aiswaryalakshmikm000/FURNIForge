@@ -1,10 +1,8 @@
 import { useState } from "react";
-
 import { Button } from "../../../../shared/components/ui/button";
-
 import { Edit3, Target } from "lucide-react";
-
-import { Progress } from "./progress";
+import { Progress } from "../../../../shared/components/common/progress";
+import { Input } from "../../../../shared/components/ui/input";
 
 type Props = {
   achieved: number;
@@ -70,7 +68,7 @@ export const TargetProgress = ({
 
       {showEdit && (
         <div className="flex items-center gap-2 mb-3">
-          <input
+          <Input
             type="number"
             value={tempTarget}
             onChange={(e) =>

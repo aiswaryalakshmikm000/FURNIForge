@@ -13,7 +13,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const isLanding = location.pathname === "/";
+  const isLanding = location.pathname === APP_ROUTES.COMMON.ROOT;
 
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 

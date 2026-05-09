@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Settings, UserPlus, Wrench, Package, ListChecks, MessageSquare} from "lucide-react";
+import { LayoutDashboard, Users, UsersRound, Settings, UserPlus, Wrench, Package, ListChecks, MessageSquare} from "lucide-react";
 import { APP_ROUTES } from "../../core/config/constants/routes.constants";
 import type { LucideIcon } from "lucide-react";
 
@@ -24,7 +24,7 @@ export const ADMIN_NAV: AdminNavSection[] = [
     label: "Sales",
     items: [
       { title: "Leads", path: APP_ROUTES.ADMIN.LEADS, icon: UserPlus },
-      { title: "Customers", path: APP_ROUTES.ADMIN.CUSTOMERS, icon: Users },
+      { title: "Customers", path: APP_ROUTES.ADMIN.CUSTOMERS, icon: UsersRound },
 
     ],
   },

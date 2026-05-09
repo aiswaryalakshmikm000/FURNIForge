@@ -15,19 +15,11 @@ type Props = {
   }[];
 };
 
-export const RevenueChart = ({
-  data,
-}: Props) => {
+export const RevenueChart = ({ data }: Props) => {
   return (
-    <ResponsiveContainer
-      width="100%"
-      height={280}
-    >
+    <ResponsiveContainer width="100%" height={280}>
       <LineChart data={data}>
-        <CartesianGrid
-          strokeDasharray="3 3"
-          stroke="hsl(36 25% 87%)"
-        />
+        <CartesianGrid strokeDasharray="3 3" stroke="hsl(36 25% 87%)" />
 
         <XAxis
           dataKey="name"
@@ -42,29 +34,21 @@ export const RevenueChart = ({
             fontSize: 12,
             fill: "hsl(16 20% 48%)",
           }}
-          tickFormatter={(v) =>
-            `₹${(v / 100000).toFixed(1)}L`
-          }
+          tickFormatter={(v) => `₹${(v / 100000).toFixed(1)}L`}
         />
 
         <Tooltip
-  formatter={(value) => {
-    const finalValue = Array.isArray(value)
-      ? value[0]
-      : value;
+          formatter={(value) => {
+            const finalValue = Array.isArray(value) ? value[0] : value;
 
-    return `₹${Number(
-      finalValue ?? 0
-    ).toLocaleString("en-IN")}`;
-  }}
-  contentStyle={{
-    borderRadius: 12,
-    border:
-      "1px solid hsl(36 25% 87%)",
-    background:
-      "hsl(30 33% 98%)",
-  }}
-/>
+            return `₹${Number(finalValue ?? 0).toLocaleString("en-IN")}`;
+          }}
+          contentStyle={{
+            borderRadius: 12,
+            border: "1px solid hsl(36 25% 87%)",
+            background: "hsl(30 33% 98%)",
+          }}
+        />
 
         <Line
           type="monotone"

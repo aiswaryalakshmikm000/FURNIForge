@@ -1,7 +1,5 @@
 //========================SUCCESS MESSAGES=============================
 
-import { INVALID } from "zod/v3";
-
 export const SUCCESS_MESSAGES = {
   AUTH: {
     REGISTER_SUCCESS: "Registration successful. Please check your email for verification code",

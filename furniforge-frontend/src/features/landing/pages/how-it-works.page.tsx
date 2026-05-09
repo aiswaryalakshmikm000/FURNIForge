@@ -8,30 +8,10 @@ import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 
 const details = [
-  {
-    step: "01",
-    title: "Fill Your Requirement Form",
-    description: "Select your deliverable type (Wardrobe, TV Unit, Sofa, etc.) and fill in dimensions, materials, finish preferences, and budget. Upload reference images.",
-    items: ["Select deliverable type", "Dimensions & material preferences", "Budget range selection", "Site photos & reference images"],
-  },
-  {
-    step: "02",
-    title: "See Quote & Confirm Design",
-    description: "Our designer prepares a detailed quotation and 3D design. Review, request modifications if needed, and confirm.",
-    items: ["Itemized quotation breakdown", "3D design visualization", "Modification requests (₹1,000 fee)", "Design & quote confirmation"],
-  },
-  {
-    step: "03",
-    title: "Get Installed",
-    description: "After 60% advance payment, our technician visits for site measurement verification. Production begins, followed by professional installation.",
-    items: ["Site visit & measurement verification", "MEP marking & approval", "Professional installation", "Quality checks at every stage"],
-  },
-  {
-    step: "04",
-    title: "Move In & Enjoy",
-    description: "Final inspection, cleaning, and handover. Balance payment completed. Enjoy ongoing warranty and post-installation support.",
-    items: ["Final inspection & cleaning", "Balance payment settlement", "Warranty activation", "Ongoing service support"],
-  },
+  { step: "01", title: "Fill Your Requirement Form", description: "Select your deliverable type (Wardrobe, TV Unit, Sofa, etc.) and fill in dimensions, materials, finish preferences, and budget. Upload reference images.", items: ["Select deliverable type", "Dimensions & material preferences", "Budget range selection", "Site photos & reference images"]},
+  { step: "02", title: "See Quote & Confirm Design", description: "Our designer prepares a detailed quotation and 3D design. Review, request modifications if needed, and confirm.", items: ["Itemized quotation breakdown", "3D design visualization", "Modification requests (₹1,000 fee)", "Design & quote confirmation"] },
+  { step: "03", title: "Get Installed", description: "After 60% advance payment, our technician visits for site measurement verification. Production begins, followed by professional installation.", items: ["Site visit & measurement verification", "MEP marking & approval", "Professional installation", "Quality checks at every stage"]},
+  { step: "04", title: "Move In & Enjoy", description: "Final inspection, cleaning, and handover. Balance payment completed. Enjoy ongoing warranty and post-installation support.", items: ["Final inspection & cleaning", "Balance payment settlement", "Warranty activation", "Ongoing service support"]},
 ];
 
 const paymentStages = [

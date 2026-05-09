@@ -2,7 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import { motion } from "framer-motion";
 
 type Props = {
-  label: string;
+  title: string;
   value: string;
   icon: LucideIcon;
   color?: string;
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const StatCard = ({
-  label,
+  title,
   value,
   icon: Icon,
   color,
@@ -27,7 +27,7 @@ export const StatCard = ({
         <Icon size={16} className={color} />
 
         <p className="text-xs text-muted-foreground font-sans">
-          {label}
+          {title}
         </p>
       </div>
 

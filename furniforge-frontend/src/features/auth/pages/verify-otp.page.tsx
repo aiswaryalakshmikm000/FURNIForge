@@ -48,9 +48,7 @@ const VerifyOtpPage = () => {
         onSuccess: (res) => {
           const { user } = res.data;
           dispatch(setAuth({ user }));
-          sessionManager.clearSignupCooldown?.();
-          sessionManager.clearTempUserId?.();   
-          sessionManager.clearEmailId?.();
+          sessionManager.clearSignupFlow()
           navigate(getDashboardRoute(user.role));
         },
       }

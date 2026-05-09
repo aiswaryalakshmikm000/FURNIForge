@@ -1,4 +1,4 @@
-import { Home, Send, FolderOpen, FileText, CreditCard, MessageSquare, User} from "lucide-react";
+import { Home, Send, FolderOpen, FileText, CreditCard, MessageSquare, User, Image as ImageIcon, CalendarCheck, Heart, Star, Palette,} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { APP_ROUTES } from "../../core/config/constants/routes.constants";
 
@@ -30,9 +30,9 @@ export const CLIENT_NAV: ClientNavSection[] = [
     label: "Projects",
     items: [
       { title: "My Projects", path: APP_ROUTES.CLIENT.PROJECTS, icon: FolderOpen },
-      { title: "Site Progress", path: APP_ROUTES.CLIENT.SITE_PROGRESS, icon: FolderOpen },
-      { title: "Designs", path: APP_ROUTES.CLIENT.DESIGNS, icon: FolderOpen },
-      { title: "Bookings", path: APP_ROUTES.CLIENT.BOOKINGS, icon: FolderOpen },
+      { title: "Site Progress", path: APP_ROUTES.CLIENT.SITE_PROGRESS, icon: ImageIcon },
+      { title: "Designs", path: APP_ROUTES.CLIENT.DESIGNS, icon: Palette },
+      { title: "Bookings", path: APP_ROUTES.CLIENT.BOOKINGS, icon: CalendarCheck },
     ],
   },
   {
@@ -45,14 +45,14 @@ export const CLIENT_NAV: ClientNavSection[] = [
   {
     label: "Inspiration",
     items: [
-      { title: "Saved Inspiration", path: APP_ROUTES.CLIENT.REFERENCES, icon: FileText },
+      { title: "Saved Inspiration", path: APP_ROUTES.CLIENT.REFERENCES, icon: Heart },
     ],
   },
   {
     label: "Communication",
     items: [
       { title: "Messages", path: APP_ROUTES.CLIENT.MESSAGES, icon: MessageSquare },
-      { title: "Review", path: APP_ROUTES.CLIENT.REVIEWS, icon: MessageSquare },
+      { title: "Review", path: APP_ROUTES.CLIENT.REVIEWS, icon: Star },
     ],
   },
   {

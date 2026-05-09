@@ -1,27 +1,30 @@
-export const TopClients = ({
-  data,
-}: any) => {
+import { ListCard } from "../../../../shared/components/common/list-card";
+
+type Client = {
+  name: string;
+  totalSpent: string;
+  projects: number;
+  type: string;
+};
+
+type Props = {
+  data: Client[];
+};
+
+export const TopClients = ({ data }: Props) => {
   return (
     <div className="space-y-3">
-      {data.map((c: any, i: number) => (
-        <div
+      {data.map((c: Client, i: number) => (
+        <ListCard
           key={i}
-          className="flex items-center justify-between p-4 rounded-xl bg-muted/30"
-        >
-          <div>
-            <p className="text-sm font-medium text-foreground font-sans">
-              {c.name}
-            </p>
-
-            <p className="text-xs text-muted-foreground font-sans">
-              {c.type} · {c.projects} project(s)
-            </p>
-          </div>
-
-          <span className="text-sm font-bold text-accent font-display">
-            {c.totalSpent}
-          </span>
-        </div>
+          title={c.name}
+          subtitle={`${c.type} · ${c.projects} project(s)`}
+          rightContent={
+            <span className="text-sm font-bold text-accent font-display">
+              {c.totalSpent} 
+            </span>
+          }
+        />
       ))}
     </div>
   );

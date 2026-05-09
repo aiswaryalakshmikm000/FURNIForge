@@ -1,39 +1,49 @@
+import { Badge } from "../../../../shared/components/ui/badge";
+import { ListCard } from "../../../../shared/components/common/list-card";
+
+
+type Payment = {
+  client: string;
+  project: string;
+  amount: string;
+  dueDate: string;
+  stage: string
+  overdue: boolean;
+};
+
+type Props = {
+  data: Payment[];
+};
+
 export const PendingPayments = ({
   data,
-}: any) => {
+}: Props) => {
   return (
     <div className="space-y-3">
-      {data.map((p: any, i: number) => (
-        <div
+      {data.map((p: Payment, i: number) => (
+        <ListCard
           key={i}
-          className={`flex items-center justify-between p-4 rounded-xl ${
+          className={
             p.overdue
               ? "bg-destructive/5 border border-destructive/20"
-              : "bg-muted/30"
-          }`}
-        >
-          <div>
-            <p className="text-sm font-medium text-foreground font-sans">
-              {p.client} — {p.project}
-            </p>
-
-            <p className="text-xs text-muted-foreground font-sans">
-              {p.stage} · Due: {p.dueDate}
-            </p>
-          </div>
-
+              : ""
+          }
+          title={`${p.client} — ${p.project}`}
+        subtitle={`${p.stage} · Due: ${p.dueDate}`}
+        rightContent={
           <div className="flex items-center gap-3">
-            <span className="text-sm font-bold text-foreground font-display">
+            <span className="text-sm font-bold text-accent font-display">
               {p.amount}
             </span>
 
             {p.overdue && (
-              <span className="px-2 py-0.5 rounded-full text-xs font-bold badge-overdue font-sans">
+              <Badge variant="destructive">
                 Overdue
-              </span>
+              </Badge>
             )}
           </div>
-        </div>
+        }
+        />
       ))}
     </div>
   );

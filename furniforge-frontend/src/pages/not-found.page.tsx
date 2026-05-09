@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
 import { Button } from "../shared/components/ui/button";
+import { APP_ROUTES } from "../core/config/constants/routes.constants";
 
 const NotFoundPage = () => {
   const location = useLocation();
@@ -88,7 +89,7 @@ const NotFoundPage = () => {
           transition={{ delay: 0.6 }}
           className="flex gap-3 justify-center"
         >
-          <Link to="/">
+          <Link to={APP_ROUTES.COMMON.ROOT}>
             <Button variant="copper" size="lg" className="gap-2">
               <Home size={18} /> Go Home
             </Button>
