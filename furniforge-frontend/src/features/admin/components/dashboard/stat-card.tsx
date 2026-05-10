@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatedContainer } from "../../../../shared/components/common/animated-container";
 
 type Props = {
   title: string;
@@ -17,10 +17,9 @@ export const StatCard = ({
   delay = 0,
 }: Props) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
+    <AnimatedContainer
+      delay={delay}
+      hover={true}
       className="bg-card rounded-2xl p-5 shadow-warm border border-border"
     >
       <div className="flex items-center gap-2 mb-2">
@@ -34,6 +33,6 @@ export const StatCard = ({
       <p className={`text-xl font-bold font-display ${color}`}>
         {value}
       </p>
-    </motion.div>
+    </AnimatedContainer>
   );
 };

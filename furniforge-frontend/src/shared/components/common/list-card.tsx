@@ -3,6 +3,7 @@ type Props = {
   subtitle?: string;
   rightContent?: React.ReactNode;
   leftContent?: React.ReactNode;
+  bottomContent?: React.ReactNode;
   className?: string;
 };
 
@@ -11,29 +12,36 @@ export const ListCard = ({
   subtitle,
   rightContent,
   leftContent,
+  bottomContent,
   className,
 }: Props) => {
   return (
     <div
-      className={`flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border ${className}`}
+      className={`p-4 rounded-xl bg-muted/30 border border-border space-y-4 ${className}`}
     >
-      <div className="flex items-center gap-3 ">
-        {leftContent}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          {leftContent}
 
-        <div>
-          <p className="text-sm font-medium text-foreground font-sans">
-            {title}
-          </p>
-
-          {subtitle && (
-            <p className="text-xs text-muted-foreground font-sans">
-              {subtitle}
+          <div>
+            <p className="text-sm font-medium text-foreground">
+              {title}
             </p>
-          )}
+
+            {subtitle && (
+              <p className="text-xs text-muted-foreground">
+                {subtitle}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="shrink-0">
+          {rightContent}
         </div>
       </div>
 
-      <div  className="shrink-0">{rightContent}</div>
+      {bottomContent}
     </div>
   );
 };

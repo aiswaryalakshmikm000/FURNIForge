@@ -56,8 +56,8 @@ export const ConfirmDialog = ({
             disabled={loading}
             className={
               variant === "destructive"
-                ? "bg-red-600 hover:bg-red-700 text-white"
-                : ""
+                ? "bg-red-600 hover:bg-red-700 text-white border-red-600"
+      : "bg-accent hover:bg-accent/90 text-accent-foreground"
             }
           >
             {loading ? "Please wait..." : confirmText}

@@ -10,7 +10,7 @@ import AdminLayout from "../../../layouts/admin/admin.layout";
 import ErrorPage from "../../../features/auth/pages/error.page";
 
 const AdminDashboard = lazy(() => import("../../../features/admin/pages/admin.dashboard.page"));
-// const UsersPage = lazy(() => import("../../../features/admin/pages/users.page"));
+const LeadsPage = lazy(() => import("../../../features/admin/pages/admin.leads.page"));
 // const ProjectsPage = lazy(() => import("../../../features/admin/pages/projects.page"));
 
 export const adminRoutes: RouteObject[] = [
@@ -26,7 +26,7 @@ export const adminRoutes: RouteObject[] = [
     errorElement: <ErrorPage />,
     children: [
         {index: true, element: <AdminDashboard/>},
-        // {path: "users", element: <UserPage/>},
+        {path: APP_ROUTES.ADMIN.LEADS, element: <LeadsPage/>},
         // {path: "projects", element: <ProjectPage/>},
     ],
   },

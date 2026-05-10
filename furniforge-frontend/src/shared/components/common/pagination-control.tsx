@@ -46,7 +46,7 @@ export const PaginationControl = ({
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <Button
               key={page}
-              variant={currentPage === page ? "default" : "outline"}
+              variant={currentPage === page ? "copper" : "outline"}
               size="sm"
               onClick={() => onPageChange(page)}
               className={`w-9 h-9 rounded-xl text-sm font-medium ${

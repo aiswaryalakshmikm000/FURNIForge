@@ -34,7 +34,7 @@ export const LogoutButton = () => {
         onOpenChange={setOpen}
         onConfirm={handleLogout}
         title="Sign out?"
-        description="You will need to log in again to access your account."
+        description="Are you sure you want to sign out?"
         confirmText="Sign Out"
         cancelText="Cancel"
         loading={isPending}

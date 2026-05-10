@@ -12,13 +12,7 @@ import { PageHeader } from "../../../shared/components/common/page-header";
 import { AnimatedContainer } from "../../../shared/components/common/animated-container";
 
 export const stats = [
-  {
-    title: "Total Revenue",
-    value: "₹28,60,000",
-    icon: DollarSign,
-    color: "text-accent",
-  },
-
+  { title: "Total Revenue", value: "₹28,60,000", icon: DollarSign, color: "text-accent"},
   { title: "Active Projects", value: "18", icon: Package, color: "text-accent" },
   { title: "Open Leads", value: "12", icon: UserPlus, color: "text-accent" },
   { title: "Pending Payments", value: "₹6,45,000", icon: CreditCard, color: "text-[hsl(var(--mustard))]"},
@@ -87,7 +81,7 @@ const AdminDashboardPage = () => {
       <PageHeader title="Admin Dashboard" description="Overview of FURNIForge operations"/>
 
       {/* STATS */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4">
         {stats.map((s, i) => (
           <StatCard key={i} {...s} delay={i * 0.03} />
         ))}
