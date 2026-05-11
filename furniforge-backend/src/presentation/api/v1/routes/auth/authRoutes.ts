@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { AuthController } from "../../../../../presentation/api/v1/controllers/auth/AuthController.js";
 import { validateBody } from "../../../../../presentation/api/middlewares/validationMiddleware.js";
 import { RegisterSchema } from "../../../../../application/dtos/auth/RegisterUserDTO.js";
@@ -13,7 +13,7 @@ import { asyncHandler } from "../../../../../shared/utils/asyncHandler.js";
 import { ForgotPasswordSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO.js";
 import { ResetPasswordSchema, VerifyResetOtpSchema, ResendForgotPasswordOtpSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO.js";
 
-const router = express.Router();
+const router = Router();
 
 //di activation
 const controller = container.get<AuthController>(TYPES.AuthController);

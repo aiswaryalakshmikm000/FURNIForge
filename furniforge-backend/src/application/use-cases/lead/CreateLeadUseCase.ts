@@ -17,7 +17,6 @@ export class CreateLeadUseCase implements ICreateLeadUseCase {
 
     const seq = await this.leadRepository.getNextLeadSequence();
     let leadRegNo = generateRegNo({prefix: "LEAD", sequence: seq})
-    console.log("hit create lead usecase", leadRegNo)
 
     const lead = Lead.create({ 
         leadRegNo,

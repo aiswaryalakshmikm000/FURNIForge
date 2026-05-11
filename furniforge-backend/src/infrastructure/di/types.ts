@@ -1,3 +1,4 @@
+import { LeadController } from "../../presentation/api/v1/controllers/admin/LeadController.js";
 
 export const TYPES = {
   Redis: Symbol.for("Redis"),
@@ -30,6 +31,8 @@ export const TYPES = {
   IResendForgotPasswordOtpUseCase: Symbol.for("IResendForgotPasswordOtpUseCase"),
 
   ICreateLeadUseCase: Symbol.for("ICreateLeadUseCase"),
+  IGetAllLeadsUseCase: Symbol.for("IGetAllLeadsUseCase"),
 
   AuthController: Symbol.for("AuthController"),
+  LeadController: Symbol.for("LeadController"),
 };

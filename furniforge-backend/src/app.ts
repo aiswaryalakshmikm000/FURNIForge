@@ -3,6 +3,7 @@ import { corsConfig } from "./infrastructure/config/corsConfig.js"
 import { helmetConfig } from "./infrastructure/config/helmetConfig.js"
 import { errorHandlerMiddleware } from "./presentation/api/middlewares/errorHandlerMiddleware.js"
 import authRoutes from "./presentation/api/v1/routes/auth/authRoutes.js";
+import adminRoutes from "./presentation/api/v1/routes/admin/leadRoutes.js"
 import { SUCCESS_MESSAGES } from "./infrastructure/config/messages.js";
 import { morganConfig } from "./infrastructure/config/morganConfig.js";
 import { cookieConfig } from "./infrastructure/config/cookieConfig.js";
@@ -17,6 +18,7 @@ app.use(helmetConfig)
 app.use(cookieConfig)
 
 app.use("/api/v1", authRoutes)
+app.use("/api/v1/admin", adminRoutes)
 
 app.use(errorHandlerMiddleware)
 

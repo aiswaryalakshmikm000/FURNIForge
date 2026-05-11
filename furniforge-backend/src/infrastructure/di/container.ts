@@ -27,6 +27,8 @@ import { ResendForgotPasswordOtpUseCase } from "../../application/use-cases/auth
 import { verifyResetOtpUseCase } from "../../application/use-cases/auth/VerifyResetOtpUseCase.js";
 import { LeadRepository } from "../database/prisma/repositories/LeadRepository.js";
 import { CreateLeadUseCase } from "../../application/use-cases/lead/CreateLeadUseCase.js";
+import { GetAllLeadsUseCase } from "../../application/use-cases/lead/GetAllLeadsUseCase.js";
+import { LeadController } from "../../presentation/api/v1/controllers/admin/LeadController.js";
 
 const container = new Container();
 
@@ -62,11 +64,13 @@ container.bind(TYPES.IGetMeUseCase).to(GetMeUseCase);
 container.bind(TYPES.IForgotPasswordUseCase).to(ForgotPasswordUseCase);
 container.bind(TYPES.IResetPasswordUseCase).to(ResetPasswordUseCase);
 container.bind(TYPES.IResendForgotPasswordOtpUseCase).to(ResendForgotPasswordOtpUseCase);
-container.bind(TYPES.IVerifyResetOtpUseCase).to(verifyResetOtpUseCase)
+container.bind(TYPES.IVerifyResetOtpUseCase).to(verifyResetOtpUseCase);
 
-container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase)
+container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase);
+container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
+container.bind(TYPES.LeadController).to(LeadController)
 
 export { container };

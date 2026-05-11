@@ -22,6 +22,10 @@ export const SUCCESS_MESSAGES = {
   GENERAL: {
     HEALTH_CHECK: 'Service is healthy',
   },
+
+  ADMIN: {
+    LEADS_FETCH_SUCCESS: "Leads fetched successfully",
+  }
 };
 
 //========================ERROR MESSAGES=============================
