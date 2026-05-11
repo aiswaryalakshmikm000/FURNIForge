@@ -18,6 +18,7 @@ import { ISessionService } from "../../../domain/services/ISessionService.js";
 import { AuthResult } from "../../../application/dtos/auth/AuthResult.js";
 import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies.js";
 import { UserMapper } from "../../../application/mappers/UserMapper.js";
+import { ICreateLeadUseCase } from "../lead/interfaces/ICreateLeadUseCase.js";
 
 @injectable()
 export class VerifyOtpUseCase implements IVerifyOtpUseCase {
@@ -28,7 +29,8 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
     @inject(TYPES.IEmailService) private emailService: IEmailService,
     @inject(TYPES.ILogger) private logger: ILogger,
     @inject(TYPES.ITokenService) private tokenService: ITokenService,
-    @inject(TYPES.ISessionService) private sessionService: ISessionService
+    @inject(TYPES.ISessionService) private sessionService: ISessionService,
+    @inject(TYPES.ICreateLeadUseCase) private createLeadUseCase: ICreateLeadUseCase
   ) {}
 
   async execute(data: VerifyOtpDTO): Promise<AuthResult> {
@@ -53,6 +55,9 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
       user.verifyEmail();
 
       const createdUser = await this.userRepository.create(user);
+    
+      await this.createLeadUseCase.execute(createdUser);
+
       await this.pendingUserService.delete(pendingUser.email, pendingUser.tempUserId);
 
       const sessionId = crypto.randomUUID();

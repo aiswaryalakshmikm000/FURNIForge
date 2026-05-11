@@ -40,7 +40,7 @@ export class User {
     );
   }
 
-  // ✅ For DB → ENTITY 
+  //  For DB → ENTITY 
   static fromPersistence(raw: PrismaUser): User {
     return new User(
       raw.id,
@@ -64,7 +64,7 @@ export class User {
     this._updatedAt = new Date();
   }
 
-  // ✅ Getters
+  //  Getters
   get id(): string { return this._id; }
   get firstName(): string { return this._firstName; }
   get lastName(): string { return this._lastName; }

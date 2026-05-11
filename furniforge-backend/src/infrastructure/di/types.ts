@@ -7,6 +7,7 @@ export const TYPES = {
   IUserRepository: Symbol.for("IUserRepository"),
   IOTPRepository: Symbol.for("IOTPRepository"),
   IPendingUserRepository: Symbol.for("IPendingUserRepository"),
+  ILeadRepository: Symbol.for("ILeadRepository"),
 
   IPasswordService: Symbol.for("IPasswordService"),
   IOtpService: Symbol.for("IOtpService"),
@@ -28,6 +29,7 @@ export const TYPES = {
   IResetPasswordUseCase: Symbol.for("IResetPasswordUseCase"),
   IResendForgotPasswordOtpUseCase: Symbol.for("IResendForgotPasswordOtpUseCase"),
 
+  ICreateLeadUseCase: Symbol.for("ICreateLeadUseCase"),
 
   AuthController: Symbol.for("AuthController"),
 };

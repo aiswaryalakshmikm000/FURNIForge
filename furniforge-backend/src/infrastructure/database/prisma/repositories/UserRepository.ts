@@ -2,7 +2,7 @@ import prisma from "../client.js";
 import { IUserRepository } from "../../../../domain/repositories/IUserRepository.js";
 import { User } from "../../../../domain/entities/User.js";
 import { BaseRepository } from "./BaseRepository.js";
-import { injectable, inject } from "inversify";
+import { injectable } from "inversify";
 import { UserMapper } from "../../../../application/mappers/UserMapper.js";
 import {User as PrismaUser, Prisma} from "../../../../generated/prisma/index.js";
 

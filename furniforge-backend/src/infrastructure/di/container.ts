@@ -25,6 +25,8 @@ import { ForgotPasswordUseCase } from "../../application/use-cases/auth/ForgotPa
 import { ResetPasswordUseCase } from "../../application/use-cases/auth/ResetPasswordUseCase.js";
 import { ResendForgotPasswordOtpUseCase } from "../../application/use-cases/auth/ResendForgotPasswordOtpUseCase.js";
 import { verifyResetOtpUseCase } from "../../application/use-cases/auth/VerifyResetOtpUseCase.js";
+import { LeadRepository } from "../database/prisma/repositories/LeadRepository.js";
+import { CreateLeadUseCase } from "../../application/use-cases/lead/CreateLeadUseCase.js";
 
 const container = new Container();
 
@@ -38,6 +40,7 @@ container.bind(TYPES.ILogger).toConstantValue(loggerInstance);
 container.bind(TYPES.IUserRepository).to(UserRepository);
 container.bind(TYPES.IOTPRepository).to(RedisOTPRepository);
 container.bind(TYPES.IPendingUserRepository).to(RedisPendingUserRepository);
+container.bind(TYPES.ILeadRepository).to(LeadRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -60,6 +63,8 @@ container.bind(TYPES.IForgotPasswordUseCase).to(ForgotPasswordUseCase);
 container.bind(TYPES.IResetPasswordUseCase).to(ResetPasswordUseCase);
 container.bind(TYPES.IResendForgotPasswordOtpUseCase).to(ResendForgotPasswordOtpUseCase);
 container.bind(TYPES.IVerifyResetOtpUseCase).to(verifyResetOtpUseCase)
+
+container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

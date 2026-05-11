@@ -22,7 +22,6 @@ export const useAuth = () => {
   useEffect(() => {
     if (query.isSuccess) {
       const { user } = query.data.data;
-      console.log("user from useauth", user)
       dispatch(setAuth({ user }));
       // toast.success(query.data.message);
     }

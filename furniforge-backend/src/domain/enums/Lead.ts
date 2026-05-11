@@ -1,0 +1,20 @@
+export enum LeadStatus {
+  UNASSIGNED = "UNASSIGNED",
+  ASSIGNED = "ASSIGNED",
+  DESIGNING = "DESIGNING",
+  PROPOSAL_SENT = "PROPOSAL_SENT",
+  CONVERTED = "CONVERTED",
+  LOST = "LOST",
+}
+
+export enum LeadSource {
+  EXTERNAL = "EXTERNAL",
+  REFERRAL = "REFERRAL",
+  SELF_REGISTERED = "SELF_REGISTERED",
+}
+
+export enum PackageType {
+    BASIC = "BASIC",
+    STANDARD = "STANDARD",
+    PREMIUM = "PREMIUM",
+}
