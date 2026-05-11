@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 
@@ -12,8 +12,8 @@ import { PageHeader } from "../../../shared/components/common/page-header";
 import { LeadCard } from "../components/leads/lead-card";
 import { AssignLeadDialog } from "../components/leads/assign-lead-dialog";
 import type { Lead } from "../types/lead.type";
-import { DESIGNERS, LEAD_SOURCES, ALL_DELIVERABLES } from "../constants/leads.constants";
 import { AddLeadDialog } from "../components/leads/add-lead-dialog";
+import { useLeadsFilters } from "../hooks/use-leads-filters";
 
 type SortKey = "none" | "date";
 
@@ -55,6 +55,12 @@ const initialLeads: Lead[] = [
   },
 ];
 
+const designers = ["Sneha Kulkarni", "Rahul Sharma", "Amit Joshi"];
+
+const leadSources = ["Website", "Referral", "Instagram", "Walk-in"];
+
+const deliverables = ["Wardrobe", "TV Unit", "Sofa", "Office Desk", "Bed"];
+
 export default function AdminLeadsPage() {
   const [search, setSearch] = useState("");
 
@@ -76,32 +82,16 @@ export default function AdminLeadsPage() {
 
   const [leads, setLeads] = useState<Lead[]>(initialLeads);
 
-const [addLeadOpen, setAddLeadOpen] = useState(false);
+  const [addLeadOpen, setAddLeadOpen] = useState(false);
 
-  const filtered = useMemo(() => {
-    let list = leads.filter((l) => {
-      const matchesSearch =
-        search === "" ||
-        l.name.toLowerCase().includes(search.toLowerCase()) ||
-        l.location.toLowerCase().includes(search.toLowerCase());
-
-      const matchesStatus = statusFilter === "All" || l.status === statusFilter;
-
-      const matchesType = typeFilter === "All" || l.types.includes(typeFilter);
-
-      const matchesSource = sourceFilter === "All" || l.source === sourceFilter;
-
-      return matchesSearch && matchesStatus && matchesType && matchesSource;
-    });
-
-    if (sortKey === "date") {
-      list = [...list].sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-      );
-    }
-
-    return list;
-  }, [search, statusFilter, typeFilter, sourceFilter, sortKey]);
+  const filtered = useLeadsFilters({
+    leads,
+    search,
+    statusFilter,
+    typeFilter,
+    sourceFilter,
+    sortKey,
+  });
 
   const {
     currentPage,
@@ -129,30 +119,30 @@ const [addLeadOpen, setAddLeadOpen] = useState(false);
   };
 
   const handleAddLead = (leadData: {
-  name: string;
-  phone: string;
-  location: string;
-  types: string[];
-  source: string;
-}) => {
-  const newLead: Lead = {
-    id: `LED${Math.floor(Math.random() * 1000)}-04-26`,
-    name: leadData.name,
-    phone: leadData.phone,
-    location: leadData.location,
-    types: leadData.types,
-    source: leadData.source,
-    assignedTo: "",
-    status: "Unassigned",
-    date: new Date().toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }),
-  };
+    name: string;
+    phone: string;
+    location: string;
+    types: string[];
+    source: string;
+  }) => {
+    const newLead: Lead = {
+      id: `LED${Math.floor(Math.random() * 1000)}-04-26`,
+      name: leadData.name,
+      phone: leadData.phone,
+      location: leadData.location,
+      types: leadData.types,
+      source: leadData.source,
+      assignedTo: "",
+      status: "Unassigned",
+      date: new Date().toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+    };
 
-  setLeads((prev) => [newLead, ...prev]);
-};
+    setLeads((prev) => [newLead, ...prev]);
+  };
 
   const resetFilters = () => {
     setStatusFilter("All");
@@ -174,11 +164,11 @@ const [addLeadOpen, setAddLeadOpen] = useState(false);
         description="Manage and assign leads to designers"
         action={
           <Button
-  variant="copper"
-  size="sm"
-  className="gap-1"
-  onClick={() => setAddLeadOpen(true)}
->
+            variant="copper"
+            size="sm"
+            className="gap-1"
+            onClick={() => setAddLeadOpen(true)}
+          >
             <Plus size={14} />
             Add Lead
           </Button>
@@ -207,7 +197,7 @@ const [addLeadOpen, setAddLeadOpen] = useState(false);
           {
             key: "type",
             label: "Deliverable",
-            options: ["All", ...ALL_DELIVERABLES],
+            options: ["All", ...deliverables],
             value: typeFilter,
             onChange: (val) => {
               setTypeFilter(val);
@@ -218,7 +208,7 @@ const [addLeadOpen, setAddLeadOpen] = useState(false);
           {
             key: "source",
             label: "Source",
-            options: ["All", ...LEAD_SOURCES],
+            options: ["All", ...leadSources],
             value: sourceFilter,
             onChange: (val) => {
               setSourceFilter(val);
@@ -251,7 +241,7 @@ const [addLeadOpen, setAddLeadOpen] = useState(false);
             <LeadCard
               key={lead.id}
               lead={lead}
-              designers={DESIGNERS}
+              designers={designers}
               assigning={assigningId === lead.id}
               selectedDesigner={selectedDesigner}
               onDesignerChange={setSelectedDesigner}
@@ -286,12 +276,12 @@ const [addLeadOpen, setAddLeadOpen] = useState(false);
       />
 
       <AddLeadDialog
-  open={addLeadOpen}
-  onOpenChange={setAddLeadOpen}
-  leadSources={LEAD_SOURCES}
-  deliverables={ALL_DELIVERABLES}
-  onAddLead={handleAddLead}
-/>
+        open={addLeadOpen}
+        onOpenChange={setAddLeadOpen}
+        leadSources={leadSources}
+        deliverables={deliverables}
+        onAddLead={handleAddLead}
+      />
     </motion.div>
   );
 }
