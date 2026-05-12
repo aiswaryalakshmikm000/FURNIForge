@@ -1,11 +1,11 @@
 import { LeadSource, LeadStatus, PackageType } from "../../../domain/enums/Lead.js";
 
-export interface LeadResponseDTO {
+export interface LeadListItem {
   id: string;
   leadRegNo: string;
   name: string;
   email: string;
-  phone: string; 
+  phone: string;
   location: string | null;
   source: LeadSource;
   status: LeadStatus;
@@ -14,4 +14,3 @@ export interface LeadResponseDTO {
   assignedDesignerId: string | null;
   createdAt: Date;
 }
-

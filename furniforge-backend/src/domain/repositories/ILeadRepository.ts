@@ -1,13 +1,6 @@
 import { IBaseRepository } from "./IBaseRepository.js";
 import { Lead } from "../entities/Lead.js";
-import { Prisma } from "../../generated/prisma/index.js";
-
-type LeadWithClient = Prisma.LeadGetPayload<{
-  include: {
-    client: true;
-  };
-}>;
-
+import { LeadListItem } from "../../shared/read-models/lead/LeadListItems.js";
 
 export interface ILeadRepository extends IBaseRepository<Lead> {
   findByLeadRegNo(leadRegNo: string): Promise<Lead | null>;
@@ -35,6 +28,6 @@ export interface ILeadRepository extends IBaseRepository<Lead> {
     status?: string;
     source?: string;
     sortOrder: "asc" | "desc";
-  }): Promise<LeadWithClient[]>;
+  }): Promise<LeadListItem[]>;
 
 }

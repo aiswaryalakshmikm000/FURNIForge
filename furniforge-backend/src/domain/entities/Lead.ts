@@ -8,6 +8,7 @@ export class Lead {
     private _name: string,
     private _email: string,
     private _phone: string,
+    
     private _source: LeadSource,
     private _status: LeadStatus,
     private _projectsInterestedIn: string[],

@@ -3,19 +3,14 @@ import { injectable } from "inversify";
 import { BaseRepository } from "./BaseRepository.js";
 import { Lead } from "../../../../domain/entities/Lead.js";
 import { ILeadRepository } from "../../../../domain/repositories/ILeadRepository.js";
-import { LeadMapper } from "../../../../application/mappers/LeadMapper.js";
-import { Prisma, Lead as PrismaLead } from "../../../../generated/prisma/index.js";
-
-type LeadWithClient = Prisma.LeadGetPayload<{
-  include: {
-    client: true;
-  };
-}>;
+import { LeadMapper } from "../mapper/lead/LeadMapper.js";
+import { LeadSource, LeadStatus, PackageType } from "../../../../domain/enums/Lead.js";
+import { Prisma, Lead as PrismaLead, } from "../../../../generated/prisma/index.js";
+import { LeadListItem } from "../../../../shared/read-models/lead/LeadListItems.js";
 
 @injectable()
 export class LeadRepository
   extends BaseRepository< Lead, PrismaLead, Prisma.LeadCreateInput, Prisma.LeadUpdateInput > implements ILeadRepository {
-
   protected model = prisma.lead;
 
   protected toDomain(raw: PrismaLead): Lead {
@@ -66,9 +61,9 @@ export class LeadRepository
             }
           : {},
 
-        params.status ? { status: params.status as any } : {}, // i dont need any in this..
+        params.status ? { status: params.status as LeadStatus } : {},
 
-        params.source ? { source: params.source as any } : {},
+        params.source ? { source: params.source as LeadSource } : {},
       ],
     };
 
@@ -133,7 +128,7 @@ export class LeadRepository
     status?: string;
     source?: string;
     sortOrder: "asc" | "desc";
-  }): Promise<LeadWithClient[]> {
+  }): Promise<LeadListItem[]> {
     const where: Prisma.LeadWhereInput = {
       AND: [
         params.search
@@ -174,9 +169,11 @@ export class LeadRepository
       ],
     };
 
-    return this.model.findMany({
+    const raws = await this.model.findMany({
       where,
+
       skip: params.skip,
+
       take: params.take,
 
       include: {
@@ -186,6 +183,37 @@ export class LeadRepository
       orderBy: {
         createdAt: params.sortOrder,
       },
+    });
+
+    return raws.map((raw) => {
+      let location: string | null = null;
+
+      if (
+        raw.client?.address &&
+        typeof raw.client.address === "object" &&
+        !Array.isArray(raw.client.address)
+      ) {
+        const address = raw.client.address as { city?: string };
+
+        location = address.city ?? null;
+      }
+
+      return {
+        id: raw.id,
+        leadRegNo: raw.leadRegNo,
+        name: raw.name,
+        email: raw.email,
+        phone: raw.phone,
+        location,
+        source: LeadSource[raw.status as keyof typeof LeadSource],
+        status: LeadStatus[raw.status as keyof typeof LeadStatus],
+        projectsInterestedIn: raw.projectsInterestedIn,
+        packageType: raw.packageType
+    ? PackageType[raw.packageType as keyof typeof PackageType]
+    : null,
+        assignedDesignerId: raw.assignedDesignerId,
+        createdAt: raw.createdAt,
+      };
     });
   }
 }
