@@ -1,5 +1,5 @@
 import { LeadResponseDTO } from "../dtos/lead/LeadResponseDTO.js";
-import { LeadListItem } from "../../shared/read-models/lead/LeadListItems.js";
+import { LeadListItem } from "../../domain/read-models/lead/LeadListItems.js";
 
 export class LeadResponseMapper {
 

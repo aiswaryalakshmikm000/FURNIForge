@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { LeadResponseDTO } from "./LeadResponseDTO.js";
-import { LeadSource, LeadStatus } from "../../../generated/prisma/index.js";
+import { LeadSource, LeadStatus } from "../../../domain/enums/Lead.js";
 
 export const GetAllLeadsQuerySchema = z.object({
 

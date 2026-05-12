@@ -14,31 +14,23 @@ export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
   async execute(query: GetAllLeadsQueryDTO): Promise<GetAllLeadsResponseDTO> {
     const skip = (query.page - 1) * query.limit;
 
-    const rows = await this.leadRepository.findAllLeadRows({
-      skip,
-      take: query.limit,
+    const [rows, total] = await Promise.all([
+      this.leadRepository.findAllLeadRows({
+        skip,
+        take: query.limit,
+        search: query.search,
+        status: query.status,
+        source: query.source,
+        sortOrder: query.sortOrder,
+      }),
 
-      search: query.search,
-      status: query.status,
-      source: query.source,
+      this.leadRepository.countLeads({
+        search: query.search,
+        status: query.status,
+        source: query.source,
+      }),
+    ]);
 
-      sortOrder: query.sortOrder,
-    });
-
-    const total = await this.leadRepository.countLeads({
-      search: query.search,
-      status: query.status,
-      source: query.source,
-    });
-
-    return {
-      leads: rows.map(LeadResponseMapper.toDTO),
-
-      total,
-
-      page: query.page,
-
-      limit: query.limit,
-    };
+    return { leads: rows.map(LeadResponseMapper.toDTO), total, page: query.page, limit: query.limit };
   }
 }

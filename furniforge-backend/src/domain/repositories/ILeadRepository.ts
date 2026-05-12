@@ -1,19 +1,11 @@
 import { IBaseRepository } from "./IBaseRepository.js";
 import { Lead } from "../entities/Lead.js";
-import { LeadListItem } from "../../shared/read-models/lead/LeadListItems.js";
+import { LeadListItem } from "../read-models/lead/LeadListItems.js";
 
 export interface ILeadRepository extends IBaseRepository<Lead> {
   findByLeadRegNo(leadRegNo: string): Promise<Lead | null>;
 
   getNextLeadSequence(): Promise<number>;
-
-  findAllLeads(params: {
-    skip: number;
-    take: number;
-    search?: string;
-    status?: string;
-    source?: string;
-  }): Promise<Lead[]>;
 
   countLeads(filters?: {
     search?: string;

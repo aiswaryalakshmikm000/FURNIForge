@@ -6,7 +6,7 @@ import { ILeadRepository } from "../../../../domain/repositories/ILeadRepository
 import { LeadMapper } from "../mapper/lead/LeadMapper.js";
 import { LeadSource, LeadStatus, PackageType } from "../../../../domain/enums/Lead.js";
 import { Prisma, Lead as PrismaLead, } from "../../../../generated/prisma/index.js";
-import { LeadListItem } from "../../../../shared/read-models/lead/LeadListItems.js";
+import { LeadListItem } from "../../../../domain/read-models/lead/LeadListItems.js";
 
 @injectable()
 export class LeadRepository
@@ -42,42 +42,6 @@ export class LeadRepository
     return counter.value;
   }
 
-  async findAllLeads(params: {
-    skip: number;
-    take: number;
-    search?: string;
-    status?: string;
-    source?: string;
-  }): Promise<Lead[]> {
-    const where: Prisma.LeadWhereInput = {
-      AND: [
-        params.search
-          ? {
-              OR: [
-                { name: { contains: params.search, mode: "insensitive" } },
-                { email: { contains: params.search, mode: "insensitive" } },
-                { phone: { contains: params.search } },
-              ],
-            }
-          : {},
-
-        params.status ? { status: params.status as LeadStatus } : {},
-
-        params.source ? { source: params.source as LeadSource } : {},
-      ],
-    };
-
-    const raws = await this.model.findMany({
-      where,
-      skip: params.skip,
-      take: params.take,
-      include: { client: true },
-      orderBy: { createdAt: "desc" },
-    });
-
-    return raws.map((raw) => this.toDomain(raw));
-  }
-
   async countLeads(filters?: {
     search?: string;
     status?: string;
@@ -86,35 +50,16 @@ export class LeadRepository
     const where: Prisma.LeadWhereInput = {
       AND: [
         filters?.search
-          ? {
-              OR: [
-                {
-                  name: {
-                    contains: filters.search,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  email: {
-                    contains: filters.search,
-                    mode: "insensitive",
-                  },
-                },
-              ],
-            }
-          : {},
+          ? { OR: [
+                { name: { contains: filters.search, mode: "insensitive" } },
+                { email: { contains: filters.search, mode: "insensitive" } },
+              ] } : {},
 
-        filters?.status
-          ? {
-              status: filters.status as any,
-            }
-          : {},
+        filters?.status 
+          ? { status: filters.status as LeadStatus } : {},
 
-        filters?.source
-          ? {
-              source: filters.source as any,
-            }
-          : {},
+        filters?.source 
+          ? { source: filters.source as LeadSource } : {},
       ],
     };
 
@@ -132,67 +77,32 @@ export class LeadRepository
     const where: Prisma.LeadWhereInput = {
       AND: [
         params.search
-          ? {
-              OR: [
-                {
-                  name: {
-                    contains: params.search,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  email: {
-                    contains: params.search,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  phone: {
-                    contains: params.search,
-                  },
-                },
-              ],
-            }
-          : {},
+          ? { OR: [
+                { name: { contains: params.search, mode: "insensitive" } },
+                { email: { contains: params.search, mode: "insensitive" } },
+                { phone: { contains: params.search } },
+              ] } : {},
 
         params.status
-          ? {
-              status: params.status as Prisma.EnumLeadStatusFilter["equals"],
-            }
-          : {},
+          ? { status: params.status as Prisma.EnumLeadStatusFilter["equals"] } : {},
 
         params.source
-          ? {
-              source: params.source as Prisma.EnumLeadSourceFilter["equals"],
-            }
-          : {},
+          ? { source: params.source as Prisma.EnumLeadSourceFilter["equals"] } : {},
       ],
     };
 
     const raws = await this.model.findMany({
       where,
-
       skip: params.skip,
-
       take: params.take,
-
-      include: {
-        client: true,
-      },
-
-      orderBy: {
-        createdAt: params.sortOrder,
-      },
+      include: { client: true },
+      orderBy: { createdAt: params.sortOrder},
     });
 
     return raws.map((raw) => {
       let location: string | null = null;
 
-      if (
-        raw.client?.address &&
-        typeof raw.client.address === "object" &&
-        !Array.isArray(raw.client.address)
-      ) {
+      if ( raw.client?.address && typeof raw.client.address === "object" && !Array.isArray(raw.client.address)) {
         const address = raw.client.address as { city?: string };
 
         location = address.city ?? null;
@@ -205,11 +115,11 @@ export class LeadRepository
         email: raw.email,
         phone: raw.phone,
         location,
-        source: LeadSource[raw.status as keyof typeof LeadSource],
-        status: LeadStatus[raw.status as keyof typeof LeadStatus],
+        source: raw.source as LeadSource,
+        status: raw.status as LeadStatus,
         projectsInterestedIn: raw.projectsInterestedIn,
         packageType: raw.packageType
-    ? PackageType[raw.packageType as keyof typeof PackageType]
+    ? raw.packageType as PackageType
     : null,
         assignedDesignerId: raw.assignedDesignerId,
         createdAt: raw.createdAt,
