@@ -4,18 +4,20 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types.js";
 import { ILeadRepository } from "../../../domain/repositories/ILeadRepository.js";
 import { LeadResponseMapper } from "../../mappers/LeadResponseMapper.js";
+import { ILogger } from "../../../domain/services/ILogger.js";
 
 @injectable()
 export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
   constructor(
-    @inject(TYPES.ILeadRepository) private leadRepository: ILeadRepository,
+    @inject(TYPES.ILeadRepository) private _leadRepository: ILeadRepository,
   ) {}
 
   async execute(query: GetAllLeadsQueryDTO): Promise<GetAllLeadsResponseDTO> {
+
     const skip = (query.page - 1) * query.limit;
 
     const [rows, total] = await Promise.all([
-      this.leadRepository.findAllLeadRows({
+      this._leadRepository.findAllLeadRows({
         skip,
         take: query.limit,
         search: query.search,
@@ -24,7 +26,7 @@ export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
         sortOrder: query.sortOrder,
       }),
 
-      this.leadRepository.countLeads({
+      this._leadRepository.countLeads({
         search: query.search,
         status: query.status,
         source: query.source,

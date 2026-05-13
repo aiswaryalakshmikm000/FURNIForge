@@ -19,12 +19,12 @@ import { env } from "../../../infrastructure/config/env.js";
 @injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {
   constructor(
-    @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
-    @inject(TYPES.IPasswordService) private passwordService: IPasswordService,
-    @inject(TYPES.IOtpService) private otpService: IOtpService,
-    @inject(TYPES.IPendingUserService) private pendingUserService: IPendingUserService,
-    @inject(TYPES.IEmailService) private emailService: IEmailService,
-    @inject(TYPES.ILogger) private logger: ILogger,
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository,
+    @inject(TYPES.IPasswordService) private _passwordService: IPasswordService,
+    @inject(TYPES.IOtpService) private _otpService: IOtpService,
+    @inject(TYPES.IPendingUserService) private _pendingUserService: IPendingUserService,
+    @inject(TYPES.IEmailService) private _emailService: IEmailService,
+    @inject(TYPES.ILogger) private _logger: ILogger,
   ) {}
 
   async execute(data: RegisterUserDTO): Promise<RegisterResponseDTO > {
@@ -32,19 +32,19 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
       const emailVO = new Email(data.email);
       const passwordVO = new Password(data.password);
 
-      const existingUser = await this.userRepository.findByEmail(emailVO.value);
+      const existingUser = await this._userRepository.findByEmail(emailVO.value);
       if (existingUser && existingUser.isVerified) {
         throw new ConflictError(ERROR_MESSAGES.AUTH.EMAIL_ALREADY_EXISTS);
       }
 
-      const existingUserByPhone = await this.userRepository.findByPhone(data.phone);
+      const existingUserByPhone = await this._userRepository.findByPhone(data.phone);
       if (existingUserByPhone && existingUserByPhone.isVerified) {
         throw new ConflictError(ERROR_MESSAGES.AUTH.PHONE_ALREADY_EXISTS);
       }
 
-      const hashedPassword = await this.passwordService.hash(passwordVO.value);
+      const hashedPassword = await this._passwordService.hash(passwordVO.value);
 
-      const { tempUserId, email } = await this.pendingUserService.createOrUpdate({
+      const { tempUserId, email } = await this._pendingUserService.createOrUpdate({
         email: emailVO.value,
         firstName: data.firstName,
         lastName: data.lastName,
@@ -52,12 +52,12 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
         passwordHash: hashedPassword,
       });
 
-      const otp = await this.otpService.generateAndHandleOtp(tempUserId, email)
+      const otp = await this._otpService.generateAndHandleOtp(tempUserId, email)
       
       try{
-        await this.emailService.sendOTPEmail(email, otp.otp, data.firstName);
+        await this._emailService.sendOTPEmail(email, otp.otp, data.firstName);
       } catch (error) {
-        await this.pendingUserService.delete(email, tempUserId);
+        await this._pendingUserService.delete(email, tempUserId);
         throw error;
       }
 
@@ -66,7 +66,7 @@ export class RegisterUserUseCase implements IRegisterUserUseCase {
     } catch (error) {
       if (error instanceof AppError) throw error;
 
-      this.logger.error(`RegisterUserUseCase Error: ${error instanceof Error ? error.message : error}`);
+      this._logger.error(`RegisterUserUseCase Error: ${error instanceof Error ? error.message : error}`);
 
       throw new InternalServerError(ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR);
     }

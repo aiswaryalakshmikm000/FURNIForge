@@ -7,10 +7,10 @@ import { ISessionService } from "../../../domain/services/ISessionService.js";
 @injectable()
 export class LogoutAllDevicesUseCase implements ILogoutAllDevicesUseCase{
   constructor(
-    @inject(TYPES.ISessionService) private sessionService: ISessionService
+    @inject(TYPES.ISessionService) private _sessionService: ISessionService
   ) {}
 
   async execute(userId: string): Promise<void> {
-    await this.sessionService.invalidateAllUserSessions(userId);
+    await this._sessionService.invalidateAllUserSessions(userId);
   }
 }

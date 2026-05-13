@@ -9,11 +9,11 @@ import { UserResponseDTO } from "../../dtos/user/userResponseDTO.js";
 @injectable()
 export class GetMeUseCase implements IGetMeUseCase {
   constructor(
-    @inject(TYPES.IUserRepository) private userRepository: IUserRepository
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository
 ) {};
 
   async execute(userId: string): Promise<{user: UserResponseDTO}> { 
-    const user = await this.userRepository.findById(userId);
+    const user = await this._userRepository.findById(userId);
 
     if (!user) throw new UnauthorizedError();
 

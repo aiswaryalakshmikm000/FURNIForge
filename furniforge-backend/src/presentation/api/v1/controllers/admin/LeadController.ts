@@ -10,12 +10,12 @@ import { GetAllLeadsQueryDTO } from "../../../../../application/dtos/lead/GetAll
 @injectable()
 export class LeadController {
   constructor(
-    @inject(TYPES.IGetAllLeadsUseCase) private getAllLeadsUseCase: IGetAllLeadsUseCase,
+    @inject(TYPES.IGetAllLeadsUseCase) private _getAllLeadsUseCase: IGetAllLeadsUseCase,
   ) {}
 
   getAllLeads = async (req: Request, res: Response) => {
     const query = req.query as unknown as GetAllLeadsQueryDTO;
-    const result = await this.getAllLeadsUseCase.execute(query);
+    const result = await this._getAllLeadsUseCase.execute(query);
 
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEADS_FETCH_SUCCESS).build());
   };

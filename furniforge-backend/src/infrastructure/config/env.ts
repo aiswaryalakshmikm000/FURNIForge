@@ -41,7 +41,9 @@ const envSchema = z.object({
   JWT_RESET_EXPIRY: z.string().default("10m"),
 
   REFRESH_TOKEN_EXPIRES_DAYS: z.string().default("7"),
-  ACCESS_TOKEN_EXPIRES_DAYS: z.string().default("15")
+  ACCESS_TOKEN_EXPIRES_DAYS: z.string().default("15"),
+
+  LOG_MAX_FILES: z.string().default("14d"),
 })
 
 //parse and validate
@@ -106,5 +108,7 @@ export const env = {
   },
 
   REFRESH_TOKEN_EXPIRES_DAYS: parsedEnv.data.REFRESH_TOKEN_EXPIRES_DAYS,
-  ACCESS_TOKEN_EXPIRES_DAYS: parsedEnv.data.ACCESS_TOKEN_EXPIRES_DAYS
+  ACCESS_TOKEN_EXPIRES_DAYS: parsedEnv.data.ACCESS_TOKEN_EXPIRES_DAYS,
+
+  LOG_MAX_FILES: parsedEnv.data.LOG_MAX_FILES,
 }

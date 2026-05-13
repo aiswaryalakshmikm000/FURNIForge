@@ -1,4 +1,5 @@
 import { IBaseRepository } from "../../../../domain/repositories/IBaseRepository.js";
+import { handlePrismaError } from "../errors/handlePrismaError.js";
 
 export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInput> implements IBaseRepository <TDomain> {
   protected abstract model: {
@@ -15,36 +16,63 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
   protected abstract toUpdate(entity: Partial<TDomain>): TUpdateInput;
 
   async create(entity: TDomain): Promise<TDomain> {
-    const raw = await this.model.create({
-      data: this.toCreate(entity),
-    });
-    return this.toDomain(raw);
+    try {
+      const raw = await this.model.create({
+        data: this.toCreate(entity),
+      });
+      return this.toDomain(raw);
+
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 
   async findById(id: string): Promise<TDomain | null> {
-    const raw = await this.model.findUnique({ where: { id } });
-    return raw ? this.toDomain(raw) : null;
+    try {
+      const raw = await this.model.findUnique({ where: { id }});
+      return raw ? this.toDomain(raw) : null;
+
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 
   async findAll(params?: any): Promise<TDomain[]> {
-    const raws = await this.model.findMany(params);
-    return raws.map((raw) => this.toDomain(raw));
+    try {
+      const raws = await this.model.findMany(params);
+      return raws.map((raw) => this.toDomain(raw));
+
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 
   async update(id: string, entity: Partial<TDomain>): Promise<TDomain> {
-    const raw = await this.model.update({
-      where: { id },
-      data: this.toUpdate(entity),
-    });
-    return this.toDomain(raw);
+    try {
+      const raw = await this.model.update({ where: { id }, data: this.toUpdate(entity) });
+      return this.toDomain(raw);
+
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 
   async delete(id: string): Promise<void> {
-    await this.model.delete({ where: { id } });
+    try {
+      await this.model.delete({ where: { id } });
+
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 
   async exists(where: any): Promise<boolean> {
-    const count = await this.model.count({ where });
-    return count > 0;
+    try {
+      const count = await this.model.count({ where });
+      return count > 0;
+
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 }

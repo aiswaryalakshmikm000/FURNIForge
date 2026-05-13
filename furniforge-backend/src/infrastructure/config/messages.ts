@@ -81,7 +81,10 @@ export const ERROR_MESSAGES = {
 
     TOKEN: {
       REFRESH_FAILED: "No refresh token",
-      ACCESS_TOKEN_MISSING: "Access token missing"
+      ACCESS_TOKEN_MISSING: "Access token missing",
+      INVALID_ACCESS_TOKEN: "Invalid access token",
+      INVALID_REFRESH_TOKEN: "Invalid refresh token",
+      INVALID_RESET_TOKEN: "Invalid reset token",
     },
   },
 

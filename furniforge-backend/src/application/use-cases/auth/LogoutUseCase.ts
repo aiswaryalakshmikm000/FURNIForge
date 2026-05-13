@@ -6,10 +6,10 @@ import { ISessionService } from "../../../domain/services/ISessionService.js";
 @injectable()
 export class LogoutUseCase implements ILogoutUseCase {
   constructor(
-    @inject(TYPES.ISessionService) private sessionService: ISessionService
+    @inject(TYPES.ISessionService) private _sessionService: ISessionService
   ) {}
 
   async execute(sessionId: string): Promise<void> {
-    await this.sessionService.revoke(sessionId);
+    await this._sessionService.revoke(sessionId);
   }
 }

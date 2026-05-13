@@ -8,27 +8,28 @@ import { ForgotPasswordDTO, ForgotPasswordResponseDTO } from "../../dtos/auth/Fo
 import { Email } from "../../../domain/value-objects/Email.js";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
 import { env } from "../../../infrastructure/config/env.js";
+import { IForgetPasswordUseCase } from "./interfaces/IForgetPasswordUseCase.js";
 
 @injectable()
-export class ForgotPasswordUseCase {
+export class ForgotPasswordUseCase implements IForgetPasswordUseCase{
   constructor(
-    @inject(TYPES.IUserRepository) private userRepo: IUserRepository,
-    @inject(TYPES.IOtpService) private otpService: IOtpService,
-    @inject(TYPES.IEmailService) private emailService: IEmailService
+    @inject(TYPES.IUserRepository) private _userRepo: IUserRepository,
+    @inject(TYPES.IOtpService) private _otpService: IOtpService,
+    @inject(TYPES.IEmailService) private _emailService: IEmailService
   ) {}
 
   async execute(data: ForgotPasswordDTO): Promise<ForgotPasswordResponseDTO> {
     const emailVO = new Email(data.email);
 
-    const user = await this.userRepo.findByEmail(emailVO.value);
+    const user = await this._userRepo.findByEmail(emailVO.value);
     if (!user) throw new NotFoundError(ERROR_MESSAGES.USER.NOT_FOUND);
 
-    const otpToken = await this.otpService.generateAndHandleOtp(
+    const otpToken = await this._otpService.generateAndHandleOtp(
       user.id,
       user.email.value
     );
 
-    await this.emailService.sendOTPEmail(user.email.value, otpToken.otp, user.firstName);
+    await this._emailService.sendOTPEmail(user.email.value, otpToken.otp, user.firstName);
     return { meta: { email: user.email.value, cooldown: env.OTP.RESEND_DELAY }};
   }
 }

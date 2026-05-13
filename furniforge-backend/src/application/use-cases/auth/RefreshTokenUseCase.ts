@@ -12,22 +12,22 @@ import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cooki
 @injectable()
 export class RefreshTokenUseCase implements IRefreshTokenUseCase {
   constructor(
-    @inject(TYPES.ITokenService) private tokenService: ITokenService,
-    @inject(TYPES.ISessionService) private sessionService: ISessionService,
-    @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
+    @inject(TYPES.ITokenService) private _tokenService: ITokenService,
+    @inject(TYPES.ISessionService) private _sessionService: ISessionService,
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository,
   ) {}
 
   async execute(refreshToken: string): Promise<RefreshTokenResultDTO> {
-    const payload = this.tokenService.verifyRefreshToken(refreshToken);
+    const payload = this._tokenService.verifyRefreshToken(refreshToken);
 
-    const session  = await this.sessionService.get(payload.sessionId);
+    const session  = await this._sessionService.get(payload.sessionId);
     if (!session ) throw new UnauthorizedError(ERROR_MESSAGES.AUTH.SESSION_NOT_FOUND);
 
     if(session.status !== "active") {
-      await this.sessionService.invalidateAllUserSessions(session.userId)
+      await this._sessionService.invalidateAllUserSessions(session.userId)
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.SESSION_CONFLICT);
     }
-    const user = await this.userRepository.findById(payload.sub);
+    const user = await this._userRepository.findById(payload.sub);
 
     if (!user || !user.isVerified) {
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.USER_INVALID);
@@ -42,13 +42,12 @@ export class RefreshTokenUseCase implements IRefreshTokenUseCase {
       sessionId: newSessionId,
     };
 
-    const accessToken = this.tokenService.generateAccessToken(newPayload);
-    const newRefreshToken = this.tokenService.generateRefreshToken(newPayload);
+    const accessToken = this._tokenService.generateAccessToken(newPayload);
+    const newRefreshToken = this._tokenService.generateRefreshToken(newPayload);
 
-    await this.sessionService.create(newSessionId, { userId: user.id , status: "active"}, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60);
+    await this._sessionService.create(newSessionId, { userId: user.id , status: "active"}, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60);
 
-    //rotate session
-    await this.sessionService.markAsRotated(payload.sessionId);
+    await this._sessionService.markAsRotated(payload.sessionId);
 
     return { accessToken, refreshToken: newRefreshToken };
   }

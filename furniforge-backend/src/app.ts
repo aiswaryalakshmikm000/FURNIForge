@@ -20,10 +20,10 @@ app.use(cookieConfig)
 app.use("/api/v1", authRoutes)
 app.use("/api/v1/admin", adminRoutes)
 
-app.use(errorHandlerMiddleware)
-
 app.get("/health", (req, res) => {
   res.json({ message: SUCCESS_MESSAGES.GENERAL.HEALTH_CHECK })
 })
+
+app.use(errorHandlerMiddleware)
 
 export default app

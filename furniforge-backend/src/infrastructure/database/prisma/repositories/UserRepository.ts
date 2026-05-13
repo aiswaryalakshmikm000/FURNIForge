@@ -5,6 +5,7 @@ import { BaseRepository } from "./BaseRepository.js";
 import { injectable } from "inversify";
 import { UserMapper } from "../../../../application/mappers/UserMapper.js";
 import {User as PrismaUser, Prisma} from "../../../../generated/prisma/index.js";
+import { handlePrismaError } from "../errors/handlePrismaError.js";
 
 @injectable()
 export class UserRepository extends BaseRepository<User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput> implements IUserRepository {
@@ -23,12 +24,22 @@ export class UserRepository extends BaseRepository<User, PrismaUser, Prisma.User
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const raw = await this.model.findUnique({ where: { email } });
-    return raw ? this.toDomain(raw) : null;
+    try {
+      const raw = await this.model.findUnique({ where: { email } });
+      return raw ? this.toDomain(raw) : null;
+
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 
   async findByPhone(phone: string): Promise<User | null> {
-    const raw = await this.model.findUnique({ where: { phone } });
-    return raw ? this.toDomain(raw) : null;
+    try {
+      const raw = await this.model.findUnique({ where: { phone } });
+      return raw ? this.toDomain(raw) : null;
+
+    } catch(error) {
+      handlePrismaError(error)
+    }
   }
 }

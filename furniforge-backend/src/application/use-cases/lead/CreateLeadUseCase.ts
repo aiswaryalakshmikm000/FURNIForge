@@ -10,12 +10,12 @@ import { generateRegNo } from "../../../shared/utils/generateRegNo.js";
 @injectable()
 export class CreateLeadUseCase implements ICreateLeadUseCase {
   constructor(
-    @inject(TYPES.ILeadRepository) private leadRepository: ILeadRepository
+    @inject(TYPES.ILeadRepository) private _leadRepository: ILeadRepository
   ) {}
 
   async execute(user: User): Promise<void> {
 
-    const seq = await this.leadRepository.getNextLeadSequence();
+    const seq = await this._leadRepository.getNextLeadSequence();
     let leadRegNo = generateRegNo({prefix: "LEAD", sequence: seq})
 
     const lead = Lead.create({ 
@@ -27,6 +27,6 @@ export class CreateLeadUseCase implements ICreateLeadUseCase {
         clientId: user.id,
     });
 
-    await this.leadRepository.create(lead);
+    await this._leadRepository.create(lead);
   }
 }

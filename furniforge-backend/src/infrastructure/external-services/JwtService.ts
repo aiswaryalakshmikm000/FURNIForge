@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import { injectable } from "inversify";
 import { env } from "../../infrastructure/config/env.js";
 import {ITokenService, TokenPayload, ResetTokenPayload} from "../../domain/services/ITokenService.js";
+import { UnauthorizedError } from "../../domain/errors/AppError.js";
+import { ERROR_MESSAGES } from "../config/messages.js";
 
 @injectable()
 export class JwtService implements ITokenService {
@@ -22,11 +24,19 @@ export class JwtService implements ITokenService {
   }
 
   verifyAccessToken(token: string): TokenPayload {
+    try {
     return jwt.verify(token, env.JWT.ACCESS_SECRET) as TokenPayload;
+  } catch {
+    throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.INVALID_ACCESS_TOKEN);
+  }
   }
 
   verifyRefreshToken(token: string): TokenPayload {
-    return jwt.verify(token, env.JWT.REFRESH_SECRET) as TokenPayload;
+    try {
+      return jwt.verify(token, env.JWT.REFRESH_SECRET) as TokenPayload;
+    } catch {
+      throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.INVALID_REFRESH_TOKEN);
+    }
   }
 
   /**
@@ -40,6 +50,10 @@ export class JwtService implements ITokenService {
   }
 
   verifyResetToken(token: string): ResetTokenPayload {
-    return jwt.verify(token, env.JWT.RESET_SECRET) as ResetTokenPayload;
+    try {
+      return jwt.verify(token, env.JWT.RESET_SECRET) as ResetTokenPayload;
+    } catch {
+      throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.INVALID_RESET_TOKEN);
+    }
   }
 }

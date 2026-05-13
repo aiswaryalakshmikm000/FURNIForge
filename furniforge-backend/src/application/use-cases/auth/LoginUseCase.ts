@@ -16,16 +16,16 @@ import { UserMapper } from "../../../application/mappers/UserMapper.js";
 @injectable()
 export class LoginUseCase implements ILoginUseCase {
   constructor(
-    @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
-    @inject(TYPES.IPasswordService) private passwordService: IPasswordService,
-    @inject(TYPES.ITokenService) private tokenService: ITokenService,
-    @inject(TYPES.ISessionService) private sessionService: ISessionService,
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository,
+    @inject(TYPES.IPasswordService) private _passwordService: IPasswordService,
+    @inject(TYPES.ITokenService) private _tokenService: ITokenService,
+    @inject(TYPES.ISessionService) private _sessionService: ISessionService,
   ) {}
 
   async execute(data: LoginDTO): Promise<AuthResult> {
     const emailVO = new Email(data.email);
 
-    const user = await this.userRepository.findByEmail(emailVO.value);
+    const user = await this._userRepository.findByEmail(emailVO.value);
 
     if (!user) {
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS);
@@ -35,7 +35,7 @@ export class LoginUseCase implements ILoginUseCase {
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.ACCOUNT_NOT_VERIFIED);
     }
 
-    const isMatch = await this.passwordService.compare(data.password, user.passwordHash);
+    const isMatch = await this._passwordService.compare(data.password, user.passwordHash);
 
     if (!isMatch) {
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS);
@@ -45,10 +45,10 @@ export class LoginUseCase implements ILoginUseCase {
 
     const payload = { sub: user.id, email: user.email.value, role: user.role, sessionId };
 
-    const accessToken = this.tokenService.generateAccessToken(payload);
-    const refreshToken = this.tokenService.generateRefreshToken(payload);
+    const accessToken = this._tokenService.generateAccessToken(payload);
+    const refreshToken = this._tokenService.generateRefreshToken(payload);
 
-    await this.sessionService.create( sessionId, { userId: user.id, status: "active" }, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 );
+    await this._sessionService.create( sessionId, { userId: user.id, status: "active" }, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 );
 
     return { user: UserMapper.toResponse(user), accessToken, refreshToken } }
 }
