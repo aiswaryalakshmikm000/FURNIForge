@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { LeadResponseDTO } from "./LeadResponseDTO.js";
-import { LeadSource, LeadStatus } from "../../../domain/enums/Lead.js";
+import { LeadResponseDTO } from "./LeadResponseDTO";
+import { LeadSource, LeadStatus } from "../../../domain/enums/Lead";
 
 export const GetAllLeadsQuerySchema = z.object({
 

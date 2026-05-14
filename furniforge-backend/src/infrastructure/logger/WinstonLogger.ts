@@ -1,7 +1,7 @@
 import winston from "winston";
 import "winston-daily-rotate-file";
-import { ILogger } from "../../domain/services/ILogger.js";
-import { env } from "../../infrastructure/config/env.js";
+import type { ILogger } from "../../domain/services/ILogger";
+import { env } from "../../infrastructure/config/env";
 
 const { combine, timestamp, printf, colorize } = winston.format;
 
@@ -26,19 +26,19 @@ export class WinstonLogger implements ILogger {
     transports: [transportConsole, transportFile],
   });
 
-  info(message: string, meta?: any): void {
+  info(message: string, meta?: Record<string, unknown>): void {
     this._logger.info(message, meta);
   }
 
-  error(message: string, meta?: any): void {
+  error(message: string, meta?: Record<string, unknown>): void {
     this._logger.error(message, meta);
   }
 
-  warn(message: string, meta?: any): void {
+  warn(message: string, meta?: Record<string, unknown>): void {
     this._logger.warn(message, meta);
   }
 
-  debug(message: string, meta?: any): void {
+  debug(message: string, meta?: Record<string, unknown>): void {
     this._logger.debug(message, meta);
   }
 }

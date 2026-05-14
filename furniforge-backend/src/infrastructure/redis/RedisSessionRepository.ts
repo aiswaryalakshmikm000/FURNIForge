@@ -1,6 +1,6 @@
-import { ISessionService, SessionData } from "../../domain/services/ISessionService.js";
+import type { ISessionService, SessionData } from "../../domain/services/ISessionService";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../infrastructure/di/types.js";
+import { TYPES } from "../../infrastructure/di/types";
 import type { Redis } from "ioredis";
 
 @injectable()

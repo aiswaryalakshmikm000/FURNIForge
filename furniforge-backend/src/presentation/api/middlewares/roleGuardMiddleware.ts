@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { UnauthorizedError, ForbiddenError} from "../../../domain/errors/AppError.js";
-import { AuthRequest } from "./authMiddleware.js";
-import { UserRole } from "../../../domain/enums/UserRole.js";
+import { UnauthorizedError, ForbiddenError} from "../../../domain/errors/AppError";
+import { AuthRequest } from "./authMiddleware";
+import { UserRole } from "../../../domain/enums/UserRole";
 
 export const authorizeRoles = (...allowedRoles: UserRole[]) => {
   return (req: AuthRequest, _res: Response, next: NextFunction) => {

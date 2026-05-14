@@ -1,4 +1,4 @@
-import { LeadSource, LeadStatus, PackageType } from "../../enums/Lead.js";
+import { LeadSource, LeadStatus, PackageType } from "../../enums/Lead";
 
 export interface LeadListItem {
   id: string;

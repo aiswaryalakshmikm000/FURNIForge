@@ -1,9 +1,9 @@
 import { ZodSchema } from "zod";
 import { Request, Response, NextFunction } from "express";
-import { ValidationError } from "../../../domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { ValidationError } from "../../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 
-export const validateBody = (schema: ZodSchema) => {
+export const validateBody = <T>(schema: ZodSchema<T>) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.body);
 
@@ -12,7 +12,6 @@ export const validateBody = (schema: ZodSchema) => {
     field: e.path.join("."),
     message: e.message
   }));
-    console.log(errors)
     return next(new ValidationError(ERROR_MESSAGES.GENERAL.VALIDATION_FAILED, { fields: errors }));
   }
 
@@ -22,7 +21,7 @@ export const validateBody = (schema: ZodSchema) => {
 };
 
 
-export const validateQuery = (schema: ZodSchema) => {
+export const validateQuery = <T>(schema: ZodSchema<T>) => {
   return (req: Request, _res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.query);
 
@@ -40,13 +39,13 @@ export const validateQuery = (schema: ZodSchema) => {
       );
     }
 
-    req.query = result.data as any;
+    req.query = result.data as Request["query"];
     next();
   };
 };
 
 
-export const validateParams = (schema: ZodSchema) => {
+export const validateParams = <T>(schema: ZodSchema<T>) => {
   return (req: Request, _res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.params);
 
@@ -64,7 +63,7 @@ export const validateParams = (schema: ZodSchema) => {
       );
     }
 
-    req.params = result.data as any;
+    req.params = result.data as Request["params"];
     next();
   };
 };

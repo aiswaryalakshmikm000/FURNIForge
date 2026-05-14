@@ -1,4 +1,3 @@
-import { LeadController } from "../../presentation/api/v1/controllers/admin/LeadController.js";
 
 export const TYPES = {
   Redis: Symbol.for("Redis"),

@@ -1,12 +1,11 @@
-import { IOtpService } from "../../domain/services/IOtpservice.js";
-import { IOTPRepository } from "../../domain/repositories/IOTPRepository.js";
-import { OtpToken } from "../../domain/entities/OtpToken.js";
-import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
-import { env } from "../../infrastructure/config/env.js";
+import type { IOtpService } from "../../domain/services/IOtpservice";
+import type { IOTPRepository } from "../../domain/repositories/IOTPRepository";
+import { OtpToken } from "../../domain/entities/OtpToken";
+import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
+import { env } from "../../infrastructure/config/env";
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../infrastructure/di/types.js";
-import { ILogger } from "../../domain/services/ILogger.js";
+import { TYPES } from "../../infrastructure/di/types";
 
 @injectable()
 export class OtpService implements IOtpService {
@@ -14,7 +13,6 @@ export class OtpService implements IOtpService {
 
   constructor(
     @inject(TYPES.IOTPRepository) private _otpRepository: IOTPRepository,
-    @inject(TYPES.ILogger) private _logger: ILogger,
   ) {}
 
   generateOTP(): string {

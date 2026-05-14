@@ -1,6 +1,6 @@
-import { IBaseRepository } from "./IBaseRepository.js";
-import { Lead } from "../entities/Lead.js";
-import { LeadListItem } from "../read-models/lead/LeadListItems.js";
+import { IBaseRepository } from "./IBaseRepository";
+import { Lead } from "../entities/Lead";
+import { LeadListItem } from "../read-models/lead/LeadListItems";
 
 export interface ILeadRepository extends IBaseRepository<Lead> {
   findByLeadRegNo(leadRegNo: string): Promise<Lead | null>;

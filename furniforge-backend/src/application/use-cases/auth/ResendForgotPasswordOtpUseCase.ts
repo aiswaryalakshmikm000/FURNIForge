@@ -1,14 +1,14 @@
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IEmailService } from "../../../domain/services/IEmailService.js";
-import { ResendForgotPasswordOtpDTO } from "../../dtos/auth/ForgotPasswordDTO.js";
-import { NotFoundError } from "../../../domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { ResendOtpResponseDTO } from "../../dtos/auth/ResendOtpResponseDTO.js";
-import { env } from "../../../infrastructure/config/env.js";
-import { IResendForgotPasswordOtpUseCase } from "./interfaces/IResendForgotPasswordOtpUseCase.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import type { IOtpService } from "../../../domain/services/IOtpservice";
+import type { IEmailService } from "../../../domain/services/IEmailService";
+import type { ResendForgotPasswordOtpDTO } from "../../dtos/auth/ForgotPasswordDTO";
+import { NotFoundError } from "../../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import type { ResendOtpResponseDTO } from "../../dtos/auth/ResendOtpResponseDTO";
+import { env } from "../../../infrastructure/config/env";
+import type { IResendForgotPasswordOtpUseCase } from "./interfaces/IResendForgotPasswordOtpUseCase";
 
 @injectable()
 export class ResendForgotPasswordOtpUseCase implements IResendForgotPasswordOtpUseCase{

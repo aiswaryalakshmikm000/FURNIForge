@@ -1,6 +1,6 @@
-import { User } from "../../domain/entities/User.js";
-import { UserResponseDTO } from "../../application/dtos/user/userResponseDTO.js";
-import {User as PrismaUser, Prisma} from "../../generated/prisma/index.js"
+import { User } from "../../domain/entities/User";
+import { UserResponseDTO } from "../../application/dtos/user/userResponseDTO";
+import {User as PrismaUser, Prisma} from "../../generated/prisma/index"
 
 export class UserMapper {
 

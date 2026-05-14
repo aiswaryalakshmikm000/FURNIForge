@@ -85,6 +85,8 @@ export const ERROR_MESSAGES = {
       INVALID_ACCESS_TOKEN: "Invalid access token",
       INVALID_REFRESH_TOKEN: "Invalid refresh token",
       INVALID_RESET_TOKEN: "Invalid reset token",
+      ACCESS_TOKEN_EXPIRED: "Access token expired",
+      REFRESH_TOKEN_EXPIRED: "Refresh token expired",
     },
   },
 

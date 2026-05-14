@@ -1,20 +1,20 @@
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { RegisterUserDTO } from "../../../application/dtos/auth/RegisterUserDTO.js";
-import { AppError } from "../../../domain/errors/AppError.js";
-import { IPasswordService } from "../../../domain/services/IPasswordService.js";
-import { Email } from "../../../domain/value-objects/Email.js";
-import { Password } from "../../../domain/value-objects/Password.js";
-import { IRegisterUserUseCase } from "./interfaces/IRegisterUserUseCase.js";
-import { ConflictError, InternalServerError } from "../../../domain/errors/AppError.js";
-import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
-import { IEmailService } from "../../../domain/services/IEmailService.js";
-import { RegisterResponseDTO } from "../../dtos/auth/RegisterResponseDTOSchema.js";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import type { RegisterUserDTO } from "../../../application/dtos/auth/RegisterUserDTO";
+import { AppError } from "../../../domain/errors/AppError";
+import type { IPasswordService } from "../../../domain/services/IPasswordService";
+import { Email } from "../../../domain/value-objects/Email";
+import { Password } from "../../../domain/value-objects/Password";
+import type { IRegisterUserUseCase } from "./interfaces/IRegisterUserUseCase";
+import { ConflictError, InternalServerError } from "../../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import type { IOtpService } from "../../../domain/services/IOtpservice";
+import type { IPendingUserService } from "../../../domain/services/IPendingUserService";
+import type { IEmailService } from "../../../domain/services/IEmailService";
+import type { RegisterResponseDTO } from "../../dtos/auth/RegisterResponseDTOSchema";
 import {inject, injectable } from 'inversify';
-import { ILogger } from "../../../domain/services/ILogger.js";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { env } from "../../../infrastructure/config/env.js";
+import type { ILogger } from "../../../domain/services/ILogger";
+import { TYPES } from "../../../infrastructure/di/types";
+import { env } from "../../../infrastructure/config/env";
 
 @injectable()
 export class RegisterUserUseCase implements IRegisterUserUseCase {

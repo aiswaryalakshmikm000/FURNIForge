@@ -1,5 +1,5 @@
 import z from "zod";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 
 
 export const ForgotPasswordSchema   = z.object({

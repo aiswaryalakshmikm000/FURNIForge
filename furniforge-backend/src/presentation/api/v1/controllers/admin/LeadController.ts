@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../../../../infrastructure/di/types.js";
-import { IGetAllLeadsUseCase } from "../../../../../application/use-cases/lead/interfaces/IGetAllLeadUseCase.js";
-import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse.js";
-import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode.js";
-import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages.js";
-import { GetAllLeadsQueryDTO } from "../../../../../application/dtos/lead/GetAllLeadsDTO.js";
+import { TYPES } from "../../../../../infrastructure/di/types";
+import type{ IGetAllLeadsUseCase } from "../../../../../application/use-cases/lead/interfaces/IGetAllLeadUseCase";
+import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse";
+import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
+import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages";
+import type {GetAllLeadsQueryDTO } from "../../../../../application/dtos/lead/GetAllLeadsDTO";
 
 @injectable()
 export class LeadController {

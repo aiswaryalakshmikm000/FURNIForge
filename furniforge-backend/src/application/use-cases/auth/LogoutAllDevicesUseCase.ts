@@ -1,7 +1,7 @@
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js"
-import { ILogoutAllDevicesUseCase } from "./interfaces/ILogoutAllDevicesUseCase.js";
-import { ISessionService } from "../../../domain/services/ISessionService.js";
+import { TYPES } from "../../../infrastructure/di/types"
+import type { ILogoutAllDevicesUseCase } from "./interfaces/ILogoutAllDevicesUseCase";
+import type { ISessionService } from "../../../domain/services/ISessionService";
 
 
 @injectable()

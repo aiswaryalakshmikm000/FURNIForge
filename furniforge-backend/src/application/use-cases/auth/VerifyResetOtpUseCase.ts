@@ -1,14 +1,14 @@
-import { NotFoundError } from "../../../domain/errors/AppError.js";
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { Email } from "../../../domain/value-objects/Email.js";
-import { OTP } from "../../../domain/value-objects/OTP.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { VerifyResetOtpDTO, VerifyResetOtpResponseDTO } from "../../dtos/auth/ForgotPasswordDTO.js";
+import { NotFoundError } from "../../../domain/errors/AppError";
+import type{ IUserRepository } from "../../../domain/repositories/IUserRepository";
+import { Email } from "../../../domain/value-objects/Email";
+import { OTP } from "../../../domain/value-objects/OTP";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import type { VerifyResetOtpDTO, VerifyResetOtpResponseDTO } from "../../dtos/auth/ForgotPasswordDTO";
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IVerifyResetOtpUseCase } from "./interfaces/IVerifyResetOtpUSeCase.js";
-import { ITokenService } from "../../../domain/services/ITokenService.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { IOtpService } from "../../../domain/services/IOtpservice";
+import type { IVerifyResetOtpUseCase } from "./interfaces/IVerifyResetOtpUSeCase";
+import type { ITokenService } from "../../../domain/services/ITokenService";
 
 @injectable()
 export class verifyResetOtpUseCase implements IVerifyResetOtpUseCase {

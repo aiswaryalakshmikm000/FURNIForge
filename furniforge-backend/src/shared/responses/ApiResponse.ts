@@ -1,14 +1,19 @@
+interface ErrorResponse {
+  code: string;
+  details?: unknown;
+}
+
 export class ResponseBuilder<T> {
   private success: boolean;
   private message: string;
   private data?: T;
-  private error?: any;
+  private error?: ErrorResponse;
 
   private constructor(
     success: boolean,
     message: string,
     data?: T,
-    error?: any,
+    error?: ErrorResponse,
   ) {
     this.success = success;
     this.message = message;
@@ -24,11 +29,20 @@ export class ResponseBuilder<T> {
     return new ResponseBuilder<T>(true, message, data);
   }
 
-  static error(message = "Error", code = "ERROR", details: any = null) {
-    return new ResponseBuilder<null>(false, message, undefined, {
-      code,
-      details,
-    });
+  static error(
+    message = "Error",
+    code = "ERROR",
+    details?: unknown,
+  ) {
+    return new ResponseBuilder<null>(
+      false,
+      message,
+      undefined,
+      {
+        code,
+        details,
+      }
+    );
   }
 
   build() {

@@ -1,13 +1,13 @@
-import prisma from "../client.js";
+import prisma from "../client";
 import { injectable } from "inversify";
-import { BaseRepository } from "./BaseRepository.js";
-import { Lead } from "../../../../domain/entities/Lead.js";
-import { ILeadRepository } from "../../../../domain/repositories/ILeadRepository.js";
-import { LeadMapper } from "../mapper/lead/LeadMapper.js";
-import { LeadSource, LeadStatus, PackageType} from "../../../../domain/enums/Lead.js";
-import { Prisma, Lead as PrismaLead} from "../../../../generated/prisma/index.js";
-import { LeadListItem } from "../../../../domain/read-models/lead/LeadListItems.js";
-import { handlePrismaError } from "../errors/handlePrismaError.js";
+import { BaseRepository } from "./BaseRepository";
+import { Lead } from "../../../../domain/entities/Lead";
+import type { ILeadRepository } from "../../../../domain/repositories/ILeadRepository";
+import { LeadMapper } from "../mapper/lead/LeadMapper";
+import { LeadSource, LeadStatus, PackageType} from "../../../../domain/enums/Lead";
+import { Prisma, Lead as PrismaLead} from "../../../../generated/prisma/index";
+import { LeadListItem } from "../../../../domain/read-models/lead/LeadListItems";
+import { handlePrismaError } from "../errors/handlePrismaError";
 
 @injectable()
 export class LeadRepository

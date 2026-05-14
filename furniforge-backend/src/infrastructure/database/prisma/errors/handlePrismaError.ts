@@ -1,6 +1,6 @@
-import { Prisma } from "../../../../generated/prisma/index.js";
-import { AppError, ConflictError, InternalServerError, NotFoundError} from "../../../../domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "../../../config/messages.js";
+import { Prisma } from "../../../../generated/prisma/index";
+import { AppError, ConflictError, InternalServerError, NotFoundError} from "../../../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../../config/messages";
 
 export function handlePrismaError(error: unknown): never {
   if (error instanceof AppError) {
@@ -8,7 +8,7 @@ export function handlePrismaError(error: unknown): never {
   }
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     switch (error.code) {
-        
+
       case "P2002":
         const target = error.meta?.target;
 

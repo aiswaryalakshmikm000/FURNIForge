@@ -1,15 +1,15 @@
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
-import { IEmailService } from "../../../domain/services/IEmailService.js";
-import { AppError, NotFoundError, InternalServerError } from "../../../domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { env } from "../../../infrastructure/config/env.js";
+import type { IOtpService } from "../../../domain/services/IOtpservice";
+import type { IPendingUserService } from "../../../domain/services/IPendingUserService";
+import type { IEmailService } from "../../../domain/services/IEmailService";
+import { AppError, NotFoundError, InternalServerError } from "../../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import { env } from "../../../infrastructure/config/env";
 import { inject, injectable } from "inversify";
-import { TYPES} from "../../../infrastructure/di/types.js"
-import { ILogger } from "../../../domain/services/ILogger.js";
-import { ResendOtpDTO } from "../../../application/dtos/auth/ResendOtpDTO.js";
-import { IResendOtpUseCase } from "./interfaces/IResendOtpUseCase.js";
-import { ResendOtpResponseDTO } from "../../dtos/auth/ResendOtpResponseDTO.js";
+import { TYPES} from "../../../infrastructure/di/types"
+import type { ILogger } from "../../../domain/services/ILogger";
+import type { ResendOtpDTO } from "../../../application/dtos/auth/ResendOtpDTO";
+import type { IResendOtpUseCase } from "./interfaces/IResendOtpUseCase";
+import type { ResendOtpResponseDTO } from "../../dtos/auth/ResendOtpResponseDTO";
 
 @injectable()
 export class ResendOtpUseCase implements IResendOtpUseCase{

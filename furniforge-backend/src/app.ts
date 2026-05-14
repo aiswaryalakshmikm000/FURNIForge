@@ -1,12 +1,12 @@
 import express from "express"
-import { corsConfig } from "./infrastructure/config/corsConfig.js"
-import { helmetConfig } from "./infrastructure/config/helmetConfig.js"
-import { errorHandlerMiddleware } from "./presentation/api/middlewares/errorHandlerMiddleware.js"
-import authRoutes from "./presentation/api/v1/routes/auth/authRoutes.js";
-import adminRoutes from "./presentation/api/v1/routes/admin/leadRoutes.js"
-import { SUCCESS_MESSAGES } from "./infrastructure/config/messages.js";
-import { morganConfig } from "./infrastructure/config/morganConfig.js";
-import { cookieConfig } from "./infrastructure/config/cookieConfig.js";
+import { corsConfig } from "./infrastructure/config/corsConfig"
+import { helmetConfig } from "./infrastructure/config/helmetConfig"
+import { errorHandlerMiddleware } from "./presentation/api/middlewares/errorHandlerMiddleware"
+import authRoutes from "./presentation/api/v1/routes/auth/authRoutes";
+import adminRoutes from "./presentation/api/v1/routes/admin/leadRoutes"
+import { SUCCESS_MESSAGES } from "./infrastructure/config/messages";
+import { morganConfig } from "./infrastructure/config/morganConfig";
+import { cookieConfig } from "./infrastructure/config/cookieConfig";
 
 const app = express()
 

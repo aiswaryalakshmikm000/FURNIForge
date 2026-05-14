@@ -1,7 +1,7 @@
-import { IOTPRepository } from "../../domain/repositories/IOTPRepository.js";
-import { OtpToken } from "../../domain/entities/OtpToken.js";
+import type { IOTPRepository } from "../../domain/repositories/IOTPRepository";
+import { OtpToken } from "../../domain/entities/OtpToken";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../infrastructure/di/types.js";
+import { TYPES } from "../../infrastructure/di/types";
 import type { Redis } from "ioredis";
 
 @injectable()
@@ -16,7 +16,7 @@ export class RedisOTPRepository implements IOTPRepository {
     const otpKey = `otp:${token.otpId}`;
     const userKey = `otp:user:${token.userId}`;
     const codeKey = `otp:code:${token.email}:${token.otp}`;
-    const data = JSON.stringify(token);
+    const data = JSON.stringify(token.toPersistence());
 
     pipeline.setex(otpKey, ttlSeconds, data) //store full otp object
     pipeline.setex(userKey, ttlSeconds, token.otpId) //map user to otpId
@@ -49,7 +49,7 @@ export class RedisOTPRepository implements IOTPRepository {
     const ttl = await this._redis.ttl(`otp:${token.otpId}`);
     if (ttl <= 0) return;
 
-    const data = JSON.stringify(token);
+    const data = JSON.stringify(token.toPersistence());
 
     const pipeline = this._redis.pipeline();
 

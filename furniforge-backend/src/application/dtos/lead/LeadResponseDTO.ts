@@ -1,4 +1,4 @@
-import { LeadSource, LeadStatus, PackageType } from "../../../domain/enums/Lead.js";
+import { LeadSource, LeadStatus, PackageType } from "../../../domain/enums/Lead";
 
 export interface LeadResponseDTO {
   id: string;

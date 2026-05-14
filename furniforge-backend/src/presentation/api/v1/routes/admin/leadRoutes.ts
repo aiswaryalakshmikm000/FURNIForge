@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { container } from "../../../../../infrastructure/di/container.js";
-import { TYPES } from "../../../../../infrastructure/di/types.js";
-import { LeadController } from "../../controllers/admin/LeadController.js";
-import { asyncHandler } from "../../../../../shared/utils/asyncHandler.js";
-import { validateQuery } from "../../../middlewares/validationMiddleware.js";
-import { GetAllLeadsQuerySchema } from "../../../../../application/dtos/lead/GetAllLeadsDTO.js";
-import { authMiddleware } from "../../../middlewares/authMiddleware.js";
-import { authorizeRoles } from "../../../middlewares/roleGuardMiddleware.js";
-import { UserRole } from "../../../../../domain/enums/UserRole.js";
+import { container } from "../../../../../infrastructure/di/container";
+import { TYPES } from "../../../../../infrastructure/di/types";
+import { LeadController } from "../../controllers/admin/LeadController";
+import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
+import { validateQuery } from "../../../middlewares/validationMiddleware";
+import { GetAllLeadsQuerySchema } from "../../../../../application/dtos/lead/GetAllLeadsDTO";
+import { authMiddleware } from "../../../middlewares/authMiddleware";
+import { authorizeRoles } from "../../../middlewares/roleGuardMiddleware";
+import { UserRole } from "../../../../../domain/enums/UserRole";
 
 const router = Router();
 

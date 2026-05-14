@@ -1,10 +1,9 @@
-import { IPendingUserService } from "../../domain/services/IPendingUserService.js";
-import { IPendingUserRepository } from "../../domain/repositories/IPendingUserRepository.js";
-import { PendingUser } from "../../domain/entities/PendingUser.js";
-import { env } from "../../infrastructure/config/env.js";
+import type { IPendingUserService } from "../../domain/services/IPendingUserService";
+import type { IPendingUserRepository } from "../../domain/repositories/IPendingUserRepository";
+import { PendingUser } from "../../domain/entities/PendingUser";
+import { env } from "../../infrastructure/config/env";
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../infrastructure/di/types.js";
-import { ILogger } from "../../domain/services/ILogger.js";
+import { TYPES } from "../../infrastructure/di/types";
 
 @injectable()
 export class PendingUserService implements IPendingUserService {
@@ -12,7 +11,6 @@ export class PendingUserService implements IPendingUserService {
 
   constructor(
     @inject(TYPES.IPendingUserRepository) private _pendingUserRepository: IPendingUserRepository,
-    @inject(TYPES.ILogger) private _logger: ILogger,
   ) {}
 
   async createOrUpdate(data: {

@@ -32,7 +32,7 @@ const envSchema = z.object({
   OTP_RATE_LIMIT_MAX: z.string().default("5"),
 
   JWT_ACCESS_SECRET: z.string().min(1, "JWT_ACCESS_SECRET is required"),
-  JWT_ACCESS_EXPIRY: z.string().default("15m"),
+  JWT_ACCESS_EXPIRY: z.string().default("15"),
 
   JWT_REFRESH_SECRET: z.string().min(1, "JWT_REFRESH_SECRET is required"),
   JWT_REFRESH_EXPIRY: z.string().default("7d"),

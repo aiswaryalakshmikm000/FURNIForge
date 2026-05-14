@@ -1,5 +1,5 @@
-import { Lead } from "../../../../../domain/entities/Lead.js";
-import { Prisma, Lead as PrismaLead } from "../../../../../generated/prisma/index.js";
+import { Lead } from "../../../../../domain/entities/Lead";
+import { Prisma, Lead as PrismaLead } from "../../../../../generated/prisma/index";
 
 export class LeadMapper {
 

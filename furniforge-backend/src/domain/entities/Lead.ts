@@ -1,5 +1,5 @@
-import { LeadStatus, LeadSource, PackageType } from "../enums/Lead.js";
-import { Lead as PrismaLead } from "../../generated/prisma/index.js";
+import { LeadStatus, LeadSource, PackageType } from "../enums/Lead";
+import { Lead as PrismaLead } from "../../generated/prisma/index";
 
 export class Lead {
   private constructor(

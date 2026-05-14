@@ -1,10 +1,9 @@
-import { IGetAllLeadsUseCase } from "./interfaces/IGetAllLeadUseCase.js";
-import { GetAllLeadsQueryDTO, GetAllLeadsResponseDTO } from "../../dtos/lead/GetAllLeadsDTO.js";
+import type { IGetAllLeadsUseCase } from "./interfaces/IGetAllLeadUseCase";
+import type { GetAllLeadsQueryDTO, GetAllLeadsResponseDTO } from "../../dtos/lead/GetAllLeadsDTO";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { ILeadRepository } from "../../../domain/repositories/ILeadRepository.js";
-import { LeadResponseMapper } from "../../mappers/LeadResponseMapper.js";
-import { ILogger } from "../../../domain/services/ILogger.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
+import { LeadResponseMapper } from "../../mappers/LeadResponseMapper";
 
 @injectable()
 export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {

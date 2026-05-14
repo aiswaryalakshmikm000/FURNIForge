@@ -1,5 +1,5 @@
-import { IBaseRepository } from "../../../../domain/repositories/IBaseRepository.js";
-import { handlePrismaError } from "../errors/handlePrismaError.js";
+import type { IBaseRepository } from "../../../../domain/repositories/IBaseRepository";
+import { handlePrismaError } from "../errors/handlePrismaError";
 
 export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInput> implements IBaseRepository <TDomain> {
   protected abstract model: {

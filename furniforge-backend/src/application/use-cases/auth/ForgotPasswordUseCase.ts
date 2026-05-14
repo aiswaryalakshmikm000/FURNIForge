@@ -1,14 +1,14 @@
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IEmailService } from "../../../domain/services/IEmailService.js";
-import { NotFoundError } from "../../../domain/errors/AppError.js";
-import { ForgotPasswordDTO, ForgotPasswordResponseDTO } from "../../dtos/auth/ForgotPasswordDTO.js";
-import { Email } from "../../../domain/value-objects/Email.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { env } from "../../../infrastructure/config/env.js";
-import { IForgetPasswordUseCase } from "./interfaces/IForgetPasswordUseCase.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import type { IOtpService } from "../../../domain/services/IOtpservice";
+import type { IEmailService } from "../../../domain/services/IEmailService";
+import { NotFoundError } from "../../../domain/errors/AppError";
+import type { ForgotPasswordDTO, ForgotPasswordResponseDTO } from "../../dtos/auth/ForgotPasswordDTO";
+import { Email } from "../../../domain/value-objects/Email";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import { env } from "../../../infrastructure/config/env";
+import type { IForgetPasswordUseCase } from "./interfaces/IForgetPasswordUseCase";
 
 @injectable()
 export class ForgotPasswordUseCase implements IForgetPasswordUseCase{

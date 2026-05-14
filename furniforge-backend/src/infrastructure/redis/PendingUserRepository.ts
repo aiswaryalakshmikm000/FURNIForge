@@ -1,7 +1,7 @@
-import { IPendingUserRepository } from "../../domain/repositories/IPendingUserRepository.js";
-import { PendingUser } from "../../domain/entities/PendingUser.js";
+import type { IPendingUserRepository } from "../../domain/repositories/IPendingUserRepository";
+import { PendingUser } from "../../domain/entities/PendingUser";
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../infrastructure/di/types.js";
+import { TYPES } from "../../infrastructure/di/types";
 import type { Redis } from "ioredis";
 
 @injectable()
@@ -17,8 +17,8 @@ export class RedisPendingUserRepository implements IPendingUserRepository {
   async save(email: string, data: PendingUser, ttl: number): Promise<void> {
     const pipeline = this._redis.pipeline();
 
-    pipeline.setex(`pending:user:${email}`, ttl, JSON.stringify(data) );
-    pipeline.setex(`pending:user:${data.tempUserId}`, ttl, JSON.stringify(data));
+    pipeline.setex(`pending:user:${email}`, ttl, JSON.stringify(data.toPersistence()) );
+    pipeline.setex(`pending:user:${data.tempUserId}`, ttl, JSON.stringify(data.toPersistence()));
 
     await pipeline.exec();
   }

@@ -1,11 +1,11 @@
-import prisma from "../client.js";
-import { IUserRepository } from "../../../../domain/repositories/IUserRepository.js";
-import { User } from "../../../../domain/entities/User.js";
-import { BaseRepository } from "./BaseRepository.js";
+import prisma from "../client";
+import type { IUserRepository } from "../../../../domain/repositories/IUserRepository";
+import { User } from "../../../../domain/entities/User";
+import { BaseRepository } from "./BaseRepository";
 import { injectable } from "inversify";
-import { UserMapper } from "../../../../application/mappers/UserMapper.js";
-import {User as PrismaUser, Prisma} from "../../../../generated/prisma/index.js";
-import { handlePrismaError } from "../errors/handlePrismaError.js";
+import { UserMapper } from "../../../../application/mappers/UserMapper";
+import {User as PrismaUser, Prisma} from "../../../../generated/prisma/index";
+import { handlePrismaError } from "../errors/handlePrismaError";
 
 @injectable()
 export class UserRepository extends BaseRepository<User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput> implements IUserRepository {

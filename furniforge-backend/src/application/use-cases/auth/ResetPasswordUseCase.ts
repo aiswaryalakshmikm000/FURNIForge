@@ -1,20 +1,18 @@
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IPasswordService } from "../../../domain/services/IPasswordService.js";
-import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError.js";
-import { ResetPasswordDTO } from "../../dtos/auth/ForgotPasswordDTO.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { ISessionService } from "../../../domain/services/ISessionService.js";
-import { ITokenService } from "../../../domain/services/ITokenService.js";
-import { IResetPasswordUseCase } from "./interfaces/IResetPasswordUseCase.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import type { IPasswordService } from "../../../domain/services/IPasswordService";
+import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
+import type { ResetPasswordDTO } from "../../dtos/auth/ForgotPasswordDTO";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import type { ISessionService } from "../../../domain/services/ISessionService";
+import type { ITokenService } from "../../../domain/services/ITokenService";
+import type { IResetPasswordUseCase } from "./interfaces/IResetPasswordUseCase";
 
 @injectable()
 export class ResetPasswordUseCase implements IResetPasswordUseCase {
   constructor(
     @inject(TYPES.IUserRepository) private _userRepo: IUserRepository,
-    @inject(TYPES.IOtpService) private _otpService: IOtpService,
     @inject(TYPES.IPasswordService) private _passwordService: IPasswordService,
     @inject(TYPES.ISessionService) private _sessionService: ISessionService,
     @inject(TYPES.ITokenService) private _tokenService: ITokenService,

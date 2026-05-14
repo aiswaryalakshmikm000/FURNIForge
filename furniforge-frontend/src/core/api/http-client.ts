@@ -35,8 +35,12 @@ httpClient.interceptors.response.use(
     };
 
     const errorCode = (error.response?.data as any)?.error?.code;
+    const REFRESHABLE_ERRORS = [
+      "ACCESS_TOKEN_EXPIRED",
+      "ACCESS_TOKEN_MISSING",
+    ];
     
-    if (error.response?.status !== 401 || errorCode !== "ACCESS_TOKEN_EXPIRED" || originalRequest._retry) {
+    if (error.response?.status !== 401 || !REFRESHABLE_ERRORS.includes(errorCode) || originalRequest._retry) {
       return Promise.reject(error);
     }
 

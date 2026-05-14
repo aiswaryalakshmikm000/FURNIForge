@@ -1,7 +1,7 @@
-import rateLimit, { ipKeyGenerator } from "express-rate-limit";
-import { redisInstance } from "../../infrastructure/redis/RedisClient.js";
-import { env } from "../../infrastructure/config/env.js";
-import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
+import rateLimit from "express-rate-limit";
+import { redisInstance } from "../../infrastructure/redis/RedisClient";
+import { env } from "../../infrastructure/config/env";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
 
 const redis = redisInstance;
 
