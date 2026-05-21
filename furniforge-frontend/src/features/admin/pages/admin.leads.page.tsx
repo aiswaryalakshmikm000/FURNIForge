@@ -5,152 +5,71 @@ import { Plus } from "lucide-react";
 import { Button } from "../../../shared/components/ui/button";
 import { FilterSortDropdown } from "../../../shared/components/common/filter-sort-dropdown";
 import { PaginationControl } from "../../../shared/components/common/pagination-control";
-import { usePagination } from "../../../shared/hooks/use-pagination";
 import { EmptyState } from "../../../shared/components/common/EmptyState";
 import { PageHeader } from "../../../shared/components/common/page-header";
-
 import { LeadCard } from "../components/leads/lead-card";
 import { AssignLeadDialog } from "../components/leads/assign-lead-dialog";
-import type { Lead } from "../types/lead.type";
 import { AddLeadDialog } from "../components/leads/add-lead-dialog";
-import { useLeadsFilters } from "../hooks/use-leads-filters";
+import { useGetAllLeads } from "../hooks/use-get-all-leads";
+import { LeadStatus, LeadSource } from "../types/lead.type";
+import { formatEnumLabel } from "../../../shared/utils/format-enum";
 
-type SortKey = "none" | "date";
-
-const initialLeads: Lead[] = [
-  {
-    id: "LED239-03-26",
-    name: "Rohit Mehta",
-    phone: "+91 98123 45678",
-    location: "Mumbai",
-    types: ["Wardrobe"],
-    date: "Feb 17, 2026",
-    assignedTo: "",
-    status: "Unassigned",
-    source: "Website",
-  },
-
-  {
-    id: "LED110-04-26",
-    name: "Anjali Verma",
-    phone: "+91 99876 12345",
-    location: "Delhi",
-    types: ["TV Unit", "Sofa"],
-    date: "Mar 05, 2026",
-    assignedTo: "Sneha Kulkarni",
-    status: "Assigned",
-    source: "Referral",
-  },
-
-  {
-    id: "LED202-04-26",
-    name: "Vikram Rao",
-    phone: "+91 98765 33321",
-    location: "Bangalore",
-    types: ["Office Desk"],
-    date: "Apr 01, 2026",
-    assignedTo: "",
-    status: "Unassigned",
-    source: "Website",
-  },
+export const DEFAULT_DELIVERABLES = [
+  "Sofa",
+  "TV unit",
+  "Living Room",
 ];
 
-const designers = ["Sneha Kulkarni", "Rahul Sharma", "Amit Joshi"];
-
-const leadSources = ["Website", "Referral", "Instagram", "Walk-in"];
-
-const deliverables = ["Wardrobe", "TV Unit", "Sofa", "Office Desk", "Bed"];
-
 export default function AdminLeadsPage() {
+  const [page, setPage] = useState(1);
+
   const [search, setSearch] = useState("");
 
-  const [statusFilter, setStatusFilter] = useState("All");
+  const [statusFilter, setStatusFilter] = useState<LeadStatus | "All">("All");
 
-  const [typeFilter, setTypeFilter] = useState("All");
+  const [sourceFilter, setSourceFilter] = useState<LeadSource | "All">("All");
 
-  const [sourceFilter, setSourceFilter] = useState("All");
+  const [deliverableFilter, setDeliverableFilter] = useState< string | "All">("All");
 
-  const [sortKey, setSortKey] = useState<SortKey>("none");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
-  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [selectedLead, setSelectedLead] = useState(null);
 
   const [confirmOpen, setConfirmOpen] = useState(false);
 
-  const [assigningId, setAssigningId] = useState<string | null>(null);
-
   const [selectedDesigner, setSelectedDesigner] = useState("");
-
-  const [leads, setLeads] = useState<Lead[]>(initialLeads);
 
   const [addLeadOpen, setAddLeadOpen] = useState(false);
 
-  const filtered = useLeadsFilters({
-    leads,
-    search,
-    statusFilter,
-    typeFilter,
-    sourceFilter,
-    sortKey,
+  const { data, isLoading } = useGetAllLeads({
+    page,
+    search: search || undefined,
+    status: statusFilter === "All" ? undefined : statusFilter,
+    source: sourceFilter === "All" ? undefined : sourceFilter,
+    deliverable: deliverableFilter === "All" ? undefined : deliverableFilter,
+    sortOrder,
   });
 
-  const {
-    currentPage,
-    totalPages,
-    paginatedItems,
-    setCurrentPage,
-    totalItems,
-    itemsPerPage,
-  } = usePagination(filtered, 5);
+  const leads = data?.data?.leads ?? [];
 
-  const openAssignDialog = (lead: Lead) => {
+  const total = data?.data?.total ?? 0;
+
+  const limit = data?.data?.limit ?? 10;
+
+  const totalPages = Math.ceil(total / limit);
+
+  const openAssignDialog = (lead: any) => {
     setSelectedLead(lead);
     setConfirmOpen(true);
   };
 
-  const handleAssignLead = () => {
-    if (!selectedLead || !selectedDesigner) return;
-
-    console.log(`Assign ${selectedLead.name} to ${selectedDesigner}`);
-
-    setConfirmOpen(false);
-    setSelectedLead(null);
-    setAssigningId(null);
-    setSelectedDesigner("");
-  };
-
-  const handleAddLead = (leadData: {
-    name: string;
-    phone: string;
-    location: string;
-    types: string[];
-    source: string;
-  }) => {
-    const newLead: Lead = {
-      id: `LED${Math.floor(Math.random() * 1000)}-04-26`,
-      name: leadData.name,
-      phone: leadData.phone,
-      location: leadData.location,
-      types: leadData.types,
-      source: leadData.source,
-      assignedTo: "",
-      status: "Unassigned",
-      date: new Date().toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }),
-    };
-
-    setLeads((prev) => [newLead, ...prev]);
-  };
-
   const resetFilters = () => {
-    setStatusFilter("All");
-    setTypeFilter("All");
-    setSourceFilter("All");
-    setSortKey("none");
     setSearch("");
-    setCurrentPage(1);
+    setStatusFilter("All");
+    setSourceFilter("All");
+    setDeliverableFilter("All");
+    setSortOrder("desc");
+    setPage(1);
   };
 
   return (
@@ -161,7 +80,7 @@ export default function AdminLeadsPage() {
     >
       <PageHeader
         title="All Leads"
-        description="Manage and assign leads to designers"
+        description="Manage and assign leads"
         action={
           <Button
             variant="copper"
@@ -179,90 +98,92 @@ export default function AdminLeadsPage() {
         search={search}
         onSearchChange={(v) => {
           setSearch(v);
-          setCurrentPage(1);
+          setPage(1);
         }}
-        searchPlaceholder="Search by name or location..."
+        searchPlaceholder="Search leads..."
         filters={[
           {
             key: "status",
             label: "Status",
-            options: ["All", "Assigned", "Unassigned"],
+            options: [{label: "All", value: "All"}, ...Object.values(LeadStatus).map((status) => ({
+              label: formatEnumLabel(status),
+              value: status,
+            })),],
             value: statusFilter,
             onChange: (val) => {
-              setStatusFilter(val);
-              setCurrentPage(1);
+              setStatusFilter((val as LeadStatus | "All") || "All");
+
+              setPage(1);
             },
           },
-
           {
-            key: "type",
+            key: "deliverable",
             label: "Deliverable",
-            options: ["All", ...deliverables],
-            value: typeFilter,
+            options: [ { label: "All", value: "All" }, ...DEFAULT_DELIVERABLES.map((deliverable) => ({
+              label: deliverable, value: deliverable
+            }))],
+            value: deliverableFilter ?? "",
             onChange: (val) => {
-              setTypeFilter(val);
-              setCurrentPage(1);
+              setDeliverableFilter(val || "All");
+              setPage(1);
             },
           },
-
           {
             key: "source",
             label: "Source",
-            options: ["All", ...leadSources],
-            value: sourceFilter,
+            options: [{label: "All", value: "All"}, ... Object.values(LeadSource).map((source) => ({
+              label: formatEnumLabel(source),
+              value: source,
+            }))],
+            value: sourceFilter ?? "",
             onChange: (val) => {
-              setSourceFilter(val);
-              setCurrentPage(1);
+              setSourceFilter((val as LeadSource | "All") || "All");
+
+              setPage(1);
             },
           },
         ]}
         sortOptions={[
           {
-            key: "date",
-            label: "Date",
+            key: "desc",
+            label: "Newest",
+          },
+          {
+            key: "asc",
+            label: "Oldest",
           },
         ]}
-        sortValue={sortKey}
+        sortValue={sortOrder}
         onSortChange={(v) => {
-          setSortKey(v as SortKey);
-          setCurrentPage(1);
+          setSortOrder(v as typeof sortOrder);
+          setPage(1);
         }}
         onReset={resetFilters}
       />
 
-      {paginatedItems.length === 0 ? (
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : leads.length === 0 ? (
         <EmptyState
           title="No leads found"
-          description="Try adjusting your filters or search keywords."
+          description="Try adjusting filters."
         />
       ) : (
         <div className="space-y-4">
-          {paginatedItems.map((lead) => (
+          {leads.map((lead) => (
             <LeadCard
               key={lead.id}
               lead={lead}
-              designers={designers}
-              assigning={assigningId === lead.id}
-              selectedDesigner={selectedDesigner}
-              onDesignerChange={setSelectedDesigner}
-              onStartAssign={() => {
-                setAssigningId(lead.id);
-                setSelectedDesigner("");
-              }}
-              onCancelAssign={() => {
-                setAssigningId(null);
-                setSelectedDesigner("");
-              }}
               onConfirmAssign={() => openAssignDialog(lead)}
             />
           ))}
 
           <PaginationControl
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            totalItems={totalItems}
-            itemsPerPage={itemsPerPage}
+            onPageChange={setPage}
+            totalItems={total}
+            itemsPerPage={limit}
           />
         </div>
       )}
@@ -272,15 +193,15 @@ export default function AdminLeadsPage() {
         onOpenChange={setConfirmOpen}
         selectedLead={selectedLead}
         selectedDesigner={selectedDesigner}
-        onConfirm={handleAssignLead}
+        onConfirm={() => {}}
       />
 
       <AddLeadDialog
         open={addLeadOpen}
         onOpenChange={setAddLeadOpen}
-        leadSources={leadSources}
-        deliverables={deliverables}
-        onAddLead={handleAddLead}
+        leadSources={Object.values(LeadSource)}
+        deliverables={[]}
+        onAddLead={() => {}}
       />
     </motion.div>
   );

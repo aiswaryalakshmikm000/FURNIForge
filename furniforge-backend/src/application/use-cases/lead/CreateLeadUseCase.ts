@@ -16,7 +16,7 @@ export class CreateLeadUseCase implements ICreateLeadUseCase {
   async execute(user: User): Promise<void> {
 
     const seq = await this._leadRepository.getNextLeadSequence();
-    let leadRegNo = generateRegNo({prefix: "LEAD", sequence: seq})
+    const leadRegNo = generateRegNo({prefix: "LEAD", sequence: seq})
 
     const lead = Lead.create({ 
         leadRegNo,

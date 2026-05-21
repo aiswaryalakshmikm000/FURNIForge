@@ -16,15 +16,14 @@ const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const resetToken = sessionManager.getResetToken();
 
-
   const { mutate: resetPassword, isPending } = useResetPassword();
-
-  if (!resetToken) return null;
 
   const { register, handleSubmit, formState: { errors, isValid }} = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
     mode: "onChange", 
   });
+  
+  if (!resetToken) return null;
 
   const onSubmit = (data: ResetPasswordFormValues) => {
     resetPassword(

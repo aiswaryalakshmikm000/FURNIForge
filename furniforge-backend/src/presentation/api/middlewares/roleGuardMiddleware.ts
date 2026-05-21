@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { UnauthorizedError, ForbiddenError} from "../../../domain/errors/AppError";
 import { AuthRequest } from "./authMiddleware";
 import { UserRole } from "../../../domain/enums/UserRole";

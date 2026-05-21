@@ -1,16 +1,19 @@
-import { LeadSource, LeadStatus, PackageType } from "../../../domain/enums/Lead";
+import { LeadSource, LeadStatus, PackageType } from "../enums/Lead";
 
-export interface LeadResponseDTO {
+export interface ILeadPersistence {
   id: string;
   leadRegNo: string;
   name: string;
   email: string;
-  phone: string; 
-  location: string | null;
+  phone: string;
   source: LeadSource;
   status: LeadStatus;
   projectsInterestedIn: string[];
   packageType: PackageType | null;
+  clientId: string | null;
   assignedDesignerId: string | null;
+  assignedAt: Date | null;
+  convertedAt: Date | null;
   createdAt: Date;
+  updatedAt: Date;
 }

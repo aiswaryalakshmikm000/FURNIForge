@@ -26,7 +26,7 @@ export const useAuth = () => {
       // toast.success(query.data.message);
     }
     if (query.isError) {
-      const status = (query.error as any)?.response?.status;
+      const status = query.error?.response?.status;
       if (status === 401 || status === 403) {
         dispatch(logout());
       }

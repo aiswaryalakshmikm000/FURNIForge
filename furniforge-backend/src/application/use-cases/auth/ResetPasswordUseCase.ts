@@ -28,7 +28,7 @@ export class ResetPasswordUseCase implements IResetPasswordUseCase {
     if(isSame) throw new BadRequestError(ERROR_MESSAGES.AUTH.OLD_PASSWORD);
 
     const hashed = await this._passwordService.hash(data.password)
-    await this._userRepo.update(user.id, {passwordHash: hashed})
+    await this._userRepo.updatePassword(user.id, hashed)
 
     await this._sessionService.invalidateAllUserSessions(user.id)
   }

@@ -3,7 +3,7 @@ import { injectable } from "inversify";
 import { BaseRepository } from "./BaseRepository";
 import { Lead } from "../../../../domain/entities/Lead";
 import type { ILeadRepository } from "../../../../domain/repositories/ILeadRepository";
-import { LeadMapper } from "../mapper/lead/LeadMapper";
+import { PrismaLeadMapper } from "../mapper/PrismaLeadMapper";
 import { LeadSource, LeadStatus, PackageType} from "../../../../domain/enums/Lead";
 import { Prisma, Lead as PrismaLead} from "../../../../generated/prisma/index";
 import { LeadListItem } from "../../../../domain/read-models/lead/LeadListItems";
@@ -15,15 +15,15 @@ export class LeadRepository
   protected model = prisma.lead;
 
   protected toDomain(raw: PrismaLead): Lead {
-    return LeadMapper.toDomain(raw);
+    return PrismaLeadMapper.toDomain(raw);
   }
 
   protected toCreate(entity: Lead): Prisma.LeadCreateInput {
-    return LeadMapper.toCreatePersistence(entity);
+    return PrismaLeadMapper.toCreatePersistence(entity);
   }
 
-  protected toUpdate(entity: Partial<Lead>): Prisma.LeadUpdateInput {
-    return LeadMapper.toUpdatePersistence(entity);
+  protected toUpdate(entity: Lead): Prisma.LeadUpdateInput {
+    return PrismaLeadMapper.toUpdatePersistence(entity);
   }
 
   async findByLeadRegNo(leadRegNo: string): Promise<Lead | null> {
@@ -51,21 +51,18 @@ export class LeadRepository
     search?: string;
     status?: string;
     source?: string;
+    deliverable?: string;
   }): Promise<number> {
     try {
       const where: Prisma.LeadWhereInput = {
         AND: [
-          filters?.search
-            ? {
-                OR: [
+          filters?.search ? { OR: [
                   { name: { contains: filters.search, mode: "insensitive" } },
                   { email: { contains: filters.search, mode: "insensitive" } },
-                ],
-              }
-            : {},
-
+                ] } : {},
           filters?.status ? { status: filters.status as LeadStatus } : {},
           filters?.source ? { source: filters.source as LeadSource } : {},
+          filters?. deliverable ? { projectsInterestedIn: {has: filters.deliverable}} : {}
         ],
       };
 
@@ -81,27 +78,20 @@ export class LeadRepository
     search?: string;
     status?: string;
     source?: string;
+    deliverable?: string;
     sortOrder: "asc" | "desc";
   }): Promise<LeadListItem[]> {
     try {
       const where: Prisma.LeadWhereInput = {
         AND: [
-          params.search
-            ? {
-                OR: [
+          params.search ? { OR: [
                   { name: { contains: params.search, mode: "insensitive" } },
                   { email: { contains: params.search, mode: "insensitive" } },
                   { phone: { contains: params.search } },
-                ],
-              }
-            : {},
-
-          params.status
-            ? { status: params.status as Prisma.EnumLeadStatusFilter["equals"] }
-            : {},
-          params.source
-            ? { source: params.source as Prisma.EnumLeadSourceFilter["equals"] }
-            : {},
+                ] } : {},
+          params.status ? { status: params.status as Prisma.EnumLeadStatusFilter["equals"] } : {},
+          params.source ? { source: params.source as Prisma.EnumLeadSourceFilter["equals"] } : {},
+          params.deliverable ? { projectsInterestedIn: {has: params.deliverable}} : {}
         ],
       };
 
@@ -133,9 +123,7 @@ export class LeadRepository
           source: raw.source as LeadSource,
           status: raw.status as LeadStatus,
           projectsInterestedIn: raw.projectsInterestedIn,
-          packageType: raw.packageType
-            ? (raw.packageType as PackageType)
-            : null,
+          packageType: raw.packageType ? (raw.packageType as PackageType) : null,
           assignedDesignerId: raw.assignedDesignerId,
           createdAt: raw.createdAt,
         };

@@ -1,5 +1,5 @@
 import { LeadStatus, LeadSource, PackageType } from "../enums/Lead";
-import { Lead as PrismaLead } from "../../generated/prisma/index";
+import { ILeadPersistence } from "../types/ILeadPersistence";
 
 export class Lead {
   private constructor(
@@ -8,7 +8,6 @@ export class Lead {
     private _name: string,
     private _email: string,
     private _phone: string,
-    
     private _source: LeadSource,
     private _status: LeadStatus,
     private _projectsInterestedIn: string[],
@@ -51,24 +50,24 @@ export class Lead {
     );
   }
 
-  // For DB → ENTITY
-  static fromPersistence(raw: PrismaLead): Lead {
+   // For DB → ENTITY
+  static fromPersistence(data: ILeadPersistence): Lead {
     return new Lead(
-      raw.id,
-      raw.leadRegNo,
-      raw.name,
-      raw.email,
-      raw.phone,
-      LeadSource[raw.source as keyof typeof LeadSource],
-      LeadStatus[raw.status as keyof typeof LeadStatus],
-      raw.projectsInterestedIn ?? [],  
-      raw.packageType ? PackageType[raw.packageType as keyof typeof PackageType] : null,
-      raw.clientId,
-      raw.assignedDesignerId,
-      raw.assignedAt,
-      raw.convertedAt,
-      new Date(raw.createdAt),
-      new Date(raw.updatedAt),
+      data.id,
+      data.leadRegNo,
+      data.name,
+      data.email,
+      data.phone,
+      data.source,
+      data.status,
+      data.projectsInterestedIn,
+      data.packageType,
+      data.clientId,
+      data.assignedDesignerId,
+      data.assignedAt,
+      data.convertedAt,
+      data.createdAt,
+      data.updatedAt,
     );
   }
 

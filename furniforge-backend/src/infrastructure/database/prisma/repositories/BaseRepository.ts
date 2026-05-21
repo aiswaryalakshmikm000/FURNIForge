@@ -13,7 +13,7 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
 
   protected abstract toDomain(raw: TPrisma): TDomain;
   protected abstract toCreate(entity: TDomain): TCreateInput;
-  protected abstract toUpdate(entity: Partial<TDomain>): TUpdateInput;
+  protected abstract toUpdate(entity: TDomain): TUpdateInput;
 
   async create(entity: TDomain): Promise<TDomain> {
     try {
@@ -47,7 +47,7 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
     }
   }
 
-  async update(id: string, entity: Partial<TDomain>): Promise<TDomain> {
+  async update(id: string, entity: TDomain): Promise<TDomain> {
     try {
       const raw = await this.model.update({ where: { id }, data: this.toUpdate(entity) });
       return this.toDomain(raw);

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export interface FilterOption {
   key: string;
   label: string;
-  options: string[];
+  options: {label: string, value: string}[];
   value: string;
   onChange: (val: string) => void;
 }
@@ -77,18 +77,14 @@ export const FilterSortDropdown = ({
 
         <button
           onClick={() => setOpen((prev) => !prev)}
-          className={`flex items-center gap-2 px-6 h-12 rounded-2xl border transition-all ${
-            open || hasActiveFilters
+          className={`relative flex items-center gap-2 px-6 h-12 rounded-2xl border transition-all ${
+            open 
               ? "bg-accent text-accent-foreground border-accent"
-              : "border-border hover:bg-muted"
+              : "border-border bg-background hover:bg-muted"
           }`}
         >
           <SlidersHorizontal size={16} />
           Filters
-
-          {hasActiveFilters && (
-            <div className="w-2 h-2 rounded-full bg-white" />
-          )}
         </button>
       </div>
 
@@ -112,11 +108,11 @@ export const FilterSortDropdown = ({
                     <div className="flex flex-wrap gap-2">
                       {filter.options.map((opt) => (
                         <button
-                          key={opt}
-                          onClick={() => filter.onChange(opt)}
-                          className={buttonStyle(filter.value === opt)}
+                          key={opt.value}
+                          onClick={() => filter.onChange(opt.value)}
+                          className={buttonStyle(filter.value === opt.value)}
                         >
-                          {opt}
+                          {opt.label}
                         </button>
                       ))}
                     </div>
@@ -130,15 +126,6 @@ export const FilterSortDropdown = ({
                     </p>
 
                     <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => onSortChange?.("none")}
-                        className={buttonStyle(
-                          sortValue === "none" || !sortValue
-                        )}
-                      >
-                        Default
-                      </button>
-
                       {sortOptions.map((s) => (
                         <button
                           key={s.key}

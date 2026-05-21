@@ -1,11 +1,11 @@
 import { ConfirmDialog } from "../../../../shared/components/common/confirm-dialog";
 
-import type { Lead } from "../../types/lead.type";
+import type { LeadResponseDTO } from "../../types/lead.type";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  selectedLead: Lead | null;
+  selectedLead: LeadResponseDTO | null;
   selectedDesigner: string;
   onConfirm: () => void;
 }

@@ -3,7 +3,7 @@ import type { IUserRepository } from "../../../../domain/repositories/IUserRepos
 import { User } from "../../../../domain/entities/User";
 import { BaseRepository } from "./BaseRepository";
 import { injectable } from "inversify";
-import { UserMapper } from "../../../../application/mappers/UserMapper";
+import { PrismaUserMapper } from "../mapper/PrismaUserMapper";
 import {User as PrismaUser, Prisma} from "../../../../generated/prisma/index";
 import { handlePrismaError } from "../errors/handlePrismaError";
 
@@ -12,15 +12,15 @@ export class UserRepository extends BaseRepository<User, PrismaUser, Prisma.User
   protected model = prisma.user;
 
   protected toDomain(raw: PrismaUser): User {
-    return UserMapper.toDomain(raw);
+    return PrismaUserMapper.toDomain(raw);
   }
 
   protected toCreate(entity: User): Prisma.UserCreateInput {
-    return UserMapper.toCreatePersistence(entity);
+    return PrismaUserMapper.toCreatePersistence(entity);
   }
 
-  protected toUpdate(entity: Partial<User>): Prisma.UserUpdateInput {
-    return UserMapper.toUpdatePersistence(entity);
+  protected toUpdate(entity: User): Prisma.UserUpdateInput {
+    return PrismaUserMapper.toUpdatePersistence(entity);
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -42,4 +42,16 @@ export class UserRepository extends BaseRepository<User, PrismaUser, Prisma.User
       handlePrismaError(error)
     }
   }
+
+  async updatePassword(id: string, passwordHash: string): Promise<void> {
+  try {
+    await this.model.update({
+      where: { id },
+      data: { passwordHash },
+    });
+
+  } catch (error) {
+    handlePrismaError(error);
+  }
+}
 }

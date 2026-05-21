@@ -2,16 +2,16 @@ import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 import { env } from "../config/env";
 import { store } from "../../app/store";
 import { logout } from "../../features/auth/store/auth.slice";
-
 import { refreshTokenApi } from "../../features/auth/api/refresh-token.api";
+import type { ApiErrorResponse } from "../../types/api/api-error.type";
 
 let isRefreshing = false;
 let failedQueue: Array<{
-  resolve: (value?: any) => void;
-  reject: (error?: any) => void;
+  resolve: (value?: unknown) => void;
+  reject: (error?: unknown) => void;
 }> = [];
 
-const processQueue = (error: any = null) => {
+const processQueue = (error: unknown = null) => {
   failedQueue.forEach((prom) => {
     if (error) prom.reject(error);
     else prom.resolve(null);
@@ -29,18 +29,19 @@ export const httpClient = axios.create({
 httpClient.interceptors.response.use(
   (response) => response,
 
-  async (error: AxiosError) => {
+  async (error: AxiosError<ApiErrorResponse>) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
 
-    const errorCode = (error.response?.data as any)?.error?.code;
+    const errorCode = error.response?.data?.error?.code;
+
     const REFRESHABLE_ERRORS = [
       "ACCESS_TOKEN_EXPIRED",
       "ACCESS_TOKEN_MISSING",
     ];
     
-    if (error.response?.status !== 401 || !REFRESHABLE_ERRORS.includes(errorCode) || originalRequest._retry) {
+    if (error.response?.status !== 401 || !REFRESHABLE_ERRORS.includes(errorCode ?? "") || originalRequest._retry) {
       return Promise.reject(error);
     }
 

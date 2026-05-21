@@ -22,6 +22,7 @@ export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
         search: query.search,
         status: query.status,
         source: query.source,
+        deliverable: query.deliverable,
         sortOrder: query.sortOrder,
       }),
 
@@ -29,6 +30,7 @@ export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
         search: query.search,
         status: query.status,
         source: query.source,
+        deliverable: query.deliverable,
       }),
     ]);
 

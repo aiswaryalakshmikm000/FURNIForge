@@ -20,7 +20,7 @@ export interface AuthRequest extends Request {
   };
 }
 
-export const authMiddleware = async ( req: AuthRequest,_res: Response, next: NextFunction ) => {
+export const authMiddleware = async ( req: AuthRequest, _res: Response, next: NextFunction ) => {
  
   try {
     const token = req.cookies?.accessToken;

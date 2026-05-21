@@ -10,10 +10,17 @@ export interface ApiErrorResponse<TDetails = unknown> {
   meta?: unknown;
 };
 
-export const getErrorMessage = (error: any): string => {
-  const apiError = error?.response?.data as ApiErrorResponse;
+export const getErrorMessage = (error: unknown): string => {
+  if (error instanceof AxiosError) {
+    const apiError = error.response?.data as ApiErrorResponse;
 
-  if (apiError?.message) return apiError.message;
+    return apiError?.message || "Something went wrong";
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
   return "Something went wrong";
 };
 

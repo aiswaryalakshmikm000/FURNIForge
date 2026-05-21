@@ -14,5 +14,13 @@ export const API_ENDPOINTS = {
     VERIFY_RESET_OTP: "/verify-reset-otp",
     RESEND_FORGOT_PASSWORD: "/resend-forgot-password-otp",
     RESET_PASSWORD: "/reset-password",
+  },
+
+  ADMIN: {
+    LEADS: {
+      GET_ALL: "/admin/leads",
+      CREATE: "/admin/leads",
+      ASSIGN_DESIGNER: (id: string) => `/admin/leads/${id}/assign-designer`,
+    }
   }
 };

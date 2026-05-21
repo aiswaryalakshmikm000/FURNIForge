@@ -17,7 +17,7 @@ export class EmailService implements IEmailService {
 
   private async _sendEmail(to: string,
   templateId: number,
-  params: Record<string, any>) {
+  params: Record<string, unknown>) {
     try {
       await axios.post(this._BREVO_URL, {
           sender: {

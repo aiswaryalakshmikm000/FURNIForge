@@ -11,6 +11,7 @@ export interface ILeadRepository extends IBaseRepository<Lead> {
     search?: string;
     status?: string;
     source?: string;
+    deliverable?: string;
   }): Promise<number>;
 
   findAllLeadRows(params: {
@@ -19,6 +20,7 @@ export interface ILeadRepository extends IBaseRepository<Lead> {
     search?: string;
     status?: string;
     source?: string;
+    deliverable?: string;
     sortOrder: "asc" | "desc";
   }): Promise<LeadListItem[]>;
 

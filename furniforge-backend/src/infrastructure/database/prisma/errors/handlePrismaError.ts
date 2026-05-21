@@ -9,7 +9,7 @@ export function handlePrismaError(error: unknown): never {
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     switch (error.code) {
 
-      case "P2002":
+      case "P2002": {
         const target = error.meta?.target;
 
         if (Array.isArray(target)) {
@@ -23,7 +23,7 @@ export function handlePrismaError(error: unknown): never {
         }
 
         throw new ConflictError(ERROR_MESSAGES.GENERAL.CONFLICT);
-
+      }
       case "P2025":
         throw new NotFoundError(ERROR_MESSAGES.GENERAL.NOT_FOUND);
 
