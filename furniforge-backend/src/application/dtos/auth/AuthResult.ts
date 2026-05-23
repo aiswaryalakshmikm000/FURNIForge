@@ -1,4 +1,4 @@
-import { AuthResponseDTO } from "./AuthResponseDTO.js";
+import { AuthResponseDTO } from "./AuthResponseDTO";
 
 export type AuthResult = AuthResponseDTO & {
   refreshToken: string;

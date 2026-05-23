@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '../../../domain/errors/AppError.js';
-import { ERROR_MESSAGES } from '../../../infrastructure/config/messages.js';
-import { loggerInstance } from '../../../infrastructure/logger/WinstonLogger.js';
+import { AppError } from '../../../domain/errors/AppError';
+import { ERROR_MESSAGES } from '../../../infrastructure/config/messages';
+import { loggerInstance } from '../../../infrastructure/logger/WinstonLogger';
 
 export const errorHandlerMiddleware = (
   err: unknown,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({

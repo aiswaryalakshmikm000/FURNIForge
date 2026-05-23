@@ -1,36 +1,35 @@
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IPasswordService } from "../../../domain/services/IPasswordService.js";
-import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError.js";
-import { ResetPasswordDTO } from "../../dtos/auth/ForgotPasswordDTO.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { ISessionService } from "../../../domain/services/ISessionService.js";
-import { ITokenService } from "../../../domain/services/ITokenService.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import type { IPasswordService } from "../../../domain/services/IPasswordService";
+import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
+import type { ResetPasswordDTO } from "../../dtos/auth/ForgotPasswordDTO";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import type { ISessionService } from "../../../domain/services/ISessionService";
+import type { ITokenService } from "../../../domain/services/ITokenService";
+import type { IResetPasswordUseCase } from "./interfaces/IResetPasswordUseCase";
 
 @injectable()
-export class ResetPasswordUseCase {
+export class ResetPasswordUseCase implements IResetPasswordUseCase {
   constructor(
-    @inject(TYPES.IUserRepository) private userRepo: IUserRepository,
-    @inject(TYPES.IOtpService) private otpService: IOtpService,
-    @inject(TYPES.IPasswordService) private passwordService: IPasswordService,
-    @inject(TYPES.ISessionService) private sessionService: ISessionService,
-    @inject(TYPES.ITokenService) private tokenService: ITokenService,
+    @inject(TYPES.IUserRepository) private _userRepo: IUserRepository,
+    @inject(TYPES.IPasswordService) private _passwordService: IPasswordService,
+    @inject(TYPES.ISessionService) private _sessionService: ISessionService,
+    @inject(TYPES.ITokenService) private _tokenService: ITokenService,
   ) {}
 
   async execute(data: ResetPasswordDTO): Promise<void> {
-    const payload = this.tokenService.verifyResetToken(data.resetToken);
+    const payload = this._tokenService.verifyResetToken(data.resetToken);
 
-    const user = await this.userRepo.findById(payload.userId);
+    const user = await this._userRepo.findById(payload.userId);
     if (!user) throw new NotFoundError(ERROR_MESSAGES.USER.NOT_FOUND);
 
-    const isSame = await this.passwordService.compare(data.password, user.passwordHash)
+    const isSame = await this._passwordService.compare(data.password, user.passwordHash)
     if(isSame) throw new BadRequestError(ERROR_MESSAGES.AUTH.OLD_PASSWORD);
 
-    const hashed = await this.passwordService.hash(data.password)
-    await this.userRepo.update(user.id, {passwordHash: hashed})
+    const hashed = await this._passwordService.hash(data.password)
+    await this._userRepo.updatePassword(user.id, hashed)
 
-    await this.sessionService.invalidateAllUserSessions(user.id)
+    await this._sessionService.invalidateAllUserSessions(user.id)
   }
 }

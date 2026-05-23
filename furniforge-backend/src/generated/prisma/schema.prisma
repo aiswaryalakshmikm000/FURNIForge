@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  clientRegNo   String?  @unique
+  role          Role
+  firstName     String
+  lastName      String
+  email         String   @unique
+  phone         String   @unique
+  avatar        String?
+  passwordHash  String?
+  isVerified    Boolean  @default(false)
+  oauthProvider String?
+  oauthId       String?
+  address       Json?
+  occupation    String?
+  education     String?
+  rating        Float?   @default(0)
+  isActive      Boolean  @default(true)
+  isBlocked     Boolean  @default(false)
+  leads         Lead[]   @relation("ClientLeads")
+  assignedLeads Lead[]   @relation("DesignerLeads")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Lead {
+  id                   String       @id @default(uuid())
+  leadRegNo            String       @unique
+  name                 String
+  email                String
+  phone                String
+  source               LeadSource
+  status               LeadStatus
+  projectsInterestedIn String[]
+  packageType          PackageType?
+  clientId             String?
+  client               User?        @relation("ClientLeads", fields: [clientId], references: [id])
+  assignedDesignerId   String?
+  assignedDesigner     User?        @relation("DesignerLeads", fields: [assignedDesignerId], references: [id])
+  assignedAt           DateTime?
+  convertedAt          DateTime?
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+}
+
+model Counter {
+  id    String @id
+  value Int
+}
+
+enum Role {
+  ADMIN
+  CLIENT
+  DESIGNER
+}
+
+enum LeadStatus {
+  UNASSIGNED
+  ASSIGNED
+  DESIGNING
+  PROPOSAL_SENT
+  CONVERTED
+  LOST
+}
+
+enum LeadSource {
+  EXTERNAL
+  REFERRAL
+  SELF_REGISTERED
+}
+
+enum PackageType {
+  BASIC
+  STANDARD
+  PREMIUM
+}

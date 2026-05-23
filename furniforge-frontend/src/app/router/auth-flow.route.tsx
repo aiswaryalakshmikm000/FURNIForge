@@ -16,7 +16,6 @@ export const AuthFlowRoute = ({ children, type }: AuthFlowRouteProps) => {
     const tempUser = sessionManager.getTempUserId();
 
     if (!tempUser) {
-      console.log("no temp user redirecting to the register")
       return <Navigate to={APP_ROUTES.AUTH.REGISTER} replace />;
     }
   }

@@ -1,4 +1,4 @@
-import { RefreshTokenResultDTO } from "../../../dtos/auth/RefreshTokenResultDTO.js";
+import { RefreshTokenResultDTO } from "../../../dtos/auth/RefreshTokenResultDTO";
 
 export interface IRefreshTokenUseCase {
   execute(refreshToken: string): Promise<RefreshTokenResultDTO>;

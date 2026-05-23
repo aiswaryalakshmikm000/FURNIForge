@@ -1,40 +1,41 @@
 import { Request, Response } from "express";
-import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse.js";
-import { IRegisterUserUseCase } from "../../../../../application/use-cases/auth/interfaces/IRegisterUserUseCase.js";
-import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "../../../../../infrastructure/config/messages.js";
-import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode.js";
-import { IVerifyOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IVerifyOtpUseCase.js";
+import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse";
+import type  { IRegisterUserUseCase } from "../../../../../application/use-cases/auth/interfaces/IRegisterUserUseCase";
+import { SUCCESS_MESSAGES, ERROR_MESSAGES } from "../../../../../infrastructure/config/messages";
+import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
+import type { IVerifyOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IVerifyOtpUseCase";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../../../../infrastructure/di/types.js";
-import { IResendOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IResendOtpUseCase.js";
-import { UnauthorizedError } from "../../../../../domain/errors/AppError.js";
-import { IRefreshTokenUseCase } from "../../../../../application/use-cases/auth/interfaces/IRefreshTokenUseCase.js";
-import { ILogoutUseCase } from "../../../../../application/use-cases/auth/interfaces/ILogoutUseCase.js";
-import { AuthRequest } from "../../../../../presentation/api/middlewares/authMiddleware.js";
-import { ILoginUseCase } from "../../../../../application/use-cases/auth/interfaces/ILoginUseCase.js";
-import { setRefreshTokenCookie, clearRefreshTokenCookie, setAccessTokenCookie, clearAccessTokenCookie } from "../../../../../infrastructure/config/cookies.js";
-import { ILogoutAllDevicesUseCase } from "../../../../../application/use-cases/auth/interfaces/ILogoutAllDevicesUseCase.js";
-import { IGetMeUseCase } from "../../../../../application/use-cases/auth/interfaces/IGetMeUseCase.js";
-import { IForgetPasswordUseCase } from "../../../../../application/use-cases/auth/interfaces/IForgetPasswordUseCase.js";
-import { IResetPasswordUseCase } from "../../../../../application/use-cases/auth/interfaces/IResetPasswordUseCase.js";
-import { IVerifyResetOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IVerifyResetOtpUSeCase.js";
-import { IResendForgotPasswordOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IResendForgotPasswordOtpUseCase.js";
+import { TYPES } from "../../../../../infrastructure/di/types";
+import type { IResendOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IResendOtpUseCase";
+import { UnauthorizedError } from "../../../../../domain/errors/AppError";
+import type { IRefreshTokenUseCase } from "../../../../../application/use-cases/auth/interfaces/IRefreshTokenUseCase";
+import type { ILogoutUseCase } from "../../../../../application/use-cases/auth/interfaces/ILogoutUseCase";
+import { AuthRequest } from "../../../../../presentation/api/middlewares/authMiddleware";
+import type { ILoginUseCase } from "../../../../../application/use-cases/auth/interfaces/ILoginUseCase";
+import { setRefreshTokenCookie, clearRefreshTokenCookie, setAccessTokenCookie, clearAccessTokenCookie } from "../../../../../infrastructure/config/cookies";
+import type { ILogoutAllDevicesUseCase } from "../../../../../application/use-cases/auth/interfaces/ILogoutAllDevicesUseCase";
+import type { IGetMeUseCase } from "../../../../../application/use-cases/auth/interfaces/IGetMeUseCase";
+import type { IForgetPasswordUseCase } from "../../../../../application/use-cases/auth/interfaces/IForgetPasswordUseCase";
+import type { IResetPasswordUseCase } from "../../../../../application/use-cases/auth/interfaces/IResetPasswordUseCase";
+import type { IVerifyResetOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IVerifyResetOtpUSeCase";
+import type { IResendForgotPasswordOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IResendForgotPasswordOtpUseCase";
+import { ERROR_CODES } from "../../../../../shared/constants/errorCodes";
 
 @injectable()
 export class AuthController {
   constructor(
-    @inject(TYPES.IRegisterUserUseCase) private registerUseCase: IRegisterUserUseCase,
-    @inject(TYPES.IVerifyOtpUseCase) private verifyOtpUseCase: IVerifyOtpUseCase,
-    @inject(TYPES.IResendOtpUseCase) private resendOtpUseCase: IResendOtpUseCase,
-    @inject(TYPES.IRefreshTokenUseCase) private refreshTokenUseCase: IRefreshTokenUseCase,
-    @inject(TYPES.ILogoutUseCase) private logoutUseCase: ILogoutUseCase,
-    @inject(TYPES.ILogoutAllDevicesUseCase) private logoutAllUseCase: ILogoutAllDevicesUseCase,
-    @inject(TYPES.ILoginUseCase) private loginUseCase: ILoginUseCase,
-    @inject(TYPES.IGetMeUseCase) private getMeUseCase: IGetMeUseCase,
-    @inject(TYPES.IForgotPasswordUseCase) private forgotPasswordUseCase: IForgetPasswordUseCase,
-    @inject(TYPES.IResetPasswordUseCase) private resetPasswordUseCase: IResetPasswordUseCase,
-    @inject(TYPES.IResendForgotPasswordOtpUseCase) private resendForgotPasswordOtpUseCase: IResendForgotPasswordOtpUseCase,
-    @inject(TYPES.IVerifyResetOtpUseCase) private verifyResetOtpUseCase: IVerifyResetOtpUseCase,
+    @inject(TYPES.IRegisterUserUseCase) private _registerUseCase: IRegisterUserUseCase,
+    @inject(TYPES.IVerifyOtpUseCase) private _verifyOtpUseCase: IVerifyOtpUseCase,
+    @inject(TYPES.IResendOtpUseCase) private _resendOtpUseCase: IResendOtpUseCase,
+    @inject(TYPES.IRefreshTokenUseCase) private _refreshTokenUseCase: IRefreshTokenUseCase,
+    @inject(TYPES.ILogoutUseCase) private _logoutUseCase: ILogoutUseCase,
+    @inject(TYPES.ILogoutAllDevicesUseCase) private _logoutAllUseCase: ILogoutAllDevicesUseCase,
+    @inject(TYPES.ILoginUseCase) private _loginUseCase: ILoginUseCase,
+    @inject(TYPES.IGetMeUseCase) private _getMeUseCase: IGetMeUseCase,
+    @inject(TYPES.IForgotPasswordUseCase) private _forgotPasswordUseCase: IForgetPasswordUseCase,
+    @inject(TYPES.IResetPasswordUseCase) private _resetPasswordUseCase: IResetPasswordUseCase,
+    @inject(TYPES.IResendForgotPasswordOtpUseCase) private _resendForgotPasswordOtpUseCase: IResendForgotPasswordOtpUseCase,
+    @inject(TYPES.IVerifyResetOtpUseCase) private _verifyResetOtpUseCase: IVerifyResetOtpUseCase,
   ) {}
 
   /**
@@ -43,7 +44,7 @@ export class AuthController {
    * @param res - Express response object (email, cooldown, tempuserId) used to send the response 
    */
   register = async (req: Request, res: Response) => {
-    const result = await this.registerUseCase.execute(req.body);
+    const result = await this._registerUseCase.execute(req.body);
     res.status(HttpStatusCode.CREATED).json(ResponseBuilder.created(result, SUCCESS_MESSAGES.AUTH.REGISTER_SUCCESS).build());
   };
 
@@ -53,7 +54,7 @@ export class AuthController {
    * @param res - Express response object used to send the create user response, accessToken, refreshToken
    */
   verifyOtp = async (req: Request, res: Response) => {
-    const result = await this.verifyOtpUseCase.execute(req.body);
+    const result = await this._verifyOtpUseCase.execute(req.body);
 
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
@@ -69,7 +70,7 @@ export class AuthController {
    * @param res - Returns success message with cooldown and email
    */
   resendOtp = async (req: Request, res: Response) => {
-    const result = await this.resendOtpUseCase.execute(req.body);
+    const result = await this._resendOtpUseCase.execute(req.body);
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.RESEND_OTP_SUCCESS).build() );
   };
 
@@ -81,13 +82,12 @@ export class AuthController {
    */
   refreshToken = async (req: Request, res: Response) => {
     const oldRefreshToken = req.cookies?.refreshToken;
-    if (!oldRefreshToken)throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.REFRESH_FAILED);
-
-    const result = await this.refreshTokenUseCase.execute(oldRefreshToken);
+    
+    if (!oldRefreshToken)throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.REFRESH_FAILED, ERROR_CODES.AUTH.REFRESH_TOKEN_MISSING);
+    const result = await this._refreshTokenUseCase.execute(oldRefreshToken);
 
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
-
     const { refreshToken, ...safeResponse } = result;
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.TOKEN_REFRESH_SUCCESS).build());
   };
@@ -99,7 +99,7 @@ export class AuthController {
    */
   logout = async (req: AuthRequest, res: Response) => {
     if (!req.user) throw new UnauthorizedError();
-    await this.logoutUseCase.execute(req.user.sessionId);
+    await this._logoutUseCase.execute(req.user.sessionId);
 
     clearAccessTokenCookie(res);
     clearRefreshTokenCookie(res);
@@ -114,7 +114,7 @@ export class AuthController {
    */
   logoutAll = async (req: AuthRequest, res: Response) => {
     if (!req.user) throw new UnauthorizedError();
-    await this.logoutAllUseCase.execute(req.user.userId);
+    await this._logoutAllUseCase.execute(req.user.userId);
 
     clearAccessTokenCookie(res);
     clearRefreshTokenCookie(res);
@@ -127,7 +127,7 @@ export class AuthController {
    * @param res return user details set access and refesh toekn in cookies 
    */
   login = async (req: Request, res: Response) => {
-    const result = await this.loginUseCase.execute(req.body);
+    const result = await this._loginUseCase.execute(req.body);
 
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
@@ -144,7 +144,7 @@ export class AuthController {
   me = async (req: AuthRequest, res: Response) => {
     if (!req.user) throw new UnauthorizedError();
 
-    const result = await this.getMeUseCase.execute(req.user.userId);
+    const result = await this._getMeUseCase.execute(req.user.userId);
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.ME_FETCH).build());
   };
 
@@ -154,7 +154,7 @@ export class AuthController {
    * @param res return email with cooldown time for otp resend
    */
   forgotPassword = async (req: Request, res: Response) => {
-    const result = await this.forgotPasswordUseCase.execute(req.body);
+    const result = await this._forgotPasswordUseCase.execute(req.body);
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.FORGOT_PASSWORD).build());
   };
 
@@ -164,7 +164,7 @@ export class AuthController {
    * @param res return reset token 
    */
   verifyResetOtp = async (req: Request, res: Response) => {
-    const result = await this.verifyResetOtpUseCase.execute(req.body)
+    const result = await this._verifyResetOtpUseCase.execute(req.body)
 
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.VERIFY_OTP_SUCCESS).build())
   }
@@ -175,7 +175,7 @@ export class AuthController {
    * @param res return success message
    */
   resetPassword = async (req: Request, res: Response) => {
-    await this.resetPasswordUseCase.execute(req.body);
+    await this._resetPasswordUseCase.execute(req.body);
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.AUTH.PASSWORD_RESET_SUCCESS).build() );
   };
 
@@ -185,7 +185,7 @@ export class AuthController {
    * @param res return email and cooldown time
    */
   resendForgotPasswordOtp = async (req: Request, res: Response) => {
-    const result = await this.resendForgotPasswordOtpUseCase.execute(req.body);
+    const result = await this._resendForgotPasswordOtpUseCase.execute(req.body);
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.RESEND_OTP_SUCCESS).build());
   };
   

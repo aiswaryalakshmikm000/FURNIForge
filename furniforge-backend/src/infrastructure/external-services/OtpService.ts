@@ -1,20 +1,18 @@
-import { IOtpService } from "../../domain/services/IOtpservice.js";
-import { IOTPRepository } from "../../domain/repositories/IOTPRepository.js";
-import { OtpToken } from "../../domain/entities/OtpToken.js";
-import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError.js";
-import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
-import { env } from "../../infrastructure/config/env.js";
+import type { IOtpService } from "../../domain/services/IOtpservice";
+import type { IOTPRepository } from "../../domain/repositories/IOTPRepository";
+import { OtpToken } from "../../domain/entities/OtpToken";
+import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
+import { env } from "../../infrastructure/config/env";
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../infrastructure/di/types.js";
-import { ILogger } from "../../domain/services/ILogger.js";
+import { TYPES } from "../../infrastructure/di/types";
 
 @injectable()
 export class OtpService implements IOtpService {
-  private readonly TTL = env.OTP.EXPIRY;
+  private readonly _TTL = env.OTP.EXPIRY;
 
   constructor(
-    @inject(TYPES.IOTPRepository) private otpRepository: IOTPRepository,
-    @inject(TYPES.ILogger) private logger: ILogger,
+    @inject(TYPES.IOTPRepository) private _otpRepository: IOTPRepository,
   ) {}
 
   generateOTP(): string {
@@ -22,7 +20,7 @@ export class OtpService implements IOtpService {
   }
 
   async generateAndHandleOtp(userId: string, email: string): Promise<OtpToken> {
-    const existing = await this.otpRepository.getByUserId(userId);
+    const existing = await this._otpRepository.getByUserId(userId);
 
     if(existing){
       const now = Date.now();
@@ -34,13 +32,13 @@ export class OtpService implements IOtpService {
         throw new TooManyRequestsError(`Please wait ${remaining}s before requesting a new OTP`, null, {remainingSeconds: remaining})
       }
 
-      await this.otpRepository.delete(existing);
+      await this._otpRepository.delete(existing);
     }
 
     const otpCode = this.generateOTP();
-    const otpToken = OtpToken.create(userId, email, otpCode, this.TTL);
+    const otpToken = OtpToken.create(userId, email, otpCode, this._TTL);
 
-    await this.otpRepository.save(otpToken, this.TTL);
+    await this._otpRepository.save(otpToken, this._TTL);
 
     console.log("Saved OTP:", otpToken);
     console.log("User OTP Key:", `otp:user:${userId}`);
@@ -53,7 +51,7 @@ export class OtpService implements IOtpService {
 
   async verifyOtp( userId: string, email: string, inputOtp: string ): Promise<OtpToken> {
 
-    const existing = await this.otpRepository.getByUserId(userId);
+    const existing = await this._otpRepository.getByUserId(userId);
 
     if (!existing) {
       throw new BadRequestError(ERROR_MESSAGES.AUTH.OTP_NOT_FOUND);
@@ -71,16 +69,16 @@ export class OtpService implements IOtpService {
       existing.verify(inputOtp);
     } catch (err: any) {
 
-      await this.otpRepository.update(existing);
+      await this._otpRepository.update(existing);
 
       if(err instanceof TooManyRequestsError){
-        await this.otpRepository.delete(existing)
+        await this._otpRepository.delete(existing)
       }
       err.meta = { remainingAttempts: existing.remainingAttempts }
       throw err;
     }
     
-    await this.otpRepository.delete(existing);
+    await this._otpRepository.delete(existing);
     return existing;
   }
 }

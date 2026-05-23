@@ -1,28 +1,17 @@
-// import axios from "axios";
-// import { env } from "../config/env";
-
-// export const httpClient = axios.create({
-//   baseURL: env.API_BASE_URL, 
-//   withCredentials: true, 
-//   timeout: 15000,
-// });
-
-
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 import { env } from "../config/env";
 import { store } from "../../app/store";
 import { logout } from "../../features/auth/store/auth.slice";
-
-// We will import refreshTokenApi here
 import { refreshTokenApi } from "../../features/auth/api/refresh-token.api";
+import type { ApiErrorResponse } from "../../types/api/api-error.type";
 
 let isRefreshing = false;
 let failedQueue: Array<{
-  resolve: (value?: any) => void;
-  reject: (error?: any) => void;
+  resolve: (value?: unknown) => void;
+  reject: (error?: unknown) => void;
 }> = [];
 
-const processQueue = (error: any = null) => {
+const processQueue = (error: unknown = null) => {
   failedQueue.forEach((prom) => {
     if (error) prom.reject(error);
     else prom.resolve(null);
@@ -40,13 +29,19 @@ export const httpClient = axios.create({
 httpClient.interceptors.response.use(
   (response) => response,
 
-  async (error: AxiosError) => {
+  async (error: AxiosError<ApiErrorResponse>) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
 
-    // Not 401 or already retried
-    if (error.response?.status !== 401 || originalRequest._retry) {
+    const errorCode = error.response?.data?.error?.code;
+
+    const REFRESHABLE_ERRORS = [
+      "ACCESS_TOKEN_EXPIRED",
+      "ACCESS_TOKEN_MISSING",
+    ];
+    
+    if (error.response?.status !== 401 || !REFRESHABLE_ERRORS.includes(errorCode ?? "") || originalRequest._retry) {
       return Promise.reject(error);
     }
 
@@ -67,7 +62,6 @@ httpClient.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError);
       store.dispatch(logout());
-      // window.location.replace("/login"); // Optional
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

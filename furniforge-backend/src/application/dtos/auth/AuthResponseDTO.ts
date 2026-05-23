@@ -1,4 +1,4 @@
-import { UserResponseDTO } from "../user/userResponseDTO.js";
+import { UserResponseDTO } from "../user/userResponseDTO";
 
 export type AuthResponseDTO = {
   user: UserResponseDTO;

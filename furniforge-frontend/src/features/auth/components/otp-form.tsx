@@ -30,32 +30,47 @@ export const OtpForm = ({
 }: OtpFormProps) => {
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const [timer, setTimer] = useState(resendDelay);
-  const [canResend, setCanResend] = useState(false);
+  // const [canResend, setCanResend] = useState(false);
+  const canResend = timer <= 0;
 
   useEffect(() => {
-    const newTimer = Math.max(0, resendDelay);
-    setTimer(newTimer);
-    setCanResend(newTimer <= 0);
-  }, [resendDelay]);
+  setTimer(Math.max(0, resendDelay));
+}, [resendDelay]);
 
-  useEffect(() => {
-    if (timer <= 0) {
-      setCanResend(true);
-      return;
-    }
+useEffect(() => {
+  if (timer <= 0) return;
 
-    const interval = setInterval(() => {
-      setTimer((prev) => {
-        if (prev <= 1) {
-          setCanResend(true);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+  const interval = setInterval(() => {
+    setTimer((prev) => Math.max(prev - 1, 0));
+  }, 1000);
 
-    return () => clearInterval(interval);
-  }, [timer]);
+  return () => clearInterval(interval);
+}, [timer]);
+
+  // useEffect(() => {
+  //   const newTimer = Math.max(0, resendDelay);
+  //   setTimer(newTimer);
+  //   setCanResend(newTimer <= 0);
+  // }, [resendDelay]);
+
+  // useEffect(() => {
+  //   if (timer <= 0) {
+  //     setCanResend(true);
+  //     return;
+  //   }
+
+  //   const interval = setInterval(() => {
+  //     setTimer((prev) => {
+  //       if (prev <= 1) {
+  //         setCanResend(true);
+  //         return 0;
+  //       }
+  //       return prev - 1;
+  //     });
+  //   }, 1000);
+
+  //   return () => clearInterval(interval);
+  // }, [timer]);
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const pasteData = e.clipboardData.getData("text").trim();

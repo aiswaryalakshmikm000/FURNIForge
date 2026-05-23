@@ -1,8 +1,9 @@
-import { IBaseRepository } from './IBaseRepository.js';
-import {User} from '../../domain/entities/User.js'
+import { IBaseRepository } from './IBaseRepository';
+import {User} from '../../domain/entities/User'
 
 export interface IUserRepository extends IBaseRepository<User>{
   findByEmail(email: string): Promise<User | null>;
-  // create(data: User): Promise<User>;
   findByPhone(phone: string): Promise<User | null>
+  updatePassword(id: string, passwordHash: string): Promise<void>;
+  findDesigners(): Promise<User[]>;
 }

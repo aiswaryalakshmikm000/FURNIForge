@@ -1,19 +1,19 @@
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { UnauthorizedError } from "../../../domain/errors/AppError.js";
-import { UserMapper } from "../../mappers/UserMapper.js";
-import { IGetMeUseCase } from "./interfaces/IGetMeUseCase.js";
-import { UserResponseDTO } from "../../dtos/user/userResponseDTO.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import { UnauthorizedError } from "../../../domain/errors/AppError";
+import { UserMapper } from "../../mappers/UserMapper";
+import type { IGetMeUseCase } from "./interfaces/IGetMeUseCase";
+import type { UserResponseDTO } from "../../dtos/user/userResponseDTO";
 
 @injectable()
 export class GetMeUseCase implements IGetMeUseCase {
   constructor(
-    @inject(TYPES.IUserRepository) private userRepository: IUserRepository
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository
 ) {};
 
   async execute(userId: string): Promise<{user: UserResponseDTO}> { 
-    const user = await this.userRepository.findById(userId);
+    const user = await this._userRepository.findById(userId);
 
     if (!user) throw new UnauthorizedError();
 

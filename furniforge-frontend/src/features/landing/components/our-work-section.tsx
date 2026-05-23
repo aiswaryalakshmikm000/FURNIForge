@@ -1,13 +1,16 @@
 import { useState, useMemo } from "react";
-import { Search, SlidersHorizontal } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+
+import { Search } from "lucide-react";
 
 import { SectionIntro } from "./section-intro";
 import { WorkCard } from "./work-card";
+
 import { PaginationControl } from "../../../shared/components/common/pagination-control";
 import { usePagination } from "../../../shared/hooks/use-pagination";
+
 import { EmptyState } from "../../../shared/components/common/EmptyState";
-import { WorkFilters } from "./work-filters";
+
+import { FilterSortDropdown } from "../../../shared/components/common/filter-sort-dropdown";
 
 import wardrobeImg from "../../../assets/work-wardrobe-new.jpg";
 import tvunitImg from "../../../assets/work-tvunit-new.jpg";
@@ -29,88 +32,37 @@ interface Project {
   client: string;
 }
 
-const TYPES = [ "All", "Wardrobe", "TV Unit", "Office Desk", "Sofa", "Bed"] as const;
-const COLORS = [ "All", "Black", "White", "Grey", "Brown", "Beige", "Wood"] as const;
-const SORT_OPTIONS: { label: string; value: "none" | "price" | "rating" }[] = [
-  { label: "Default", value: "none" },
-  { label: "Price", value: "price" },
-  { label: "Rating", value: "rating" },
+const COLORS = ["All", "Black", "White", "Grey", "Brown", "Beige", "Wood"] as const;
+const TYPES = ["All", "Wardrobe", "TV Unit", "Office Desk", "Sofa", "Bed"] as const;
+
+const SORT_OPTIONS = [
+  { key: "price", label: "Price" },
+  { key: "rating", label: "Rating" },
 ];
 
 const projects: Project[] = [
-  {
-    id: 1,
-    image: wardrobeImg,
-    title: "Sliding Wardrobe — Master Bedroom",
-    location: "Mumbai",
-    rating: 4.8,
-    price: 185000,
-    color: "Brown",
-    type: "Wardrobe",
-    finish: "Laminate",
-    review: "Absolutely loved the design.",
-    client: "Priya M.",
-  },
-  {
-    id: 2,
-    image: tvunitImg,
-    title: "Wall Mounted TV Unit",
-    location: "Bangalore",
-    rating: 4.9,
-    price: 95000,
-    color: "Grey",
-    type: "TV Unit",
-    finish: "PU",
-    review: "Exceeded expectations.",
-    client: "Rahul S.",
-  },
-  {
-    id: 3,
-    image: deskImg,
-    title: "Ergonomic Office Desk Setup",
-    location: "Pune",
-    rating: 4.6,
-    price: 72000,
-    color: "White",
-    type: "Office Desk",
-    finish: "Laminate",
-    review: "Perfect for WFH.",
-    client: "Arjun R.",
-  },
-  {
-    id: 4,
-    image: sofaImg,
-    title: "L-Shape Sofa with Ottoman",
-    location: "Delhi",
-    rating: 4.7,
-    price: 145000,
-    color: "Beige",
-    type: "Sofa",
-    finish: "Fabric",
-    review: "Incredibly comfortable.",
-    client: "Meena T.",
-  },
-  {
-    id: 5,
-    image: bedImg,
-    title: "Platform Bed with Storage",
-    location: "Gurgaon",
-    rating: 4.9,
-    price: 120000,
-    color: "Wood",
-    type: "Bed",
-    finish: "Veneer",
-    review: "Dream bedroom realized.",
-    client: "Vikash P.",
-  },
+  { id: 1, image: wardrobeImg, title: "Sliding Wardrobe — Master Bedroom", location: "Mumbai", rating: 4.8, review: "Absolutely loved the design.", client: "Priya M.", price: 185000, finish: "Laminate", color: "Brown", type: "Wardrobe" },
+  { id: 2, image: tvunitImg, title: "Wall Mounted TV Unit", location: "Bangalore", rating: 4.9, review: "Exceeded expectations.", client: "Rahul S.", price: 95000, finish: "PU", color: "Grey", type: "TV Unit" },
+  { id: 3, image: deskImg, title: "Ergonomic Office Desk Setup", location: "Pune", rating: 4.6, review: "Perfect for WFH.", client: "Arjun R.", price: 72000, finish: "Laminate", color: "White", type: "Office Desk" },
+  { id: 4, image: sofaImg, title: "L-Shape Sofa with Ottoman", location: "Delhi", rating: 4.7, review: "Incredibly comfortable.", client: "Meena T.", price: 145000, finish: "Fabric", color: "Beige", type: "Sofa" },
+  { id: 5, image: bedImg, title: "Platform Bed with Storage", location: "Gurgaon", rating: 4.9, review: "Dream bedroom realized.", client: "Vikash P.", price: 120000, finish: "Veneer", color: "Wood", type: "Bed" },
+  { id: 6, image: wardrobeImg, title: "Walk-in Wardrobe", location: "Jaipur", rating: 4.5, review: "Luxury storage.", client: "Kavita D.", price: 320000, finish: "PU", color: "Brown", type: "Wardrobe" },
+  { id: 7, image: tvunitImg, title: "Floating TV Console", location: "Chennai", rating: 4.7, review: "Clean and minimal.", client: "Deepa R.", price: 68000, finish: "Acrylic", color: "White", type: "TV Unit" },
+  { id: 8, image: deskImg, title: "Executive Desk with Drawers", location: "Hyderabad", rating: 4.8, review: "Professional setup.", client: "Ravi K.", price: 85000, finish: "Laminate", color: "Grey", type: "Office Desk" },
+  { id: 9, image: bedImg, title: "King-Size Upholstered Bed", location: "Thane", rating: 4.4, review: "Excellent craftsmanship.", client: "Anita S.", price: 155000, finish: "Fabric", color: "Beige", type: "Bed" },
 ];
 
 export const OurWorkSection = () => {
   const [search, setSearch] = useState("");
+
   const [typeFilter, setTypeFilter] = useState("All");
+
   const [colorFilter, setColorFilter] = useState("All");
-  const [sortKey, setSortKey] = useState<"none" | "price" | "rating">("none");
-  const [showFilters, setShowFilters] = useState(false);
+
+  const [sortKey, setSortKey] = useState<
+    "none" | "price" | "rating"
+  >("none");
+
   const [saved, setSaved] = useState<number[]>([]);
 
   const filtered = useMemo(() => {
@@ -121,15 +73,26 @@ export const OurWorkSection = () => {
         p.location.toLowerCase().includes(search.toLowerCase()) ||
         p.client?.toLowerCase().includes(search.toLowerCase());
 
-      const matchesType = typeFilter === "All" || p.type === typeFilter;
-      const matchesColor = colorFilter === "All" || p.color === colorFilter;
+      const matchesType =
+        typeFilter === "All" || p.type === typeFilter;
 
-      return matchesSearch && matchesType && matchesColor;
+      const matchesColor =
+        colorFilter === "All" || p.color === colorFilter;
+
+      return (
+        matchesSearch &&
+        matchesType &&
+        matchesColor
+      );
     });
 
-    if (sortKey === "price") list = [...list].sort((a, b) => b.price - a.price);
-    if (sortKey === "rating")
+    if (sortKey === "price") {
+      list = [...list].sort((a, b) => b.price - a.price);
+    }
+
+    if (sortKey === "rating") {
       list = [...list].sort((a, b) => b.rating - a.rating);
+    }
 
     return list;
   }, [search, typeFilter, colorFilter, sortKey]);
@@ -143,22 +106,20 @@ export const OurWorkSection = () => {
     itemsPerPage,
   } = usePagination<Project>(filtered, 6);
 
-  const hasActiveFilters = typeFilter !== "All" || colorFilter !== "All" || sortKey !== "none";
-
   const toggleSave = (id: number) => {
     setSaved((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+      prev.includes(id)
+        ? prev.filter((i) => i !== id)
+        : [...prev, id]
     );
   };
-
-  const toggleFilterPanel = () => setShowFilters((prev) => !prev);
 
   const clearAllFilters = () => {
     setTypeFilter("All");
     setColorFilter("All");
     setSortKey("none");
     setSearch("");
-    setShowFilters(false);
+    setCurrentPage(1);
   };
 
   return (
@@ -172,82 +133,81 @@ export const OurWorkSection = () => {
         />
       </section>
 
+      {/* CONTENT */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* SEARCH + FILTER BUTTON */}
-        <div className="flex gap-3 mb-6 items-center">
-          <div className="relative flex-1">
-            <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search by name, location or client..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 rounded-2xl border border-border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-accent font-sans shadow-warm"
-            />
-          </div>
-
-          <button
-            onClick={toggleFilterPanel}
-            className={`flex items-center gap-2 px-6 h-12 rounded-2xl border transition-all ${
-              showFilters || hasActiveFilters
-                ? "bg-accent text-accent-foreground border-accent"
-                : "border-border hover:bg-muted"
-            }`}
-          >
-            <SlidersHorizontal size={16} />
-            Filters
-            {hasActiveFilters && ( <div className="w-2 h-2 rounded-full bg-white" />)}
-          </button>
-        </div>
-
-        {/* COLLAPSIBLE FILTERS */}
-        <AnimatePresence>
-          {showFilters && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden mb-8"
-            >
-              <WorkFilters
-                types={TYPES}
-                colors={COLORS}
-                type={typeFilter}
-                color={colorFilter}
-                setType={setTypeFilter}
-                setColor={setColorFilter}
-                clear={clearAllFilters}
-                sortOptions={SORT_OPTIONS}
-                sortKey={sortKey}
-                setSortKey={setSortKey}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* FILTERS */}
+        <FilterSortDropdown
+          search={search}
+          onSearchChange={(v) => {
+            setSearch(v);
+            setCurrentPage(1);
+          }}
+          searchPlaceholder="Search by name, location or client..."
+          filters={[
+            {
+              key: "type",
+              label: "Type",
+              options: [...TYPES],
+              value: typeFilter,
+              onChange: (v) => {
+                setTypeFilter(v);
+                setCurrentPage(1);
+              },
+            },
+            {
+              key: "color",
+              label: "Color",
+              options: [...COLORS],
+              value: colorFilter,
+              onChange: (v) => {
+                setColorFilter(v);
+                setCurrentPage(1);
+              },
+            },
+          ]}
+          sortOptions={SORT_OPTIONS}
+          sortValue={sortKey}
+          onSortChange={(v) =>
+            setSortKey(v as "none" | "price" | "rating")
+          }
+          onReset={clearAllFilters}
+        />
 
         {/* RESULTS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
           {paginatedItems.map((project) => (
-            <WorkCard  key={project.id}  project={project}
+            <WorkCard
+              key={project.id}
+              project={project}
               isSaved={saved.includes(project.id)}
               onSave={toggleSave}
             />
           ))}
         </div>
 
+        {/* EMPTY STATE */}
         {paginatedItems.length === 0 && (
-          <EmptyState  title="No projects found"
+          <EmptyState
+            title="No projects found"
             description="We couldn't find any projects matching your filters."
-            icon={<Search size={32} className="text-muted-foreground" />}
+            icon={
+              <Search
+                size={32}
+                className="text-muted-foreground"
+              />
+            }
             action={
-              <button onClick={clearAllFilters}
-                className="mt-4 px-6 py-2.5 bg-accent text-accent-foreground rounded-2xl text-sm font-medium hover:bg-accent/90 transition">
+              <button
+                onClick={clearAllFilters}
+                className="mt-4 px-6 py-2.5 bg-accent text-accent-foreground rounded-2xl text-sm font-medium hover:bg-accent/90 transition"
+              >
                 Clear all filters
               </button>
             }
           />
         )}
 
+        {/* PAGINATION */}
         <PaginationControl
           currentPage={currentPage}
           totalPages={totalPages}

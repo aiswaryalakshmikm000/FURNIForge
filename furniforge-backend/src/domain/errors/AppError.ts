@@ -1,19 +1,20 @@
-import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
-import { HttpStatusCode } from "../../domain/enums/HttpStatusCode.js";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
+import { HttpStatusCode } from "../../domain/enums/HttpStatusCode";
+import { ERROR_CODES } from "../../shared/constants/errorCodes";
 
 export class AppError extends Error {
   public statusCode: number;
   public code: string;
   public isOperational: boolean;
-  public details?: any;
-  public meta?: any;
+  public details?: unknown;
+  public meta?: unknown;
 
   constructor(
     message: string,
     statusCode: number,
     code: string,
-    details?: any,
-    meta?: any,
+    details?: unknown,
+    meta?: unknown,
   ) {
     super(message);
     this.statusCode = statusCode;
@@ -28,72 +29,72 @@ export class AppError extends Error {
 
 export class BadRequestError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.BAD_REQUEST, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.BAD_REQUEST, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.BAD_REQUEST, "BAD_REQUEST_ERROR", details, meta);
+    super(message, HttpStatusCode.BAD_REQUEST, ERROR_CODES.GENERAL.BAD_REQUEST, details, meta);
   }
 }
 
 export class ValidationError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.VALIDATION_FAILED, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.VALIDATION_FAILED, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.BAD_REQUEST,"VALIDATION_ERROR", details ,meta);
+    super(message, HttpStatusCode.BAD_REQUEST, ERROR_CODES.GENERAL.VALIDATION_ERROR, details ,meta);
   }
 }
 
 export class UnauthorizedError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.UNAUTHORIZED, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.UNAUTHORIZED, code: string = ERROR_CODES.GENERAL.UNAUTHORIZED, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.UNAUTHORIZED, "UNAUTHORIZED_ERROR", details ,meta);
+    super(message, HttpStatusCode.UNAUTHORIZED, code, details ,meta);
   }
 }
 
 export class ForbiddenError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.FORBIDDEN, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.FORBIDDEN, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.FORBIDDEN, "FORBIDDEN_ERROR", details, meta);
+    super(message, HttpStatusCode.FORBIDDEN, ERROR_CODES.GENERAL.FORBIDDEN, details, meta);
   }
 }
 
 export class NotFoundError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.NOT_FOUND, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.NOT_FOUND, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.NOT_FOUND, "NOT_FOUND_ERROR", details, meta);
+    super(message, HttpStatusCode.NOT_FOUND, ERROR_CODES.GENERAL.NOT_FOUND, details, meta);
   }
 }
 
 export class ConflictError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.CONFLICT, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.CONFLICT, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.CONFLICT, "CONFLICT_ERROR", details, meta);
+    super(message, HttpStatusCode.CONFLICT, ERROR_CODES.GENERAL.CONFLICT, details, meta);
   }
 }
 
 export class UnprocessableEntityError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.UNPROCESSABLE_ENTITY, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.UNPROCESSABLE_ENTITY, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.UNPROCESSABLE_ENTITY, "UNPROCESSABLE_ENTITY_ERROR",details, meta);
+    super(message, HttpStatusCode.UNPROCESSABLE_ENTITY, ERROR_CODES.GENERAL.UNPROCESSABLE_ENTITY, details, meta);
   }
 }
 
 export class TooManyRequestsError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.TOO_MANY_REQUESTS, details?: any, meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.TOO_MANY_REQUESTS, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.TOO_MANY_REQUESTS, "TOO_MANY_REQUESTS_ERROR", details, meta);
+    super(message, HttpStatusCode.TOO_MANY_REQUESTS, ERROR_CODES.GENERAL.TOO_MANY_REQUESTS, details, meta);
   }
 }
 
 export class InternalServerError extends AppError {
   constructor(
-    message: string = ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR, details?: any,meta?: any,
+    message: string = ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR, details?: unknown, meta?: unknown,
   ) {
-    super(message, HttpStatusCode.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", details, meta);
+    super(message, HttpStatusCode.INTERNAL_SERVER_ERROR, ERROR_CODES.GENERAL.INTERNAL_SERVER_ERROR, details, meta);
   }
 }

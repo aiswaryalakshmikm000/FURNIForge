@@ -1,34 +1,34 @@
-import { ISessionService, SessionData } from "../../domain/services/ISessionService.js";
+import type { ISessionService, SessionData } from "../../domain/services/ISessionService";
 import { inject, injectable } from "inversify";
-import { TYPES } from "../../infrastructure/di/types.js";
+import { TYPES } from "../../infrastructure/di/types";
 import type { Redis } from "ioredis";
 
 @injectable()
 export class RedisSessionRepository implements ISessionService {
   constructor(
-    @inject(TYPES.Redis) private redis: Redis
+    @inject(TYPES.Redis) private _redis: Redis
   ){}
 
-  private sessionKey(sessionId: string) { //session data
+  private _sessionKey(sessionId: string) { //session data
     return `session:${sessionId}`;
   }
 
-  private userSessionsKey(userId: string) { //set of sessionId
+  private _userSessionsKey(userId: string) { //set of sessionId
     return `user:sessions:${userId}`;
   }
 
   async create(sessionId: string, data: SessionData, ttl: number): Promise<void> {
-    const pipeline = this.redis.pipeline();
+    const pipeline = this._redis.pipeline();
 
-    pipeline.setex(this.sessionKey(sessionId), ttl, JSON.stringify(data));
-    pipeline.sadd(this.userSessionsKey(data.userId), sessionId); //user -session mapping
-    pipeline.expire(this.userSessionsKey(data.userId), ttl);
+    pipeline.setex(this._sessionKey(sessionId), ttl, JSON.stringify(data));
+    pipeline.sadd(this._userSessionsKey(data.userId), sessionId); //user -session mapping
+    pipeline.expire(this._userSessionsKey(data.userId), ttl);
 
     await pipeline.exec();
   }
 
   async get(sessionId: string): Promise<SessionData | null> {
-    const data = await this.redis.get(this.sessionKey(sessionId));
+    const data = await this._redis.get(this._sessionKey(sessionId));
     return data ? JSON.parse(data) : null;
   }
 
@@ -36,31 +36,31 @@ export class RedisSessionRepository implements ISessionService {
     const session = await this.get(sessionId);
     if (!session) return;
 
-    const ttl = await this.redis.ttl(this.sessionKey(sessionId));
+    const ttl = await this._redis.ttl(this._sessionKey(sessionId));
     if (ttl <= 0) return;
 
-    await this.redis.setex(
-      this.sessionKey(sessionId),
+    await this._redis.setex(
+      this._sessionKey(sessionId),
       ttl,
       JSON.stringify({ ...session, status: "rotated" })
     );
   }
 
   async invalidateAllUserSessions(userId: string): Promise<void> {
-    const sessionIds = await this.redis.smembers(this.userSessionsKey(userId));
+    const sessionIds = await this._redis.smembers(this._userSessionsKey(userId));
 
     if (!sessionIds.length) return;
 
-    const pipeline = this.redis.pipeline();
+    const pipeline = this._redis.pipeline();
 
     for (const sessionId of sessionIds) {
       pipeline.set(
-        this.sessionKey(sessionId),
+        this._sessionKey(sessionId),
         JSON.stringify({ userId, status: "revoked" })
       );
     }
 
-    pipeline.del(this.userSessionsKey(userId));
+    pipeline.del(this._userSessionsKey(userId));
 
     await pipeline.exec();
   }
@@ -69,11 +69,11 @@ export class RedisSessionRepository implements ISessionService {
     const session = await this.get(sessionId);
     if (!session) return;
 
-    const ttl = await this.redis.ttl(this.sessionKey(sessionId));
+    const ttl = await this._redis.ttl(this._sessionKey(sessionId));
     if (ttl <= 0) return;
 
-    await this.redis.setex(
-      this.sessionKey(sessionId),
+    await this._redis.setex(
+      this._sessionKey(sessionId),
       ttl,
       JSON.stringify({ ...session, status: "revoked" })
     );

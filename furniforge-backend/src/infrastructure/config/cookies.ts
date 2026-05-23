@@ -1,4 +1,4 @@
-import { env } from "./env.js";
+import { env } from "./env";
 import { Response } from "express";
 
 export const REFRESH_TOKEN_EXPIRES_DAYS  = Number (env.REFRESH_TOKEN_EXPIRES_DAYS) 

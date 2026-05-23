@@ -1,7 +1,8 @@
-import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError.js";
-import { env } from "../../infrastructure/config/env.js";
-import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
-import { OTP } from "../../domain/value-objects/OTP.js";
+import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError";
+import { env } from "../../infrastructure/config/env";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
+import { OTP } from "../../domain/value-objects/OTP";
+import type { IOtpTokenPersistence } from "../types/IOtpTokenPersistence";
 
 export class OtpToken {
   private constructor(
@@ -32,19 +33,33 @@ export class OtpToken {
     );
   }
 
-  static fromPersistence(raw: any): OtpToken {
+  static fromPersistence(raw: IOtpTokenPersistence): OtpToken {
   return new OtpToken(
       raw.otpId,
       raw.userId,
       raw.email,
-      new OTP(raw._otp?._value),
-      raw._attempts ?? 0,
-      raw._maxAttempts ?? env.OTP.MAX_ATTEMPTS,
-      raw._isVerified ?? false,
-      new Date(raw._expiresAt),
-      new Date(raw._createdAt)
+      new OTP(raw.otp),
+      raw.attempts ?? 0,
+      raw.maxAttempts ?? env.OTP.MAX_ATTEMPTS,
+      raw.isVerified ?? false,
+      new Date(raw.expiresAt),
+      new Date(raw.createdAt)
     );
   }
+
+  toPersistence(): IOtpTokenPersistence {
+  return {
+    otpId: this.otpId,
+    userId: this.userId,
+    email: this.email,
+    otp: this._otp.value,
+    attempts: this._attempts,
+    maxAttempts: this._maxAttempts,
+    isVerified: this._isVerified,
+    expiresAt: this._expiresAt,
+    createdAt: this._createdAt,
+  };
+}
 
   verify(input: string) {
     const inputOtp = new OTP(input)

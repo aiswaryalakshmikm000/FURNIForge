@@ -1,19 +1,19 @@
-import express from "express";
-import { AuthController } from "../../../../../presentation/api/v1/controllers/auth/AuthController.js";
-import { validateBody } from "../../../../../presentation/api/middlewares/validationMiddleware.js";
-import { RegisterSchema } from "../../../../../application/dtos/auth/RegisterUserDTO.js";
-import { VerifyOtpSchema } from "../../../../../application/dtos/auth/VerifyOtpDTO.js";
-import { container } from "../../../../../infrastructure/di/container.js";
-import { TYPES } from "../../../../../infrastructure/di/types.js";
-import { ResendOtpSchema } from "../../../../../application/dtos/auth/ResendOtpDTO.js";
-import { otpLimiter, authLimiter } from "../../../../../infrastructure/security/rateLimiter.js";
-import { authMiddleware } from "../../../../../presentation/api/middlewares/authMiddleware.js";
-import { LoginSchema } from "../../../../../application/dtos/auth/LoginUserDTO.js";
-import { asyncHandler } from "../../../../../shared/utils/asyncHandler.js";
-import { ForgotPasswordSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO.js";
-import { ResetPasswordSchema, VerifyResetOtpSchema, ResendForgotPasswordOtpSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO.js";
+import { Router } from "express";
+import { AuthController } from "../../../../../presentation/api/v1/controllers/auth/AuthController";
+import { validateBody } from "../../../../../presentation/api/middlewares/validationMiddleware";
+import { RegisterSchema } from "../../../../../application/dtos/auth/RegisterUserDTO";
+import { VerifyOtpSchema } from "../../../../../application/dtos/auth/VerifyOtpDTO";
+import { container } from "../../../../../infrastructure/di/container";
+import { TYPES } from "../../../../../infrastructure/di/types";
+import { ResendOtpSchema } from "../../../../../application/dtos/auth/ResendOtpDTO";
+import { otpLimiter, authLimiter } from "../../../../../infrastructure/security/rateLimiter";
+import { authMiddleware } from "../../../../../presentation/api/middlewares/authMiddleware";
+import { LoginSchema } from "../../../../../application/dtos/auth/LoginUserDTO";
+import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
+import { ForgotPasswordSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO";
+import { ResetPasswordSchema, VerifyResetOtpSchema, ResendForgotPasswordOtpSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO";
 
-const router = express.Router();
+const router = Router();
 
 //di activation
 const controller = container.get<AuthController>(TYPES.AuthController);

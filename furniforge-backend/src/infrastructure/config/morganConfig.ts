@@ -1,6 +1,6 @@
 import morgan from "morgan";
-import { env } from "./env.js";
-import { loggerInstance } from "../logger/WinstonLogger.js";
+import { env } from "./env";
+import { loggerInstance } from "../logger/WinstonLogger";
 
 const morganFormat = env.NODE_ENV === "development" ? "dev" : "combined";
 

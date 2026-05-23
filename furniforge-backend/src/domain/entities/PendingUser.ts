@@ -1,3 +1,5 @@
+import type { IPendingUserPersistence } from "../types/IPendingUserPersistence";
+
 export class PendingUser {
   constructor(
     private _tempUserId: string,
@@ -31,17 +33,30 @@ export class PendingUser {
     );
   }
 
-  static fromPersistence(raw: any): PendingUser {
+  static fromPersistence(raw: IPendingUserPersistence): PendingUser {
     return new PendingUser(
-      raw._tempUserId,
-      raw._email,
-      raw._firstName,
-      raw._lastName,
-      raw._phone,
-      raw._passwordHash,
-      new Date(raw._createdAt),
-      raw._isVerified
+      raw.tempUserId,
+      raw.email,
+      raw.firstName,
+      raw.lastName,
+      raw.phone,
+      raw.passwordHash,
+      new Date(raw.createdAt),
+      raw.isVerified
     );
+  }
+
+  toPersistence(): IPendingUserPersistence {
+    return {
+      tempUserId: this._tempUserId,
+      email: this._email,
+      firstName: this._firstName,
+      lastName: this._lastName,
+      phone: this._phone,
+      passwordHash: this._passwordHash,
+      createdAt: this._createdAt,
+      isVerified: this._isVerified,
+    };
   }
 
   isExpired(ttl: number): boolean {

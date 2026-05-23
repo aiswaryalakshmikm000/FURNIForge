@@ -1,7 +1,10 @@
 import jwt from "jsonwebtoken";
 import { injectable } from "inversify";
-import { env } from "../../infrastructure/config/env.js";
-import {ITokenService, TokenPayload, ResetTokenPayload} from "../../domain/services/ITokenService.js";
+import { env } from "../../infrastructure/config/env";
+import type { ITokenService, TokenPayload, ResetTokenPayload} from "../../domain/services/ITokenService";
+import { UnauthorizedError } from "../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../config/messages";
+import { ERROR_CODES } from "../../shared/constants/errorCodes";
 
 @injectable()
 export class JwtService implements ITokenService {
@@ -22,11 +25,39 @@ export class JwtService implements ITokenService {
   }
 
   verifyAccessToken(token: string): TokenPayload {
+    try {
     return jwt.verify(token, env.JWT.ACCESS_SECRET) as TokenPayload;
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      throw new UnauthorizedError(
+        ERROR_MESSAGES.AUTH.TOKEN.ACCESS_TOKEN_EXPIRED,
+        ERROR_CODES.AUTH.ACCESS_TOKEN_EXPIRED
+      );
+    }
+
+    throw new UnauthorizedError(
+      ERROR_MESSAGES.AUTH.TOKEN.INVALID_ACCESS_TOKEN,
+      ERROR_CODES.AUTH.INVALID_ACCESS_TOKEN
+    );
+  }
   }
 
   verifyRefreshToken(token: string): TokenPayload {
-    return jwt.verify(token, env.JWT.REFRESH_SECRET) as TokenPayload;
+    try {
+      return jwt.verify(token, env.JWT.REFRESH_SECRET) as TokenPayload;
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+      throw new UnauthorizedError(
+        ERROR_MESSAGES.AUTH.TOKEN.REFRESH_TOKEN_EXPIRED,
+        ERROR_CODES.AUTH.REFRESH_TOKEN_EXPIRED
+      );
+    }
+
+    throw new UnauthorizedError(
+      ERROR_MESSAGES.AUTH.TOKEN.INVALID_REFRESH_TOKEN,
+      ERROR_CODES.AUTH.INVALID_REFRESH_TOKEN
+    );
+    }
   }
 
   /**
@@ -40,6 +71,10 @@ export class JwtService implements ITokenService {
   }
 
   verifyResetToken(token: string): ResetTokenPayload {
-    return jwt.verify(token, env.JWT.RESET_SECRET) as ResetTokenPayload;
+    try {
+      return jwt.verify(token, env.JWT.RESET_SECRET) as ResetTokenPayload;
+    } catch {
+      throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.INVALID_RESET_TOKEN);
+    }
   }
 }

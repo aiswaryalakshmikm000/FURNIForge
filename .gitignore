@@ -41,6 +41,11 @@ dump.rdb
 docker-compose.override.yml
 .docker/
 
+# PRISMA GENERATED CLIENT
+src/generated/prisma/
+
+# TESTING
+coverage/
 
 # IDE / OS FILES
 .vscode/*

@@ -7,36 +7,33 @@ type Props = {
     | "success"
     | "warning"
     | "destructive"
-    | "gradient";
+    | "gradient"
+    | "info"
+    | "secondary";
   className?: string;
 };
 
-export const Badge = ({
-  children,
-  variant = "default",
-  className,
-}: Props) => {
+export const Badge = ({ children, variant = "default", className }: Props) => {
   return (
     <span
       className={cn(
         "px-3 py-1 rounded-full text-xs font-medium font-sans",
         {
-          "bg-muted text-foreground":
-            variant === "default",
+          "bg-muted text-foreground": variant === "default",
 
-          "bg-green-100 text-green-700":
-            variant === "success",
+          "bg-green-100 text-green-700": variant === "success",
 
-          "bg-yellow-100 text-yellow-700":
-            variant === "warning",
+          "bg-yellow-100 text-yellow-700": variant === "warning",
 
-          "bg-destructive/10 text-destructive":
-            variant === "destructive",
+          "bg-destructive/10 text-destructive": variant === "destructive",
 
-          "gradient-copper text-accent-foreground":
-            variant === "gradient",
+          "bg-blue-100 text-blue-700": variant === "info",
+
+          "bg-violet-100 text-stone-700": variant === "secondary",
+
+          "gradient-copper text-accent-foreground": variant === "gradient",
         },
-        className
+        className,
       )}
     >
       {children}

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { meApi } from "../api/me.api";
 import { useDispatch } from "react-redux";
 import { setAuth, logout } from "../store/auth.slice";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import { useEffect } from "react";
 import { type AppAxiosError } from "../../../types/api/api-error.type";
 import type { MeResponseDTO } from "../../../types/auth/me";
@@ -22,12 +22,11 @@ export const useAuth = () => {
   useEffect(() => {
     if (query.isSuccess) {
       const { user } = query.data.data;
-      console.log("user from useauth", user)
       dispatch(setAuth({ user }));
-      toast.success(query.data.message);
+      // toast.success(query.data.message);
     }
     if (query.isError) {
-      const status = (query.error as any)?.response?.status;
+      const status = query.error?.response?.status;
       if (status === 401 || status === 403) {
         dispatch(logout());
       }

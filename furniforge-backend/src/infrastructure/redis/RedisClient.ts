@@ -1,5 +1,5 @@
 import { Redis} from "ioredis";
-import { loggerInstance } from "../../infrastructure/logger/WinstonLogger.js";
+import { loggerInstance } from "../../infrastructure/logger/WinstonLogger";
 
 export const redisInstance = new Redis({
   host: "127.0.0.1",

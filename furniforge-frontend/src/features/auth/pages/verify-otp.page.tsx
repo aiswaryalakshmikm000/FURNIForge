@@ -11,7 +11,18 @@ import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 import { getDashboardRoute } from "../../../core/utils/routes.utils";
 
 const VerifyOtpPage = () => {
-  const [cooldown, setCooldown] = useState(0);
+  // const [cooldown, setCooldown] = useState(0);
+  const [cooldown, setCooldown] = useState(() => {
+  const storedExpiry = sessionManager.getSignupCooldown();
+
+  if (!storedExpiry) return 0;
+
+  const remaining = Math.floor(
+    (Number(storedExpiry) - Date.now()) / 1000
+  );
+
+  return remaining > 0 ? remaining : 0;
+});
   
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,16 +39,16 @@ const VerifyOtpPage = () => {
     }
   }, [tempUserId, navigate]);
 
-  useEffect(() => {
-    const storedExpiry = sessionManager.getSignupCooldown();
+  // useEffect(() => {
+  //   const storedExpiry = sessionManager.getSignupCooldown();
 
-    if (storedExpiry) {
-      const remaining = Math.floor((Number(storedExpiry) - Date.now()) / 1000);
-      setCooldown(remaining > 0 ? remaining : 0);
-    } else {
-      setCooldown(0);
-    }
-  }, []);
+  //   if (storedExpiry) {
+  //     const remaining = Math.floor((Number(storedExpiry) - Date.now()) / 1000);
+  //     setCooldown(remaining > 0 ? remaining : 0);
+  //   } else {
+  //     setCooldown(0);
+  //   }
+  // }, []);
 
   if (!tempUserId) return null; 
 

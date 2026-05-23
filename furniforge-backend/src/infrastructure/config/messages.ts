@@ -22,6 +22,11 @@ export const SUCCESS_MESSAGES = {
   GENERAL: {
     HEALTH_CHECK: 'Service is healthy',
   },
+
+  ADMIN: {
+    LEADS_FETCH_SUCCESS: "Leads fetched successfully",
+    DESIGNER_ASSIGNED: "Designer assigned successfully",
+  }
 };
 
 //========================ERROR MESSAGES=============================
@@ -74,11 +79,22 @@ export const ERROR_MESSAGES = {
 
     OLD_PASSWORD: "Cannot reuse old password",
     PASSWORD_CONFLICT: "Passwords do not match",
+    // GOOGLE_ACCOUNT: "This account was registered using Google Sign In",
 
     TOKEN: {
       REFRESH_FAILED: "No refresh token",
-      ACCESS_TOKEN_MISSING: "Access token missing"
+      ACCESS_TOKEN_MISSING: "Access token missing",
+      INVALID_ACCESS_TOKEN: "Invalid access token",
+      INVALID_REFRESH_TOKEN: "Invalid refresh token",
+      INVALID_RESET_TOKEN: "Invalid reset token",
+      ACCESS_TOKEN_EXPIRED: "Access token expired",
+      REFRESH_TOKEN_EXPIRED: "Refresh token expired",
     },
+  },
+
+  ADMIN: {
+    LEAD_NOT_FOUND: "Lead not found",
+    DESIGNER_NOT_FOUND: "Designer not found",
   },
 
   USER: {

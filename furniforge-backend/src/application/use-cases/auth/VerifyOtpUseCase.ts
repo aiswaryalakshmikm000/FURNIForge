@@ -1,46 +1,48 @@
-import { IOtpService } from "../../../domain/services/IOtpservice.js";
-import { IPendingUserService } from "../../../domain/services/IPendingUserService.js";
-import { IUserRepository } from "../../../domain/repositories/IUserRepository.js";
-import { IEmailService } from "../../../domain/services/IEmailService.js";
-import { VerifyOtpDTO } from "../../../application/dtos/auth/VerifyOtpDTO.js";
-import { NotFoundError } from "../../../domain/errors/AppError.js";
-import { User } from "../../../domain/entities/User.js";
-import { ERROR_MESSAGES } from "../../../infrastructure/config/messages.js";
-import { OTP } from "../../../domain/value-objects/OTP.js";
-import { InternalServerError } from "../../../domain/errors/AppError.js";
-import { AppError } from "../../../domain/errors/AppError.js";
-import { IVerifyOtpUseCase } from "./interfaces/IVerifyOtpUseCase.js";
+import type { IOtpService } from "../../../domain/services/IOtpservice";
+import type { IPendingUserService } from "../../../domain/services/IPendingUserService";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import type { IEmailService } from "../../../domain/services/IEmailService";
+import type { VerifyOtpDTO } from "../../../application/dtos/auth/VerifyOtpDTO";
+import { NotFoundError } from "../../../domain/errors/AppError";
+import { User } from "../../../domain/entities/User";
+import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import { OTP } from "../../../domain/value-objects/OTP";
+import { InternalServerError } from "../../../domain/errors/AppError";
+import { AppError } from "../../../domain/errors/AppError";
+import type { IVerifyOtpUseCase } from "./interfaces/IVerifyOtpUseCase";
 import { injectable, inject } from "inversify";
-import { TYPES } from "../../../infrastructure/di/types.js";
-import { ILogger } from "../../../domain/services/ILogger.js";
-import { ITokenService } from "../../../domain/services/ITokenService.js";
-import { ISessionService } from "../../../domain/services/ISessionService.js";
-import { AuthResult } from "../../../application/dtos/auth/AuthResult.js";
-import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies.js";
-import { UserMapper } from "../../../application/mappers/UserMapper.js";
+import { TYPES } from "../../../infrastructure/di/types";
+import type { ILogger } from "../../../domain/services/ILogger";
+import type { ITokenService } from "../../../domain/services/ITokenService";
+import type { ISessionService } from "../../../domain/services/ISessionService";
+import { AuthResult } from "../../../application/dtos/auth/AuthResult";
+import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies";
+import { UserMapper } from "../../../application/mappers/UserMapper";
+import type { ICreateLeadUseCase } from "../lead/interfaces/ICreateLeadUseCase";
 
 @injectable()
 export class VerifyOtpUseCase implements IVerifyOtpUseCase {
   constructor(
-    @inject(TYPES.IOtpService) private otpService: IOtpService,
-    @inject(TYPES.IPendingUserService) private pendingUserService: IPendingUserService,
-    @inject(TYPES.IUserRepository) private userRepository: IUserRepository,
-    @inject(TYPES.IEmailService) private emailService: IEmailService,
-    @inject(TYPES.ILogger) private logger: ILogger,
-    @inject(TYPES.ITokenService) private tokenService: ITokenService,
-    @inject(TYPES.ISessionService) private sessionService: ISessionService
+    @inject(TYPES.IOtpService) private _otpService: IOtpService,
+    @inject(TYPES.IPendingUserService) private _pendingUserService: IPendingUserService,
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository,
+    @inject(TYPES.IEmailService) private _emailService: IEmailService,
+    @inject(TYPES.ILogger) private _logger: ILogger,
+    @inject(TYPES.ITokenService) private _tokenService: ITokenService,
+    @inject(TYPES.ISessionService) private _sessionService: ISessionService,
+    @inject(TYPES.ICreateLeadUseCase) private _createLeadUseCase: ICreateLeadUseCase
   ) {}
 
   async execute(data: VerifyOtpDTO): Promise<AuthResult> {
     try {
       const otpVO = new OTP(data.otp)
 
-      const pendingUser = await this.pendingUserService.getByTempUserId(data.tempUserId);
+      const pendingUser = await this._pendingUserService.getByTempUserId(data.tempUserId);
       if (!pendingUser) {
         throw new NotFoundError(ERROR_MESSAGES.AUTH.PENDING_USER_NOT_FOUND);
       }
 
-      await this.otpService.verifyOtp(pendingUser.tempUserId, pendingUser.email, otpVO.value);
+      await this._otpService.verifyOtp(pendingUser.tempUserId, pendingUser.email, otpVO.value);
 
       const user = User.create({
         firstName: pendingUser.firstName,
@@ -52,22 +54,25 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
 
       user.verifyEmail();
 
-      const createdUser = await this.userRepository.create(user);
-      await this.pendingUserService.delete(pendingUser.email, pendingUser.tempUserId);
+      const createdUser = await this._userRepository.create(user);
+    
+      await this._createLeadUseCase.execute(createdUser);
+
+      await this._pendingUserService.delete(pendingUser.email, pendingUser.tempUserId);
 
       const sessionId = crypto.randomUUID();
       const payload = {sub: createdUser.id, email: createdUser.email.value, role: createdUser.role, sessionId}
 
-      const accessToken = this.tokenService.generateAccessToken(payload);
+      const accessToken = this._tokenService.generateAccessToken(payload);
 
-      const refreshToken = this.tokenService.generateRefreshToken(payload);
+      const refreshToken = this._tokenService.generateRefreshToken(payload);
 
-      await this.sessionService.create( sessionId, { userId: createdUser.id, status: "active" }, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 );
+      await this._sessionService.create( sessionId, { userId: createdUser.id, status: "active" }, REFRESH_TOKEN_EXPIRES_DAYS * 24 * 60 * 60 );
 
       try {
-        await this.emailService.sendWelcomeEmail(createdUser.email.value, createdUser.firstName)
+        await this._emailService.sendWelcomeEmail(createdUser.email.value, createdUser.firstName)
       } catch (error){
-        this.logger.error("Welcome email failed", {email: createdUser.email.value, error});
+        this._logger.error("Welcome email failed", {email: createdUser.email.value, error});
       }
 
       return {user: UserMapper.toResponse(createdUser), accessToken, refreshToken}
@@ -76,7 +81,7 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
     } catch (error) {
       if (error instanceof AppError) throw error;
 
-      this.logger.error("Unexpected error in VerifyOtpUseCase", {error})
+      this._logger.error("Unexpected error in VerifyOtpUseCase", {error})
       throw new InternalServerError(ERROR_MESSAGES.GENERAL.INTERNAL_SERVER_ERROR);
     
     }

@@ -4,7 +4,7 @@ import "../index.css";
 import App from "./App";
 import { Toaster } from "sonner";
 import { ErrorBoundary } from "../core/error/error-boundary";
-import "../core/api/interceptors"
+import "../core/api/http-client"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

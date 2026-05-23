@@ -1,8 +1,8 @@
-import { UserRole } from "../../domain/enums/UserRole.js";
-import { Email } from "../../domain/value-objects/Email.js";
-import { ERROR_MESSAGES } from "../../infrastructure/config/messages.js";
-import { BadRequestError } from "../../domain/errors/AppError.js";
-import { User as PrismaUser } from "../../generated/prisma/index.js";
+import { UserRole } from "../../domain/enums/UserRole";
+import { Email } from "../../domain/value-objects/Email";
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
+import { BadRequestError } from "../../domain/errors/AppError";
+import { IUserPersistence } from "../types/IUserPersistence";
 
 export class User {
   private constructor(
@@ -18,7 +18,7 @@ export class User {
     private _updatedAt: Date,
   ) {}
 
-  // ✅ For NEW users
+  // For NEW users
   static create(data: {
     firstName: string;
     lastName: string;
@@ -40,19 +40,18 @@ export class User {
     );
   }
 
-  // ✅ For DB → ENTITY 
-  static fromPersistence(raw: PrismaUser): User {
+  static fromPersistence(data: IUserPersistence): User {
     return new User(
-      raw.id,
-      raw.firstName,
-      raw.lastName,
-      new Email(raw.email),
-      raw.phone,
-      raw.passwordHash,
-      UserRole[raw.role as keyof typeof UserRole],
-      raw.isVerified,
-      new Date(raw.createdAt),
-      new Date(raw.updatedAt)
+      data.id,
+      data.firstName,
+      data.lastName,
+      new Email(data.email),
+      data.phone,
+      data.passwordHash,
+      data.role,
+      data.isVerified,
+      data.createdAt,
+      data.updatedAt,
     );
   }
 
@@ -64,7 +63,7 @@ export class User {
     this._updatedAt = new Date();
   }
 
-  // ✅ Getters
+  //  Getters
   get id(): string { return this._id; }
   get firstName(): string { return this._firstName; }
   get lastName(): string { return this._lastName; }

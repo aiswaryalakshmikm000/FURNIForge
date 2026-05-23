@@ -6,12 +6,13 @@ export default [
   {
     ignores: ["dist", "node_modules", "src/generated/prisma"],
   },
-  
+
   js.configs.recommended,
   ...tseslint.configs.recommended,
 
   {
     files: ["**/*.ts"],
+
     languageOptions: {
       parserOptions: {
         project: "./tsconfig.json",
@@ -19,35 +20,31 @@ export default [
         sourceType: "module",
       },
     },
+
     plugins: {
       import: importPlugin,
     },
+
     rules: {
       "no-console": "warn",
-      "no-unused-vars": "off", 
+
+      "no-unused-vars": "off",
+
       "@typescript-eslint/no-unused-vars": ["warn"],
 
       "@typescript-eslint/explicit-function-return-type": "off",
+
       "@typescript-eslint/no-explicit-any": "warn",
 
-      "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          js: "always",
-          ts: "never",
-        },
-      ],
+      "import/no-unresolved": "error",
 
-      "import/no-unresolved": "error", 
+      "import/extensions": "off",
     },
+
     settings: {
       "import/resolver": {
         typescript: {
-            project: "./tsconfig.json",
-        },
-        node: {
-            extensions: [".js", ".ts"],
+          project: "./tsconfig.json",
         },
       },
     },
