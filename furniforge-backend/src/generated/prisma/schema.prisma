@@ -17,7 +17,7 @@ model User {
   email         String   @unique
   phone         String   @unique
   avatar        String?
-  passwordHash  String
+  passwordHash  String?
   isVerified    Boolean  @default(false)
   oauthProvider String?
   oauthId       String?
@@ -27,7 +27,8 @@ model User {
   rating        Float?   @default(0)
   isActive      Boolean  @default(true)
   isBlocked     Boolean  @default(false)
-  leads         Lead[]
+  leads         Lead[]   @relation("ClientLeads")
+  assignedLeads Lead[]   @relation("DesignerLeads")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
@@ -43,8 +44,9 @@ model Lead {
   projectsInterestedIn String[]
   packageType          PackageType?
   clientId             String?
-  client               User?        @relation(fields: [clientId], references: [id])
+  client               User?        @relation("ClientLeads", fields: [clientId], references: [id])
   assignedDesignerId   String?
+  assignedDesigner     User?        @relation("DesignerLeads", fields: [assignedDesignerId], references: [id])
   assignedAt           DateTime?
   convertedAt          DateTime?
   createdAt            DateTime     @default(now())

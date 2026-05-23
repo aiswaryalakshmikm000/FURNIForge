@@ -1104,10 +1104,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     leads: number
+    assignedLeads: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leads?: boolean | UserCountOutputTypeCountLeadsArgs
+    assignedLeads?: boolean | UserCountOutputTypeCountAssignedLeadsArgs
   }
 
   // Custom InputTypes
@@ -1125,6 +1127,13 @@ export namespace Prisma {
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LeadWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAssignedLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LeadWhereInput
   }
 
@@ -1393,7 +1402,7 @@ export namespace Prisma {
     email: string
     phone: string
     avatar: string | null
-    passwordHash: string
+    passwordHash: string | null
     isVerified: boolean
     oauthProvider: string | null
     oauthId: string | null
@@ -1448,6 +1457,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     leads?: boolean | User$leadsArgs<ExtArgs>
+    assignedLeads?: boolean | User$assignedLeadsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1523,6 +1533,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientRegNo" | "role" | "firstName" | "lastName" | "email" | "phone" | "avatar" | "passwordHash" | "isVerified" | "oauthProvider" | "oauthId" | "address" | "occupation" | "education" | "rating" | "isActive" | "isBlocked" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leads?: boolean | User$leadsArgs<ExtArgs>
+    assignedLeads?: boolean | User$assignedLeadsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1532,6 +1543,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       leads: Prisma.$LeadPayload<ExtArgs>[]
+      assignedLeads: Prisma.$LeadPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1542,7 +1554,7 @@ export namespace Prisma {
       email: string
       phone: string
       avatar: string | null
-      passwordHash: string
+      passwordHash: string | null
       isVerified: boolean
       oauthProvider: string | null
       oauthId: string | null
@@ -1949,6 +1961,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     leads<T extends User$leadsArgs<ExtArgs> = {}>(args?: Subset<T, User$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assignedLeads<T extends User$assignedLeadsArgs<ExtArgs> = {}>(args?: Subset<T, User$assignedLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2410,6 +2423,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.assignedLeads
+   */
+  export type User$assignedLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lead
+     */
+    select?: LeadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lead
+     */
+    omit?: LeadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LeadInclude<ExtArgs> | null
+    where?: LeadWhereInput
+    orderBy?: LeadOrderByWithRelationInput | LeadOrderByWithRelationInput[]
+    cursor?: LeadWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LeadScalarFieldEnum | LeadScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2669,6 +2706,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     client?: boolean | Lead$clientArgs<ExtArgs>
+    assignedDesigner?: boolean | Lead$assignedDesignerArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
 
   export type LeadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2688,6 +2726,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     client?: boolean | Lead$clientArgs<ExtArgs>
+    assignedDesigner?: boolean | Lead$assignedDesignerArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
 
   export type LeadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2707,6 +2746,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     client?: boolean | Lead$clientArgs<ExtArgs>
+    assignedDesigner?: boolean | Lead$assignedDesignerArgs<ExtArgs>
   }, ExtArgs["result"]["lead"]>
 
   export type LeadSelectScalar = {
@@ -2730,18 +2770,22 @@ export namespace Prisma {
   export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadRegNo" | "name" | "email" | "phone" | "source" | "status" | "projectsInterestedIn" | "packageType" | "clientId" | "assignedDesignerId" | "assignedAt" | "convertedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
   export type LeadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | Lead$clientArgs<ExtArgs>
+    assignedDesigner?: boolean | Lead$assignedDesignerArgs<ExtArgs>
   }
   export type LeadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | Lead$clientArgs<ExtArgs>
+    assignedDesigner?: boolean | Lead$assignedDesignerArgs<ExtArgs>
   }
   export type LeadIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | Lead$clientArgs<ExtArgs>
+    assignedDesigner?: boolean | Lead$assignedDesignerArgs<ExtArgs>
   }
 
   export type $LeadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Lead"
     objects: {
       client: Prisma.$UserPayload<ExtArgs> | null
+      assignedDesigner: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3154,6 +3198,7 @@ export namespace Prisma {
   export interface Prisma__LeadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     client<T extends Lead$clientArgs<ExtArgs> = {}>(args?: Subset<T, Lead$clientArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    assignedDesigner<T extends Lead$assignedDesignerArgs<ExtArgs> = {}>(args?: Subset<T, Lead$assignedDesignerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3597,6 +3642,25 @@ export namespace Prisma {
    * Lead.client
    */
   export type Lead$clientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Lead.assignedDesigner
+   */
+  export type Lead$assignedDesignerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -4884,7 +4948,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     phone?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
-    passwordHash?: StringFilter<"User"> | string
+    passwordHash?: StringNullableFilter<"User"> | string | null
     isVerified?: BoolFilter<"User"> | boolean
     oauthProvider?: StringNullableFilter<"User"> | string | null
     oauthId?: StringNullableFilter<"User"> | string | null
@@ -4897,6 +4961,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     leads?: LeadListRelationFilter
+    assignedLeads?: LeadListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4908,7 +4973,7 @@ export namespace Prisma {
     email?: SortOrder
     phone?: SortOrder
     avatar?: SortOrderInput | SortOrder
-    passwordHash?: SortOrder
+    passwordHash?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     oauthProvider?: SortOrderInput | SortOrder
     oauthId?: SortOrderInput | SortOrder
@@ -4921,6 +4986,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     leads?: LeadOrderByRelationAggregateInput
+    assignedLeads?: LeadOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4935,7 +5001,7 @@ export namespace Prisma {
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     avatar?: StringNullableFilter<"User"> | string | null
-    passwordHash?: StringFilter<"User"> | string
+    passwordHash?: StringNullableFilter<"User"> | string | null
     isVerified?: BoolFilter<"User"> | boolean
     oauthProvider?: StringNullableFilter<"User"> | string | null
     oauthId?: StringNullableFilter<"User"> | string | null
@@ -4948,6 +5014,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     leads?: LeadListRelationFilter
+    assignedLeads?: LeadListRelationFilter
   }, "id" | "clientRegNo" | "email" | "phone">
 
   export type UserOrderByWithAggregationInput = {
@@ -4959,7 +5026,7 @@ export namespace Prisma {
     email?: SortOrder
     phone?: SortOrder
     avatar?: SortOrderInput | SortOrder
-    passwordHash?: SortOrder
+    passwordHash?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     oauthProvider?: SortOrderInput | SortOrder
     oauthId?: SortOrderInput | SortOrder
@@ -4990,7 +5057,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     phone?: StringWithAggregatesFilter<"User"> | string
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
-    passwordHash?: StringWithAggregatesFilter<"User"> | string
+    passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
     isVerified?: BoolWithAggregatesFilter<"User"> | boolean
     oauthProvider?: StringNullableWithAggregatesFilter<"User"> | string | null
     oauthId?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -5024,6 +5091,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
     client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    assignedDesigner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type LeadOrderByWithRelationInput = {
@@ -5043,6 +5111,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     client?: UserOrderByWithRelationInput
+    assignedDesigner?: UserOrderByWithRelationInput
   }
 
   export type LeadWhereUniqueInput = Prisma.AtLeast<{
@@ -5065,6 +5134,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Lead"> | Date | string
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
     client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    assignedDesigner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "leadRegNo">
 
   export type LeadOrderByWithAggregationInput = {
@@ -5157,7 +5227,7 @@ export namespace Prisma {
     email: string
     phone: string
     avatar?: string | null
-    passwordHash: string
+    passwordHash?: string | null
     isVerified?: boolean
     oauthProvider?: string | null
     oauthId?: string | null
@@ -5170,6 +5240,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     leads?: LeadCreateNestedManyWithoutClientInput
+    assignedLeads?: LeadCreateNestedManyWithoutAssignedDesignerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -5181,7 +5252,7 @@ export namespace Prisma {
     email: string
     phone: string
     avatar?: string | null
-    passwordHash: string
+    passwordHash?: string | null
     isVerified?: boolean
     oauthProvider?: string | null
     oauthId?: string | null
@@ -5194,6 +5265,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     leads?: LeadUncheckedCreateNestedManyWithoutClientInput
+    assignedLeads?: LeadUncheckedCreateNestedManyWithoutAssignedDesignerInput
   }
 
   export type UserUpdateInput = {
@@ -5205,7 +5277,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
     oauthId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5218,6 +5290,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leads?: LeadUpdateManyWithoutClientNestedInput
+    assignedLeads?: LeadUpdateManyWithoutAssignedDesignerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -5229,7 +5302,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
     oauthId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5242,6 +5315,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leads?: LeadUncheckedUpdateManyWithoutClientNestedInput
+    assignedLeads?: LeadUncheckedUpdateManyWithoutAssignedDesignerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5253,7 +5327,7 @@ export namespace Prisma {
     email: string
     phone: string
     avatar?: string | null
-    passwordHash: string
+    passwordHash?: string | null
     isVerified?: boolean
     oauthProvider?: string | null
     oauthId?: string | null
@@ -5276,7 +5350,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
     oauthId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5299,7 +5373,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
     oauthId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -5323,12 +5397,12 @@ export namespace Prisma {
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
     packageType?: $Enums.PackageType | null
-    assignedDesignerId?: string | null
     assignedAt?: Date | string | null
     convertedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     client?: UserCreateNestedOneWithoutLeadsInput
+    assignedDesigner?: UserCreateNestedOneWithoutAssignedLeadsInput
   }
 
   export type LeadUncheckedCreateInput = {
@@ -5359,12 +5433,12 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
     packageType?: NullableEnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType | null
-    assignedDesignerId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: UserUpdateOneWithoutLeadsNestedInput
+    assignedDesigner?: UserUpdateOneWithoutAssignedLeadsNestedInput
   }
 
   export type LeadUncheckedUpdateInput = {
@@ -5413,7 +5487,6 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
     packageType?: NullableEnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType | null
-    assignedDesignerId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5958,10 +6031,24 @@ export namespace Prisma {
     connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
   }
 
+  export type LeadCreateNestedManyWithoutAssignedDesignerInput = {
+    create?: XOR<LeadCreateWithoutAssignedDesignerInput, LeadUncheckedCreateWithoutAssignedDesignerInput> | LeadCreateWithoutAssignedDesignerInput[] | LeadUncheckedCreateWithoutAssignedDesignerInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAssignedDesignerInput | LeadCreateOrConnectWithoutAssignedDesignerInput[]
+    createMany?: LeadCreateManyAssignedDesignerInputEnvelope
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+  }
+
   export type LeadUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<LeadCreateWithoutClientInput, LeadUncheckedCreateWithoutClientInput> | LeadCreateWithoutClientInput[] | LeadUncheckedCreateWithoutClientInput[]
     connectOrCreate?: LeadCreateOrConnectWithoutClientInput | LeadCreateOrConnectWithoutClientInput[]
     createMany?: LeadCreateManyClientInputEnvelope
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+  }
+
+  export type LeadUncheckedCreateNestedManyWithoutAssignedDesignerInput = {
+    create?: XOR<LeadCreateWithoutAssignedDesignerInput, LeadUncheckedCreateWithoutAssignedDesignerInput> | LeadCreateWithoutAssignedDesignerInput[] | LeadUncheckedCreateWithoutAssignedDesignerInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAssignedDesignerInput | LeadCreateOrConnectWithoutAssignedDesignerInput[]
+    createMany?: LeadCreateManyAssignedDesignerInputEnvelope
     connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
   }
 
@@ -6007,6 +6094,20 @@ export namespace Prisma {
     deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
   }
 
+  export type LeadUpdateManyWithoutAssignedDesignerNestedInput = {
+    create?: XOR<LeadCreateWithoutAssignedDesignerInput, LeadUncheckedCreateWithoutAssignedDesignerInput> | LeadCreateWithoutAssignedDesignerInput[] | LeadUncheckedCreateWithoutAssignedDesignerInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAssignedDesignerInput | LeadCreateOrConnectWithoutAssignedDesignerInput[]
+    upsert?: LeadUpsertWithWhereUniqueWithoutAssignedDesignerInput | LeadUpsertWithWhereUniqueWithoutAssignedDesignerInput[]
+    createMany?: LeadCreateManyAssignedDesignerInputEnvelope
+    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    update?: LeadUpdateWithWhereUniqueWithoutAssignedDesignerInput | LeadUpdateWithWhereUniqueWithoutAssignedDesignerInput[]
+    updateMany?: LeadUpdateManyWithWhereWithoutAssignedDesignerInput | LeadUpdateManyWithWhereWithoutAssignedDesignerInput[]
+    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
+  }
+
   export type LeadUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<LeadCreateWithoutClientInput, LeadUncheckedCreateWithoutClientInput> | LeadCreateWithoutClientInput[] | LeadUncheckedCreateWithoutClientInput[]
     connectOrCreate?: LeadCreateOrConnectWithoutClientInput | LeadCreateOrConnectWithoutClientInput[]
@@ -6021,6 +6122,20 @@ export namespace Prisma {
     deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
   }
 
+  export type LeadUncheckedUpdateManyWithoutAssignedDesignerNestedInput = {
+    create?: XOR<LeadCreateWithoutAssignedDesignerInput, LeadUncheckedCreateWithoutAssignedDesignerInput> | LeadCreateWithoutAssignedDesignerInput[] | LeadUncheckedCreateWithoutAssignedDesignerInput[]
+    connectOrCreate?: LeadCreateOrConnectWithoutAssignedDesignerInput | LeadCreateOrConnectWithoutAssignedDesignerInput[]
+    upsert?: LeadUpsertWithWhereUniqueWithoutAssignedDesignerInput | LeadUpsertWithWhereUniqueWithoutAssignedDesignerInput[]
+    createMany?: LeadCreateManyAssignedDesignerInputEnvelope
+    set?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    disconnect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    delete?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+    update?: LeadUpdateWithWhereUniqueWithoutAssignedDesignerInput | LeadUpdateWithWhereUniqueWithoutAssignedDesignerInput[]
+    updateMany?: LeadUpdateManyWithWhereWithoutAssignedDesignerInput | LeadUpdateManyWithWhereWithoutAssignedDesignerInput[]
+    deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
+  }
+
   export type LeadCreateprojectsInterestedInInput = {
     set: string[]
   }
@@ -6028,6 +6143,12 @@ export namespace Prisma {
   export type UserCreateNestedOneWithoutLeadsInput = {
     create?: XOR<UserCreateWithoutLeadsInput, UserUncheckedCreateWithoutLeadsInput>
     connectOrCreate?: UserCreateOrConnectWithoutLeadsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutAssignedLeadsInput = {
+    create?: XOR<UserCreateWithoutAssignedLeadsInput, UserUncheckedCreateWithoutAssignedLeadsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssignedLeadsInput
     connect?: UserWhereUniqueInput
   }
 
@@ -6060,6 +6181,16 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLeadsInput, UserUpdateWithoutLeadsInput>, UserUncheckedUpdateWithoutLeadsInput>
+  }
+
+  export type UserUpdateOneWithoutAssignedLeadsNestedInput = {
+    create?: XOR<UserCreateWithoutAssignedLeadsInput, UserUncheckedCreateWithoutAssignedLeadsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAssignedLeadsInput
+    upsert?: UserUpsertWithoutAssignedLeadsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedLeadsInput, UserUpdateWithoutAssignedLeadsInput>, UserUncheckedUpdateWithoutAssignedLeadsInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -6372,11 +6503,11 @@ export namespace Prisma {
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
     packageType?: $Enums.PackageType | null
-    assignedDesignerId?: string | null
     assignedAt?: Date | string | null
     convertedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    assignedDesigner?: UserCreateNestedOneWithoutAssignedLeadsInput
   }
 
   export type LeadUncheckedCreateWithoutClientInput = {
@@ -6403,6 +6534,50 @@ export namespace Prisma {
 
   export type LeadCreateManyClientInputEnvelope = {
     data: LeadCreateManyClientInput | LeadCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type LeadCreateWithoutAssignedDesignerInput = {
+    id?: string
+    leadRegNo: string
+    name: string
+    email: string
+    phone: string
+    source: $Enums.LeadSource
+    status: $Enums.LeadStatus
+    projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
+    packageType?: $Enums.PackageType | null
+    assignedAt?: Date | string | null
+    convertedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    client?: UserCreateNestedOneWithoutLeadsInput
+  }
+
+  export type LeadUncheckedCreateWithoutAssignedDesignerInput = {
+    id?: string
+    leadRegNo: string
+    name: string
+    email: string
+    phone: string
+    source: $Enums.LeadSource
+    status: $Enums.LeadStatus
+    projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
+    packageType?: $Enums.PackageType | null
+    clientId?: string | null
+    assignedAt?: Date | string | null
+    convertedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LeadCreateOrConnectWithoutAssignedDesignerInput = {
+    where: LeadWhereUniqueInput
+    create: XOR<LeadCreateWithoutAssignedDesignerInput, LeadUncheckedCreateWithoutAssignedDesignerInput>
+  }
+
+  export type LeadCreateManyAssignedDesignerInputEnvelope = {
+    data: LeadCreateManyAssignedDesignerInput | LeadCreateManyAssignedDesignerInput[]
     skipDuplicates?: boolean
   }
 
@@ -6443,6 +6618,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Lead"> | Date | string
   }
 
+  export type LeadUpsertWithWhereUniqueWithoutAssignedDesignerInput = {
+    where: LeadWhereUniqueInput
+    update: XOR<LeadUpdateWithoutAssignedDesignerInput, LeadUncheckedUpdateWithoutAssignedDesignerInput>
+    create: XOR<LeadCreateWithoutAssignedDesignerInput, LeadUncheckedCreateWithoutAssignedDesignerInput>
+  }
+
+  export type LeadUpdateWithWhereUniqueWithoutAssignedDesignerInput = {
+    where: LeadWhereUniqueInput
+    data: XOR<LeadUpdateWithoutAssignedDesignerInput, LeadUncheckedUpdateWithoutAssignedDesignerInput>
+  }
+
+  export type LeadUpdateManyWithWhereWithoutAssignedDesignerInput = {
+    where: LeadScalarWhereInput
+    data: XOR<LeadUpdateManyMutationInput, LeadUncheckedUpdateManyWithoutAssignedDesignerInput>
+  }
+
   export type UserCreateWithoutLeadsInput = {
     id?: string
     clientRegNo?: string | null
@@ -6452,7 +6643,7 @@ export namespace Prisma {
     email: string
     phone: string
     avatar?: string | null
-    passwordHash: string
+    passwordHash?: string | null
     isVerified?: boolean
     oauthProvider?: string | null
     oauthId?: string | null
@@ -6464,6 +6655,7 @@ export namespace Prisma {
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    assignedLeads?: LeadCreateNestedManyWithoutAssignedDesignerInput
   }
 
   export type UserUncheckedCreateWithoutLeadsInput = {
@@ -6475,7 +6667,7 @@ export namespace Prisma {
     email: string
     phone: string
     avatar?: string | null
-    passwordHash: string
+    passwordHash?: string | null
     isVerified?: boolean
     oauthProvider?: string | null
     oauthId?: string | null
@@ -6487,11 +6679,65 @@ export namespace Prisma {
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    assignedLeads?: LeadUncheckedCreateNestedManyWithoutAssignedDesignerInput
   }
 
   export type UserCreateOrConnectWithoutLeadsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutLeadsInput, UserUncheckedCreateWithoutLeadsInput>
+  }
+
+  export type UserCreateWithoutAssignedLeadsInput = {
+    id?: string
+    clientRegNo?: string | null
+    role: $Enums.Role
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    avatar?: string | null
+    passwordHash?: string | null
+    isVerified?: boolean
+    oauthProvider?: string | null
+    oauthId?: string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: string | null
+    education?: string | null
+    rating?: number | null
+    isActive?: boolean
+    isBlocked?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leads?: LeadCreateNestedManyWithoutClientInput
+  }
+
+  export type UserUncheckedCreateWithoutAssignedLeadsInput = {
+    id?: string
+    clientRegNo?: string | null
+    role: $Enums.Role
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    avatar?: string | null
+    passwordHash?: string | null
+    isVerified?: boolean
+    oauthProvider?: string | null
+    oauthId?: string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: string | null
+    education?: string | null
+    rating?: number | null
+    isActive?: boolean
+    isBlocked?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leads?: LeadUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type UserCreateOrConnectWithoutAssignedLeadsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAssignedLeadsInput, UserUncheckedCreateWithoutAssignedLeadsInput>
   }
 
   export type UserUpsertWithoutLeadsInput = {
@@ -6514,7 +6760,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
     oauthId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6526,6 +6772,7 @@ export namespace Prisma {
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedLeads?: LeadUpdateManyWithoutAssignedDesignerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLeadsInput = {
@@ -6537,7 +6784,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    passwordHash?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
     oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
     oauthId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6549,6 +6796,66 @@ export namespace Prisma {
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedLeads?: LeadUncheckedUpdateManyWithoutAssignedDesignerNestedInput
+  }
+
+  export type UserUpsertWithoutAssignedLeadsInput = {
+    update: XOR<UserUpdateWithoutAssignedLeadsInput, UserUncheckedUpdateWithoutAssignedLeadsInput>
+    create: XOR<UserCreateWithoutAssignedLeadsInput, UserUncheckedCreateWithoutAssignedLeadsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAssignedLeadsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAssignedLeadsInput, UserUncheckedUpdateWithoutAssignedLeadsInput>
+  }
+
+  export type UserUpdateWithoutAssignedLeadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    oauthId?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    education?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUpdateManyWithoutClientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAssignedLeadsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    oauthId?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    education?: NullableStringFieldUpdateOperationsInput | string | null
+    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type LeadCreateManyClientInput = {
@@ -6568,6 +6875,23 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type LeadCreateManyAssignedDesignerInput = {
+    id?: string
+    leadRegNo: string
+    name: string
+    email: string
+    phone: string
+    source: $Enums.LeadSource
+    status: $Enums.LeadStatus
+    projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
+    packageType?: $Enums.PackageType | null
+    clientId?: string | null
+    assignedAt?: Date | string | null
+    convertedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type LeadUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
     leadRegNo?: StringFieldUpdateOperationsInput | string
@@ -6578,11 +6902,11 @@ export namespace Prisma {
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
     packageType?: NullableEnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType | null
-    assignedDesignerId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedDesigner?: UserUpdateOneWithoutAssignedLeadsNestedInput
   }
 
   export type LeadUncheckedUpdateWithoutClientInput = {
@@ -6613,6 +6937,57 @@ export namespace Prisma {
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
     packageType?: NullableEnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType | null
     assignedDesignerId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeadUpdateWithoutAssignedDesignerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    leadRegNo?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
+    packageType?: NullableEnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType | null
+    assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: UserUpdateOneWithoutLeadsNestedInput
+  }
+
+  export type LeadUncheckedUpdateWithoutAssignedDesignerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    leadRegNo?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
+    packageType?: NullableEnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType | null
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LeadUncheckedUpdateManyWithoutAssignedDesignerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    leadRegNo?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
+    status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+    projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
+    packageType?: NullableEnumPackageTypeFieldUpdateOperationsInput | $Enums.PackageType | null
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

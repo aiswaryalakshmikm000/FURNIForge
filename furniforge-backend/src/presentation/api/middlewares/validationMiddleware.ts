@@ -8,10 +8,11 @@ export const validateBody = <T>(schema: ZodSchema<T>) => {
     const result = schema.safeParse(req.body);
 
     if (!result.success) {
-        const errors = result.error.issues.map(e => ({
-    field: e.path.join("."),
-    message: e.message
-  }));
+      const errors = result.error.issues.map(e => ({
+        field: e.path.join("."),
+        message: e.message
+      }
+    ));
     return next(new ValidationError(ERROR_MESSAGES.GENERAL.VALIDATION_FAILED, { fields: errors }));
   }
 

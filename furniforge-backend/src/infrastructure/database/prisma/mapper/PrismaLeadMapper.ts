@@ -34,7 +34,9 @@ export class PrismaLeadMapper {
       status: lead.status,
       projectsInterestedIn: lead.projectsInterestedIn,
       packageType: lead.packageType,
-      assignedDesignerId: lead.assignedDesignerId,
+      assignedDesigner: lead.assignedDesignerId
+        ? {connect: {id: lead.assignedDesignerId}}
+        : undefined,
       assignedAt: lead.assignedAt,
       convertedAt: lead.convertedAt,
       client: lead.clientId
@@ -54,7 +56,9 @@ export class PrismaLeadMapper {
       status: lead.status,
       projectsInterestedIn: lead.projectsInterestedIn,
       packageType: lead.packageType,
-      assignedDesignerId: lead.assignedDesignerId,
+      assignedDesigner: lead.assignedDesignerId
+        ? {connect: {id: lead.assignedDesignerId}}
+        : {disconnect: true} ,
       assignedAt: lead.assignedAt,
       convertedAt: lead.convertedAt,
       updatedAt: lead.updatedAt,

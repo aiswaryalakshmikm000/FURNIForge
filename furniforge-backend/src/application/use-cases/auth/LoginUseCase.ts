@@ -7,7 +7,7 @@ import type { ISessionService } from "../../../domain/services/ISessionService";
 import { AuthResult } from "../../../application/dtos/auth/AuthResult";
 import type { LoginDTO } from "../../../application/dtos/auth/LoginUserDTO";
 import { Email } from "../../../domain/value-objects/Email";
-import { UnauthorizedError } from "../../../domain/errors/AppError";
+import { BadRequestError, UnauthorizedError } from "../../../domain/errors/AppError";
 import { TYPES } from "../../../infrastructure/di/types"
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies";
@@ -35,6 +35,10 @@ export class LoginUseCase implements ILoginUseCase {
     if (!user.isVerified) {
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.ACCOUNT_NOT_VERIFIED, ERROR_CODES.AUTH.ACCOUNT_NOT_VERIFIED);
     }
+
+    // if(user.oauthProvider === "google"){
+    //    throw new BadRequestError(ERROR_MESSAGES.AUTH.GOOGLE_ACCOUNT);
+    // }
 
     const isMatch = await this._passwordService.compare(data.password, user.passwordHash);
 

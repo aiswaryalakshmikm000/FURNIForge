@@ -22,13 +22,13 @@ export const AssignLeadDialog = ({
       open={open}
       onOpenChange={onOpenChange}
       title={
-        selectedLead?.status === "Assigned" ? "Reassign Lead?" : "Assign Lead?"
+        selectedLead?.status === "ASSIGNED" ? "Reassign Lead?" : "Assign Lead?"
       }
       description={
         selectedDesigner ? `Assign this lead to ${selectedDesigner}?` : "Assign this lead to an available designer."
       }
       confirmText={
-        selectedLead?.status === "Assigned" ? "Reassign" : "Assign"
+        selectedLead?.status === "ASSIGNED" ? "Reassign" : "Assign"
       }
       onConfirm={onConfirm}
     />

@@ -16,7 +16,6 @@ export const GetAllLeadsQuerySchema = z.object({
 
 export type GetAllLeadsQueryDTO = z.infer <typeof GetAllLeadsQuerySchema>;
 
-
 export interface GetAllLeadsResponseDTO {
   leads: LeadResponseDTO[];
   total: number;

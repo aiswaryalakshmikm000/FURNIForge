@@ -99,8 +99,21 @@ export class LeadRepository
         where,
         skip: params.skip,
         take: params.take,
-        include: { client: true },
         orderBy: { createdAt: params.sortOrder },
+        select: {
+          id: true, 
+          leadRegNo: true, 
+          name: true, 
+          email: true, 
+          phone: true, 
+          source: true, 
+          status: true, 
+          projectsInterestedIn: true, 
+          packageType: true,
+          createdAt: true, 
+          client: { select: {address: true, avatar: true}},
+          assignedDesigner: { select: { firstName: true, lastName: true}}
+        }
       });
 
       return raws.map((raw) => {
@@ -109,9 +122,11 @@ export class LeadRepository
         if (
           raw.client?.address && typeof raw.client.address === "object" && !Array.isArray(raw.client.address)
         ) {
-          const address = raw.client.address as { city?: string };
-          location = address.city ?? null;
+          const address = raw.client.address as { city?: string; state: string};
+          location = [address.city, address.state].filter(Boolean).join(", ") || null
         }
+
+        const assignedDesignerName = raw.assignedDesigner ? `${raw.assignedDesigner.firstName} ${raw.assignedDesigner.lastName}` : null
 
         return {
           id: raw.id,
@@ -120,11 +135,12 @@ export class LeadRepository
           email: raw.email,
           phone: raw.phone,
           location,
+          avatar: raw.client?.avatar || null,
           source: raw.source as LeadSource,
           status: raw.status as LeadStatus,
           projectsInterestedIn: raw.projectsInterestedIn,
           packageType: raw.packageType ? (raw.packageType as PackageType) : null,
-          assignedDesignerId: raw.assignedDesignerId,
+          assignedDesignerName,
           createdAt: raw.createdAt,
         };
       });

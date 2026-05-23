@@ -6,11 +6,16 @@ import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse";
 import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
 import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages";
 import type {GetAllLeadsQueryDTO } from "../../../../../application/dtos/lead/GetAllLeadsDTO";
+import { AssignDesignerDTO } from "../../../../../application/dtos/lead/AssignDesignerDTO";
+import type { IAssignDesignerUseCase } from "../../../../../application/use-cases/lead/interfaces/IAssignDesignerUseCase";
+import type { IGetDesignerOptionsUseCase } from "../../../../../application/use-cases/lead/interfaces/IGetDesignerOptionsUseCase";
 
 @injectable()
 export class LeadController {
   constructor(
     @inject(TYPES.IGetAllLeadsUseCase) private _getAllLeadsUseCase: IGetAllLeadsUseCase,
+    @inject(TYPES.IAssignDesignerUseCase) private _assignDesignerUseCase: IAssignDesignerUseCase,
+    @inject(TYPES.IGetDesignerOptionsUseCase) private _getDesignerOptionsUseCase: IGetDesignerOptionsUseCase
   ) {}
 
   getAllLeads = async (req: Request, res: Response) => {
@@ -19,4 +24,18 @@ export class LeadController {
 
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEADS_FETCH_SUCCESS).build());
   };
+
+  assignDesigner = async (req: Request, res: Response) => {
+    const {id} = req.params;
+    console.log("ID", id)
+    const body = req.body as AssignDesignerDTO
+
+    const result = await this._assignDesignerUseCase.execute(id, body.designerId);
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.DESIGNER_ASSIGNED).build())
+  }
+
+  getDesignerOptions = async (_req: Request, res: Response) => {
+    const result = await this._getDesignerOptionsUseCase.execute();
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result).build())
+  }
 }

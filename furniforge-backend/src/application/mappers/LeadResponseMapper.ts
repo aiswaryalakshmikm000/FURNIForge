@@ -11,11 +11,12 @@ export class LeadResponseMapper {
       email: item.email,
       phone: item.phone,
       location: item.location,
+      avatar: item.avatar,
       source: item.source,
       status: item.status,
       projectsInterestedIn: item.projectsInterestedIn,
       packageType: item.packageType,
-      assignedDesignerId: item.assignedDesignerId,
+      assignedDesignerName: item.assignedDesignerName,
       createdAt: item.createdAt,
     };
   }

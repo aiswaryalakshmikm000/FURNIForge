@@ -29,6 +29,8 @@ import { LeadRepository } from "../database/prisma/repositories/LeadRepository";
 import { CreateLeadUseCase } from "../../application/use-cases/lead/CreateLeadUseCase";
 import { GetAllLeadsUseCase } from "../../application/use-cases/lead/GetAllLeadsUseCase";
 import { LeadController } from "../../presentation/api/v1/controllers/admin/LeadController";
+import { AssignDesignerUseCase } from "../../application/use-cases/lead/AssignDesignerUseCase";
+import { GetDesignerOptionsUseCase } from "../../application/use-cases/lead/GetDesignerOptionsUseCase";
 
 const container = new Container();
 
@@ -65,9 +67,11 @@ container.bind(TYPES.IForgotPasswordUseCase).to(ForgotPasswordUseCase);
 container.bind(TYPES.IResetPasswordUseCase).to(ResetPasswordUseCase);
 container.bind(TYPES.IResendForgotPasswordOtpUseCase).to(ResendForgotPasswordOtpUseCase);
 container.bind(TYPES.IVerifyResetOtpUseCase).to(verifyResetOtpUseCase);
+container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
 
 container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase);
 container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);
+container.bind(TYPES.IGetDesignerOptionsUseCase).to(GetDesignerOptionsUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
