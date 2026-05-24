@@ -31,6 +31,8 @@ import { GetAllLeadsUseCase } from "../../application/use-cases/lead/GetAllLeads
 import { LeadController } from "../../presentation/api/v1/controllers/admin/LeadController";
 import { AssignDesignerUseCase } from "../../application/use-cases/lead/AssignDesignerUseCase";
 import { GetDesignerOptionsUseCase } from "../../application/use-cases/lead/GetDesignerOptionsUseCase";
+import { GoogleAuthUseCase } from "../../application/use-cases/auth/GoogleAuthUseCase";
+import { GoogleAuthService } from "../external-services/GoogleAuthService";
 
 const container = new Container();
 
@@ -53,6 +55,7 @@ container.bind(TYPES.IPendingUserService).to(PendingUserService);
 container.bind(TYPES.IEmailService).to(EmailService);
 container.bind(TYPES.ITokenService).to(JwtService);
 container.bind(TYPES.ISessionService).to(RedisSessionRepository);
+container.bind(TYPES.IGoogleAuthService).to(GoogleAuthService);
 
 // Use Cases
 container.bind(TYPES.IRegisterUserUseCase).to(RegisterUserUseCase);
@@ -67,11 +70,12 @@ container.bind(TYPES.IForgotPasswordUseCase).to(ForgotPasswordUseCase);
 container.bind(TYPES.IResetPasswordUseCase).to(ResetPasswordUseCase);
 container.bind(TYPES.IResendForgotPasswordOtpUseCase).to(ResendForgotPasswordOtpUseCase);
 container.bind(TYPES.IVerifyResetOtpUseCase).to(verifyResetOtpUseCase);
-container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
+container.bind(TYPES.IGoogleAuthUseCase).to(GoogleAuthUseCase)
 
 container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase);
 container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);
-container.bind(TYPES.IGetDesignerOptionsUseCase).to(GetDesignerOptionsUseCase)
+container.bind(TYPES.IGetDesignerOptionsUseCase).to(GetDesignerOptionsUseCase);
+container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

@@ -36,9 +36,9 @@ export class LoginUseCase implements ILoginUseCase {
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.ACCOUNT_NOT_VERIFIED, ERROR_CODES.AUTH.ACCOUNT_NOT_VERIFIED);
     }
 
-    // if(user.oauthProvider === "google"){
-    //    throw new BadRequestError(ERROR_MESSAGES.AUTH.GOOGLE_ACCOUNT);
-    // }
+    if(!user.passwordHash || user.oAuthProvider === "google" ){
+       throw new BadRequestError(ERROR_MESSAGES.AUTH.GOOGLE_ACCOUNT);
+    }
 
     const isMatch = await this._passwordService.compare(data.password, user.passwordHash);
 

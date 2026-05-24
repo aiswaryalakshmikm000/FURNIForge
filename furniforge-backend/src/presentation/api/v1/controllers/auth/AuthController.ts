@@ -20,6 +20,7 @@ import type { IResetPasswordUseCase } from "../../../../../application/use-cases
 import type { IVerifyResetOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IVerifyResetOtpUSeCase";
 import type { IResendForgotPasswordOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IResendForgotPasswordOtpUseCase";
 import { ERROR_CODES } from "../../../../../shared/constants/errorCodes";
+import type { IGoogleAuthUseCase } from "../../../../../application/use-cases/auth/interfaces/IGoogleAuthUseCase";
 
 @injectable()
 export class AuthController {
@@ -36,6 +37,7 @@ export class AuthController {
     @inject(TYPES.IResetPasswordUseCase) private _resetPasswordUseCase: IResetPasswordUseCase,
     @inject(TYPES.IResendForgotPasswordOtpUseCase) private _resendForgotPasswordOtpUseCase: IResendForgotPasswordOtpUseCase,
     @inject(TYPES.IVerifyResetOtpUseCase) private _verifyResetOtpUseCase: IVerifyResetOtpUseCase,
+    @inject(TYPES.IGoogleAuthUseCase) private _googleAuthUseCase: IGoogleAuthUseCase,
   ) {}
 
   /**
@@ -188,5 +190,16 @@ export class AuthController {
     const result = await this._resendForgotPasswordOtpUseCase.execute(req.body);
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.RESEND_OTP_SUCCESS).build());
   };
-  
+
+  googleAuth = async ( req:Request, res:Response ) => {
+    const result = await this._googleAuthUseCase.execute( req.body);
+
+    setAccessTokenCookie( res, result.accessToken );
+    setRefreshTokenCookie( res, result.refreshToken );
+
+    const { accessToken, refreshToken, ...safeResponse } = result;
+
+    res.status(200).json(ResponseBuilder.success( safeResponse, SUCCESS_MESSAGES.AUTH.GOOGLE_LOGIN_SUCCESS ).build());
+  };
+
 }

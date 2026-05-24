@@ -17,6 +17,7 @@ export const SUCCESS_MESSAGES = {
     ME_FETCH: "User fetched successfully",
     FORGOT_PASSWORD: "If an account with this email exists, a reset OTP has been sent",
     PASSWORD_RESET_SUCCESS: "Password reset successful",
+    GOOGLE_LOGIN_SUCCESS: "Google login successful",
   },
 
   GENERAL: {
@@ -79,7 +80,9 @@ export const ERROR_MESSAGES = {
 
     OLD_PASSWORD: "Cannot reuse old password",
     PASSWORD_CONFLICT: "Passwords do not match",
-    // GOOGLE_ACCOUNT: "This account was registered using Google Sign In",
+    GOOGLE_ACCOUNT: "This account was registered using Google Sign In",
+    RELOAD_USER_FAILED: "Failed to reload user",
+    INVALID_GOOGLE_TOKEN: "Invalid google token",
 
     TOKEN: {
       REFRESH_FAILED: "No refresh token",

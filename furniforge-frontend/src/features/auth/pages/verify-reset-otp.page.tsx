@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 
 const VerifyResetOtpPage = () => {
-  // const [cooldown, setCooldown] = useState(0);
   const [cooldown, setCooldown] = useState(() => {
   const storedExpiry = sessionManager.getResetCooldown();
 
@@ -33,17 +32,6 @@ const VerifyResetOtpPage = () => {
       navigate(APP_ROUTES.AUTH.FORGOT_PASSWORD, { replace: true });
     }
   }, [email, navigate]);
-
-  // useEffect(() => {
-  //   const storedExpiry = sessionManager.getResetCooldown();
-
-  //   if (storedExpiry) {
-  //     const remaining = Math.floor((Number(storedExpiry) - Date.now()) / 1000);
-  //     setCooldown(remaining > 0 ? remaining : 0);
-  //   } else {
-  //     setCooldown(0);
-  //   }
-  // }, []);
 
   if (!email) return null;
 
