@@ -8,14 +8,7 @@ import { User as PrismaUser, Prisma } from "../../../../generated/prisma/index";
 import { handlePrismaError } from "../errors/handlePrismaError";
 
 @injectable()
-export class UserRepository
-  extends BaseRepository<
-    User,
-    PrismaUser,
-    Prisma.UserCreateInput,
-    Prisma.UserUpdateInput
-  >
-  implements IUserRepository
+export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput > implements IUserRepository
 {
   protected model = prisma.user;
 
@@ -67,6 +60,29 @@ export class UserRepository
         orderBy: {firstName: "asc"}},    
       );
       return raws.map((raw) => this.toDomain(raw))
+    } catch (error) {
+      handlePrismaError(error)
+    }
+  }
+
+  async findByOAuthId(provider: string, oauthId: string): Promise<User | null> {
+    try {
+      const raw = await this.model.findFirst({ 
+          where: {oauthProvider:provider, oauthId}}
+      );
+      return raw ? this.toDomain(raw) : null;
+
+    } catch (error) {
+      handlePrismaError(error)
+    }
+  }
+
+  async linkGoogleAccount(userId: string, googleId: string): Promise<void> {
+    try {
+      await this.model.update({
+        where: {id: userId}, 
+        data: {oauthProvider: "google", oauthId: googleId}
+      })
     } catch (error) {
       handlePrismaError(error)
     }

@@ -44,6 +44,8 @@ const envSchema = z.object({
   ACCESS_TOKEN_EXPIRES_DAYS: z.string().default("15"),
 
   LOG_MAX_FILES: z.string().default("14d"),
+
+  GOOGLE_CLIENT_ID: z.string()
 })
 
 //parse and validate
@@ -111,4 +113,6 @@ export const env = {
   ACCESS_TOKEN_EXPIRES_DAYS: parsedEnv.data.ACCESS_TOKEN_EXPIRES_DAYS,
 
   LOG_MAX_FILES: parsedEnv.data.LOG_MAX_FILES,
+
+  GOOGLE_CLIENT_ID: parsedEnv.data.GOOGLE_CLIENT_ID
 }

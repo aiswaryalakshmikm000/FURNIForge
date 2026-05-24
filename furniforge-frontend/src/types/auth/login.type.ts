@@ -15,3 +15,13 @@ export interface LoginResponseDTO {
   };
   message: string,
 };
+
+export interface GoogleAuthResponseDTO {
+  user: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    role: UserRole;
+  };
+}

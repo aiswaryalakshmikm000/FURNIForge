@@ -12,6 +12,7 @@ import { LoginSchema } from "../../../../../application/dtos/auth/LoginUserDTO";
 import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
 import { ForgotPasswordSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO";
 import { ResetPasswordSchema, VerifyResetOtpSchema, ResendForgotPasswordOtpSchema } from "../../../../../application/dtos/auth/ForgotPasswordDTO";
+import { GoogleAuthSchema } from "../../../../../application/dtos/auth/GoogleAuthDTO";
 
 const router = Router();
 
@@ -30,6 +31,6 @@ router.post("/forgot-password", otpLimiter, validateBody(ForgotPasswordSchema), 
 router.post("/verify-reset-otp", otpLimiter, validateBody(VerifyResetOtpSchema), asyncHandler(controller.verifyResetOtp))
 router.post("/reset-password", otpLimiter, validateBody(ResetPasswordSchema), asyncHandler(controller.resetPassword));
 router.post("/resend-forgot-password-otp", otpLimiter, validateBody(ResendForgotPasswordOtpSchema), asyncHandler(controller.resendForgotPasswordOtp));
-
+router.post("/google", authLimiter, validateBody(GoogleAuthSchema), asyncHandler(controller.googleAuth));
 
 export default router;

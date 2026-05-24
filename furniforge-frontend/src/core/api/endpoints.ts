@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
     LOGOUT: "/logout",
     LOGOUT_ALL: "/logout-all",
     ME: "/me",
+    GOOGLE: "/google",
 
     VERIFY_OTP: "/verify-otp",
     RESEND_OTP: "/resend-otp",

@@ -12,6 +12,8 @@ export class PrismaUserMapper {
       email: raw.email,
       phone: raw.phone,
       passwordHash: raw.passwordHash,
+      oauthProvider: raw.oauthProvider,
+      oauthId: raw.oauthId,
       role: raw.role as UserRole,
       isVerified: raw.isVerified,
       createdAt: raw.createdAt,
@@ -27,6 +29,8 @@ export class PrismaUserMapper {
       email: user.email.value,
       phone: user.phone,
       passwordHash: user.passwordHash,
+      oauthProvider: user.oAuthProvider,
+      oauthId: user.oauthId,
       role: user.role,
       isVerified: user.isVerified,
     };
@@ -40,6 +44,8 @@ export class PrismaUserMapper {
       phone: user.phone,
       passwordHash: user.passwordHash,
       role: user.role,
+      oauthProvider: user.oAuthProvider,
+      oauthId: user.oauthId,
       isVerified: user.isVerified,
     };
   }

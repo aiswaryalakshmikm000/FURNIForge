@@ -6,7 +6,9 @@ export interface IUserPersistence {
     lastName: string;
     email: string;
     phone: string;
-    passwordHash: string;
+    passwordHash: string | null;
+    oauthId: string | null;
+    oauthProvider: string | null;
     role: UserRole;
     isVerified: boolean;
     createdAt: Date;

@@ -15,6 +15,7 @@ export const TYPES = {
   IEmailService: Symbol.for("IEmailService"),
   ITokenService: Symbol.for("ITokenService"),
   ISessionService: Symbol.for("ISessionService"),
+  IGoogleAuthService: Symbol.for("IGoogleAuthService"),
 
   IRegisterUserUseCase: Symbol.for("IRegisterUserUseCase"),
   IVerifyOtpUseCase: Symbol.for("IVerifyOtpUseCase"),
@@ -28,6 +29,7 @@ export const TYPES = {
   IVerifyResetOtpUseCase: Symbol.for("IVerifyResetOtpUseCase"),
   IResetPasswordUseCase: Symbol.for("IResetPasswordUseCase"),
   IResendForgotPasswordOtpUseCase: Symbol.for("IResendForgotPasswordOtpUseCase"),
+  IGoogleAuthUseCase: Symbol.for("IGoogleAuthUseCase"),
 
   ICreateLeadUseCase: Symbol.for("ICreateLeadUseCase"),
   IGetAllLeadsUseCase: Symbol.for("IGetAllLeadsUseCase"),

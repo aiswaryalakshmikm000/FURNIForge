@@ -4,3 +4,5 @@ export type AuthResponseDTO = {
   user: UserResponseDTO;
   accessToken: string;
 };
+
+

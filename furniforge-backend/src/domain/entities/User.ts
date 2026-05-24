@@ -11,7 +11,9 @@ export class User {
     private _lastName: string,
     private _email: Email,
     private _phone: string,
-    private _passwordHash: string,
+    private _passwordHash: string | null,
+    private _oauthProvider: string | null,
+    private _oauthId: string | null,
     private _role: UserRole,
     private _isVerified: boolean,
     private _createdAt: Date,
@@ -33,12 +35,42 @@ export class User {
       new Email(data.email),
       data.phone,
       data.passwordHash,
+      null,
+      null,
       UserRole.CLIENT,
       false,
       new Date(),
       new Date()
     );
   }
+
+  static createGoogleUser(data:{
+    firstName:string;
+    lastName:string;
+    email:string;
+    googleId: string;
+    avatar?:string;
+}): User {
+
+    const user = new User(
+        crypto.randomUUID(),
+        data.firstName,
+        data.lastName,
+        new Email(data.email),
+        "",
+        null,
+        "google",
+        data.googleId,
+        UserRole.CLIENT,
+        true,
+        new Date(),
+        new Date()
+    );
+
+    user._oauthProvider = "google";
+
+    return user;
+}
 
   static fromPersistence(data: IUserPersistence): User {
     return new User(
@@ -48,6 +80,8 @@ export class User {
       new Email(data.email),
       data.phone,
       data.passwordHash,
+      data.oauthProvider,
+      data.oauthId,
       data.role,
       data.isVerified,
       data.createdAt,
@@ -64,12 +98,14 @@ export class User {
   }
 
   //  Getters
-  get id(): string { return this._id; }
-  get firstName(): string { return this._firstName; }
-  get lastName(): string { return this._lastName; }
-  get email(): Email { return this._email; } 
-  get phone(): string { return this._phone; }
-  get role(): UserRole { return this._role; }
-  get passwordHash(): string { return this._passwordHash; } 
-  get isVerified(): boolean { return this._isVerified; }
+  get id(): string { return this._id };
+  get firstName(): string { return this._firstName };
+  get lastName(): string { return this._lastName; };
+  get email(): Email { return this._email };
+  get phone(): string { return this._phone };
+  get role(): UserRole { return this._role };
+  get passwordHash(): string | null { return this._passwordHash }; 
+  get isVerified(): boolean { return this._isVerified };
+  get oAuthProvider(): string | null { return this._oauthProvider };
+  get oauthId(): string | null { return this._oauthId };
 }
