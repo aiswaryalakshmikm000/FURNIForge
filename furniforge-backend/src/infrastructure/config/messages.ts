@@ -27,6 +27,7 @@ export const SUCCESS_MESSAGES = {
   ADMIN: {
     LEADS_FETCH_SUCCESS: "Leads fetched successfully",
     DESIGNER_ASSIGNED: "Designer assigned successfully",
+    LEAD_CREATED: "Lead created successfully"
   }
 };
 

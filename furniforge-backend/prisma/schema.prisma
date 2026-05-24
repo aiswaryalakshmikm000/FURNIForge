@@ -39,6 +39,7 @@ model Lead {
   name                 String
   email                String
   phone                String
+  location             String?
   source               LeadSource
   status               LeadStatus
   projectsInterestedIn String[]

@@ -33,6 +33,7 @@ import { AssignDesignerUseCase } from "../../application/use-cases/lead/AssignDe
 import { GetDesignerOptionsUseCase } from "../../application/use-cases/lead/GetDesignerOptionsUseCase";
 import { GoogleAuthUseCase } from "../../application/use-cases/auth/GoogleAuthUseCase";
 import { GoogleAuthService } from "../external-services/GoogleAuthService";
+import { CreateManualLeadUseCase } from "../../application/use-cases/lead/CreateManualLeadUseCase";
 
 const container = new Container();
 
@@ -76,6 +77,7 @@ container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase);
 container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);
 container.bind(TYPES.IGetDesignerOptionsUseCase).to(GetDesignerOptionsUseCase);
 container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
+container.bind(TYPES.ICreateManualLeadUseCase).to(CreateManualLeadUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

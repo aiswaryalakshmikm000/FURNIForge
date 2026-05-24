@@ -6,6 +6,7 @@ export interface ILeadPersistence {
   name: string;
   email: string;
   phone: string;
+  location: string | null,
   source: LeadSource;
   status: LeadStatus;
   projectsInterestedIn: string[];

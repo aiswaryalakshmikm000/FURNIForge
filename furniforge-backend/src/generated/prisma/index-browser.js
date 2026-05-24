@@ -150,6 +150,7 @@ exports.Prisma.LeadScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
+  location: 'location',
   source: 'source',
   status: 'status',
   projectsInterestedIn: 'projectsInterestedIn',

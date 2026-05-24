@@ -8,6 +8,7 @@ export class Lead {
     private _name: string,
     private _email: string,
     private _phone: string,
+    private _location: string | null,
     private _source: LeadSource,
     private _status: LeadStatus,
     private _projectsInterestedIn: string[],
@@ -26,6 +27,7 @@ export class Lead {
     name: string;
     email: string;
     phone: string;
+    location?: string | null;
     source: LeadSource;
     clientId?: string;
     projectsInterestedIn?: string[];
@@ -37,6 +39,7 @@ export class Lead {
       data.name,
       data.email,
       data.phone,
+      data.location ?? null,
       data.source,
       LeadStatus.UNASSIGNED,
       data.projectsInterestedIn ?? [],
@@ -58,6 +61,7 @@ export class Lead {
       data.name,
       data.email,
       data.phone,
+      data.location,
       data.source,
       data.status,
       data.projectsInterestedIn,
@@ -101,6 +105,7 @@ export class Lead {
   get name() { return this._name; }
   get email() { return this._email; }
   get phone() { return this._phone; }
+  get location() { return this._location; }
   get source() { return this._source; }
   get status() { return this._status; }
   get projectsInterestedIn() { return this._projectsInterestedIn; }

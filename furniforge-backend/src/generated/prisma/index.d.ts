@@ -2481,6 +2481,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
+    location: string | null
     source: $Enums.LeadSource | null
     status: $Enums.LeadStatus | null
     packageType: $Enums.PackageType | null
@@ -2498,6 +2499,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     phone: string | null
+    location: string | null
     source: $Enums.LeadSource | null
     status: $Enums.LeadStatus | null
     packageType: $Enums.PackageType | null
@@ -2515,6 +2517,7 @@ export namespace Prisma {
     name: number
     email: number
     phone: number
+    location: number
     source: number
     status: number
     projectsInterestedIn: number
@@ -2535,6 +2538,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
+    location?: true
     source?: true
     status?: true
     packageType?: true
@@ -2552,6 +2556,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
+    location?: true
     source?: true
     status?: true
     packageType?: true
@@ -2569,6 +2574,7 @@ export namespace Prisma {
     name?: true
     email?: true
     phone?: true
+    location?: true
     source?: true
     status?: true
     projectsInterestedIn?: true
@@ -2660,6 +2666,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn: string[]
@@ -2695,6 +2702,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    location?: boolean
     source?: boolean
     status?: boolean
     projectsInterestedIn?: boolean
@@ -2715,6 +2723,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    location?: boolean
     source?: boolean
     status?: boolean
     projectsInterestedIn?: boolean
@@ -2735,6 +2744,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    location?: boolean
     source?: boolean
     status?: boolean
     projectsInterestedIn?: boolean
@@ -2755,6 +2765,7 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     phone?: boolean
+    location?: boolean
     source?: boolean
     status?: boolean
     projectsInterestedIn?: boolean
@@ -2767,7 +2778,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadRegNo" | "name" | "email" | "phone" | "source" | "status" | "projectsInterestedIn" | "packageType" | "clientId" | "assignedDesignerId" | "assignedAt" | "convertedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
+  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leadRegNo" | "name" | "email" | "phone" | "location" | "source" | "status" | "projectsInterestedIn" | "packageType" | "clientId" | "assignedDesignerId" | "assignedAt" | "convertedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
   export type LeadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | Lead$clientArgs<ExtArgs>
     assignedDesigner?: boolean | Lead$assignedDesignerArgs<ExtArgs>
@@ -2793,6 +2804,7 @@ export namespace Prisma {
       name: string
       email: string
       phone: string
+      location: string | null
       source: $Enums.LeadSource
       status: $Enums.LeadStatus
       projectsInterestedIn: string[]
@@ -3233,6 +3245,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Lead", 'String'>
     readonly email: FieldRef<"Lead", 'String'>
     readonly phone: FieldRef<"Lead", 'String'>
+    readonly location: FieldRef<"Lead", 'String'>
     readonly source: FieldRef<"Lead", 'LeadSource'>
     readonly status: FieldRef<"Lead", 'LeadStatus'>
     readonly projectsInterestedIn: FieldRef<"Lead", 'String[]'>
@@ -4731,6 +4744,7 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     phone: 'phone',
+    location: 'location',
     source: 'source',
     status: 'status',
     projectsInterestedIn: 'projectsInterestedIn',
@@ -5080,6 +5094,7 @@ export namespace Prisma {
     name?: StringFilter<"Lead"> | string
     email?: StringFilter<"Lead"> | string
     phone?: StringFilter<"Lead"> | string
+    location?: StringNullableFilter<"Lead"> | string | null
     source?: EnumLeadSourceFilter<"Lead"> | $Enums.LeadSource
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
     projectsInterestedIn?: StringNullableListFilter<"Lead">
@@ -5100,6 +5115,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    location?: SortOrderInput | SortOrder
     source?: SortOrder
     status?: SortOrder
     projectsInterestedIn?: SortOrder
@@ -5123,6 +5139,7 @@ export namespace Prisma {
     name?: StringFilter<"Lead"> | string
     email?: StringFilter<"Lead"> | string
     phone?: StringFilter<"Lead"> | string
+    location?: StringNullableFilter<"Lead"> | string | null
     source?: EnumLeadSourceFilter<"Lead"> | $Enums.LeadSource
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
     projectsInterestedIn?: StringNullableListFilter<"Lead">
@@ -5143,6 +5160,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    location?: SortOrderInput | SortOrder
     source?: SortOrder
     status?: SortOrder
     projectsInterestedIn?: SortOrder
@@ -5167,6 +5185,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Lead"> | string
     email?: StringWithAggregatesFilter<"Lead"> | string
     phone?: StringWithAggregatesFilter<"Lead"> | string
+    location?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     source?: EnumLeadSourceWithAggregatesFilter<"Lead"> | $Enums.LeadSource
     status?: EnumLeadStatusWithAggregatesFilter<"Lead"> | $Enums.LeadStatus
     projectsInterestedIn?: StringNullableListFilter<"Lead">
@@ -5393,6 +5412,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -5411,6 +5431,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -5429,6 +5450,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -5447,6 +5469,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -5465,6 +5488,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -5483,6 +5507,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -5499,6 +5524,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -5884,6 +5910,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    location?: SortOrder
     source?: SortOrder
     status?: SortOrder
     projectsInterestedIn?: SortOrder
@@ -5902,6 +5929,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    location?: SortOrder
     source?: SortOrder
     status?: SortOrder
     packageType?: SortOrder
@@ -5919,6 +5947,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     phone?: SortOrder
+    location?: SortOrder
     source?: SortOrder
     status?: SortOrder
     packageType?: SortOrder
@@ -6499,6 +6528,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -6516,6 +6546,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -6543,6 +6574,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -6560,6 +6592,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -6606,6 +6639,7 @@ export namespace Prisma {
     name?: StringFilter<"Lead"> | string
     email?: StringFilter<"Lead"> | string
     phone?: StringFilter<"Lead"> | string
+    location?: StringNullableFilter<"Lead"> | string | null
     source?: EnumLeadSourceFilter<"Lead"> | $Enums.LeadSource
     status?: EnumLeadStatusFilter<"Lead"> | $Enums.LeadStatus
     projectsInterestedIn?: StringNullableListFilter<"Lead">
@@ -6864,6 +6898,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -6881,6 +6916,7 @@ export namespace Prisma {
     name: string
     email: string
     phone: string
+    location?: string | null
     source: $Enums.LeadSource
     status: $Enums.LeadStatus
     projectsInterestedIn?: LeadCreateprojectsInterestedInInput | string[]
@@ -6898,6 +6934,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -6915,6 +6952,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -6932,6 +6970,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -6949,6 +6988,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -6966,6 +7006,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
@@ -6983,6 +7024,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     source?: EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
     status?: EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
     projectsInterestedIn?: LeadUpdateprojectsInterestedInInput | string[]
