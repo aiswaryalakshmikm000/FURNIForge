@@ -17,15 +17,11 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
 
   async create(entity: TDomain): Promise<TDomain> {
     try {
-      console.log("create")
       const raw = await this.model.create({ data: this.toCreate(entity)});
-      console.log("Raw", raw)
       return this.toDomain(raw);
 
     } catch (error) {
-      console.error("Prisma error,", error)
-      throw error
-      // handlePrismaError(error);
+      handlePrismaError(error);
     }
   }
 

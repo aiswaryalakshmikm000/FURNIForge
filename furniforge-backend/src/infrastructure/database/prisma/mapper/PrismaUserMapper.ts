@@ -5,7 +5,6 @@ import { UserRole } from "../../../../domain/enums/UserRole";
 export class PrismaUserMapper {
 
   static toDomain(raw: PrismaUser): User {
-    console.log("todoman user")
     return User.fromPersistence({
       id: raw.id,
       firstName: raw.firstName,
@@ -23,7 +22,6 @@ export class PrismaUserMapper {
   }
 
   static toCreatePersistence(user: User): Prisma.UserCreateInput {
-    console.log("to create persist user")
     return {
       id: user.id,
       firstName: user.firstName,
@@ -39,7 +37,6 @@ export class PrismaUserMapper {
   }
 
   static toUpdatePersistence(user: User): Prisma.UserUpdateInput {
-    console.log("toupdate persitance")
     return {
       firstName: user.firstName,
       lastName: user.lastName,

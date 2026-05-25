@@ -5,7 +5,7 @@ type SocialAuthProps = {
   isLoading?: boolean;
 };
 
-export const SocialAuth = ({ onGoogle, isLoading }: SocialAuthProps) => {
+export const SocialAuth = ({ onGoogle }: SocialAuthProps) => {
   return (
     <>
       {/* Divider */}

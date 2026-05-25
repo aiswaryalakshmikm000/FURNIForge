@@ -34,6 +34,9 @@ import { GetDesignerOptionsUseCase } from "../../application/use-cases/lead/GetD
 import { GoogleAuthUseCase } from "../../application/use-cases/auth/GoogleAuthUseCase";
 import { GoogleAuthService } from "../external-services/GoogleAuthService";
 import { CreateManualLeadUseCase } from "../../application/use-cases/lead/CreateManualLeadUseCase";
+import { DesignerRepository } from "../database/prisma/repositories/DesignerRepository";
+import { GetAllDesignersUseCase } from "../../application/use-cases/designer/GetAllDesignersUseCase";
+import { DesignerController } from "../../presentation/api/v1/controllers/admin/DesignerController";
 
 const container = new Container();
 
@@ -48,6 +51,7 @@ container.bind(TYPES.IUserRepository).to(UserRepository);
 container.bind(TYPES.IOTPRepository).to(RedisOTPRepository);
 container.bind(TYPES.IPendingUserRepository).to(RedisPendingUserRepository);
 container.bind(TYPES.ILeadRepository).to(LeadRepository);
+container.bind(TYPES.IDesignerRepository).to(DesignerRepository)
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -77,10 +81,12 @@ container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase);
 container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);
 container.bind(TYPES.IGetDesignerOptionsUseCase).to(GetDesignerOptionsUseCase);
 container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
-container.bind(TYPES.ICreateManualLeadUseCase).to(CreateManualLeadUseCase)
+container.bind(TYPES.ICreateManualLeadUseCase).to(CreateManualLeadUseCase);
+container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
-container.bind(TYPES.LeadController).to(LeadController)
+container.bind(TYPES.LeadController).to(LeadController);
+container.bind(TYPES.DesignerController).to(DesignerController);
 
 export { container };

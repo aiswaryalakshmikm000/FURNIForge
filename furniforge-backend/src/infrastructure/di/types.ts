@@ -1,4 +1,3 @@
-
 export const TYPES = {
   Redis: Symbol.for("Redis"),
   
@@ -8,6 +7,7 @@ export const TYPES = {
   IOTPRepository: Symbol.for("IOTPRepository"),
   IPendingUserRepository: Symbol.for("IPendingUserRepository"),
   ILeadRepository: Symbol.for("ILeadRepository"),
+  IDesignerRepository: Symbol.for("IDesignerRepository"),
 
   IPasswordService: Symbol.for("IPasswordService"),
   IOtpService: Symbol.for("IOtpService"),
@@ -36,7 +36,9 @@ export const TYPES = {
   IAssignDesignerUseCase: Symbol.for("IAssignDesignerUseCase"),
   IGetDesignerOptionsUseCase: Symbol.for("IGetDesignerOptionsUseCase"),
   ICreateManualLeadUseCase: Symbol.for("ICreateManualLeadUseCase"),
+  IGetAllDesignerUseCase: Symbol.for("IGetAllDesignerUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),
+  DesignerController: Symbol.for("DesignerController"),
 };

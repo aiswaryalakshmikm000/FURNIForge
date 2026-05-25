@@ -1155,16 +1155,21 @@ export namespace Prisma {
   }
 
   export type UserAvgAggregateOutputType = {
+    projectCount: number | null
+    totalRevenue: Decimal | null
     rating: number | null
   }
 
   export type UserSumAggregateOutputType = {
+    projectCount: number | null
+    totalRevenue: Decimal | null
     rating: number | null
   }
 
   export type UserMinAggregateOutputType = {
     id: string | null
     clientRegNo: string | null
+    designerRegNo: string | null
     role: $Enums.Role | null
     firstName: string | null
     lastName: string | null
@@ -1177,6 +1182,8 @@ export namespace Prisma {
     oauthId: string | null
     occupation: string | null
     education: string | null
+    projectCount: number | null
+    totalRevenue: Decimal | null
     rating: number | null
     isActive: boolean | null
     isBlocked: boolean | null
@@ -1187,6 +1194,7 @@ export namespace Prisma {
   export type UserMaxAggregateOutputType = {
     id: string | null
     clientRegNo: string | null
+    designerRegNo: string | null
     role: $Enums.Role | null
     firstName: string | null
     lastName: string | null
@@ -1199,6 +1207,8 @@ export namespace Prisma {
     oauthId: string | null
     occupation: string | null
     education: string | null
+    projectCount: number | null
+    totalRevenue: Decimal | null
     rating: number | null
     isActive: boolean | null
     isBlocked: boolean | null
@@ -1209,6 +1219,7 @@ export namespace Prisma {
   export type UserCountAggregateOutputType = {
     id: number
     clientRegNo: number
+    designerRegNo: number
     role: number
     firstName: number
     lastName: number
@@ -1222,6 +1233,8 @@ export namespace Prisma {
     address: number
     occupation: number
     education: number
+    projectCount: number
+    totalRevenue: number
     rating: number
     isActive: number
     isBlocked: number
@@ -1232,16 +1245,21 @@ export namespace Prisma {
 
 
   export type UserAvgAggregateInputType = {
+    projectCount?: true
+    totalRevenue?: true
     rating?: true
   }
 
   export type UserSumAggregateInputType = {
+    projectCount?: true
+    totalRevenue?: true
     rating?: true
   }
 
   export type UserMinAggregateInputType = {
     id?: true
     clientRegNo?: true
+    designerRegNo?: true
     role?: true
     firstName?: true
     lastName?: true
@@ -1254,6 +1272,8 @@ export namespace Prisma {
     oauthId?: true
     occupation?: true
     education?: true
+    projectCount?: true
+    totalRevenue?: true
     rating?: true
     isActive?: true
     isBlocked?: true
@@ -1264,6 +1284,7 @@ export namespace Prisma {
   export type UserMaxAggregateInputType = {
     id?: true
     clientRegNo?: true
+    designerRegNo?: true
     role?: true
     firstName?: true
     lastName?: true
@@ -1276,6 +1297,8 @@ export namespace Prisma {
     oauthId?: true
     occupation?: true
     education?: true
+    projectCount?: true
+    totalRevenue?: true
     rating?: true
     isActive?: true
     isBlocked?: true
@@ -1286,6 +1309,7 @@ export namespace Prisma {
   export type UserCountAggregateInputType = {
     id?: true
     clientRegNo?: true
+    designerRegNo?: true
     role?: true
     firstName?: true
     lastName?: true
@@ -1299,6 +1323,8 @@ export namespace Prisma {
     address?: true
     occupation?: true
     education?: true
+    projectCount?: true
+    totalRevenue?: true
     rating?: true
     isActive?: true
     isBlocked?: true
@@ -1396,6 +1422,7 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     clientRegNo: string | null
+    designerRegNo: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -1409,7 +1436,9 @@ export namespace Prisma {
     address: JsonValue | null
     occupation: string | null
     education: string | null
-    rating: number | null
+    projectCount: number
+    totalRevenue: Decimal
+    rating: number
     isActive: boolean
     isBlocked: boolean
     createdAt: Date
@@ -1438,6 +1467,7 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     clientRegNo?: boolean
+    designerRegNo?: boolean
     role?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -1451,6 +1481,8 @@ export namespace Prisma {
     address?: boolean
     occupation?: boolean
     education?: boolean
+    projectCount?: boolean
+    totalRevenue?: boolean
     rating?: boolean
     isActive?: boolean
     isBlocked?: boolean
@@ -1464,6 +1496,7 @@ export namespace Prisma {
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     clientRegNo?: boolean
+    designerRegNo?: boolean
     role?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -1477,6 +1510,8 @@ export namespace Prisma {
     address?: boolean
     occupation?: boolean
     education?: boolean
+    projectCount?: boolean
+    totalRevenue?: boolean
     rating?: boolean
     isActive?: boolean
     isBlocked?: boolean
@@ -1487,6 +1522,7 @@ export namespace Prisma {
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     clientRegNo?: boolean
+    designerRegNo?: boolean
     role?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -1500,6 +1536,8 @@ export namespace Prisma {
     address?: boolean
     occupation?: boolean
     education?: boolean
+    projectCount?: boolean
+    totalRevenue?: boolean
     rating?: boolean
     isActive?: boolean
     isBlocked?: boolean
@@ -1510,6 +1548,7 @@ export namespace Prisma {
   export type UserSelectScalar = {
     id?: boolean
     clientRegNo?: boolean
+    designerRegNo?: boolean
     role?: boolean
     firstName?: boolean
     lastName?: boolean
@@ -1523,6 +1562,8 @@ export namespace Prisma {
     address?: boolean
     occupation?: boolean
     education?: boolean
+    projectCount?: boolean
+    totalRevenue?: boolean
     rating?: boolean
     isActive?: boolean
     isBlocked?: boolean
@@ -1530,7 +1571,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientRegNo" | "role" | "firstName" | "lastName" | "email" | "phone" | "avatar" | "passwordHash" | "isVerified" | "oauthProvider" | "oauthId" | "address" | "occupation" | "education" | "rating" | "isActive" | "isBlocked" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientRegNo" | "designerRegNo" | "role" | "firstName" | "lastName" | "email" | "phone" | "avatar" | "passwordHash" | "isVerified" | "oauthProvider" | "oauthId" | "address" | "occupation" | "education" | "projectCount" | "totalRevenue" | "rating" | "isActive" | "isBlocked" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leads?: boolean | User$leadsArgs<ExtArgs>
     assignedLeads?: boolean | User$assignedLeadsArgs<ExtArgs>
@@ -1548,6 +1589,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       clientRegNo: string | null
+      designerRegNo: string | null
       role: $Enums.Role
       firstName: string
       lastName: string
@@ -1561,7 +1603,9 @@ export namespace Prisma {
       address: Prisma.JsonValue | null
       occupation: string | null
       education: string | null
-      rating: number | null
+      projectCount: number
+      totalRevenue: Prisma.Decimal
+      rating: number
       isActive: boolean
       isBlocked: boolean
       createdAt: Date
@@ -1993,6 +2037,7 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly clientRegNo: FieldRef<"User", 'String'>
+    readonly designerRegNo: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly firstName: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
@@ -2006,6 +2051,8 @@ export namespace Prisma {
     readonly address: FieldRef<"User", 'Json'>
     readonly occupation: FieldRef<"User", 'String'>
     readonly education: FieldRef<"User", 'String'>
+    readonly projectCount: FieldRef<"User", 'Int'>
+    readonly totalRevenue: FieldRef<"User", 'Decimal'>
     readonly rating: FieldRef<"User", 'Float'>
     readonly isActive: FieldRef<"User", 'Boolean'>
     readonly isBlocked: FieldRef<"User", 'Boolean'>
@@ -4715,6 +4762,7 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     clientRegNo: 'clientRegNo',
+    designerRegNo: 'designerRegNo',
     role: 'role',
     firstName: 'firstName',
     lastName: 'lastName',
@@ -4728,6 +4776,8 @@ export namespace Prisma {
     address: 'address',
     occupation: 'occupation',
     education: 'education',
+    projectCount: 'projectCount',
+    totalRevenue: 'totalRevenue',
     rating: 'rating',
     isActive: 'isActive',
     isBlocked: 'isBlocked',
@@ -4864,6 +4914,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4931,20 +5009,6 @@ export namespace Prisma {
    */
   export type ListEnumPackageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PackageType[]'>
     
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
   /**
    * Deep Input Types
    */
@@ -4956,6 +5020,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     clientRegNo?: StringNullableFilter<"User"> | string | null
+    designerRegNo?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleFilter<"User"> | $Enums.Role
     firstName?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
@@ -4969,7 +5034,9 @@ export namespace Prisma {
     address?: JsonNullableFilter<"User">
     occupation?: StringNullableFilter<"User"> | string | null
     education?: StringNullableFilter<"User"> | string | null
-    rating?: FloatNullableFilter<"User"> | number | null
+    projectCount?: IntFilter<"User"> | number
+    totalRevenue?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
+    rating?: FloatFilter<"User"> | number
     isActive?: BoolFilter<"User"> | boolean
     isBlocked?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -4981,6 +5048,7 @@ export namespace Prisma {
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     clientRegNo?: SortOrderInput | SortOrder
+    designerRegNo?: SortOrderInput | SortOrder
     role?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -4994,7 +5062,9 @@ export namespace Prisma {
     address?: SortOrderInput | SortOrder
     occupation?: SortOrderInput | SortOrder
     education?: SortOrderInput | SortOrder
-    rating?: SortOrderInput | SortOrder
+    projectCount?: SortOrder
+    totalRevenue?: SortOrder
+    rating?: SortOrder
     isActive?: SortOrder
     isBlocked?: SortOrder
     createdAt?: SortOrder
@@ -5006,6 +5076,7 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     clientRegNo?: string
+    designerRegNo?: string
     email?: string
     phone?: string
     AND?: UserWhereInput | UserWhereInput[]
@@ -5022,18 +5093,21 @@ export namespace Prisma {
     address?: JsonNullableFilter<"User">
     occupation?: StringNullableFilter<"User"> | string | null
     education?: StringNullableFilter<"User"> | string | null
-    rating?: FloatNullableFilter<"User"> | number | null
+    projectCount?: IntFilter<"User"> | number
+    totalRevenue?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
+    rating?: FloatFilter<"User"> | number
     isActive?: BoolFilter<"User"> | boolean
     isBlocked?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     leads?: LeadListRelationFilter
     assignedLeads?: LeadListRelationFilter
-  }, "id" | "clientRegNo" | "email" | "phone">
+  }, "id" | "clientRegNo" | "designerRegNo" | "email" | "phone">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     clientRegNo?: SortOrderInput | SortOrder
+    designerRegNo?: SortOrderInput | SortOrder
     role?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -5047,7 +5121,9 @@ export namespace Prisma {
     address?: SortOrderInput | SortOrder
     occupation?: SortOrderInput | SortOrder
     education?: SortOrderInput | SortOrder
-    rating?: SortOrderInput | SortOrder
+    projectCount?: SortOrder
+    totalRevenue?: SortOrder
+    rating?: SortOrder
     isActive?: SortOrder
     isBlocked?: SortOrder
     createdAt?: SortOrder
@@ -5065,6 +5141,7 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     clientRegNo?: StringNullableWithAggregatesFilter<"User"> | string | null
+    designerRegNo?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     firstName?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
@@ -5078,7 +5155,9 @@ export namespace Prisma {
     address?: JsonNullableWithAggregatesFilter<"User">
     occupation?: StringNullableWithAggregatesFilter<"User"> | string | null
     education?: StringNullableWithAggregatesFilter<"User"> | string | null
-    rating?: FloatNullableWithAggregatesFilter<"User"> | number | null
+    projectCount?: IntWithAggregatesFilter<"User"> | number
+    totalRevenue?: DecimalWithAggregatesFilter<"User"> | Decimal | DecimalJsLike | number | string
+    rating?: FloatWithAggregatesFilter<"User"> | number
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
     isBlocked?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -5240,6 +5319,7 @@ export namespace Prisma {
   export type UserCreateInput = {
     id?: string
     clientRegNo?: string | null
+    designerRegNo?: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -5253,7 +5333,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: string | null
     education?: string | null
-    rating?: number | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
     isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
@@ -5265,6 +5347,7 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     id?: string
     clientRegNo?: string | null
+    designerRegNo?: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -5278,7 +5361,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: string | null
     education?: string | null
-    rating?: number | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
     isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
@@ -5290,6 +5375,7 @@ export namespace Prisma {
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -5303,7 +5389,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5315,6 +5403,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -5328,7 +5417,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5340,6 +5431,7 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     id?: string
     clientRegNo?: string | null
+    designerRegNo?: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -5353,7 +5445,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: string | null
     education?: string | null
-    rating?: number | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
     isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
@@ -5363,6 +5457,7 @@ export namespace Prisma {
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -5376,7 +5471,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5386,6 +5483,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -5399,7 +5497,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5637,15 +5737,37 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type DecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -5677,6 +5799,7 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     clientRegNo?: SortOrder
+    designerRegNo?: SortOrder
     role?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -5690,6 +5813,8 @@ export namespace Prisma {
     address?: SortOrder
     occupation?: SortOrder
     education?: SortOrder
+    projectCount?: SortOrder
+    totalRevenue?: SortOrder
     rating?: SortOrder
     isActive?: SortOrder
     isBlocked?: SortOrder
@@ -5698,12 +5823,15 @@ export namespace Prisma {
   }
 
   export type UserAvgOrderByAggregateInput = {
+    projectCount?: SortOrder
+    totalRevenue?: SortOrder
     rating?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     clientRegNo?: SortOrder
+    designerRegNo?: SortOrder
     role?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -5716,6 +5844,8 @@ export namespace Prisma {
     oauthId?: SortOrder
     occupation?: SortOrder
     education?: SortOrder
+    projectCount?: SortOrder
+    totalRevenue?: SortOrder
     rating?: SortOrder
     isActive?: SortOrder
     isBlocked?: SortOrder
@@ -5726,6 +5856,7 @@ export namespace Prisma {
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     clientRegNo?: SortOrder
+    designerRegNo?: SortOrder
     role?: SortOrder
     firstName?: SortOrder
     lastName?: SortOrder
@@ -5738,6 +5869,8 @@ export namespace Prisma {
     oauthId?: SortOrder
     occupation?: SortOrder
     education?: SortOrder
+    projectCount?: SortOrder
+    totalRevenue?: SortOrder
     rating?: SortOrder
     isActive?: SortOrder
     isBlocked?: SortOrder
@@ -5746,6 +5879,8 @@ export namespace Prisma {
   }
 
   export type UserSumOrderByAggregateInput = {
+    projectCount?: SortOrder
+    totalRevenue?: SortOrder
     rating?: SortOrder
   }
 
@@ -5829,20 +5964,52 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -6003,17 +6170,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type CounterCountOrderByAggregateInput = {
     id?: SortOrder
     value?: SortOrder
@@ -6035,22 +6191,6 @@ export namespace Prisma {
 
   export type CounterSumOrderByAggregateInput = {
     value?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type LeadCreateNestedManyWithoutClientInput = {
@@ -6097,8 +6237,24 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type DecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
     increment?: number
     decrement?: number
     multiply?: number
@@ -6222,14 +6378,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedLeadsInput, UserUpdateWithoutAssignedLeadsInput>, UserUncheckedUpdateWithoutAssignedLeadsInput>
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -6270,15 +6418,37 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedDecimalFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -6307,17 +6477,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -6389,20 +6548,52 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedDecimalFilter<$PrismaModel>
+    _sum?: NestedDecimalFilter<$PrismaModel>
+    _min?: NestedDecimalFilter<$PrismaModel>
+    _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -6493,33 +6684,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type LeadCreateWithoutClientInput = {
@@ -6671,6 +6835,7 @@ export namespace Prisma {
   export type UserCreateWithoutLeadsInput = {
     id?: string
     clientRegNo?: string | null
+    designerRegNo?: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -6684,7 +6849,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: string | null
     education?: string | null
-    rating?: number | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
     isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
@@ -6695,6 +6862,7 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutLeadsInput = {
     id?: string
     clientRegNo?: string | null
+    designerRegNo?: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -6708,7 +6876,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: string | null
     education?: string | null
-    rating?: number | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
     isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
@@ -6724,6 +6894,7 @@ export namespace Prisma {
   export type UserCreateWithoutAssignedLeadsInput = {
     id?: string
     clientRegNo?: string | null
+    designerRegNo?: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -6737,7 +6908,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: string | null
     education?: string | null
-    rating?: number | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
     isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
@@ -6748,6 +6921,7 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutAssignedLeadsInput = {
     id?: string
     clientRegNo?: string | null
+    designerRegNo?: string | null
     role: $Enums.Role
     firstName: string
     lastName: string
@@ -6761,7 +6935,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: string | null
     education?: string | null
-    rating?: number | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
     isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
@@ -6788,6 +6964,7 @@ export namespace Prisma {
   export type UserUpdateWithoutLeadsInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -6801,7 +6978,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6812,6 +6991,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutLeadsInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -6825,7 +7005,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6847,6 +7029,7 @@ export namespace Prisma {
   export type UserUpdateWithoutAssignedLeadsInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -6860,7 +7043,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6871,6 +7056,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutAssignedLeadsInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -6884,7 +7070,9 @@ export namespace Prisma {
     address?: NullableJsonNullValueInput | InputJsonValue
     occupation?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableFloatFieldUpdateOperationsInput | number | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
     isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

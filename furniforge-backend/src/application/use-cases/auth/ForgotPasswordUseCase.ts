@@ -23,6 +23,7 @@ export class ForgotPasswordUseCase implements IForgetPasswordUseCase{
 
     const user = await this._userRepo.findByEmail(emailVO.value);
     if (!user) throw new NotFoundError(ERROR_MESSAGES.USER.NOT_FOUND);
+    if (!user.isVerified) throw new NotFoundError(ERROR_MESSAGES.AUTH.ACCOUNT_NOT_VERIFIED);
 
     const otpToken = await this._otpService.generateAndHandleOtp(
       user.id,

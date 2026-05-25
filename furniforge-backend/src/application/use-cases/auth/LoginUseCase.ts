@@ -25,7 +25,6 @@ export class LoginUseCase implements ILoginUseCase {
 
   async execute(data: LoginDTO): Promise<AuthResult> {
     const emailVO = new Email(data.email);
-
     const user = await this._userRepository.findByEmail(emailVO.value);
 
     if (!user) {
@@ -41,7 +40,6 @@ export class LoginUseCase implements ILoginUseCase {
     }
 
     const isMatch = await this._passwordService.compare(data.password, user.passwordHash);
-
     if (!isMatch) {
       throw new UnauthorizedError(ERROR_MESSAGES.AUTH.INVALID_CREDENTIALS, ERROR_CODES.AUTH.INVALID_CREDENTIALS);
     }

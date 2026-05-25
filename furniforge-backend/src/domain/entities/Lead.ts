@@ -33,7 +33,6 @@ export class Lead {
     projectsInterestedIn?: string[];
     packageType?: PackageType;
   }): Lead {
-    console.log("lead create", data)
     return new Lead(
       crypto.randomUUID(),
       data.leadRegNo,
