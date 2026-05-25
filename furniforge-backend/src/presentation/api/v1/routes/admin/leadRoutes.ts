@@ -9,6 +9,7 @@ import { authMiddleware } from "../../../middlewares/authMiddleware";
 import { authorizeRoles } from "../../../middlewares/roleGuardMiddleware";
 import { UserRole } from "../../../../../domain/enums/UserRole";
 import { AssignDesignerSchema } from "../../../../../application/dtos/lead/AssignDesignerDTO";
+import { CreateLeadDTOSchema } from "../../../../../application/dtos/lead/CreateLeadDTO";
 
 const router = Router();
 
@@ -17,5 +18,6 @@ const controller = container.get<LeadController>( TYPES.LeadController );
 router.get("/leads", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetAllLeadsQuerySchema), asyncHandler(controller.getAllLeads));
 router.patch("/leads/:id/assign-designer", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(AssignDesignerSchema), asyncHandler(controller.assignDesigner))
 router.get("/designers/options", authMiddleware, authorizeRoles(UserRole.ADMIN), asyncHandler(controller.getDesignerOptions))
+router.post("/leads", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateLeadDTOSchema), asyncHandler(controller.createLead))
 
 export default router;

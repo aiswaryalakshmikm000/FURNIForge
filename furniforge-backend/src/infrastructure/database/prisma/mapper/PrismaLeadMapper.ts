@@ -4,12 +4,14 @@ import { LeadSource, LeadStatus, PackageType } from "../../../../domain/enums/Le
 
 export class PrismaLeadMapper {
   static toDomain(raw: PrismaLead): Lead {
+    console.log("todomain lead ")
     return Lead.fromPersistence({
       id: raw.id,
       leadRegNo: raw.leadRegNo,
       name: raw.name,
       email: raw.email,
       phone: raw.phone,
+      location: raw.location,
       source: raw.source as LeadSource,
       status: raw.status as LeadStatus,
       projectsInterestedIn: raw.projectsInterestedIn ?? [],
@@ -24,12 +26,14 @@ export class PrismaLeadMapper {
   }
 
   static toCreatePersistence(lead: Lead): Prisma.LeadCreateInput {
+    console.log("toCreatePersistence")
     return {
       id: lead.id,
       leadRegNo: lead.leadRegNo,
       name: lead.name,
       email: lead.email,
       phone: lead.phone,
+      location: lead.location,
       source: lead.source,
       status: lead.status,
       projectsInterestedIn: lead.projectsInterestedIn,
@@ -48,10 +52,12 @@ export class PrismaLeadMapper {
   }
 
   static toUpdatePersistence(lead: Lead): Prisma.LeadUpdateInput {
+    console.log("toUpdatePersistence ")
     return {
       name: lead.name,
       email: lead.email,
       phone: lead.phone,
+      location: lead.location,
       source: lead.source,
       status: lead.status,
       projectsInterestedIn: lead.projectsInterestedIn,

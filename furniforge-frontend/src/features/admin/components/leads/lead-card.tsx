@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Globe, MapPin, Phone, User } from "lucide-react";
+import { Globe, Mail, MapPin, Phone, User } from "lucide-react";
 import { formatEnumLabel } from "../../../../shared/utils/format-enum";
 import { Badge } from "../../../../shared/components/ui/badge";
 import type { LeadResponseDTO, LeadStatus } from "../../types/lead.type";
@@ -99,12 +99,18 @@ export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignL
                 {lead.phone}
               </span>
 
+              <span className="flex items-center gap-1">
+                <Mail size={10} />
+                {lead.email}
+              </span>
+
               {lead.location && (
                 <span className="flex items-center gap-1">
                   <MapPin size={10} />
                   {lead.location}
                 </span>
-              )}
+              )
+              }
             </div>
           </div>
         </div>

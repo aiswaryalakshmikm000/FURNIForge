@@ -1,33 +1,25 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
-
 import { Button } from "../../../shared/components/ui/button";
 import { FilterSortDropdown } from "../../../shared/components/common/filter-sort-dropdown";
 import { PaginationControl } from "../../../shared/components/common/pagination-control";
 import { EmptyState } from "../../../shared/components/common/EmptyState";
 import { PageHeader } from "../../../shared/components/common/page-header";
-
 import { LeadCard } from "../components/leads/lead-card";
 import { AssignLeadDialog } from "../components/leads/assign-lead-dialog";
 import { AddLeadDialog } from "../components/leads/add-lead-dialog";
-
 import { useGetAllLeads } from "../hooks/use-get-all-leads";
 import { useGetAllDesignerOptions } from "../hooks/use-get-designer-options";
 import { useAssignDesigner } from "../hooks/use-assign-designer";
-
-import {
-  LeadStatus,
-  LeadSource,
-  type LeadResponseDTO,
-} from "../types/lead.type";
-
+import { LeadStatus, LeadSource, type LeadResponseDTO } from "../types/lead.type";
 import { formatEnumLabel } from "../../../shared/utils/format-enum";
+import { useCreateLead } from "../hooks/use-create-lead.";
 
 export const DEFAULT_DELIVERABLES = [
   "Sofa",
   "TV unit",
-  "Living Room",
+  "Bed",
 ];
 
 export default function AdminLeadsPage() {
@@ -61,6 +53,8 @@ export default function AdminLeadsPage() {
   const [addLeadOpen, setAddLeadOpen] = useState(false);
 
   const { mutateAsync: assignDesigner } = useAssignDesigner();
+
+  const { mutateAsync: createLead } = useCreateLead();
 
   const { data, isLoading } = useGetAllLeads({
     page,
@@ -272,9 +266,11 @@ export default function AdminLeadsPage() {
       <AddLeadDialog
         open={addLeadOpen}
         onOpenChange={setAddLeadOpen}
-        leadSources={Object.values(LeadSource)}
-        deliverables={[]}
-        onAddLead={() => {}}
+        deliverables={DEFAULT_DELIVERABLES}
+        onAddLead={async (lead) => {
+    await createLead(lead);
+    setAddLeadOpen(false);
+  }}
       />
     </motion.div>
   );

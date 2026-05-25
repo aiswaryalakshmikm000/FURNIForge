@@ -13,8 +13,8 @@ export class CreateLeadUseCase implements ICreateLeadUseCase {
     @inject(TYPES.ILeadRepository) private _leadRepository: ILeadRepository
   ) {}
 
-  async execute(user: User): Promise<void> {
-
+  async execute(user: User): Promise<Lead> {
+    
     const seq = await this._leadRepository.getNextLeadSequence();
     const leadRegNo = generateRegNo({prefix: "LEAD", sequence: seq})
 
@@ -27,6 +27,7 @@ export class CreateLeadUseCase implements ICreateLeadUseCase {
         clientId: user.id,
     });
 
-    await this._leadRepository.create(lead);
+    const createdLead =  await this._leadRepository.create(lead);
+    return createdLead;
   }
 }
