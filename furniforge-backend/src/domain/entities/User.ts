@@ -26,7 +26,7 @@ export class User {
     lastName: string;
     email: string;
     phone: string;
-    passwordHash: string;
+    passwordHash: string | null;
   }): User {
     return new User(
       crypto.randomUUID(),

@@ -7,19 +7,43 @@ import type { LeadResponseDTO } from "../../dtos/lead/LeadResponseDTO";
 import { generateRegNo } from "../../../shared/utils/generateRegNo";
 import { Lead } from "../../../domain/entities/Lead";
 import { LeadResponseMapper } from "../../mappers/LeadResponseMapper";
-
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
+import { Email } from "../../../domain/value-objects/Email";
+import { User } from "../../../domain/entities/User";
 
 @injectable()
 export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
   constructor(
-    @inject(TYPES.ILeadRepository) private _leadRepository: ILeadRepository
+    @inject(TYPES.ILeadRepository) private _leadRepository: ILeadRepository,
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository,
   ) {}
 
-  async execute( dto: CreateLeadDTO ): Promise<LeadResponseDTO> {
+  async execute(dto: CreateLeadDTO): Promise<LeadResponseDTO> {
+    
+    //create user ---
+    const emailVO = new Email(dto.email);
+    const existingUser = await this._userRepository.findByEmail(emailVO.value);
 
+    let clientId: string | null = null;
+
+    if (!existingUser) {
+      const user = User.create({
+        firstName: dto.name.split(" ")[0],
+        lastName: dto.name.split(" ").slice(1).join(" "),
+        email: dto.email,
+        phone: dto.phone,
+        passwordHash: null,
+      });
+
+      const createdUser = await this._userRepository.create(user)
+      clientId = createdUser.id;
+    } else {
+      clientId = existingUser.id
+    }
+
+    //create lead ----
     const seq = await this._leadRepository.getNextLeadSequence();
-
-    const leadRegNo = generateRegNo({ prefix: "LEAD", sequence: seq, });
+    const leadRegNo = generateRegNo({ prefix: "LEAD", sequence: seq });
 
     const lead = Lead.create({
       leadRegNo,
@@ -28,6 +52,7 @@ export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
       phone: dto.phone,
       location: dto.location,
       source: dto.source,
+      clientId,
       projectsInterestedIn: dto.projectsInterestedIn,
       packageType: dto.packageType,
     });
