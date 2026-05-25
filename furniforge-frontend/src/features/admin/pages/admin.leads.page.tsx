@@ -19,7 +19,7 @@ import { useCreateLead } from "../hooks/use-create-lead.";
 export const DEFAULT_DELIVERABLES = [
   "Sofa",
   "TV unit",
-  "Living Room",
+  "Bed",
 ];
 
 export default function AdminLeadsPage() {

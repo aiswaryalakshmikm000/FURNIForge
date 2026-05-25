@@ -4,6 +4,7 @@ import { LeadSource, LeadStatus, PackageType } from "../../../../domain/enums/Le
 
 export class PrismaLeadMapper {
   static toDomain(raw: PrismaLead): Lead {
+    console.log("todomain lead ")
     return Lead.fromPersistence({
       id: raw.id,
       leadRegNo: raw.leadRegNo,
@@ -25,6 +26,7 @@ export class PrismaLeadMapper {
   }
 
   static toCreatePersistence(lead: Lead): Prisma.LeadCreateInput {
+    console.log("toCreatePersistence")
     return {
       id: lead.id,
       leadRegNo: lead.leadRegNo,
@@ -50,6 +52,7 @@ export class PrismaLeadMapper {
   }
 
   static toUpdatePersistence(lead: Lead): Prisma.LeadUpdateInput {
+    console.log("toUpdatePersistence ")
     return {
       name: lead.name,
       email: lead.email,

@@ -1,19 +1,10 @@
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "../../../../shared/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle} from "../../../../shared/components/ui/alert-dialog";
 import { Button } from "../../../../shared/components/ui/button";
 import { Input } from "../../../../shared/components/ui/input";
 import { FormField } from "../../../../shared/components/common/forms/form-field";
 import { Select } from "../../../../shared/components/common/forms/select";
 import { CheckboxGroup } from "../../../../shared/components/common/forms/checkbox-group";
-import {
-  createLeadSchema,
-  type CreateLeadFormValues,
-} from "../../validation/create-lead.validation";
+import { createLeadSchema, type CreateLeadFormValues} from "../../validation/create-lead.validation";
 import { LeadSource , PackageType} from "../../types/lead.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
@@ -96,10 +87,6 @@ export const AddLeadDialog = ({
                     <option value={LeadSource.EXTERNAL}>External</option>
 
                     <option value={LeadSource.REFERRAL}>Referral</option>
-
-                    <option value={LeadSource.SELF_REGISTERED}>
-                      Self Registered
-                    </option>
                   </Select>
                 )}
               />
@@ -113,9 +100,9 @@ export const AddLeadDialog = ({
                   <Select {...field}>
                     <option value="BASIC">Basic</option>
 
-                    <option value="PREMIUM">Premium</option>
+                    <option value="STANDARD">Standard</option>
 
-                    <option value="LUXURY">Luxury</option>
+                    <option value="PREMIUM">Premium</option>
                   </Select>
                 )}
               />

@@ -13,7 +13,7 @@ export const RegisterSchema = z.object({
   lastName: z
     .string()
     .max(50, { message: "Last name must not exceed 50 characters" })
-    .regex(/^[a-zA-Z\s]+$/, {
+    .regex(/^[a-zA-Z\s]*$/, {
       message: "Last name can only contain letters and spaces",
     })
     .transform((val) => val.trim())

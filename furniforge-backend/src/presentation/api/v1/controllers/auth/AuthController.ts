@@ -56,12 +56,14 @@ export class AuthController {
    * @param res - Express response object used to send the create user response, accessToken, refreshToken
    */
   verifyOtp = async (req: Request, res: Response) => {
+    console.log("verify otp hit")
     const result = await this._verifyOtpUseCase.execute(req.body);
 
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
 
     const { refreshToken, accessToken, ...safeResponse } = result;
+    console.log("BEFORE RESPONSE");
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.VERIFY_EMAIL_SUCCESS).build());
   };
 
