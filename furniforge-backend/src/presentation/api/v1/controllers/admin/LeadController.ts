@@ -30,7 +30,6 @@ export class LeadController {
 
   assignDesigner = async (req: Request, res: Response) => {
     const {id} = req.params;
-    console.log("ID", id)
     const body = req.body as AssignDesignerDTO
 
     const result = await this._assignDesignerUseCase.execute(id, body.designerId);

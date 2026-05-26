@@ -23,6 +23,10 @@ export const API_ENDPOINTS = {
       CREATE: "/admin/leads",
       ASSIGN_DESIGNER: (id: string) => `/admin/leads/${id}/assign-designer`,
       DESIGNER_OPTIONS: "/admin/designers/options",
+    },
+    DESIGNERS: {
+      GET_ALL: "/admin/designers",
+      BLOCK: (id: string) => `/admin/designers/${id}/block`,
     }
   }
 };

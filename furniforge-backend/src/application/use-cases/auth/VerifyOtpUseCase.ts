@@ -55,10 +55,8 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
       user.verifyEmail();
 
       const createdUser = await this._userRepository.create(user);
-      console.log("created USer" , createdUser)
     
-      const createdLead = await this._createLeadUseCase.execute(createdUser);
-      console.log("created lead" , createdLead)
+      await this._createLeadUseCase.execute(createdUser);
 
       await this._pendingUserService.delete(pendingUser.email, pendingUser.tempUserId);
 

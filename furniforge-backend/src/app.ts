@@ -3,7 +3,8 @@ import { corsConfig } from "./infrastructure/config/corsConfig"
 import { helmetConfig } from "./infrastructure/config/helmetConfig"
 import { errorHandlerMiddleware } from "./presentation/api/middlewares/errorHandlerMiddleware"
 import authRoutes from "./presentation/api/v1/routes/auth/authRoutes";
-import adminRoutes from "./presentation/api/v1/routes/admin/leadRoutes"
+import adminLeadRoutes from "./presentation/api/v1/routes/admin/leadRoutes"
+import adminDesignerRoutes from "./presentation/api/v1/routes/admin/designerRoutes"
 import { SUCCESS_MESSAGES } from "./infrastructure/config/messages";
 import { morganConfig } from "./infrastructure/config/morganConfig";
 import { cookieConfig } from "./infrastructure/config/cookieConfig";
@@ -18,7 +19,8 @@ app.use(helmetConfig)
 app.use(cookieConfig)
 
 app.use("/api/v1", authRoutes)
-app.use("/api/v1/admin", adminRoutes)
+app.use("/api/v1/admin", adminLeadRoutes)
+app.use("/api/v1/admin", adminDesignerRoutes)
 
 app.get("/health", (req, res) => {
   res.json({ message: SUCCESS_MESSAGES.GENERAL.HEALTH_CHECK })

@@ -31,9 +31,7 @@ export class LeadRepository
       const raw = await this.model.findUnique({ where: { leadRegNo } });
       return raw ? this.toDomain(raw) : null;
     } catch (error) {
-      console.error("Prisma error,", error)
-      throw error
-      // handlePrismaError(error);
+      handlePrismaError(error);
     }
   }
 

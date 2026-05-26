@@ -24,6 +24,7 @@ export const authMiddleware = async ( req: AuthRequest, _res: Response, next: Ne
  
   try {
     const token = req.cookies?.accessToken;
+    
     if(!token) throw new UnauthorizedError(ERROR_MESSAGES.AUTH.TOKEN.ACCESS_TOKEN_MISSING, ERROR_CODES.AUTH.ACCESS_TOKEN_MISSING)
 
     const payload = tokenService.verifyAccessToken(token);

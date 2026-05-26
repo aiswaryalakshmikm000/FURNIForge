@@ -11,7 +11,7 @@ import ErrorPage from "../../../features/auth/pages/error.page";
 
 const AdminDashboard = lazy(() => import("../../../features/admin/pages/admin.dashboard.page"));
 const LeadsPage = lazy(() => import("../../../features/admin/pages/admin.leads.page"));
-// const ProjectsPage = lazy(() => import("../../../features/admin/pages/projects.page"));
+const DesignerPage = lazy(() => import("../../../features/admin/pages/admin.designers.page"));
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -27,7 +27,7 @@ export const adminRoutes: RouteObject[] = [
     children: [
         {index: true, element: <AdminDashboard/>},
         {path: APP_ROUTES.ADMIN.LEADS, element: <LeadsPage/>},
-        // {path: "projects", element: <ProjectPage/>},
+        {path: APP_ROUTES.ADMIN.DESIGNERS, element: <DesignerPage/>},
     ],
   },
 ];
