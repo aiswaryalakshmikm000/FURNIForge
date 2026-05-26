@@ -1,7 +1,7 @@
 
 export interface DesignerResponseDTO {
   id: string;
-  designerRegNo: string | null;
+  designerRegNo: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -14,4 +14,5 @@ export interface DesignerResponseDTO {
   totalRevenue: number;
   isActive: boolean;
   isBlocked: boolean;
+  createdAt: Date;
 }

@@ -1,7 +1,7 @@
 
 export interface DesignerListItem {
   id: string;
-  designerRegNo: string | null;
+  designerRegNo: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -14,4 +14,5 @@ export interface DesignerListItem {
   totalRevenue: number;
   isActive: boolean;
   isBlocked: boolean;
+  createdAt: Date;
 }

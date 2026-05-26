@@ -7,7 +7,7 @@ export const GetAllDesignersQuerySchema  = z.object({
   limit: z.coerce.number().min(1).max(100).default(10),
   search: z.string().optional(),
   status: z.enum([ "ACTIVE",  "BLOCKED" , "INACTIVE"]).optional(),
-  sortBy: z.enum(["rating", "revenue", "createdAt"]).default("createdAt"),
+  sortBy: z.enum(["rating", "projects", "revenue", "createdAt"]).default("createdAt"),
   sortOrder: z.enum(["asc", "desc"]).default("desc"),
 });
 

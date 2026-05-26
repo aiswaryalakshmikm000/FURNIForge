@@ -16,7 +16,7 @@ export interface IDesignerRepository extends IBaseRepository<User> {
     take: number;
     search?: string;
     status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
-    sortBy: "rating" | "revenue" | "createdAt";
+    sortBy: "rating" | "projects" | "revenue" | "createdAt";
     sortOrder: "asc" | "desc";
   }): Promise<DesignerListItem[]>;
 

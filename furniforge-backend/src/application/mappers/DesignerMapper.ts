@@ -20,6 +20,7 @@ export class DesignerMapper {
     totalRevenue: designer.totalRevenue,
     isActive: designer.isActive,
     isBlocked: designer.isBlocked,
+    createdAt: designer.createdAt,
    };
  }
 }

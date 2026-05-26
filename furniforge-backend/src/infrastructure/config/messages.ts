@@ -100,6 +100,7 @@ export const ERROR_MESSAGES = {
   ADMIN: {
     LEAD_NOT_FOUND: "Lead not found",
     DESIGNER_NOT_FOUND: "Designer not found",
+    DESIGNER_REG_NO_MISSING: "Designer registration number is missing",
   },
 
   USER: {

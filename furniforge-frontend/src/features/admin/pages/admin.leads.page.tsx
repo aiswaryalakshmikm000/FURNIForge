@@ -102,13 +102,9 @@ export default function AdminLeadsPage() {
         leadId: selectedLead.id,
         designerId: selectedDesignerId,
       });
-
       setConfirmOpen(false);
-
       setSelectedLead(null);
-
       setSelectedDesignerId("");
-
       setActiveAssignLeadId(null);
     } catch (error) {
       console.error(error);

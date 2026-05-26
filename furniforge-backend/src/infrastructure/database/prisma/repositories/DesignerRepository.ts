@@ -7,6 +7,8 @@ import type { IDesignerRepository } from "../../../../domain/repositories/IDesig
 import { PrismaUserMapper } from "../mapper/PrismaUserMapper";
 import { DesignerListItem } from "../../../../domain/read-models/designer/DesignerListItem";
 import { User } from "../../../../domain/entities/User";
+import { InternalServerError } from "../../../../domain/errors/AppError";
+import { ERROR_MESSAGES } from "../../../config/messages";
 
 @injectable()
 export class DesignerRepository
@@ -75,7 +77,7 @@ export class DesignerRepository
     take: number;
     search?: string;
     status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
-    sortBy: "rating" | "revenue" | "createdAt";
+    sortBy: "rating" | "projects" |"revenue" | "createdAt";
     sortOrder: "asc" | "desc";
   }): Promise<DesignerListItem[]> {
     try {
@@ -111,6 +113,10 @@ export class DesignerRepository
           orderBy = { rating: params.sortOrder };
           break;
 
+        case "projects":
+          orderBy = { projectCount: params.sortOrder };
+          break;
+
         case "createdAt":
           orderBy = { createdAt: params.sortOrder };
           break;
@@ -137,12 +143,15 @@ export class DesignerRepository
           address: true,
           rating: true,
           projectCount: true,
+          totalRevenue: true,
           isActive: true,
           isBlocked: true,
+          createdAt: true,
         },
       });
 
       return raws.map((raw) => {
+        if(!raw.designerRegNo) throw new InternalServerError(ERROR_MESSAGES.ADMIN.DESIGNER_REG_NO_MISSING)
         let location: string | null = null;
 
         if ( raw.address && typeof raw.address === "object" && !Array.isArray(raw.address) ) {
@@ -161,9 +170,10 @@ export class DesignerRepository
           education: raw.education,
           rating: raw.rating,
           projectCount: raw.projectCount,
-          totalRevenue: 0,
+          totalRevenue: raw.totalRevenue ? Number(raw.totalRevenue) : 0,
           isActive: raw.isActive,
           isBlocked: raw.isBlocked,
+          createdAt: raw.createdAt
         };
       });
     } catch (error) {
