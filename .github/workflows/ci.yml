@@ -1,0 +1,63 @@
+name: FurniForge CI
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+
+  backend-build:
+    name: Backend CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: furniforge-backend
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Backend Dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Build Backend
+        run: npm run build
+
+  frontend-build:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: furniforge-frontend
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Frontend Dependencies
+        run: npm ci
+
+      - name: Build Frontend
+        run: npm run build

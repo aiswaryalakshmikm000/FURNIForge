@@ -1,22 +1,16 @@
 import { useState, useMemo } from "react";
-
 import { Search } from "lucide-react";
-
 import { SectionIntro } from "./section-intro";
 import { WorkCard } from "./work-card";
-
 import { PaginationControl } from "../../../shared/components/common/pagination-control";
-import { usePagination } from "../../../shared/hooks/use-pagination";
-
 import { EmptyState } from "../../../shared/components/common/EmptyState";
-
 import { FilterSortDropdown } from "../../../shared/components/common/filter-sort-dropdown";
-
 import wardrobeImg from "../../../assets/work-wardrobe-new.jpg";
 import tvunitImg from "../../../assets/work-tvunit-new.jpg";
 import deskImg from "../../../assets/work-desk-new.jpg";
 import sofaImg from "../../../assets/work-sofa-new.jpg";
 import bedImg from "../../../assets/work-bed-new.jpg";
+import { usePagination } from "../hooks/use-pagination";
 
 interface Project {
   id: number;
@@ -147,7 +141,10 @@ export const OurWorkSection = () => {
             {
               key: "type",
               label: "Type",
-              options: [...TYPES],
+              options: TYPES.map((t) => ({
+  label: t,
+  value: t,
+})),
               value: typeFilter,
               onChange: (v) => {
                 setTypeFilter(v);
@@ -157,7 +154,10 @@ export const OurWorkSection = () => {
             {
               key: "color",
               label: "Color",
-              options: [...COLORS],
+              options: COLORS.map((c) => ({
+  label: c,
+  value: c,
+})),
               value: colorFilter,
               onChange: (v) => {
                 setColorFilter(v);
@@ -175,7 +175,7 @@ export const OurWorkSection = () => {
 
         {/* RESULTS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {paginatedItems.map((project) => (
+          {paginatedItems.map((project: Project) => (
             <WorkCard
               key={project.id}
               project={project}

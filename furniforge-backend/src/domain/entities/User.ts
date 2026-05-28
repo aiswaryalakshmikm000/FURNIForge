@@ -108,4 +108,6 @@ export class User {
   get isVerified(): boolean { return this._isVerified };
   get oAuthProvider(): string | null { return this._oauthProvider };
   get oauthId(): string | null { return this._oauthId };
+  get createdAt(): Date { return this._createdAt}
+  get updatedAt(): Date {return this._updatedAt}
 }

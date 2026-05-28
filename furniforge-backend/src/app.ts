@@ -22,7 +22,7 @@ app.use("/api/v1", authRoutes)
 app.use("/api/v1/admin", adminLeadRoutes)
 app.use("/api/v1/admin", adminDesignerRoutes)
 
-app.get("/health", (req, res) => {
+app.get("/health", (_req, res) => {
   res.json({ message: SUCCESS_MESSAGES.GENERAL.HEALTH_CHECK })
 })
 

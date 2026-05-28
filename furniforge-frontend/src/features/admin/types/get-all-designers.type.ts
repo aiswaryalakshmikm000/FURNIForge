@@ -2,7 +2,7 @@ export interface GetAllDesignersRequestDTO {
   page: number;
   search?: string;
   status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
-  sortBy?: "rating" | "projectCount" | "revenue" | "createdAt" ;
+  sortBy?: "rating" | "projects" | "revenue" | "createdAt" ;
   sortOrder?: "asc" | "desc";
 }
 
