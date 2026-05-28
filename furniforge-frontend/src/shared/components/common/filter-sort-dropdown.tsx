@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { SlidersHorizontal, Search, X } from "lucide-react";
+import {
+  SlidersHorizontal,
+  Search,
+  X,
+  ArrowUp,
+  ArrowDown,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface FilterOption {
   key: string;
   label: string;
-  options: {label: string, value: string}[];
+  options: { label: string; value: string }[];
   value: string;
   onChange: (val: string) => void;
 }
@@ -17,15 +23,14 @@ export interface SortOption {
 
 interface Props {
   filters: FilterOption[];
-
   sortOptions?: SortOption[];
   sortValue?: string;
   onSortChange?: (v: string) => void;
-
+  sortOrder?: "asc" | "desc";
+  onSortOrderChange?: (value: "asc" | "desc") => void;
   search?: string;
   onSearchChange?: (v: string) => void;
   searchPlaceholder?: string;
-
   onReset?: () => void;
 }
 
@@ -34,6 +39,8 @@ export const FilterSortDropdown = ({
   sortOptions,
   sortValue,
   onSortChange,
+  sortOrder,
+  onSortOrderChange,
   search,
   onSearchChange,
   searchPlaceholder,
@@ -78,7 +85,7 @@ export const FilterSortDropdown = ({
         <button
           onClick={() => setOpen((prev) => !prev)}
           className={`relative flex items-center gap-2 px-6 h-12 rounded-2xl border transition-all ${
-            open 
+            open
               ? "bg-accent text-accent-foreground border-accent"
               : "border-border bg-background hover:bg-muted"
           }`}
@@ -121,9 +128,29 @@ export const FilterSortDropdown = ({
 
                 {sortOptions && (
                   <div>
-                    <p className="text-xs uppercase mb-3 font-semibold text-muted-foreground font-sans tracking-wider">
-                      Sort By
-                    </p>
+                    <div className="flex items-center gap-2 mb-3">
+                      <p
+                        className=" text-xs uppercase font-semibold text-muted-foreground font-sans tracking-wider "
+                      >
+                        Sort By
+                      </p>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onSortOrderChange?.(
+                            sortOrder === "asc" ? "desc" : "asc",
+                          )
+                        }
+                        className="rounded-full font-semibold text-muted-foreground font-sans hover:text-accent-foreground transition-all  flex items-center justify-center "
+                      >
+                        {sortOrder === "asc" ? (
+                          <ArrowUp size={16} />
+                        ) : (
+                          <ArrowDown size={16} />
+                        )}
+                      </button>
+                    </div>
 
                     <div className="flex flex-wrap gap-2">
                       {sortOptions.map((s) => (

@@ -25,42 +25,19 @@ export const DesignerCard = ({
 
   return (
     <div
-      className="
-      bg-card
-      rounded-2xl
-      p-5
-      shadow-warm
-      border
-      border-border
-    "
+      className=" bg-card rounded-2xl p-5 shadow-warm border border-border "
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div
-            className="
-            w-12
-            h-12
-            rounded-full
-            gradient-rose
-            flex
-            items-center
-            justify-center
-            text-accent-foreground
-            font-bold
-            font-display
-          "
+            className=" w-12 h-12 rounded-full gradient-rose flex items-center justify-center text-accent-foreground font-bold font-display "
           >
             {initials}
           </div>
 
           <div>
             <h3
-              className="
-              font-bold
-              text-foreground
-              font-display
-              text-sm
-            "
+              className=" font-bold text-foreground font-display text-sm "
             >
               {designer.firstName}
               {" "}
@@ -68,22 +45,14 @@ export const DesignerCard = ({
 
               <span
                 className="
-                text-xs text-muted-foreground font-sans font-normal
-              "
+                text-xs text-muted-foreground font-sans font-normal "
               >
                 -{designer.designerRegNo} . {createdDate}
               </span>
             </h3>
 
             <div
-              className="
-              flex
-              items-center
-              gap-3
-              text-xs
-              text-muted-foreground
-              mt-1
-            "
+              className=" flex items-center gap-3 text-xs text-muted-foreground mt-1 "
             >
               <span className="flex items-center gap-1">
                 <Phone size={10} />
@@ -97,14 +66,7 @@ export const DesignerCard = ({
             </div>
 
             <div
-              className="
-              flex
-              items-center
-              gap-3
-              text-xs
-              text-muted-foreground
-              mt-1
-            "
+              className=" flex items-center gap-3 text-xs text-muted-foreground mt-1 "
             >
               <span>
                 {designer.projectCount} projects
@@ -116,11 +78,7 @@ export const DesignerCard = ({
               </span>
 
               <span
-                className="
-                flex
-                items-center
-                gap-1
-              "
+                className="flex items-center gap-1"
               >
                 <Star
                   size={10}
