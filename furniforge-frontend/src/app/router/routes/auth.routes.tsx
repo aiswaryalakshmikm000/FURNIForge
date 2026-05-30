@@ -4,6 +4,7 @@ import type { RouteObject } from "react-router-dom";
 import { PublicOnlyRoute } from "../public-only.route";
 import { AuthFlowRoute } from "../auth-flow.route";
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
+import VerifyEmailPage from "../../../features/auth/pages/verify-email.page";
 
 const ErrorPage = lazy(() => import("../../../features/auth/pages/error.page"));
 const LoginPage = lazy(() => import("../../../features/auth/pages/login.page"));
@@ -67,6 +68,7 @@ export const authRoutes: RouteObject[] = [
           </AuthFlowRoute>
         ),
       },
+      { path: APP_ROUTES.AUTH.VERIFY_EMAIL, element: <VerifyEmailPage /> }
     ],
   },
 ];

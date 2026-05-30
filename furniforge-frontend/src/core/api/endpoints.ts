@@ -7,9 +7,10 @@ export const API_ENDPOINTS = {
     LOGOUT_ALL: "/logout-all",
     ME: "/me",
     GOOGLE: "/google",
-
+    
     VERIFY_OTP: "/verify-otp",
     RESEND_OTP: "/resend-otp",
+    VERIFY_EMAIL: "/verify-email",
 
     FORGOT_PASSWORD: "/forgot-password",
     VERIFY_RESET_OTP: "/verify-reset-otp",
@@ -27,6 +28,10 @@ export const API_ENDPOINTS = {
     DESIGNERS: {
       GET_ALL: "/admin/designers",
       BLOCK: (id: string) => `/admin/designers/${id}/block`,
-    }
+    },
+  },
+
+  CLIENT: {
+
   }
 };

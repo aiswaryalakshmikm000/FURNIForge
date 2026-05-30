@@ -21,6 +21,12 @@ import type { IVerifyResetOtpUseCase } from "../../../../../application/use-case
 import type { IResendForgotPasswordOtpUseCase } from "../../../../../application/use-cases/auth/interfaces/IResendForgotPasswordOtpUseCase";
 import { ERROR_CODES } from "../../../../../shared/constants/errorCodes";
 import type { IGoogleAuthUseCase } from "../../../../../application/use-cases/auth/interfaces/IGoogleAuthUseCase";
+import type { IVerifyEmailUseCase } from "../../../../../application/use-cases/auth/interfaces/IVerifyEmailUseCase";
+import { RegisterUserDTO } from "../../../../../application/dtos/auth/RegisterUserDTO";
+import { VerifyOtpDTO } from "../../../../../application/dtos/auth/VerifyOtpDTO";
+import { LoginDTO } from "../../../../../application/dtos/auth/LoginUserDTO";
+import { ForgotPasswordDTO } from "../../../../../application/dtos/auth/ForgotPasswordDTO";
+import { VerifyEmailRequestDTO } from "../../../../../application/dtos/auth/VerifyEmailDTO";
 
 @injectable()
 export class AuthController {
@@ -38,6 +44,7 @@ export class AuthController {
     @inject(TYPES.IResendForgotPasswordOtpUseCase) private _resendForgotPasswordOtpUseCase: IResendForgotPasswordOtpUseCase,
     @inject(TYPES.IVerifyResetOtpUseCase) private _verifyResetOtpUseCase: IVerifyResetOtpUseCase,
     @inject(TYPES.IGoogleAuthUseCase) private _googleAuthUseCase: IGoogleAuthUseCase,
+    @inject(TYPES.IVerifyEmailUseCase) private _verifyEmailUseCase: IVerifyEmailUseCase,
   ) {}
 
   /**
@@ -46,7 +53,8 @@ export class AuthController {
    * @param res - Express response object (email, cooldown, tempuserId) used to send the response 
    */
   register = async (req: Request, res: Response) => {
-    const result = await this._registerUseCase.execute(req.body);
+    const body = req.body as RegisterUserDTO;
+    const result = await this._registerUseCase.execute(body);
     res.status(HttpStatusCode.CREATED).json(ResponseBuilder.created(result, SUCCESS_MESSAGES.AUTH.REGISTER_SUCCESS).build());
   };
 
@@ -56,7 +64,8 @@ export class AuthController {
    * @param res - Express response object used to send the create user response, accessToken, refreshToken
    */
   verifyOtp = async (req: Request, res: Response) => {
-    const result = await this._verifyOtpUseCase.execute(req.body);
+    const body = req.body as VerifyOtpDTO;
+    const result = await this._verifyOtpUseCase.execute(body);
 
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
@@ -129,7 +138,8 @@ export class AuthController {
    * @param res return user details set access and refesh toekn in cookies 
    */
   login = async (req: Request, res: Response) => {
-    const result = await this._loginUseCase.execute(req.body);
+    const body = req.body as LoginDTO;
+    const result = await this._loginUseCase.execute(body);
 
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
@@ -156,7 +166,8 @@ export class AuthController {
    * @param res return email with cooldown time for otp resend
    */
   forgotPassword = async (req: Request, res: Response) => {
-    const result = await this._forgotPasswordUseCase.execute(req.body);
+    const body = req.body as ForgotPasswordDTO;
+    const result = await this._forgotPasswordUseCase.execute(body);
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.AUTH.FORGOT_PASSWORD).build());
   };
 
@@ -178,7 +189,7 @@ export class AuthController {
    */
   resetPassword = async (req: Request, res: Response) => {
     await this._resetPasswordUseCase.execute(req.body);
-    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.AUTH.PASSWORD_RESET_SUCCESS).build() );
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.AUTH.PASSWORD_UPDATE_SUCCESS).build() );
   };
 
   /**
@@ -199,7 +210,14 @@ export class AuthController {
 
     const { accessToken, refreshToken, ...safeResponse } = result;
 
-    res.status(200).json(ResponseBuilder.success( safeResponse, SUCCESS_MESSAGES.AUTH.GOOGLE_LOGIN_SUCCESS ).build());
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success( safeResponse, SUCCESS_MESSAGES.AUTH.GOOGLE_LOGIN_SUCCESS ).build());
   };
+
+  verifyEmail = async (req: Request, res: Response) => {
+    const body = req.body as VerifyEmailRequestDTO;
+    const result = await this._verifyEmailUseCase.execute(body)
+
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.USER.EMAIL_VERIFY_SUCCESS).build())
+  }
 
 }

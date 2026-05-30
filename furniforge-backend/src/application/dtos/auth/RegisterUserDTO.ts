@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import { capitalizeWords } from "../../../shared/utils/formatName";
 
 export const RegisterSchema = z.object({
   firstName: z
@@ -9,14 +10,14 @@ export const RegisterSchema = z.object({
     .regex(/^[a-zA-Z\s]+$/, {
       message: "First name can only contain letters and spaces",
     })
-    .trim(),
+    .transform((val) => capitalizeWords(val)),
   lastName: z
     .string()
     .max(50, { message: "Last name must not exceed 50 characters" })
     .regex(/^[a-zA-Z\s]*$/, {
       message: "Last name can only contain letters and spaces",
     })
-    .transform((val) => val.trim())
+    .transform((val) => capitalizeWords(val))
     .optional()
     .default(""),
   email: z

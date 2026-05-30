@@ -31,13 +31,14 @@ export default function DesignersPage() {
   const designers = data?.data?.designers ?? [];
   const total = data?.data?.total ?? 0;
   const limit = data?.data?.limit ?? 10;
-  const totalPages = Math.ceil(total / limit);
+  const totalPages = data?.data?.totalPages ?? 1;
 
   const resetFilters = () => {
     setSearch("");
     setStatusFilter("All");
     setSortBy("createdAt");
     setPage(1);
+    setSortOrder("desc")
   };
 
   return (

@@ -37,6 +37,7 @@ import { CreateManualLeadUseCase } from "../../application/use-cases/lead/Create
 import { DesignerRepository } from "../database/prisma/repositories/DesignerRepository";
 import { GetAllDesignersUseCase } from "../../application/use-cases/designer/GetAllDesignersUseCase";
 import { DesignerController } from "../../presentation/api/v1/controllers/admin/DesignerController";
+import { VerifyEmailUseCase } from "../../application/use-cases/auth/VerifyEmailUseCase";
 
 const container = new Container();
 
@@ -76,6 +77,7 @@ container.bind(TYPES.IResetPasswordUseCase).to(ResetPasswordUseCase);
 container.bind(TYPES.IResendForgotPasswordOtpUseCase).to(ResendForgotPasswordOtpUseCase);
 container.bind(TYPES.IVerifyResetOtpUseCase).to(verifyResetOtpUseCase);
 container.bind(TYPES.IGoogleAuthUseCase).to(GoogleAuthUseCase)
+container.bind(TYPES.IVerifyEmailUseCase).to(VerifyEmailUseCase)
 
 container.bind(TYPES.ICreateLeadUseCase).to(CreateLeadUseCase);
 container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);

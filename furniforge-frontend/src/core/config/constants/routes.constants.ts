@@ -14,6 +14,7 @@ export const APP_ROUTES = {
     VERIFY_OTP: "/verify-otp",
     VERIFY_RESET_OTP: "/verify-reset-otp",
     RESET_PASSWORD: "/reset-password",
+    VERIFY_EMAIL: "verify-email"
   },
 
   ADMIN: {

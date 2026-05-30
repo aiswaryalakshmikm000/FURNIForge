@@ -10,7 +10,6 @@ export const createLeadSchema = z.object({
   packageType: z.nativeEnum(PackageType, {message: "Package required", }),
   projectsInterestedIn: z.array(z.string()).min(1, "Select at least one project"),
   designerId: z.string().optional(),
-  notes: z.string().optional(),
 });
 
 export type CreateLeadFormValues = z.infer<typeof createLeadSchema>;

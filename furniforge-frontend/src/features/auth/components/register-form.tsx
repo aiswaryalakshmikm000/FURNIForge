@@ -13,30 +13,36 @@ import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 import { setAuth } from "../store/auth.slice";
 import { useDispatch } from "react-redux";
 import { useGoogleAuth } from "../hooks/use-google-auth";
+import { FormField } from "../../../shared/components/common/forms/form-field";
 
 export const RegisterForm = () => {
   const [showPw, setShowPw] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {mutate, isPending} = useRegister();
+  const { mutate, isPending } = useRegister();
   const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleAuth();
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema), mode: "onChange",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    mode: "onChange",
   });
 
   const onSubmit = (data: RegisterFormValues) => {
     mutate(data, {
       onSuccess: (res) => {
-        const {tempUserId, email, cooldown} = res.data.meta;
+        const { tempUserId, email, cooldown } = res.data.meta;
         sessionManager.setTempUserId(tempUserId);
         const expiry = Date.now() + cooldown * 1000;
 
         sessionManager.setEmailId(email);
-        sessionManager.setSignupCooldown(expiry.toString())
-        navigate(APP_ROUTES.AUTH.VERIFY_OTP)
-      }
+        sessionManager.setSignupCooldown(expiry.toString());
+        navigate(APP_ROUTES.AUTH.VERIFY_OTP);
+      },
     });
   };
 
@@ -59,93 +65,52 @@ export const RegisterForm = () => {
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* First + Last */}
         <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="text-sm font-medium text-foreground font-sans">
-              First Name
-            </label>
-            <Input
-              {...register("firstName")}
-              placeholder="John"
-              className="mt-1.5"
-            />
-            <p className="text-xs text-red-500 mt-1">
-              {" "}
-              {errors.firstName?.message}{" "}
-            </p>
-          </div>
+          <FormField
+            label="First Name"
+            required
+            error={errors.firstName?.message}
+          >
+            <Input {...register("firstName")} placeholder="John" />
+          </FormField>
 
-          <div>
-            <label className="text-sm font-medium text-foreground font-sans">
-              Last Name
-            </label>
-            <Input
-              {...register("lastName")}
-              placeholder="Doe"
-              className="mt-1.5"
-            />
-            <p className="text-xs text-red-500 mt-1">
-              {" "}
-              {errors.lastName?.message}{" "}
-            </p>
-          </div>
+          <FormField label="Last Name" error={errors.lastName?.message}>
+            <Input {...register("lastName")} placeholder="Doe" />
+          </FormField>
         </div>
 
         {/* Email */}
-        <div>
-          <label className="text-sm font-medium text-foreground font-sans">
-            Email
-          </label>
+        <FormField label="Email" required error={errors.email?.message}>
           <Input
             type="email"
             {...register("email")}
             placeholder="john@example.com"
-            className="mt-1.5"
           />
-          <p className="text-xs text-red-500 mt-1">{errors.email?.message}</p>
-        </div>
+        </FormField>
 
         {/* Phone */}
-        <div>
-          <label className="text-sm font-medium text-foreground font-sans">
-            Phone Number
-          </label>
-          <Input
-            type="tel"
-            {...register("phone")}
-            placeholder="98765 43210"
-            className="mt-1.5"
-          />
-          <p className="text-xs text-red-500 mt-1">{errors.phone?.message}</p>
-        </div>
+        <FormField label="Phone Number" required error={errors.phone?.message}>
+          <Input type="tel" {...register("phone")} placeholder="9876543210" />
+        </FormField>
 
         {/* Password */}
-        <div>
-          <label className="text-sm font-medium text-foreground font-sans">
-            Password
-          </label>
-
+        <FormField label="Password" required error={errors.password?.message}>
           <div className="relative">
             <Input
               type={showPw ? "text" : "password"}
               {...register("password")}
               placeholder="Create a strong password"
-              className="mt-1.5 pr-10"
+              className="pr-10"
             />
 
             <button
               type="button"
               onClick={() => setShowPw(!showPw)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 mt-1 text-muted-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
             >
               {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           </div>
-
-          <p className="text-xs text-red-500 mt-1">
-            {" "}
-            {errors.password?.message}{" "}
-          </p>
-        </div>
+        </FormField>
 
         {/* Submit */}
         <Button

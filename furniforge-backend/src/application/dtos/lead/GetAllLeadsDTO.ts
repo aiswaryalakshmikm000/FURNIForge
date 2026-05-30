@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { LeadResponseDTO } from "./LeadResponseDTO";
 import { LeadSource, LeadStatus } from "../../../domain/enums/Lead";
+import { PaginationMeta } from "../../../shared/utils/paginate";
 
 export const GetAllLeadsQuerySchema = z.object({
 
@@ -16,9 +17,6 @@ export const GetAllLeadsQuerySchema = z.object({
 
 export type GetAllLeadsQueryDTO = z.infer <typeof GetAllLeadsQuerySchema>;
 
-export interface GetAllLeadsResponseDTO {
+export interface GetAllLeadsResponseDTO extends PaginationMeta{
   leads: LeadResponseDTO[];
-  total: number;
-  page: number;
-  limit: number;
 }

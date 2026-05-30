@@ -15,4 +15,5 @@ export interface GetAllLeadsResponseDTO {
   total: number;
   page: number;
   limit: number;
+  totalPages: number;
 }
