@@ -16,7 +16,7 @@ export const SUCCESS_MESSAGES = {
     TOKEN_REFRESH_SUCCESS: "Access token refreshed successfully",
     ME_FETCH: "User fetched successfully",
     FORGOT_PASSWORD: "If an account with this email exists, a reset OTP has been sent",
-    PASSWORD_RESET_SUCCESS: "Password reset successful",
+    PASSWORD_UPDATE_SUCCESS: "Password updated successfully",
     GOOGLE_LOGIN_SUCCESS: "Google login successful",
   },
 
@@ -29,6 +29,10 @@ export const SUCCESS_MESSAGES = {
     DESIGNER_ASSIGNED: "Designer assigned successfully",
     LEAD_CREATED: "Lead created successfully",
     DESIGNER_FETCH_SUCCESS: "Designers fetched successfully",
+  },
+
+  USER: {
+    EMAIL_VERIFY_SUCCESS: "Email verified successfully",
   }
 };
 
@@ -95,6 +99,7 @@ export const ERROR_MESSAGES = {
       INVALID_RESET_TOKEN: "Invalid reset token",
       ACCESS_TOKEN_EXPIRED: "Access token expired",
       REFRESH_TOKEN_EXPIRED: "Refresh token expired",
+      RESET_TOKEN_EXPIRED: "Reset token expired"
     },
   },
 
@@ -106,5 +111,7 @@ export const ERROR_MESSAGES = {
 
   USER: {
     NOT_FOUND: "User not found",
+    INVALID_ACCOUNT_VERIFY_TOKEN: "Invalid verification link",
+    VERIFY_TOKEN_EXPIRED: "Verify token expired"
   },
 };

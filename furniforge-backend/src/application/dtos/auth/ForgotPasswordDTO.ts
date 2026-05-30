@@ -8,15 +8,12 @@ export const ForgotPasswordSchema   = z.object({
 
 export type ForgotPasswordDTO = z.infer<typeof ForgotPasswordSchema>;
 
-export const ForgotPasswordResponseSchema = z.object({
-  meta: z.object({
-    email: z.string().email(),
-    cooldown: z.number(),
-  }),
-});
-
-export type ForgotPasswordResponseDTO = z.infer<typeof ForgotPasswordResponseSchema>;
-
+export interface ForgotPasswordResponseDTO {
+  meta: {
+    email: string;
+    cooldown: number;
+  };
+}
 
 /**
  * verify reset otp request and response dto
@@ -29,15 +26,11 @@ export const VerifyResetOtpSchema = z.object({
 
 export type VerifyResetOtpDTO = z.infer<typeof VerifyResetOtpSchema>;
 
-
-export const VerifyResetOtpResponseSchema = z.object({
-  meta: z.object({
-    resetToken: z.string()
-  })
-});
-
-export type VerifyResetOtpResponseDTO = z.infer<typeof VerifyResetOtpResponseSchema>;
-
+export interface VerifyResetOtpResponseDTO {
+  meta: {
+    resetToken: string;
+  };
+}
 
 /**
  * 

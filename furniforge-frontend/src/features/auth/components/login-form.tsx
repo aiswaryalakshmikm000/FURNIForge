@@ -13,15 +13,20 @@ import { setAuth } from "../store/auth.slice";
 import { useDispatch } from "react-redux";
 import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 import { useGoogleAuth } from "../hooks/use-google-auth";
+import { FormField } from "../../../shared/components/common/forms/form-field";
 
 export const LoginForm = () => {
   const [showPw, setShowPw] = useState(false);
   const { mutate, isPending } = useLogin();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { mutate:googleLogin , isPending: isGoogleLoading} = useGoogleAuth();
+  const { mutate: googleLogin, isPending: isGoogleLoading } = useGoogleAuth();
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<LoginFormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     mode: "onChange",
   });
@@ -29,10 +34,10 @@ export const LoginForm = () => {
   const onSubmit = (data: LoginFormValues) => {
     mutate(data, {
       onSuccess: (res) => {
-        const {user} = res.data;
-        dispatch(setAuth({user}))
-        navigate(APP_ROUTES.COMMON.ROOT)
-      }
+        const { user } = res.data;
+        dispatch(setAuth({ user }));
+        navigate(APP_ROUTES.COMMON.ROOT);
+      },
     });
   };
 
@@ -56,46 +61,34 @@ export const LoginForm = () => {
       {/* FORM */}
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         {/* EMAIL */}
-        <div>
-          <label className="text-sm font-medium text-foreground font-sans">
-            Email
-          </label>
-
+        <FormField label="Email" required error={errors.email?.message}>
           <Input
             type="email"
             {...register("email")}
             placeholder="john@example.com"
           />
-          <p className="text-red-500 text-xs mt-1">{errors.email?.message}</p>
-        </div>
+        </FormField>
 
         {/* PASSWORD */}
         <div>
-          <label className="text-sm font-medium text-foreground font-sans">
-            Password
-          </label>
+          <FormField label="Password" required error={errors.password?.message}>
+            <div className="relative">
+              <Input
+                type={showPw ? "text" : "password"}
+                {...register("password")}
+                placeholder="Enter your password"
+                className="pr-10"
+              />
 
-          <div className="relative">
-            <Input
-              type={showPw ? "text" : "password"}
-              {...register("password")}
-              placeholder="Enter your password"
-              className="pr-10"
-            />
-
-            <button
-              type="button"
-              onClick={() => setShowPw(!showPw)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5 text-muted-foreground"
-            >
-              {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
-            </button>
-          </div>
-          <p className="text-red-500 text-xs mt-1">
-            {" "}
-            {errors.password?.message}{" "}
-          </p>
-
+              <button
+                type="button"
+                onClick={() => setShowPw(!showPw)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5 text-muted-foreground"
+              >
+                {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+          </FormField>
           <div className="text-right mt-2">
             <Link
               to={APP_ROUTES.AUTH.FORGOT_PASSWORD}
@@ -125,7 +118,7 @@ export const LoginForm = () => {
             onSuccess: (res) => {
               const { user } = res.data;
 
-              dispatch( setAuth({ user }) );
+              dispatch(setAuth({ user }));
               navigate(APP_ROUTES.COMMON.ROOT);
             },
           });

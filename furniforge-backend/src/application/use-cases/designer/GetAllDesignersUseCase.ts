@@ -4,6 +4,7 @@ import type { IGetAllDesignersUseCase } from "./interfaces/IGetAllDesignersUseCa
 import type { GetAllDesignersQueryDTO, GetAllDesignersResponseDTO } from "../../dtos/designer/GetAllDesignersDTO";
 import type { IDesignerRepository } from "../../../domain/repositories/IDesignerRepository";
 import { DesignerMapper } from "../../mappers/DesignerMapper";
+import { buildPaginationMeta, getPagination } from "../../../shared/utils/paginate";
 
 @injectable()
 export class GetAllDesignersUseCase implements IGetAllDesignersUseCase {
@@ -13,12 +14,12 @@ export class GetAllDesignersUseCase implements IGetAllDesignersUseCase {
 
   async execute(query: GetAllDesignersQueryDTO): Promise<GetAllDesignersResponseDTO> {
 
-    const skip = (query.page - 1) * query.limit;
+    const { skip, take } = getPagination({page: query.page, limit: query.limit});
 
     const [rows, total] = await Promise.all([
       this._designerRepository.findAllDesignerRows({
         skip,
-        take: query.limit,
+        take,
         search: query.search,
         status: query.status,
         sortBy: query.sortBy,
@@ -31,6 +32,6 @@ export class GetAllDesignersUseCase implements IGetAllDesignersUseCase {
       }),
     ]);
 
-    return { designers: rows.map(DesignerMapper.toResponse), total, page: query.page, limit: query.limit };
+    return { designers: rows.map(DesignerMapper.toResponse), ...buildPaginationMeta(query.page, query.limit, total) };
   }
 }

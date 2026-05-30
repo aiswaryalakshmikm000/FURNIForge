@@ -4,6 +4,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
 import { LeadResponseMapper } from "../../mappers/LeadResponseMapper";
+import { buildPaginationMeta, getPagination } from "../../../shared/utils/paginate";
 
 @injectable()
 export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
@@ -13,12 +14,12 @@ export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
 
   async execute(query: GetAllLeadsQueryDTO): Promise<GetAllLeadsResponseDTO> {
 
-    const skip = (query.page - 1) * query.limit;
+    const { skip, take } = getPagination({page: query.page, limit: query.limit})
 
     const [rows, total] = await Promise.all([
       this._leadRepository.findAllLeadRows({
         skip,
-        take: query.limit,
+        take,
         search: query.search,
         status: query.status,
         source: query.source,
@@ -34,6 +35,6 @@ export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
       }),
     ]);
 
-    return { leads: rows.map(LeadResponseMapper.toDTO), total, page: query.page, limit: query.limit };
+    return { leads: rows.map(LeadResponseMapper.toDTO), ...buildPaginationMeta(query.page, query.limit, total) };
   }
 }

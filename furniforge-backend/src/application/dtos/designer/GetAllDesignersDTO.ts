@@ -1,5 +1,6 @@
 import z from "zod";
 import { DesignerResponseDTO } from "./DesignerResponseDTO";
+import { PaginationMeta } from "../../../shared/utils/paginate";
 
 export const GetAllDesignersQuerySchema  = z.object({
 
@@ -13,9 +14,6 @@ export const GetAllDesignersQuerySchema  = z.object({
 
 export type GetAllDesignersQueryDTO = z.infer <typeof GetAllDesignersQuerySchema>;
 
-export interface GetAllDesignersResponseDTO {
+export interface GetAllDesignersResponseDTO extends PaginationMeta{
   designers: DesignerResponseDTO[];
-  total: number;
-  page: number;
-  limit: number;
 }

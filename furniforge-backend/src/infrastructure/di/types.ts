@@ -30,6 +30,7 @@ export const TYPES = {
   IResetPasswordUseCase: Symbol.for("IResetPasswordUseCase"),
   IResendForgotPasswordOtpUseCase: Symbol.for("IResendForgotPasswordOtpUseCase"),
   IGoogleAuthUseCase: Symbol.for("IGoogleAuthUseCase"),
+  IVerifyEmailUseCase: Symbol.for("IVerifyEmailUseCase"),
 
   ICreateLeadUseCase: Symbol.for("ICreateLeadUseCase"),
   IGetAllLeadsUseCase: Symbol.for("IGetAllLeadsUseCase"),

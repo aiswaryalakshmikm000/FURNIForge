@@ -16,23 +16,10 @@ interface Props {
   onAddLead: (lead: CreateLeadFormValues) => void | Promise<void>;
 }
 
-export const AddLeadDialog = ({
-  open,
-  onOpenChange,
-  deliverables,
-  onAddLead,
-}: Props) => {
-  const {
-    register,
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid },
-  } = useForm<CreateLeadFormValues>({
-    resolver: zodResolver(createLeadSchema),
-
-    mode: "onChange",
-
+export const AddLeadDialog = ({ open, onOpenChange, deliverables, onAddLead }: Props) => {
+  
+  const { register, control, handleSubmit, reset, formState: { errors, isValid, isSubmitting } } = useForm<CreateLeadFormValues>({
+    resolver: zodResolver(createLeadSchema), mode: "onChange",
     defaultValues: {
       name: "",
       email: "",
@@ -41,7 +28,6 @@ export const AddLeadDialog = ({
       source: LeadSource.EXTERNAL,
       packageType: PackageType.BASIC,
       projectsInterestedIn: [],
-      notes: "",
     },
   });
 
@@ -144,8 +130,8 @@ export const AddLeadDialog = ({
               Cancel
             </Button>
 
-            <Button type="submit" variant="copper" disabled={!isValid}>
-              Add Lead
+            <Button type="submit" variant="copper" disabled={!isValid || isSubmitting}>
+              {isSubmitting ? "Adding..." : "Add Lead"}
             </Button>
           </div>
         </form>

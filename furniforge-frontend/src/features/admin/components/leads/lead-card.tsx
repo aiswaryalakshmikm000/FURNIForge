@@ -19,6 +19,7 @@ interface Props {
     lead: LeadResponseDTO,
     designerId: string,
   ) => void;
+  isAssigning: boolean;
 }
 
 const getStatusVariant = (
@@ -46,7 +47,7 @@ const getStatusVariant = (
   }
 };
 
-export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignLeadId, onConfirmAssign }: Props) => {
+export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignLeadId, onConfirmAssign, isAssigning }: Props) => {
 
   const [selectedDesigner, setSelectedDesigner] = useState("");
 
@@ -164,6 +165,7 @@ export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignL
             onCancelAssign={handleCancelAssign}
             onConfirmAssign={handleConfirmAssign}
             status={lead.status}
+            isAssigning={isAssigning}
           />
         </div>
       </div>

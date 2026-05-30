@@ -11,6 +11,12 @@ export interface ResetTokenPayload {
   userId: string
 }
 
+export interface EmailVerificationPayload {
+  userId: string;
+  email: string;
+  role: UserRole;
+}
+
 export interface ITokenService {
   generateAccessToken(payload: TokenPayload): string;
   generateRefreshToken(payload: TokenPayload): string;
@@ -19,4 +25,7 @@ export interface ITokenService {
 
   generateResetToken(payload: ResetTokenPayload): string;
   verifyResetToken(token: string): ResetTokenPayload;
+
+  generateEmailVerificationToken(payload: EmailVerificationPayload): string;
+  verifyEmailVerificationToken(token: string): EmailVerificationPayload;
 }

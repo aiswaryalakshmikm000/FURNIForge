@@ -29,7 +29,7 @@ export const OtpForm = ({
   logoText = "F",
 }: OtpFormProps) => {
   const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(""));
-  const [timer, setTimer] = useState(resendDelay);
+  const [timer, setTimer] = useState(() => Math.max(0, resendDelay));
   const canResend = timer <= 0;
 
   useEffect(() => {

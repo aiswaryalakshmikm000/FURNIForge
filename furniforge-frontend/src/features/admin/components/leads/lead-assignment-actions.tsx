@@ -16,6 +16,7 @@ interface Props {
   onCancelAssign: () => void;
   onConfirmAssign: () => void;
   status: string;
+  isAssigning: boolean;
 }
 
 export const LeadAssignmentActions = ({
@@ -27,6 +28,7 @@ export const LeadAssignmentActions = ({
   onCancelAssign,
   onConfirmAssign,
   status,
+  isAssigning,
 }: Props) => {
   if (assigning) {
     return (
@@ -54,10 +56,10 @@ export const LeadAssignmentActions = ({
         <Button
           variant="copper"
           size="sm"
-          disabled={!selectedDesigner}
+          disabled={!selectedDesigner || isAssigning}
           onClick={onConfirmAssign}
         >
-          Assign
+          {isAssigning ? "Assigning..." : "Assign"}
         </Button>
 
         <Button variant="outline" size="sm" onClick={onCancelAssign}>

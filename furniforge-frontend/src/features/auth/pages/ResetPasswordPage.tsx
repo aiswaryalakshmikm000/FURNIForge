@@ -11,9 +11,15 @@ import { APP_ROUTES } from "../../../core/config/constants/routes.constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordSchema, type ResetPasswordFormValues } from "../validation/reset-password.schema";
+import { useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("mode")
+  const isCreateMode = mode === "create"
+
   const resetToken = sessionManager.getResetToken();
 
   const { mutate: resetPassword, isPending } = useResetPassword();
@@ -23,14 +29,18 @@ const ResetPasswordPage = () => {
     mode: "onChange", 
   });
   
-  if (!resetToken) return null;
+  if (!resetToken) {
+  navigate(APP_ROUTES.AUTH.LOGIN);
+  return null;
+}
 
   const onSubmit = (data: ResetPasswordFormValues) => {
     resetPassword(
       { resetToken, password: data.password, confirmPassword: data.confirmPassword },
       {
-        onSuccess: () => {
+        onSuccess: (res) => {
           sessionManager.clearForgotPasswordFlow()
+          toast.success(res.message)
           navigate(APP_ROUTES.AUTH.LOGIN);
         },
       },
@@ -53,11 +63,11 @@ const ResetPasswordPage = () => {
               <Logo />
 
               <h1 className="text-2xl font-bold font-display">
-                Reset Password
+                {isCreateMode ? "Create Password" : "Reset Password"} 
               </h1>
 
               <p className="text-sm text-muted-foreground mt-2">
-                Create a new password
+                {isCreateMode ? "Create your account password" : "Set new password"}
               </p>
             </div>
 
@@ -72,7 +82,7 @@ const ResetPasswordPage = () => {
               className="w-full mt-6"
               disabled={!isValid || isPending}
             >
-              {isPending ? "Updating..." : "Reset Password"}
+              {isPending ? "Updating..." : isCreateMode ? "Create Password" : "Reset Password"}
               <ArrowRight size={16} />
             </Button>
             </form>

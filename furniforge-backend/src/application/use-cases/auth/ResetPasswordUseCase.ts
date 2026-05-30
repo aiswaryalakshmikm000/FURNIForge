@@ -24,10 +24,14 @@ export class ResetPasswordUseCase implements IResetPasswordUseCase {
     const user = await this._userRepo.findById(payload.userId);
     if (!user) throw new NotFoundError(ERROR_MESSAGES.USER.NOT_FOUND);
 
-    if(!user.passwordHash) throw new BadRequestError(ERROR_MESSAGES.AUTH.PASSWORD_NOT_SET)
+    if (user.passwordHash) {
+      const isSame = await this._passwordService.compare(
+      data.password,
+      user.passwordHash
+    );
 
-    const isSame = await this._passwordService.compare(data.password, user.passwordHash)
-    if(isSame) throw new BadRequestError(ERROR_MESSAGES.AUTH.OLD_PASSWORD);
+    if (isSame) throw new BadRequestError(ERROR_MESSAGES.AUTH.OLD_PASSWORD);
+    }
 
     const hashed = await this._passwordService.hash(data.password)
     await this._userRepo.updatePassword(user.id, hashed)
