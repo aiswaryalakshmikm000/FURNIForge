@@ -28,7 +28,6 @@ model User {
   projectCount  Int      @default(0)
   totalRevenue  Decimal  @default(0)
   rating        Float    @default(0)
-  isActive      Boolean  @default(true)
   isBlocked     Boolean  @default(false)
   leads         Lead[]   @relation("ClientLeads")
   assignedLeads Lead[]   @relation("DesignerLeads")

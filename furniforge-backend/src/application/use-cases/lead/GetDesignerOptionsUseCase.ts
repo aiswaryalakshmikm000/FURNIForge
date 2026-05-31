@@ -3,6 +3,7 @@ import { TYPES } from "../../../infrastructure/di/types";
 import type { IGetDesignerOptionsUseCase } from "./interfaces/IGetDesignerOptionsUseCase";
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import type { GetDesignerOptionsResponseDTO } from "../../dtos/lead/GetDesignerOptionsDTO";
+import { DesignerOptionMapper } from "../../mappers/DesignerOptionMapper";
 
 @injectable()
 export class GetDesignerOptionsUseCase implements IGetDesignerOptionsUseCase {
@@ -13,14 +14,8 @@ export class GetDesignerOptionsUseCase implements IGetDesignerOptionsUseCase {
 
   async execute(): Promise<GetDesignerOptionsResponseDTO> {
 
-    const designers =
-      await this._userRepository.findDesigners();
+    const designers = await this._userRepository.findDesigners();
 
-    return {
-      designers: designers.map((designer) => ({
-        id: designer.id,
-        fullName: `${designer.firstName} ${designer.lastName}`,
-      }))
-    };
+    return { designers: designers.map(DesignerOptionMapper.toResponse) };
   };
 };

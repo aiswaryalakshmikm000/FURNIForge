@@ -12,7 +12,7 @@ export interface DesignerListItem {
   rating: number;
   projectCount: number;
   totalRevenue: number;
-  isActive: boolean;
   isBlocked: boolean;
+  isVerified: boolean;
   createdAt: Date;
 }

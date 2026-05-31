@@ -18,8 +18,8 @@ export class DesignerMapper {
     rating: designer.rating,
     projectCount: designer.projectCount,
     totalRevenue: designer.totalRevenue,
-    isActive: designer.isActive,
     isBlocked: designer.isBlocked,
+    isVerified: designer.isVerified,
     createdAt: designer.createdAt,
    };
  }

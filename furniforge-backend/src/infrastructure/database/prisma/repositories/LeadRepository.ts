@@ -11,7 +11,14 @@ import { handlePrismaError } from "../errors/handlePrismaError";
 
 @injectable()
 export class LeadRepository
-  extends BaseRepository< Lead, PrismaLead, Prisma.LeadCreateInput, Prisma.LeadUpdateInput > implements ILeadRepository {
+  extends BaseRepository<
+    Lead,
+    PrismaLead,
+    Prisma.LeadCreateInput,
+    Prisma.LeadUpdateInput
+  >
+  implements ILeadRepository
+{
   protected model = prisma.lead;
 
   protected toDomain(raw: PrismaLead): Lead {
@@ -84,14 +91,27 @@ export class LeadRepository
     try {
       const where: Prisma.LeadWhereInput = {
         AND: [
-          params.search ? { OR: [
+          params.search
+            ? {
+                OR: [
                   { name: { contains: params.search, mode: "insensitive" } },
                   { email: { contains: params.search, mode: "insensitive" } },
                   { phone: { contains: params.search } },
-                ] } : {},
-          params.status ? { status: params.status as Prisma.EnumLeadStatusFilter["equals"] } : {},
-          params.source ? { source: params.source as Prisma.EnumLeadSourceFilter["equals"] } : {},
-          params.deliverable ? { projectsInterestedIn: {has: params.deliverable}} : {}
+                  {
+                    location: { contains: params.search, mode: "insensitive" },
+                  },
+                ],
+              }
+            : {},
+          params.status
+            ? { status: params.status as Prisma.EnumLeadStatusFilter["equals"] }
+            : {},
+          params.source
+            ? { source: params.source as Prisma.EnumLeadSourceFilter["equals"] }
+            : {},
+          params.deliverable
+            ? { projectsInterestedIn: { has: params.deliverable } }
+            : {},
         ],
       };
 
@@ -101,32 +121,42 @@ export class LeadRepository
         take: params.take,
         orderBy: { createdAt: params.sortOrder },
         select: {
-          id: true, 
-          leadRegNo: true, 
-          name: true, 
-          email: true, 
-          phone: true, 
-          source: true, 
-          status: true, 
-          projectsInterestedIn: true, 
+          id: true,
+          leadRegNo: true,
+          name: true,
+          email: true,
+          phone: true,
+          location: true,
+          source: true,
+          status: true,
+          projectsInterestedIn: true,
           packageType: true,
-          createdAt: true, 
-          client: { select: {address: true, avatar: true}},
-          assignedDesigner: { select: { firstName: true, lastName: true}}
-        }
+          createdAt: true,
+          client: { select: { address: true, avatar: true } },
+          assignedDesigner: { select: { firstName: true, lastName: true } },
+        },
       });
 
       return raws.map((raw) => {
-        let location: string | null = null;
-
+        let location = raw.location;
         if (
-          raw.client?.address && typeof raw.client.address === "object" && !Array.isArray(raw.client.address)
+          !location &&
+          raw.client?.address &&
+          typeof raw.client.address === "object" &&
+          !Array.isArray(raw.client.address)
         ) {
-          const address = raw.client.address as { city?: string; state: string};
-          location = [address.city, address.state].filter(Boolean).join(", ") || null
+          const address = raw.client.address as {
+            city?: string;
+            state?: string;
+          };
+
+          location =
+            [address.city, address.state].filter(Boolean).join(", ") || null;
         }
 
-        const assignedDesignerName = raw.assignedDesigner ? `${raw.assignedDesigner.firstName} ${raw.assignedDesigner.lastName}` : null
+        const assignedDesignerName = raw.assignedDesigner
+          ? `${raw.assignedDesigner.firstName} ${raw.assignedDesigner.lastName}`
+          : null;
 
         return {
           id: raw.id,
@@ -134,12 +164,14 @@ export class LeadRepository
           name: raw.name,
           email: raw.email,
           phone: raw.phone,
-          location,
+          location: location,
           avatar: raw.client?.avatar || null,
           source: raw.source as LeadSource,
           status: raw.status as LeadStatus,
           projectsInterestedIn: raw.projectsInterestedIn,
-          packageType: raw.packageType ? (raw.packageType as PackageType) : null,
+          packageType: raw.packageType
+            ? (raw.packageType as PackageType)
+            : null,
           assignedDesignerName,
           createdAt: raw.createdAt,
         };
@@ -148,4 +180,5 @@ export class LeadRepository
       handlePrismaError(error);
     }
   }
+
 }

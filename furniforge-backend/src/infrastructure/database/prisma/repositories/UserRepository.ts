@@ -6,6 +6,7 @@ import { injectable } from "inversify";
 import { PrismaUserMapper } from "../mapper/PrismaUserMapper";
 import { User as PrismaUser, Prisma } from "../../../../generated/prisma/index";
 import { handlePrismaError } from "../errors/handlePrismaError";
+import { DesignerOptionItem } from "../../../../domain/read-models/designer/DesignerOptionItem";
 
 @injectable()
 export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput > implements IUserRepository
@@ -50,13 +51,13 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
     }
   }
 
-  async findDesigners(): Promise<User[]> {
+  async findDesigners(): Promise<DesignerOptionItem[]> {
     try {
-      const raws = await this.model.findMany({
-        where: {role: "DESIGNER", isActive: true, isBlocked: false, isVerified: true},
+      return await this.model.findMany({
+        where: {role: "DESIGNER", isBlocked: false, isVerified: true},
+        select: { id: true, firstName: true, lastName: true },
         orderBy: {firstName: "asc"}},    
       );
-      return raws.map((raw) => this.toDomain(raw))
     } catch (error) {
       handlePrismaError(error)
     }

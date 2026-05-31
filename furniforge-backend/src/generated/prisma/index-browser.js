@@ -141,7 +141,6 @@ exports.Prisma.UserScalarFieldEnum = {
   projectCount: 'projectCount',
   totalRevenue: 'totalRevenue',
   rating: 'rating',
-  isActive: 'isActive',
   isBlocked: 'isBlocked',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

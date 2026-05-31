@@ -29,6 +29,8 @@ export const SUCCESS_MESSAGES = {
     DESIGNER_ASSIGNED: "Designer assigned successfully",
     LEAD_CREATED: "Lead created successfully",
     DESIGNER_FETCH_SUCCESS: "Designers fetched successfully",
+    LEAD_DELETED: "Lead deleted successfully",
+    LEAD_UPDATED: "Lead updated successfully"
   },
 
   USER: {
@@ -107,6 +109,7 @@ export const ERROR_MESSAGES = {
     LEAD_NOT_FOUND: "Lead not found",
     DESIGNER_NOT_FOUND: "Designer not found",
     DESIGNER_REG_NO_MISSING: "Designer registration number is missing",
+    CANNOT_ASSIGN_DESIGNER: "Cannot assign designer to converted and lost customers"
   },
 
   USER: {
@@ -114,4 +117,8 @@ export const ERROR_MESSAGES = {
     INVALID_ACCOUNT_VERIFY_TOKEN: "Invalid verification link",
     VERIFY_TOKEN_EXPIRED: "Verify token expired"
   },
+
+  LEAD: {
+    NOT_FOUND: "Lead not found"
+  }
 };

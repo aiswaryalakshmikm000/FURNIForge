@@ -3,9 +3,10 @@ import type { IAssignDesignerUseCase } from "./interfaces/IAssignDesignerUseCase
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
-import type { AssignDesignerResponseDTO } from "../../dtos/lead/AssignDesignerDTO";
+import type { AssignDesignerDTO, AssignDesignerResponseDTO } from "../../dtos/lead/AssignDesignerDTO";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
+import { AssignDesignerResponseMapper } from "../../mappers/AssignDesignerResponseMapper";
 
 @injectable()
 export class AssignDesignerUseCase implements IAssignDesignerUseCase {
@@ -15,13 +16,13 @@ export class AssignDesignerUseCase implements IAssignDesignerUseCase {
     @inject(TYPES.IUserRepository) private readonly _userRepository: IUserRepository,
   ) {}
 
-  async execute( leadId: string, designerId: string ): Promise<AssignDesignerResponseDTO> {
+  async execute( leadId: string, dto: AssignDesignerDTO ): Promise<AssignDesignerResponseDTO> {
 
     const lead = await this._leadRepository.findById(leadId);
 
     if (!lead) throw new NotFoundError(ERROR_MESSAGES.ADMIN.LEAD_NOT_FOUND);
     
-    const designer = await this._userRepository.findById(designerId);
+    const designer = await this._userRepository.findById(dto.designerId);
 
     if (!designer) throw new NotFoundError(ERROR_MESSAGES.ADMIN.DESIGNER_NOT_FOUND);
 
@@ -29,12 +30,6 @@ export class AssignDesignerUseCase implements IAssignDesignerUseCase {
 
     const updatedLead = await this._leadRepository.update( lead.id, lead );
 
-    return {
-      leadId: updatedLead.id,
-      designerId: designer.id,
-      designerName: `${designer.firstName} ${designer.lastName}`,
-      status: updatedLead.status,
-      assignedAt: updatedLead.assignedAt!,
-    };
+    return AssignDesignerResponseMapper.toResponse(updatedLead, designer)
   }
 }
