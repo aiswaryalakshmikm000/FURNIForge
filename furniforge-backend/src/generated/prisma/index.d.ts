@@ -1185,7 +1185,6 @@ export namespace Prisma {
     projectCount: number | null
     totalRevenue: Decimal | null
     rating: number | null
-    isActive: boolean | null
     isBlocked: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1210,7 +1209,6 @@ export namespace Prisma {
     projectCount: number | null
     totalRevenue: Decimal | null
     rating: number | null
-    isActive: boolean | null
     isBlocked: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1236,7 +1234,6 @@ export namespace Prisma {
     projectCount: number
     totalRevenue: number
     rating: number
-    isActive: number
     isBlocked: number
     createdAt: number
     updatedAt: number
@@ -1275,7 +1272,6 @@ export namespace Prisma {
     projectCount?: true
     totalRevenue?: true
     rating?: true
-    isActive?: true
     isBlocked?: true
     createdAt?: true
     updatedAt?: true
@@ -1300,7 +1296,6 @@ export namespace Prisma {
     projectCount?: true
     totalRevenue?: true
     rating?: true
-    isActive?: true
     isBlocked?: true
     createdAt?: true
     updatedAt?: true
@@ -1326,7 +1321,6 @@ export namespace Prisma {
     projectCount?: true
     totalRevenue?: true
     rating?: true
-    isActive?: true
     isBlocked?: true
     createdAt?: true
     updatedAt?: true
@@ -1439,7 +1433,6 @@ export namespace Prisma {
     projectCount: number
     totalRevenue: Decimal
     rating: number
-    isActive: boolean
     isBlocked: boolean
     createdAt: Date
     updatedAt: Date
@@ -1484,7 +1477,6 @@ export namespace Prisma {
     projectCount?: boolean
     totalRevenue?: boolean
     rating?: boolean
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1513,7 +1505,6 @@ export namespace Prisma {
     projectCount?: boolean
     totalRevenue?: boolean
     rating?: boolean
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1539,7 +1530,6 @@ export namespace Prisma {
     projectCount?: boolean
     totalRevenue?: boolean
     rating?: boolean
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1565,13 +1555,12 @@ export namespace Prisma {
     projectCount?: boolean
     totalRevenue?: boolean
     rating?: boolean
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientRegNo" | "designerRegNo" | "role" | "firstName" | "lastName" | "email" | "phone" | "avatar" | "passwordHash" | "isVerified" | "oauthProvider" | "oauthId" | "address" | "occupation" | "education" | "projectCount" | "totalRevenue" | "rating" | "isActive" | "isBlocked" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientRegNo" | "designerRegNo" | "role" | "firstName" | "lastName" | "email" | "phone" | "avatar" | "passwordHash" | "isVerified" | "oauthProvider" | "oauthId" | "address" | "occupation" | "education" | "projectCount" | "totalRevenue" | "rating" | "isBlocked" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leads?: boolean | User$leadsArgs<ExtArgs>
     assignedLeads?: boolean | User$assignedLeadsArgs<ExtArgs>
@@ -1606,7 +1595,6 @@ export namespace Prisma {
       projectCount: number
       totalRevenue: Prisma.Decimal
       rating: number
-      isActive: boolean
       isBlocked: boolean
       createdAt: Date
       updatedAt: Date
@@ -2054,7 +2042,6 @@ export namespace Prisma {
     readonly projectCount: FieldRef<"User", 'Int'>
     readonly totalRevenue: FieldRef<"User", 'Decimal'>
     readonly rating: FieldRef<"User", 'Float'>
-    readonly isActive: FieldRef<"User", 'Boolean'>
     readonly isBlocked: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -4779,7 +4766,6 @@ export namespace Prisma {
     projectCount: 'projectCount',
     totalRevenue: 'totalRevenue',
     rating: 'rating',
-    isActive: 'isActive',
     isBlocked: 'isBlocked',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -5037,7 +5023,6 @@ export namespace Prisma {
     projectCount?: IntFilter<"User"> | number
     totalRevenue?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
     rating?: FloatFilter<"User"> | number
-    isActive?: BoolFilter<"User"> | boolean
     isBlocked?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -5065,7 +5050,6 @@ export namespace Prisma {
     projectCount?: SortOrder
     totalRevenue?: SortOrder
     rating?: SortOrder
-    isActive?: SortOrder
     isBlocked?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5096,7 +5080,6 @@ export namespace Prisma {
     projectCount?: IntFilter<"User"> | number
     totalRevenue?: DecimalFilter<"User"> | Decimal | DecimalJsLike | number | string
     rating?: FloatFilter<"User"> | number
-    isActive?: BoolFilter<"User"> | boolean
     isBlocked?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -5124,7 +5107,6 @@ export namespace Prisma {
     projectCount?: SortOrder
     totalRevenue?: SortOrder
     rating?: SortOrder
-    isActive?: SortOrder
     isBlocked?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5158,7 +5140,6 @@ export namespace Prisma {
     projectCount?: IntWithAggregatesFilter<"User"> | number
     totalRevenue?: DecimalWithAggregatesFilter<"User"> | Decimal | DecimalJsLike | number | string
     rating?: FloatWithAggregatesFilter<"User"> | number
-    isActive?: BoolWithAggregatesFilter<"User"> | boolean
     isBlocked?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -5336,7 +5317,6 @@ export namespace Prisma {
     projectCount?: number
     totalRevenue?: Decimal | DecimalJsLike | number | string
     rating?: number
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5364,7 +5344,6 @@ export namespace Prisma {
     projectCount?: number
     totalRevenue?: Decimal | DecimalJsLike | number | string
     rating?: number
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5392,7 +5371,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5420,7 +5398,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5448,7 +5425,6 @@ export namespace Prisma {
     projectCount?: number
     totalRevenue?: Decimal | DecimalJsLike | number | string
     rating?: number
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5474,7 +5450,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5500,7 +5475,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5816,7 +5790,6 @@ export namespace Prisma {
     projectCount?: SortOrder
     totalRevenue?: SortOrder
     rating?: SortOrder
-    isActive?: SortOrder
     isBlocked?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5847,7 +5820,6 @@ export namespace Prisma {
     projectCount?: SortOrder
     totalRevenue?: SortOrder
     rating?: SortOrder
-    isActive?: SortOrder
     isBlocked?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5872,7 +5844,6 @@ export namespace Prisma {
     projectCount?: SortOrder
     totalRevenue?: SortOrder
     rating?: SortOrder
-    isActive?: SortOrder
     isBlocked?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -6852,7 +6823,6 @@ export namespace Prisma {
     projectCount?: number
     totalRevenue?: Decimal | DecimalJsLike | number | string
     rating?: number
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6879,7 +6849,6 @@ export namespace Prisma {
     projectCount?: number
     totalRevenue?: Decimal | DecimalJsLike | number | string
     rating?: number
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6911,7 +6880,6 @@ export namespace Prisma {
     projectCount?: number
     totalRevenue?: Decimal | DecimalJsLike | number | string
     rating?: number
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6938,7 +6906,6 @@ export namespace Prisma {
     projectCount?: number
     totalRevenue?: Decimal | DecimalJsLike | number | string
     rating?: number
-    isActive?: boolean
     isBlocked?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -6981,7 +6948,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7008,7 +6974,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7046,7 +7011,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7073,7 +7037,6 @@ export namespace Prisma {
     projectCount?: IntFieldUpdateOperationsInput | number
     totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     rating?: FloatFieldUpdateOperationsInput | number
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     isBlocked?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

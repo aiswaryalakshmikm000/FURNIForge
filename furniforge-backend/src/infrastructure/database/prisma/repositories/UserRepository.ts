@@ -54,7 +54,7 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
   async findDesigners(): Promise<DesignerOptionItem[]> {
     try {
       return await this.model.findMany({
-        where: {role: "DESIGNER", isActive: true, isBlocked: false, isVerified: true},
+        where: {role: "DESIGNER", isBlocked: false, isVerified: true},
         select: { id: true, firstName: true, lastName: true },
         orderBy: {firstName: "asc"}},    
       );

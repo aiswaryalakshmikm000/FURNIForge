@@ -98,6 +98,7 @@ export default function DesignersPage() {
               { label: "All", value: "All" },
               { label: "Active", value: "Active" },
               { label: "Blocked", value: "Blocked" },
+              { label: "Inactive", value: "Inactive" },
             ],
             onChange: (value) => {
               setStatusFilter(value);
