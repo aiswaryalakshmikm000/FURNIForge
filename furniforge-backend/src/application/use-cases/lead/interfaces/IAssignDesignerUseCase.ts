@@ -1,6 +1,6 @@
-import { AssignDesignerResponseDTO } from "../../../dtos/lead/AssignDesignerDTO";
+import { AssignDesignerDTO, AssignDesignerResponseDTO } from "../../../dtos/lead/AssignDesignerDTO";
 
 
 export interface IAssignDesignerUseCase {
-  execute( leadId: string, designerId: string ): Promise<AssignDesignerResponseDTO>;
+  execute( leadId: string, dto: AssignDesignerDTO ): Promise<AssignDesignerResponseDTO>;
 }

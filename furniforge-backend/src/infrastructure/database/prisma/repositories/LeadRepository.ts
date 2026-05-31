@@ -88,6 +88,7 @@ export class LeadRepository
                   { name: { contains: params.search, mode: "insensitive" } },
                   { email: { contains: params.search, mode: "insensitive" } },
                   { phone: { contains: params.search } },
+                  { location: {contains: params.search, mode: "insensitive"}}
                 ] } : {},
           params.status ? { status: params.status as Prisma.EnumLeadStatusFilter["equals"] } : {},
           params.source ? { source: params.source as Prisma.EnumLeadSourceFilter["equals"] } : {},
@@ -106,6 +107,7 @@ export class LeadRepository
           name: true, 
           email: true, 
           phone: true, 
+          location: true,
           source: true, 
           status: true, 
           projectsInterestedIn: true, 
@@ -117,13 +119,15 @@ export class LeadRepository
       });
 
       return raws.map((raw) => {
-        let location: string | null = null;
 
-        if (
-          raw.client?.address && typeof raw.client.address === "object" && !Array.isArray(raw.client.address)
-        ) {
-          const address = raw.client.address as { city?: string; state: string};
-          location = [address.city, address.state].filter(Boolean).join(", ") || null
+        let location = raw.location;
+        if ( !location && raw.client?.address && typeof raw.client.address === "object" && !Array.isArray(raw.client.address) ) {
+          const address = raw.client.address as {
+            city?: string;
+            state?: string;
+          };
+
+          location = [address.city, address.state].filter(Boolean).join(", ") || null;
         }
 
         const assignedDesignerName = raw.assignedDesigner ? `${raw.assignedDesigner.firstName} ${raw.assignedDesigner.lastName}` : null
@@ -134,7 +138,7 @@ export class LeadRepository
           name: raw.name,
           email: raw.email,
           phone: raw.phone,
-          location,
+          location: location,
           avatar: raw.client?.avatar || null,
           source: raw.source as LeadSource,
           status: raw.status as LeadStatus,

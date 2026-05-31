@@ -37,6 +37,9 @@ export const TYPES = {
   IAssignDesignerUseCase: Symbol.for("IAssignDesignerUseCase"),
   IGetDesignerOptionsUseCase: Symbol.for("IGetDesignerOptionsUseCase"),
   ICreateManualLeadUseCase: Symbol.for("ICreateManualLeadUseCase"),
+  IDeleteLeadUseCase: Symbol.for("IDeleteLeadUseCase"),
+  IUpdateLeadUseCase: Symbol.for("IUpdateLeadUseCase"),
+  
   IGetAllDesignerUseCase: Symbol.for("IGetAllDesignerUseCase"),
 
   AuthController: Symbol.for("AuthController"),

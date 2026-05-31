@@ -8,14 +8,17 @@ import { EmptyState } from "../../../shared/components/common/EmptyState";
 import { PageHeader } from "../../../shared/components/common/page-header";
 import { LeadCard } from "../components/leads/lead-card";
 import { AssignLeadDialog } from "../components/leads/assign-lead-dialog";
-import { AddLeadDialog } from "../components/leads/add-lead-dialog";
+import { LeadFormDialog } from "../components/leads/lead-form-dialog";
 import { useGetAllLeads } from "../hooks/use-get-all-leads";
 import { useGetAllDesignerOptions } from "../hooks/use-get-designer-options";
 import { useAssignDesigner } from "../hooks/use-assign-designer";
 import { useCreateLead } from "../hooks/use-create-lead.";
 import { useDebounce } from "../../../shared/hooks/use-debounce";
-import { LeadStatus, LeadSource, type LeadResponseDTO } from "../types/lead.type";
+import { LeadStatus, LeadSource, type LeadResponseDTO, PackageType } from "../types/lead.type";
 import { formatEnumLabel } from "../../../shared/utils/format-enum";
+import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
+import { useDeleteLead } from "../hooks/use-delete-leaad";
+import { useUpdateLead } from "../hooks/use-update-lead";
 
 export const DEFAULT_DELIVERABLES = [ "Sofa", "TV unit", "Bed"];
 
@@ -33,8 +36,15 @@ export default function AdminLeadsPage() {
   const [activeAssignLeadId, setActiveAssignLeadId] = useState<string | null>(null);
   const [assigningLeadId, setAssigningLeadId] = useState<string | null>(null);
   const [addLeadOpen, setAddLeadOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [leadToDelete, setLeadToDelete] = useState<LeadResponseDTO | null>(null);
+  const [editOpen, setEditOpen] = useState(false);
+  const [leadToEdit, setLeadToEdit] = useState<LeadResponseDTO | null>(null);
+
   const { mutateAsync: assignDesigner } = useAssignDesigner();
-  const { mutateAsync: createLead } = useCreateLead();
+  const { mutateAsync: createLead, isPending :isAddingLead } = useCreateLead();
+  const { mutateAsync: deleteLead } = useDeleteLead();
+  const { mutateAsync: updateLead, isPending: isUpdatingLead } = useUpdateLead();
 
   const { data, isLoading } = useGetAllLeads({
     page,
@@ -61,13 +71,10 @@ export default function AdminLeadsPage() {
 
   const { data: designersData } = useGetAllDesignerOptions();
 
-  const designers =
-    designersData?.data?.designers.map(
-      (designer) => ({
+  const designers = designersData?.data?.designers.map((designer) => ({
         id: designer.id,
         name: designer.fullName,
-      }),
-    ) ?? [];
+      })) ?? [];
 
   const openAssignDialog = (
     lead: LeadResponseDTO,
@@ -80,7 +87,6 @@ export default function AdminLeadsPage() {
 
   const handleAssignDesigner = async () => {
     if ( !selectedLead || !selectedDesignerId ) return;
-
     try {
       setAssigningLeadId(selectedLead.id);
       await assignDesigner({ leadId: selectedLead.id, designerId: selectedDesignerId });
@@ -95,6 +101,18 @@ export default function AdminLeadsPage() {
     }
   };
 
+  const handleDeleteLead = async () => {
+    if (!leadToDelete) return;
+
+    try {
+      await deleteLead(leadToDelete.id);
+      setDeleteOpen(false);
+      setLeadToDelete(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const resetFilters = () => {
     setSearch("");
     setStatusFilter("All");
@@ -102,6 +120,16 @@ export default function AdminLeadsPage() {
     setDeliverableFilter("All");
     setSortOrder("desc");
     setPage(1);
+  };
+
+  const handleOpenDelete = (lead: LeadResponseDTO) => {
+    setLeadToDelete(lead);
+    setDeleteOpen(true);
+  };
+
+  const handleOpenEdit = (lead: LeadResponseDTO) => {
+    setLeadToEdit(lead);
+    setEditOpen(true);
   };
 
   return (
@@ -124,7 +152,7 @@ export default function AdminLeadsPage() {
             variant="copper"
             size="sm"
             className="gap-1"
-            onClick={() => setAddLeadOpen(true) }
+            onClick={() => setAddLeadOpen(true)}
           >
             <Plus size={14} />
             Add Lead
@@ -140,19 +168,19 @@ export default function AdminLeadsPage() {
         }}
         searchPlaceholder="Search leads..."
         filters={[
-          { key: "status", label: "Status", value: statusFilter, options: [
+          {
+            key: "status",
+            label: "Status",
+            value: statusFilter,
+            options: [
               { label: "All", value: "All" },
-              ...Object.values(
-                LeadStatus,
-              ).map((status) => (
-                { label: formatEnumLabel( status ), value: status })),
+              ...Object.values(LeadStatus).map((status) => ({
+                label: formatEnumLabel(status),
+                value: status,
+              })),
             ],
             onChange: (value) => {
-              setStatusFilter(
-                (value as
-                  | LeadStatus
-                  | "All") || "All",
-              );
+              setStatusFilter((value as LeadStatus | "All") || "All");
               setPage(1);
             },
           },
@@ -163,12 +191,13 @@ export default function AdminLeadsPage() {
             value: deliverableFilter,
             options: [
               { label: "All", value: "All" },
-              ...DEFAULT_DELIVERABLES.map(
-                (item) => ({ label: item, value: item }),
-              ),
+              ...DEFAULT_DELIVERABLES.map((item) => ({
+                label: item,
+                value: item,
+              })),
             ],
             onChange: (value) => {
-              setDeliverableFilter( value || "All", );
+              setDeliverableFilter(value || "All");
               setPage(1);
             },
           },
@@ -178,24 +207,26 @@ export default function AdminLeadsPage() {
             label: "Source",
             value: sourceFilter,
             options: [
-              { label: "All", value: "All" }, ...Object.values( LeadSource ).map((source) => (
-                { label: formatEnumLabel( source ), value: source })),
+              { label: "All", value: "All" },
+              ...Object.values(LeadSource).map((source) => ({
+                label: formatEnumLabel(source),
+                value: source,
+              })),
             ],
             onChange: (value) => {
-              setSourceFilter((value as | LeadSource | "All") || "All" );
+              setSourceFilter((value as LeadSource | "All") || "All");
               setPage(1);
             },
           },
         ]}
-        sortOptions={[
-          { key: "createdAt", label: "Date" },
-        ]}
+        sortOptions={[{ key: "createdAt", label: "Date" }]}
         sortValue="createdAt"
         onSortChange={() => {}}
         sortOrder={sortOrder}
         onSortOrderChange={(value) => {
           setSortOrder(value);
-          setPage(1) }}
+          setPage(1);
+        }}
         onReset={resetFilters}
       />
 
@@ -214,10 +245,12 @@ export default function AdminLeadsPage() {
                 key={lead.id}
                 lead={lead}
                 designers={designers}
-                activeAssignLeadId={ activeAssignLeadId }
-                setActiveAssignLeadId={ setActiveAssignLeadId }
-                onConfirmAssign={ openAssignDialog }
+                activeAssignLeadId={activeAssignLeadId}
+                setActiveAssignLeadId={setActiveAssignLeadId}
+                onConfirmAssign={openAssignDialog}
                 isAssigning={assigningLeadId === lead.id}
+                onDelete={handleOpenDelete}
+                onEdit={handleOpenEdit}
               />
             ))}
           </div>
@@ -236,17 +269,52 @@ export default function AdminLeadsPage() {
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
         selectedLead={selectedLead}
-        selectedDesigner={ designers.find((d) => d.id === selectedDesignerId, )?.name ?? "" }
+        selectedDesigner={
+          designers.find((d) => d.id === selectedDesignerId)?.name ?? ""
+        }
         onConfirm={handleAssignDesigner}
       />
 
-      <AddLeadDialog
+      <LeadFormDialog
+        mode="create"
         open={addLeadOpen}
         onOpenChange={setAddLeadOpen}
-        deliverables={ DEFAULT_DELIVERABLES }
-        onAddLead={async (lead) => { 
-          await createLead(lead);
-          setAddLeadOpen(false) }}
+        deliverables={DEFAULT_DELIVERABLES}
+        isLoading= {isAddingLead}
+        onSubmit={async(data) => {await createLead({...data, email: data.email!})}}
+      />
+
+      <LeadFormDialog
+        mode="edit"
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        deliverables={DEFAULT_DELIVERABLES}
+        isLoading= {isUpdatingLead}
+        initialData={ leadToEdit ? {
+                name: leadToEdit.name,
+                email: leadToEdit.email,
+                phone: leadToEdit.phone,
+                location: leadToEdit.location ?? "",
+                source: leadToEdit.source,
+                packageType: leadToEdit.packageType ?? PackageType.BASIC,
+                projectsInterestedIn: leadToEdit.projectsInterestedIn,
+              } : undefined }
+        
+        onSubmit={async(data) => {
+          if(!leadToEdit) return;
+          const {email, ...payload} = data;
+          await updateLead ({leadId: leadToEdit.id, payload})
+        }}
+      />
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="Delete Lead?"
+        description={`Are you sure you want to delete ${leadToDelete?.name}?`}
+        confirmText="Delete"
+        variant="destructive"
+        onConfirm={handleDeleteLead}
       />
     </motion.div>
   );

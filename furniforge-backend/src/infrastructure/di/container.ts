@@ -38,6 +38,8 @@ import { DesignerRepository } from "../database/prisma/repositories/DesignerRepo
 import { GetAllDesignersUseCase } from "../../application/use-cases/designer/GetAllDesignersUseCase";
 import { DesignerController } from "../../presentation/api/v1/controllers/admin/DesignerController";
 import { VerifyEmailUseCase } from "../../application/use-cases/auth/VerifyEmailUseCase";
+import { DeleteLeadUseCase } from "../../application/use-cases/lead/DeleteLeadUseCase";
+import { UpdateLeadUseCase } from "../../application/use-cases/lead/UpdateLeadUseCase";
 
 const container = new Container();
 
@@ -84,6 +86,9 @@ container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);
 container.bind(TYPES.IGetDesignerOptionsUseCase).to(GetDesignerOptionsUseCase);
 container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
 container.bind(TYPES.ICreateManualLeadUseCase).to(CreateManualLeadUseCase);
+container.bind(TYPES.IDeleteLeadUseCase).to(DeleteLeadUseCase);
+container.bind(TYPES.IUpdateLeadUseCase).to(UpdateLeadUseCase);
+
 container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase)
 
 // Controller

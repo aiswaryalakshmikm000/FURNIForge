@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Globe, Mail, MapPin, Phone, User } from "lucide-react";
+import { Globe, Mail, MapPin, Pencil, Phone, Trash2, User } from "lucide-react";
 import { formatEnumLabel } from "../../../../shared/utils/format-enum";
 import { Badge } from "../../../../shared/components/ui/badge";
-import type { LeadResponseDTO, LeadStatus } from "../../types/lead.type";
+import { LeadSource, type LeadResponseDTO, type LeadStatus } from "../../types/lead.type";
 import { LeadAssignmentActions } from "./lead-assignment-actions";
+import { Button } from "../../../../shared/components/ui/button";
 
 interface Designer {
   id: string;
@@ -15,11 +16,10 @@ interface Props {
   designers: Designer[];
   activeAssignLeadId: string | null;
   setActiveAssignLeadId: ( id: string | null ) => void;
-  onConfirmAssign: (
-    lead: LeadResponseDTO,
-    designerId: string,
-  ) => void;
+  onConfirmAssign: ( lead: LeadResponseDTO, designerId: string ) => void;
   isAssigning: boolean;
+  onEdit: (lead: LeadResponseDTO) => void;
+  onDelete: (lead: LeadResponseDTO) => void;
 }
 
 const getStatusVariant = (
@@ -47,10 +47,9 @@ const getStatusVariant = (
   }
 };
 
-export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignLeadId, onConfirmAssign, isAssigning }: Props) => {
+export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignLeadId, onConfirmAssign, isAssigning, onEdit, onDelete }: Props) => {
 
   const [selectedDesigner, setSelectedDesigner] = useState("");
-
   const createdDate = new Date(lead.createdAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -59,14 +58,12 @@ export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignL
 
   const assigning = activeAssignLeadId === lead.id;
 
-  const handleStartAssign = () => {
-  setActiveAssignLeadId(lead.id);
-};
+  const handleStartAssign = () => { setActiveAssignLeadId(lead.id) };
 
   const handleCancelAssign = () => {
-  setActiveAssignLeadId(null);
-  setSelectedDesigner("");
-};
+    setActiveAssignLeadId(null);
+    setSelectedDesigner("");
+  };
 
   const handleConfirmAssign = () => {
     if (!selectedDesigner) return;
@@ -81,11 +78,7 @@ export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignL
           {/* Avatar */}
           <div className="h-10 w-10 rounded-full overflow-hidden bg-accent/10 flex items-center justify-center border border-border">
             {lead.avatar ? (
-              <img
-                src={lead.avatar}
-                alt={lead.name}
-                className="h-full w-full object-cover"
-              />
+              <img src={lead.avatar}  alt={lead.name}  className="h-full w-full object-cover" />
             ) : (
               <User size={18} className="text-accent" />
             )}
@@ -110,21 +103,25 @@ export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignL
                   <MapPin size={10} />
                   {lead.location}
                 </span>
-              )
-              }
+              )}
             </div>
           </div>
         </div>
 
         {/* badges */}
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="default" className="flex items-center gap-1  text-muted-foreground">
+          <Badge
+            variant="default"
+            className="flex items-center gap-1  text-muted-foreground"
+          >
             <Globe size={8} />
 
             {formatEnumLabel(lead.source)}
           </Badge>
 
-          <Badge variant={getStatusVariant(lead.status)} className="px-3 py-1 text-xs">
+          <Badge
+            variant={getStatusVariant(lead.status)}
+            className="px-3 py-1 text-xs" >
             {formatEnumLabel(lead.status)}
           </Badge>
         </div>
@@ -137,7 +134,10 @@ export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignL
           <div>
             <div className="flex flex-wrap gap-2 mb-2">
               {lead.projectsInterestedIn.map((project) => (
-                <Badge key={project} variant="default" className="px-2 py-0.5 text-xs text-accent bg-accent/10">
+                <Badge
+                  key={project}
+                  variant="default"
+                  className="px-2 py-0.5 text-xs text-accent bg-accent/10" >
                   {project}
                 </Badge>
               ))}
@@ -156,17 +156,37 @@ export const LeadCard = ({ lead, designers, activeAssignLeadId, setActiveAssignL
           </div>
 
           {/* Right */}
-          <LeadAssignmentActions
-            assigning={assigning}
-            selectedDesigner={selectedDesigner}
-            designers={designers}
-            onDesignerChange={setSelectedDesigner}
-            onStartAssign={handleStartAssign}
-            onCancelAssign={handleCancelAssign}
-            onConfirmAssign={handleConfirmAssign}
-            status={lead.status}
-            isAssigning={isAssigning}
-          />
+          <div className="flex flex-wrap items-center gap-2">
+            {lead.source !== LeadSource.SELF_REGISTERED && (
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-accent border-accent/30 hover:bg-accent/10"
+                onClick={() => onEdit(lead)} >
+                <Pencil size={14} />
+              </Button>
+            )}
+
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-red-500"
+              onClick={() => onDelete(lead)} >
+              <Trash2 size={14} />
+            </Button>
+
+            <LeadAssignmentActions
+              assigning={assigning}
+              selectedDesigner={selectedDesigner}
+              designers={designers}
+              onDesignerChange={setSelectedDesigner}
+              onStartAssign={handleStartAssign}
+              onCancelAssign={handleCancelAssign}
+              onConfirmAssign={handleConfirmAssign}
+              status={lead.status}
+              isAssigning={isAssigning}
+            />
+          </div>
         </div>
       </div>
     </div>
