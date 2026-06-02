@@ -1,4 +1,3 @@
-
 export interface RegisterResponseDTO {
   meta: {
     tempUserId: string;

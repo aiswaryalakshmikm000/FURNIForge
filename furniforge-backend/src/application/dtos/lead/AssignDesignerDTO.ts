@@ -7,8 +7,6 @@ export const AssignDesignerSchema = z.object({
 
 export type AssignDesignerDTO = z.infer<typeof AssignDesignerSchema>;
 
-
-
 export interface AssignDesignerResponseDTO {
   leadId: string;
   designerId: string;

@@ -5,8 +5,6 @@ export const VerifyEmailRequestSchema = z.object({
 });
 export type VerifyEmailRequestDTO = z.infer<typeof VerifyEmailRequestSchema>;
 
-
-
 export interface VerifyEmailResponseDTO {
   userId: string;
   email: string;

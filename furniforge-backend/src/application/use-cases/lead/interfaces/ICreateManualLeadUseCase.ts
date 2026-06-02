@@ -1,6 +1,5 @@
-import { CreateLeadDTO } from "../../../dtos/lead/CreateLeadDTO";
-import { LeadResponseDTO } from "../../../dtos/lead/LeadResponseDTO";
+import type { CreateLeadDTO, CreateLeadResponseDTO } from "../../../dtos/lead/CreateLeadDTO";
 
 export interface ICreateManualLeadUseCase {
-  execute( dto: CreateLeadDTO ): Promise<LeadResponseDTO>;
+  execute( dto: CreateLeadDTO ): Promise<CreateLeadResponseDTO>;
 }

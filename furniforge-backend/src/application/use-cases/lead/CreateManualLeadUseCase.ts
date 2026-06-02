@@ -2,17 +2,16 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ICreateManualLeadUseCase } from "./interfaces/ICreateManualLeadUseCase";
 import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
-import type { LeadResponseDTO } from "../../dtos/lead/LeadResponseDTO";
 import { generateRegNo } from "../../../shared/utils/generateRegNo";
 import { Lead } from "../../../domain/entities/Lead";
-import { LeadResponseMapper } from "../../mappers/LeadResponseMapper";
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { Email } from "../../../domain/value-objects/Email";
 import { User } from "../../../domain/entities/User";
 import type { ITokenService } from "../../../domain/services/ITokenService";
 import type { IEmailService } from "../../../domain/services/IEmailService";
 import { env } from "../../../infrastructure/config/env";
-import type { CreateLeadDTO } from "../../dtos/lead/CreateLeadDTO";
+import type { CreateLeadDTO, CreateLeadResponseDTO } from "../../dtos/lead/CreateLeadDTO";
+import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
 
 @injectable()
 export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
@@ -23,7 +22,7 @@ export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
     @inject(TYPES.IEmailService) private _emailService: IEmailService,
   ) {}
 
-  async execute(dto: CreateLeadDTO): Promise<LeadResponseDTO> {
+  async execute(dto: CreateLeadDTO): Promise<CreateLeadResponseDTO> {
     
     //create user ---
     const emailVO = new Email(dto.email);
@@ -76,6 +75,6 @@ export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
 
     const createdLead = await this._leadRepository.create(lead);
 
-    return LeadResponseMapper.fromLead(createdLead);
+    return LeadCommandMapper.toCreateResponse(createdLead);
   }
 }

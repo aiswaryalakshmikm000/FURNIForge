@@ -35,6 +35,6 @@ export class GetAllLeadsUseCase implements IGetAllLeadsUseCase {
       }),
     ]);
 
-    return { leads: rows.map(LeadResponseMapper.fromListItem), ...buildPaginationMeta(query.page, query.limit, total) };
+    return { leads: rows.map(LeadResponseMapper.toResponse), ...buildPaginationMeta(query.page, query.limit, total) };
   }
 }

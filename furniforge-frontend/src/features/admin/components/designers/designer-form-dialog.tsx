@@ -1,65 +1,136 @@
-import { useState, useEffect } from "react";
-import { Input } from "../../../../shared/components/ui/input";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from "../../../../shared/components/ui/alert-dialog";
 import { Button } from "../../../../shared/components/ui/button";
+import { Input } from "../../../../shared/components/ui/input";
+import { FormField } from "../../../../shared/components/common/forms/form-field";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { designerFormSchema, type DesignerFormValues } from "../../validation/designer-form.validation";
 
-export const DesignerModal = ({
-  open,
-  onClose,
-  onSubmit,
-  initialData,
-  mode,
-}: any) => {
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
+interface Props {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  mode: "create" | "edit";
+  isLoading?: boolean;
+  initialData?: DesignerFormValues;
+  onSubmit: (
+    data: DesignerFormValues,
+  ) => void | Promise<void>;
+}
+
+export const DesignerFormDialog = ({ open, onOpenChange, mode, isLoading, initialData, onSubmit }: Props) => {
+  const { register, handleSubmit, reset, formState: { errors, isValid } } = useForm<DesignerFormValues>({
+    resolver: zodResolver(designerFormSchema),
+    mode: "onChange",
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      phone: "",
+      email: "",
+    },
   });
 
   useEffect(() => {
-    if (initialData) setForm(initialData);
-  }, [initialData]);
+    if (open) {
+      reset(
+        initialData ?? {
+          firstName: "",
+          lastName: "",
+          phone: "",
+          email: "",
+        },
+      );
+    }
+  }, [open, initialData, reset]);
 
-  if (!open) return null;
+  const submitHandler = async ( data: DesignerFormValues ) => {
+    await onSubmit(data);
+    reset();
+    onOpenChange(false);
+  };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-card w-[420px] rounded-2xl p-6 space-y-4 shadow-xl">
+    <AlertDialog
+      open={open}
+      onOpenChange={onOpenChange}
+    >
+      <AlertDialogContent className="rounded-2xl">
+        <AlertDialogHeader>
+          <AlertDialogTitle>
+            {mode === "create" ? "Add Designer" : "Edit Designer"}
+          </AlertDialogTitle>
 
-        <h2 className="text-lg font-semibold font-display">
-          {mode === "add" ? "Add Designer" : "Edit Designer"}
-        </h2>
+          <AlertDialogDescription>
+            {mode === "create" ? "Enter designer details" : "Update designer details"}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
 
-        <Input
-          placeholder="First Name"
-          value={form.firstName}
-          onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-        />
+        <form
+          onSubmit={handleSubmit(submitHandler)}
+          className="space-y-4"
+        >
+          <div className="grid grid-cols-2 gap-4">
+            <FormField
+              label="First Name"
+              required
+              error={errors.firstName?.message}
+            >
+            <Input {...register("firstName")} />
+            </FormField>
 
-        <Input
-          placeholder="Last Name"
-          value={form.lastName}
-          onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-        />
+            <FormField
+              label="Last Name"
+              error={errors.lastName?.message}
+            >
+              <Input {...register("lastName")} />
+            </FormField>
 
-        <Input
-          placeholder="Phone"
-          value={form.phone}
-          onChange={(e) => setForm({ ...form, phone: e.target.value })}
-        />
+            <FormField
+              label="Phone"
+              required
+              error={errors.phone?.message}
+            >
+              <Input {...register("phone")} />
+            </FormField>
 
-        <Input value={form.email} disabled placeholder="Email" />
+            <FormField
+              label="Email"
+              required
+              error={errors.email?.message}
+            >
+              <Input
+                {...register("email")}
+                disabled={mode === "edit"}
+                className={ mode === "edit" ? "cursor-not-allowed opacity-60" : ""}
+              />
+            </FormField>
+          </div>
 
-        <div className="flex justify-end gap-2 pt-2">
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button variant="copper" onClick={() => onSubmit(form)}>
-            {mode === "add" ? "Create" : "Update"}
-          </Button>
-        </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancel
+            </Button>
 
-      </div>
-    </div>
+            <Button
+              type="submit"
+              variant="copper"
+              disabled={!isValid || isLoading}
+            >
+              {isLoading
+                ? mode === "create"
+                  ? "Creating..."
+                  : "Updating..."
+                : mode === "create"
+                  ? "Create Designer"
+                  : "Update Designer"}
+            </Button>
+          </div>
+        </form>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };

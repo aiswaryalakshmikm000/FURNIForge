@@ -35,7 +35,6 @@ export const RegisterSchema = z.object({
     .regex(/[a-z]/, "Must contain lowercase")
     .regex(/[0-9]/, "Must contain number")
     .regex(/[\W]/, "Must contain special character"),
-  }
-);
+});
 
 export type RegisterUserDTO = z.infer<typeof RegisterSchema>;

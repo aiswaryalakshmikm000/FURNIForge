@@ -1,4 +1,3 @@
-
 export interface DesignerResponseDTO {
   id: string;
   designerRegNo: string;

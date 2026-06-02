@@ -10,19 +10,24 @@ import { Button } from "../../../shared/components/ui/button";
 import { DesignerCard } from "../components/designers/designer-card";
 import { useGetAllDesigners } from "../hooks/use-get-all-designers";
 import { useDebounce } from "../../../shared/hooks/use-debounce";
-import { DesignerModal } from "../components/designers/designer-form-dialog";
+import { DesignerFormDialog } from "../components/designers/designer-form-dialog";
+import { useCreateDesigner } from "../hooks/use-create-designer";
+import type { DesignerResponseDTO } from "../types/get-all-designers.type";
+import { useUpdateDesigner } from "../hooks/use-update-designer";
 
 export default function DesignersPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
-
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-
   const [openModal, setOpenModal] = useState(false);
-  const [editData, setEditData] = useState<any>(null);
+  const [editOpen, setEditOpen] = useState(false);
+   const [designerToEdit, setDesignerToEdit] = useState<DesignerResponseDTO | null>(null);
+
+  const { mutateAsync: updateDesigner, isPending: isUpdatingDesigner } = useUpdateDesigner();
+  const {mutateAsync: createDesigner, isPending: isCreatingDesigner } = useCreateDesigner()
 
   const { data, isLoading } = useGetAllDesigners({
     page,
@@ -34,7 +39,7 @@ export default function DesignersPage() {
           ? "ACTIVE"
           : statusFilter === "Blocked"
             ? "BLOCKED"
-            : "INACTIVE",
+            : "PENDING",
     sortBy: sortBy === "none" ? undefined : (sortBy as any),
     sortOrder,
   });
@@ -52,13 +57,12 @@ export default function DesignersPage() {
     setPage(1);
   };
 
-  const handleEdit = (designer: any) => {
-    setEditData(designer);
-    setOpenModal(true);
+  const handleEdit = (designer: DesignerResponseDTO) => {
+    setDesignerToEdit(designer);
+    setEditOpen(true);
   };
 
   const handleAdd = () => {
-    setEditData(null);
     setOpenModal(true);
   };
 
@@ -73,8 +77,12 @@ export default function DesignersPage() {
         title="Designers"
         description="Manage your design team"
         action={
-          <Button variant="copper" size="sm"
-            className="gap-1" onClick={handleAdd}>
+          <Button
+            variant="copper"
+            size="sm"
+            className="gap-1"
+            onClick={handleAdd}
+          >
             <Plus size={14} />
             Add Designer
           </Button>
@@ -98,7 +106,7 @@ export default function DesignersPage() {
               { label: "All", value: "All" },
               { label: "Active", value: "Active" },
               { label: "Blocked", value: "Blocked" },
-              { label: "Inactive", value: "Inactive" },
+              { label: "Pending", value: "Pending" },
             ],
             onChange: (value) => {
               setStatusFilter(value);
@@ -158,13 +166,40 @@ export default function DesignersPage() {
       )}
 
       {/* MODAL */}
-      <DesignerModal
+      <DesignerFormDialog
+        mode="create"
         open={openModal}
-        mode={editData ? "edit" : "add"}
-        initialData={editData}
-        onClose={() => setOpenModal(false)}
-        onSubmit={() => {
-          setOpenModal(false);
+        onOpenChange={setOpenModal}
+        isLoading={isCreatingDesigner}
+        onSubmit={async (data) => {
+          await createDesigner(data);
+        }}
+      />
+
+      <DesignerFormDialog
+        mode="edit"
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        initialData={
+          designerToEdit
+            ? {
+                firstName: designerToEdit.firstName,
+                lastName: designerToEdit.lastName,
+                email: designerToEdit.email,
+                phone: designerToEdit.phone,
+              }
+            : undefined
+        }
+        isLoading={isUpdatingDesigner}
+        onSubmit={async (data) => {
+          if (!designerToEdit) return;
+
+          const { email, ...payload } = data;
+
+          await updateDesigner({
+            designerId: designerToEdit.id,
+            payload,
+          });
         }}
       />
     </motion.div>

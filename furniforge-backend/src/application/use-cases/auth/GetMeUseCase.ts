@@ -9,10 +9,10 @@ import type { UserResponseDTO } from "../../dtos/user/userResponseDTO";
 @injectable()
 export class GetMeUseCase implements IGetMeUseCase {
   constructor(
-    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository
-) {};
+    @inject(TYPES.IUserRepository) private _userRepository: IUserRepository,
+  ) {}
 
-  async execute(userId: string): Promise<{user: UserResponseDTO}> { 
+  async execute(userId: string): Promise<{ user: UserResponseDTO }> {
     const user = await this._userRepository.findById(userId);
 
     if (!user) throw new UnauthorizedError();

@@ -23,7 +23,6 @@ export class Lead {
     private _updatedAt: Date,
   ) {}
 
-  // ✅ For NEW leads
   static create(data: {
     leadRegNo: string;
     name: string;

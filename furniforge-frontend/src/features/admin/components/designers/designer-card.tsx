@@ -16,6 +16,19 @@ export const DesignerCard = ({
     year: "numeric",
   });
 
+  const status = designer.isBlocked
+  ? "Blocked"
+  : designer.isVerified
+    ? "Active"
+    : "Pending";
+
+const badgeVariant =
+  designer.isBlocked
+    ? "destructive"
+    : !designer.isVerified
+      ? "secondary"
+      : "success";
+
   return (
     <div className="bg-card rounded-3xl border border-border shadow-warm p-6 transition-all hover:shadow-lg">
 
@@ -65,8 +78,8 @@ export const DesignerCard = ({
         {/* RIGHT ACTIONS (same pattern as LeadCard) */}
         <div className="flex flex-wrap items-center gap-2">
 
-          <Badge variant={designer.isBlocked ? "destructive" : "success"}>
-            {designer.isBlocked ? "Blocked" : "Active"}
+          <Badge variant={badgeVariant}>
+            {status}
           </Badge>
 
           <Button variant="outline" size="sm" onClick={() => onEdit(designer)}>

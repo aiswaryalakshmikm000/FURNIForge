@@ -6,7 +6,6 @@ export const LoginSchema = z.object({
     .string()
     .email({ message: ERROR_MESSAGES.AUTH.INVALID_EMAIL })
     .transform((val) => val.trim().toLowerCase()),
-
   password: z
     .string()
     .min(1, { message: ERROR_MESSAGES.AUTH.PASSWORD_REQUIRED }),

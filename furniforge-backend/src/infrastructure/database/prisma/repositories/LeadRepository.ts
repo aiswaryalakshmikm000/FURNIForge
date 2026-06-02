@@ -11,14 +11,7 @@ import { handlePrismaError } from "../errors/handlePrismaError";
 
 @injectable()
 export class LeadRepository
-  extends BaseRepository<
-    Lead,
-    PrismaLead,
-    Prisma.LeadCreateInput,
-    Prisma.LeadUpdateInput
-  >
-  implements ILeadRepository
-{
+  extends BaseRepository< Lead, PrismaLead, Prisma.LeadCreateInput, Prisma.LeadUpdateInput > implements ILeadRepository {
   protected model = prisma.lead;
 
   protected toDomain(raw: PrismaLead): Lead {

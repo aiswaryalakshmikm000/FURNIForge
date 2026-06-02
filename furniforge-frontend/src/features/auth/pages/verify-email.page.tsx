@@ -21,10 +21,9 @@ const VerifyEmailPage = () => {
 
     const res = data.data;
     sessionManager.setResetToken(res.resetToken);
-
     setTimeout(() => {
-    navigate(`${APP_ROUTES.AUTH.RESET_PASSWORD}?mode=create`);
-  }, 1500);
+      navigate(`${APP_ROUTES.AUTH.RESET_PASSWORD}?mode=create`);
+    }, 1500);
   }, [isSuccess, data]);
 
   return (

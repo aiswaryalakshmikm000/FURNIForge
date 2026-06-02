@@ -30,7 +30,9 @@ export const SUCCESS_MESSAGES = {
     LEAD_CREATED: "Lead created successfully",
     DESIGNER_FETCH_SUCCESS: "Designers fetched successfully",
     LEAD_DELETED: "Lead deleted successfully",
-    LEAD_UPDATED: "Lead updated successfully"
+    LEAD_UPDATED: "Lead updated successfully",
+    DESIGNER_CREATED: "Designer created successfully",
+    DESIGNER_UPDATED:  "Designer updated successfully"
   },
 
   USER: {

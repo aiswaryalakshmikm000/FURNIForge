@@ -3,7 +3,7 @@ import { User } from "../../domain/entities/User";
 import { AssignDesignerResponseDTO } from "../dtos/lead/AssignDesignerDTO";
 
 export class AssignDesignerResponseMapper {
-  static toResponse( lead: Lead, designer: User ): AssignDesignerResponseDTO {
+  static toResponse(lead: Lead, designer: User): AssignDesignerResponseDTO {
     return {
       leadId: lead.id,
       designerId: designer.id,
