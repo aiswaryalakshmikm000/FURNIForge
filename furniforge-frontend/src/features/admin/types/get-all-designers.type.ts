@@ -20,6 +20,7 @@ export interface DesignerResponseDTO {
   projectCount: number;
   totalRevenue: number;
   isBlocked: boolean;
+  isVerified: boolean;
   createdAt: string;
 }
 

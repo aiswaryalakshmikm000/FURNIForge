@@ -14,6 +14,3 @@ export const CreateDesignerDTOSchema = z.object({
 export type CreateDesignerDTO = z.infer<typeof CreateDesignerDTOSchema>;
 
 
-export interface CreateDesignerResponseDTO {
-  id: string;
-}

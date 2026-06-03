@@ -22,7 +22,3 @@ export const UpdateLeadDTOSchema = z.object({
 });
 
 export type UpdateLeadFDTO = z.infer<typeof UpdateLeadDTOSchema>;
-
-export interface UpdateLeadResponseDTO {
-  id: string;
-}

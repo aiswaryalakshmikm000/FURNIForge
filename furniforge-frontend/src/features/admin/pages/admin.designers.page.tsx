@@ -14,6 +14,8 @@ import { DesignerFormDialog } from "../components/designers/designer-form-dialog
 import { useCreateDesigner } from "../hooks/use-create-designer";
 import type { DesignerResponseDTO } from "../types/get-all-designers.type";
 import { useUpdateDesigner } from "../hooks/use-update-designer";
+import { useToggleDesignerBlock } from "../hooks/use-toggle-designer-block";
+import type { DesignerCommandResponseDTO } from "../types/designer-form.type";
 
 export default function DesignersPage() {
   const [page, setPage] = useState(1);
@@ -28,6 +30,7 @@ export default function DesignersPage() {
 
   const { mutateAsync: updateDesigner, isPending: isUpdatingDesigner } = useUpdateDesigner();
   const {mutateAsync: createDesigner, isPending: isCreatingDesigner } = useCreateDesigner()
+  const {mutateAsync: toggleDesignerBlock } = useToggleDesignerBlock();
 
   const { data, isLoading } = useGetAllDesigners({
     page,
@@ -65,6 +68,10 @@ export default function DesignersPage() {
   const handleAdd = () => {
     setOpenModal(true);
   };
+
+  const handleToggleBlock = async (designer: DesignerCommandResponseDTO) => {
+    await toggleDesignerBlock(designer.id)
+  }
 
   return (
     <motion.div
@@ -144,13 +151,13 @@ export default function DesignersPage() {
       ) : (
         <>
           <div className="space-y-4">
-            {designers.map((designer: any) => (
+            {designers.map((designer) => (
               <DesignerCard
                 key={designer.id}
                 designer={designer}
                 onEdit={handleEdit}
                 onDelete={() => {}}
-                onToggleBlock={() => {}}
+                onToggleBlock={handleToggleBlock}
               />
             ))}
           </div>

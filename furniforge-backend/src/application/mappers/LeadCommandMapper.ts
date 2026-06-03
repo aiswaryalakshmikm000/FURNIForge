@@ -1,15 +1,8 @@
 import { Lead } from "../../domain/entities/Lead";
-import { CreateLeadResponseDTO } from "../dtos/lead/CreateLeadDTO";
-import { UpdateLeadResponseDTO } from "../dtos/lead/UpdateLeadDTO";
+import { LeadCommandResponseDTO } from "../dtos/lead/LeadCommandResponseDTO";
 
 export class LeadCommandMapper {
-  static toCreateResponse(lead: Lead): CreateLeadResponseDTO {
-    return {
-      id: lead.id,
-    };
-  }
-
-  static toUpdateResponse(lead: Lead): UpdateLeadResponseDTO {
+  static toResponse(lead: Lead): LeadCommandResponseDTO {
     return {
       id: lead.id,
     };

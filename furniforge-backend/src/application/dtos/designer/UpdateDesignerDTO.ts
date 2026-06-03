@@ -12,7 +12,3 @@ export const UpdateDesignerDTOSchema = z.object({
 });
 
 export type UpdateDesignerDTO = z.infer<typeof UpdateDesignerDTOSchema>;
-
-export interface UpdateDesignerResponseDTO {
-  id: string;
-}

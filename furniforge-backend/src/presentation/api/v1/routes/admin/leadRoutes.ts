@@ -8,20 +8,20 @@ import { GetAllLeadsQuerySchema } from "../../../../../application/dtos/lead/Get
 import { authMiddleware } from "../../../middlewares/authMiddleware";
 import { authorizeRoles } from "../../../middlewares/roleGuardMiddleware";
 import { UserRole } from "../../../../../domain/enums/UserRole";
-import { AssignDesignerSchema } from "../../../../../application/dtos/lead/AssignDesignerDTO";
 import { CreateLeadDTOSchema } from "../../../../../application/dtos/lead/CreateLeadDTO";
 import { UpdateLeadDTOSchema } from "../../../../../application/dtos/lead/UpdateLeadDTO";
-import { DeleteLeadParamsSchema } from "../../../../../application/dtos/lead/DeleteLeadDTO";
+import { LeadCommandParamsSchema } from "../../../../../application/dtos/lead/LeadCommandResponseDTO";
+import { AssignDesignerSchema } from "../../../../../application/dtos/lead/AssignDesignerDTO";
 
 const router = Router();
 
 const controller = container.get<LeadController>( TYPES.LeadController );
 
 router.get("/leads", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetAllLeadsQuerySchema), asyncHandler(controller.getAllLeads));
-router.patch("/leads/:id/assign-designer", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(AssignDesignerSchema), asyncHandler(controller.assignDesigner))
-router.get("/designers/options", authMiddleware, authorizeRoles(UserRole.ADMIN), asyncHandler(controller.getDesignerOptions))
+router.patch("/leads/:id/assign-designer", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(LeadCommandParamsSchema), validateBody(AssignDesignerSchema), asyncHandler(controller.assignDesigner))
+router.get("/leads/designers-options", authMiddleware, authorizeRoles(UserRole.ADMIN), asyncHandler(controller.getDesignerOptions))
 router.post("/leads", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateLeadDTOSchema), asyncHandler(controller.createManualLead))
-router.delete("/leads/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeleteLeadParamsSchema), asyncHandler(controller.deleteLead));
-router.patch("/leads/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(UpdateLeadDTOSchema), asyncHandler(controller.updateLead ));
+router.delete("/leads/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(LeadCommandParamsSchema), asyncHandler(controller.deleteLead));
+router.patch("/leads/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(LeadCommandParamsSchema), validateBody(UpdateLeadDTOSchema), asyncHandler(controller.updateLead ));
 
 export default router;

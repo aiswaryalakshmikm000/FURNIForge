@@ -6,6 +6,8 @@ import type { ILeadRepository } from "../../../domain/repositories/ILeadReposito
 import type { ICreateLeadUseCase } from "./interfaces/ICreateLeadUseCase";
 import { User } from "../../../domain/entities/User";
 import { generateRegNo } from "../../../shared/utils/generateRegNo";
+import { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
+import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
 
 @injectable()
 export class CreateLeadUseCase implements ICreateLeadUseCase {
@@ -13,7 +15,7 @@ export class CreateLeadUseCase implements ICreateLeadUseCase {
     @inject(TYPES.ILeadRepository) private _leadRepository: ILeadRepository
   ) {}
 
-  async execute(user: User): Promise<Lead> {
+  async execute(user: User): Promise<LeadCommandResponseDTO> {
     
     const seq = await this._leadRepository.getNextLeadSequence();
     const leadRegNo = generateRegNo({prefix: "LEAD", sequence: seq})
@@ -28,6 +30,6 @@ export class CreateLeadUseCase implements ICreateLeadUseCase {
     });
 
     const createdLead =  await this._leadRepository.create(lead);
-    return createdLead;
+    return LeadCommandMapper.toResponse(createdLead);
   }
 }

@@ -4,7 +4,7 @@ import type { IUserRepository } from "../../../domain/repositories/IUserReposito
 import type { IEmailService } from "../../../domain/services/IEmailService";
 import type { ITokenService } from "../../../domain/services/ITokenService";
 import { TYPES } from "../../../infrastructure/di/types";
-import type { CreateDesignerDTO, CreateDesignerResponseDTO } from "../../dtos/designer/CreateDesignerDTO";
+import type { CreateDesignerDTO } from "../../dtos/designer/CreateDesignerDTO";
 import type { ICreateDesignerUseCase } from "./interfaces/ICreateDesignerUseCase";
 import { ConflictError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
@@ -13,6 +13,7 @@ import { generateRegNo } from "../../../shared/utils/generateRegNo";
 import { User } from "../../../domain/entities/User";
 import { env } from "../../../infrastructure/config/env";
 import { DesignerCommandMapper } from "../../mappers/DesignerCommandMapper";
+import type { DesignerCommandResponseDTO } from "../../dtos/designer/DesignerCommandDTO";
 
 @injectable()
 export class CreateDesignerUseCase implements ICreateDesignerUseCase {
@@ -23,7 +24,7 @@ export class CreateDesignerUseCase implements ICreateDesignerUseCase {
     @inject(TYPES.IEmailService) private _emailService: IEmailService,
   ) {}
 
-  async execute( dto: CreateDesignerDTO ): Promise<CreateDesignerResponseDTO> {
+  async execute( dto: CreateDesignerDTO ): Promise<DesignerCommandResponseDTO> {
 
     const emailVO = new Email(dto.email);
 
@@ -55,6 +56,6 @@ export class CreateDesignerUseCase implements ICreateDesignerUseCase {
     const inviteLink = `${env.CORS.ORIGIN}/verify-email?token=${token}`;
     await this._emailService.sendDesignerInvitation( created.email.value, created.firstName, inviteLink );
 
-    return DesignerCommandMapper.toCreateResponse(created)
+    return DesignerCommandMapper.toResponse(created)
   }
 }

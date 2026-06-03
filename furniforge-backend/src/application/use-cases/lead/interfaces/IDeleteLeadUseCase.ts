@@ -1,5 +1,5 @@
-import { DeleteLeadParamsDTO, DeleteLeadResponseDTO } from "../../../dtos/lead/DeleteLeadDTO";
+import { LeadCommandRequestDTO, LeadCommandResponseDTO } from "../../../dtos/lead/LeadCommandResponseDTO";
 
 export interface IDeleteLeadUseCase {
-  execute ( dto: DeleteLeadParamsDTO ): Promise<DeleteLeadResponseDTO> 
+  execute ( dto: LeadCommandRequestDTO ): Promise<LeadCommandResponseDTO> 
 }

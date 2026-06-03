@@ -24,6 +24,3 @@ export const CreateLeadDTOSchema = z.object({
 
 export type CreateLeadDTO = z.infer<typeof CreateLeadDTOSchema>;
 
-export interface CreateLeadResponseDTO {
-  id: string;
-}

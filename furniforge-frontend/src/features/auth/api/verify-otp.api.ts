@@ -1,5 +1,5 @@
 import { httpClient } from "../../../core/api/http-client";
-import type { VerifyOtpRequestDTO, VerifyOtpResponseDTO } from "../../../types/auth/verify-otp.type";
+import type { VerifyOtpRequestDTO, VerifyOtpResponseDTO } from "../types/verify-otp.type";
 import type { ApiResponse } from "../../../types/api/api-response.type";
 import { API_ENDPOINTS } from "../../../core/api/endpoints";
 

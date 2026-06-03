@@ -3,9 +3,10 @@ import { TYPES } from "../../../infrastructure/di/types";
 import type { IDesignerRepository } from "../../../domain/repositories/IDesignerRepository";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
-import type { UpdateDesignerDTO, UpdateDesignerResponseDTO } from "../../dtos/designer/UpdateDesignerDTO";
+import type { UpdateDesignerDTO } from "../../dtos/designer/UpdateDesignerDTO";
 import type { IUpdateDesignerUseCase } from "./interfaces/IUpdateDesignerUseCase";
 import { DesignerCommandMapper } from "../../mappers/DesignerCommandMapper";
+import type { DesignerCommandResponseDTO } from "../../dtos/designer/DesignerCommandDTO";
 
 @injectable()
 export class UpdateDesignerUseCase implements IUpdateDesignerUseCase {
@@ -13,7 +14,7 @@ export class UpdateDesignerUseCase implements IUpdateDesignerUseCase {
     @inject(TYPES.IDesignerRepository) private readonly designerRepository: IDesignerRepository
   ) {}
 
-  async execute( designerId: string, dto: UpdateDesignerDTO ): Promise<UpdateDesignerResponseDTO> {
+  async execute( designerId: string, dto: UpdateDesignerDTO ): Promise<DesignerCommandResponseDTO> {
     const designer = await this.designerRepository.findById(designerId);
 
     if (!designer) throw new NotFoundError( ERROR_MESSAGES.ADMIN.DESIGNER_NOT_FOUND );
@@ -26,6 +27,6 @@ export class UpdateDesignerUseCase implements IUpdateDesignerUseCase {
 
     const updated = await this.designerRepository.update( designer.id, designer );
 
-    return DesignerCommandMapper.toUpdateResponse(updated)
+    return DesignerCommandMapper.toResponse(updated)
   }
 }

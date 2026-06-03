@@ -10,6 +10,8 @@ import type { CreateDesignerDTO } from "../../../../../application/dtos/designer
 import type { ICreateDesignerUseCase } from "../../../../../application/use-cases/designer/interfaces/ICreateDesignerUseCase";
 import type { UpdateDesignerDTO } from "../../../../../application/dtos/designer/UpdateDesignerDTO";
 import type { IUpdateDesignerUseCase } from "../../../../../application/use-cases/designer/interfaces/IUpdateDesignerUseCase";
+import type { IToggleDesignerBlockUseCase } from "../../../../../application/use-cases/designer/interfaces/IToggleDesignerBlockUseCase";
+import { DesignerCommandRequestDTO } from "../../../../../application/dtos/designer/DesignerCommandDTO";
 
 @injectable()
 export class DesignerController {
@@ -17,6 +19,7 @@ export class DesignerController {
     @inject(TYPES.IGetAllDesignerUseCase) private _getAllDesignerUseCase: IGetAllDesignersUseCase,
     @inject(TYPES.ICreateDesignerUseCase) private _createDesignerUseCase: ICreateDesignerUseCase,
     @inject(TYPES.IUpdateDesignerUseCase) private _updateDesignerUseCase: IUpdateDesignerUseCase,
+    @inject(TYPES.IToggleDesignerBlockUseCase) private _toggleDesignerBlockUseCase: IToggleDesignerBlockUseCase,
   ) {}
 
   getAllDesigners = async (req: Request, res: Response) => {
@@ -40,4 +43,11 @@ export class DesignerController {
     const result = await this._updateDesignerUseCase.execute(id, body)
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_UPDATED).build());
   }
+
+  toggleDesignerBlock = async ( req: Request, res: Response ) => {
+  const dto = req.params as DesignerCommandRequestDTO;
+
+  const result = await this._toggleDesignerBlockUseCase.execute(dto);
+
+  res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_BLOCK_STATUS_UPDATED ).build()) };
 }

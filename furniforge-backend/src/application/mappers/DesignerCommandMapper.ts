@@ -1,15 +1,8 @@
 import { User } from "../../domain/entities/User";
-import { CreateDesignerResponseDTO } from "../dtos/designer/CreateDesignerDTO";
-import { UpdateDesignerResponseDTO } from "../dtos/designer/UpdateDesignerDTO";
+import { DesignerCommandResponseDTO } from "../dtos/designer/DesignerCommandDTO";
 
 export class DesignerCommandMapper {
-  static toCreateResponse(user: User): CreateDesignerResponseDTO {
-    return {
-      id: user.id,
-    };
-  }
-
-  static toUpdateResponse(user: User): UpdateDesignerResponseDTO {
+  static toResponse(user: User): DesignerCommandResponseDTO {
     return {
       id: user.id,
     };

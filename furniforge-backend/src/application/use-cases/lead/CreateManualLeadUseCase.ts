@@ -10,8 +10,9 @@ import { User } from "../../../domain/entities/User";
 import type { ITokenService } from "../../../domain/services/ITokenService";
 import type { IEmailService } from "../../../domain/services/IEmailService";
 import { env } from "../../../infrastructure/config/env";
-import type { CreateLeadDTO, CreateLeadResponseDTO } from "../../dtos/lead/CreateLeadDTO";
+import type { CreateLeadDTO } from "../../dtos/lead/CreateLeadDTO";
 import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
+import { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
 
 @injectable()
 export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
@@ -22,7 +23,7 @@ export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
     @inject(TYPES.IEmailService) private _emailService: IEmailService,
   ) {}
 
-  async execute(dto: CreateLeadDTO): Promise<CreateLeadResponseDTO> {
+  async execute(dto: CreateLeadDTO): Promise<LeadCommandResponseDTO> {
     
     //create user ---
     const emailVO = new Email(dto.email);
@@ -75,6 +76,6 @@ export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
 
     const createdLead = await this._leadRepository.create(lead);
 
-    return LeadCommandMapper.toCreateResponse(createdLead);
+    return LeadCommandMapper.toResponse(createdLead);
   }
 }

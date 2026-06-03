@@ -4,8 +4,9 @@ import { TYPES } from "../../../infrastructure/di/types";
 import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
-import type { UpdateLeadFDTO, UpdateLeadResponseDTO } from "../../dtos/lead/UpdateLeadDTO";
+import type { UpdateLeadFDTO } from "../../dtos/lead/UpdateLeadDTO";
 import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
+import { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
 
 @injectable()
 export class UpdateLeadUseCase implements IUpdateLeadUseCase {
@@ -13,7 +14,7 @@ export class UpdateLeadUseCase implements IUpdateLeadUseCase {
     @inject(TYPES.ILeadRepository) private readonly leadRepository: ILeadRepository
   ) {}
 
-  async execute( leadId: string, dto: UpdateLeadFDTO ): Promise<UpdateLeadResponseDTO> {
+  async execute( leadId: string, dto: UpdateLeadFDTO ): Promise<LeadCommandResponseDTO> {
 
     const lead = await this.leadRepository.findById(leadId);
 
@@ -30,8 +31,6 @@ export class UpdateLeadUseCase implements IUpdateLeadUseCase {
 
     const updated = await this.leadRepository.update( lead.id, lead );
 
-    // return LeadResponseMapper.fromLead( updated );
-
-    return LeadCommandMapper.toUpdateResponse(updated);
+    return LeadCommandMapper.toResponse(updated);
   }
 }
