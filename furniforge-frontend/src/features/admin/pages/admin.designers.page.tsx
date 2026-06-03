@@ -16,6 +16,8 @@ import type { DesignerResponseDTO } from "../types/get-all-designers.type";
 import { useUpdateDesigner } from "../hooks/use-update-designer";
 import { useToggleDesignerBlock } from "../hooks/use-toggle-designer-block";
 import type { DesignerCommandResponseDTO } from "../types/designer-form.type";
+import { useDeleteDesigner } from "../hooks/use-delete-designer";
+import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
 
 export default function DesignersPage() {
   const [page, setPage] = useState(1);
@@ -26,11 +28,14 @@ export default function DesignersPage() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [openModal, setOpenModal] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
-   const [designerToEdit, setDesignerToEdit] = useState<DesignerResponseDTO | null>(null);
+  const [designerToEdit, setDesignerToEdit] = useState<DesignerResponseDTO | null>(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [designerToDelete, setDesignerToDelete] = useState<DesignerResponseDTO | null> (null);
 
   const { mutateAsync: updateDesigner, isPending: isUpdatingDesigner } = useUpdateDesigner();
   const {mutateAsync: createDesigner, isPending: isCreatingDesigner } = useCreateDesigner()
   const {mutateAsync: toggleDesignerBlock } = useToggleDesignerBlock();
+  const {mutateAsync: deleteDesigner }= useDeleteDesigner();
 
   const { data, isLoading } = useGetAllDesigners({
     page,
@@ -65,12 +70,28 @@ export default function DesignersPage() {
     setEditOpen(true);
   };
 
+  const handleOpenDelete = (designer: DesignerResponseDTO) => {
+    setDesignerToDelete(designer);
+    setDeleteOpen(true);
+  };
+
   const handleAdd = () => {
     setOpenModal(true);
   };
 
   const handleToggleBlock = async (designer: DesignerCommandResponseDTO) => {
     await toggleDesignerBlock(designer.id)
+  }
+
+  const handleDeleteDesigner = async () => {
+    if(!designerToDelete) return;
+    try {
+      await deleteDesigner(designerToDelete.id)
+      setDesignerToDelete(null)
+      setDeleteOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -156,7 +177,7 @@ export default function DesignersPage() {
                 key={designer.id}
                 designer={designer}
                 onEdit={handleEdit}
-                onDelete={() => {}}
+                onDelete={handleOpenDelete}
                 onToggleBlock={handleToggleBlock}
               />
             ))}
@@ -209,6 +230,17 @@ export default function DesignersPage() {
           });
         }}
       />
+
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="Delete Designer?"
+        description={`Are you sure you want to delete ${designerToDelete?.firstName} ${designerToDelete?.lastName}?`}
+        confirmText="Delete"
+        variant="destructive"
+        onConfirm={handleDeleteDesigner}
+      />
+
     </motion.div>
   );
 }

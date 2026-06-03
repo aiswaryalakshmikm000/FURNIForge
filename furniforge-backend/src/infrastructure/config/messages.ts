@@ -34,6 +34,7 @@ export const SUCCESS_MESSAGES = {
     DESIGNER_CREATED: "Designer created successfully",
     DESIGNER_UPDATED:  "Designer updated successfully",
     DESIGNER_BLOCK_STATUS_UPDATED: "Designer status updated successfully",
+    DESIGNER_DELETED: "Designer deleted successfully",
   },
 
   USER: {
@@ -123,6 +124,6 @@ export const ERROR_MESSAGES = {
   },
 
   LEAD: {
-    NOT_FOUND: "Lead not found"
+    NOT_FOUND: "Lead not found dsfdsfsdfdsf"
   }
 };

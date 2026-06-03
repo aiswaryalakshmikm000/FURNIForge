@@ -43,6 +43,7 @@ import { UpdateLeadUseCase } from "../../application/use-cases/lead/UpdateLeadUs
 import { CreateDesignerUseCase } from "../../application/use-cases/designer/CreateDesignerUseCase";
 import { UpdateDesignerUseCase } from "../../application/use-cases/designer/UpdateDesignerUseCase";
 import { ToggleDesignerBlockUseCase } from "../../application/use-cases/designer/ToggleDesignerBlockUseCase";
+import { DeleteDesignerUseCase } from "../../application/use-cases/designer/DeleteDesignerUseCase";
 
 const container = new Container();
 
@@ -95,7 +96,8 @@ container.bind(TYPES.IUpdateLeadUseCase).to(UpdateLeadUseCase);
 container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase);
 container.bind(TYPES.ICreateDesignerUseCase).to(CreateDesignerUseCase);
 container.bind(TYPES.IUpdateDesignerUseCase).to(UpdateDesignerUseCase);
-container.bind(TYPES.IToggleDesignerBlockUseCase).to(ToggleDesignerBlockUseCase)
+container.bind(TYPES.IToggleDesignerBlockUseCase).to(ToggleDesignerBlockUseCase);
+container.bind(TYPES.IDeleteDesignerUseCase).to(DeleteDesignerUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

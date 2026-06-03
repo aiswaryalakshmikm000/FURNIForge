@@ -32,7 +32,8 @@ export const API_ENDPOINTS = {
       GET_ALL: "/admin/designers",
       BLOCK: (id: string) => `/admin/designers/${id}/block`,
       CREATE: "/admin/designers",
-      UPDATE: (id: string) => `/admin/designers/${id}`
+      UPDATE: (id: string) => `/admin/designers/${id}`,
+      DELETE: (id: string) => `/admin/designers/${id}`
     },
   },
 

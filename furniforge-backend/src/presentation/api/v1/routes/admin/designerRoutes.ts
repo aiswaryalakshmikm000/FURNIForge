@@ -20,5 +20,6 @@ router.get("/designers", authMiddleware, authorizeRoles(UserRole.ADMIN), validat
 router.post("/designers", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateDesignerDTOSchema), asyncHandler(controller.createDesigner) );
 router.patch("/designers/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DesignerCommandParamsSchema), validateBody(UpdateDesignerDTOSchema), asyncHandler(controller.updateDesigner) );
 router.patch("/designers/:id/block", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DesignerCommandParamsSchema), asyncHandler(controller.toggleDesignerBlock) );
+router.delete("/designers/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DesignerCommandParamsSchema), asyncHandler(controller.deleteDesigner))
 
 export default router;

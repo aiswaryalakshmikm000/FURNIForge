@@ -11,7 +11,8 @@ import type { ICreateDesignerUseCase } from "../../../../../application/use-case
 import type { UpdateDesignerDTO } from "../../../../../application/dtos/designer/UpdateDesignerDTO";
 import type { IUpdateDesignerUseCase } from "../../../../../application/use-cases/designer/interfaces/IUpdateDesignerUseCase";
 import type { IToggleDesignerBlockUseCase } from "../../../../../application/use-cases/designer/interfaces/IToggleDesignerBlockUseCase";
-import { DesignerCommandRequestDTO } from "../../../../../application/dtos/designer/DesignerCommandDTO";
+import type { DesignerCommandRequestDTO } from "../../../../../application/dtos/designer/DesignerCommandDTO";
+import type { IDeleteDesignerUseCase } from "../../../../../application/use-cases/designer/interfaces/IDeleteDesignerUseCase";
 
 @injectable()
 export class DesignerController {
@@ -20,6 +21,7 @@ export class DesignerController {
     @inject(TYPES.ICreateDesignerUseCase) private _createDesignerUseCase: ICreateDesignerUseCase,
     @inject(TYPES.IUpdateDesignerUseCase) private _updateDesignerUseCase: IUpdateDesignerUseCase,
     @inject(TYPES.IToggleDesignerBlockUseCase) private _toggleDesignerBlockUseCase: IToggleDesignerBlockUseCase,
+    @inject(TYPES.IDeleteDesignerUseCase) private _deleteDesignerUseCase: IDeleteDesignerUseCase,
   ) {}
 
   getAllDesigners = async (req: Request, res: Response) => {
@@ -45,9 +47,17 @@ export class DesignerController {
   }
 
   toggleDesignerBlock = async ( req: Request, res: Response ) => {
-  const dto = req.params as DesignerCommandRequestDTO;
+    const dto = req.params as DesignerCommandRequestDTO;
+    const result = await this._toggleDesignerBlockUseCase.execute(dto);
 
-  const result = await this._toggleDesignerBlockUseCase.execute(dto);
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_BLOCK_STATUS_UPDATED ).build()) 
+  };
 
-  res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_BLOCK_STATUS_UPDATED ).build()) };
+  deleteDesigner = async ( req: Request, res: Response ) => {
+    const dto = req.params as DesignerCommandRequestDTO;
+    console.log("delete controller designer")
+    const result = await this._deleteDesignerUseCase.execute(dto);
+
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_DELETED ).build()) 
+  }
 }
