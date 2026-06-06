@@ -37,6 +37,10 @@ export const SUCCESS_MESSAGES = {
     DESIGNER_DELETED: "Designer deleted successfully",
   },
 
+  DELIVERABLES: {
+    DELIVERABLES_FETCH_SUCCESS: "Deliverables fetched successfully",
+  },
+
   USER: {
     EMAIL_VERIFY_SUCCESS: "Email verified successfully",
   }

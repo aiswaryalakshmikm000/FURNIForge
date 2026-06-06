@@ -12,7 +12,6 @@ type ProtectedRouteProps = {
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  
   if (!isAuthenticated) return <Navigate to={APP_ROUTES.AUTH.LOGIN} replace />;
 
   return children;

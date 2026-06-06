@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Lead = $Result.DefaultSelection<Prisma.$LeadPayload>
 /**
+ * Model Deliverable
+ * 
+ */
+export type Deliverable = $Result.DefaultSelection<Prisma.$DeliverablePayload>
+/**
  * Model Counter
  * 
  */
@@ -226,6 +231,16 @@ export class PrismaClient<
     * ```
     */
   get lead(): Prisma.LeadDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.deliverable`: Exposes CRUD operations for the **Deliverable** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Deliverables
+    * const deliverables = await prisma.deliverable.findMany()
+    * ```
+    */
+  get deliverable(): Prisma.DeliverableDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.counter`: Exposes CRUD operations for the **Counter** model.
@@ -679,6 +694,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Lead: 'Lead',
+    Deliverable: 'Deliverable',
     Counter: 'Counter'
   };
 
@@ -698,7 +714,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "lead" | "counter"
+      modelProps: "user" | "lead" | "deliverable" | "counter"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -847,6 +863,80 @@ export namespace Prisma {
           count: {
             args: Prisma.LeadCountArgs<ExtArgs>
             result: $Utils.Optional<LeadCountAggregateOutputType> | number
+          }
+        }
+      }
+      Deliverable: {
+        payload: Prisma.$DeliverablePayload<ExtArgs>
+        fields: Prisma.DeliverableFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DeliverableFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DeliverableFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>
+          }
+          findFirst: {
+            args: Prisma.DeliverableFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DeliverableFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>
+          }
+          findMany: {
+            args: Prisma.DeliverableFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>[]
+          }
+          create: {
+            args: Prisma.DeliverableCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>
+          }
+          createMany: {
+            args: Prisma.DeliverableCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DeliverableCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>[]
+          }
+          delete: {
+            args: Prisma.DeliverableDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>
+          }
+          update: {
+            args: Prisma.DeliverableUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>
+          }
+          deleteMany: {
+            args: Prisma.DeliverableDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DeliverableUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DeliverableUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>[]
+          }
+          upsert: {
+            args: Prisma.DeliverableUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeliverablePayload>
+          }
+          aggregate: {
+            args: Prisma.DeliverableAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDeliverable>
+          }
+          groupBy: {
+            args: Prisma.DeliverableGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DeliverableGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DeliverableCountArgs<ExtArgs>
+            result: $Utils.Optional<DeliverableCountAggregateOutputType> | number
           }
         }
       }
@@ -1022,6 +1112,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     lead?: LeadOmit
+    deliverable?: DeliverableOmit
     counter?: CounterOmit
   }
 
@@ -1105,11 +1196,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     leads: number
     assignedLeads: number
+    createdDeliverables: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leads?: boolean | UserCountOutputTypeCountLeadsArgs
     assignedLeads?: boolean | UserCountOutputTypeCountAssignedLeadsArgs
+    createdDeliverables?: boolean | UserCountOutputTypeCountCreatedDeliverablesArgs
   }
 
   // Custom InputTypes
@@ -1135,6 +1228,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAssignedLeadsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: LeadWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedDeliverablesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliverableWhereInput
   }
 
 
@@ -1482,6 +1582,7 @@ export namespace Prisma {
     updatedAt?: boolean
     leads?: boolean | User$leadsArgs<ExtArgs>
     assignedLeads?: boolean | User$assignedLeadsArgs<ExtArgs>
+    createdDeliverables?: boolean | User$createdDeliverablesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1564,6 +1665,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leads?: boolean | User$leadsArgs<ExtArgs>
     assignedLeads?: boolean | User$assignedLeadsArgs<ExtArgs>
+    createdDeliverables?: boolean | User$createdDeliverablesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1574,6 +1676,7 @@ export namespace Prisma {
     objects: {
       leads: Prisma.$LeadPayload<ExtArgs>[]
       assignedLeads: Prisma.$LeadPayload<ExtArgs>[]
+      createdDeliverables: Prisma.$DeliverablePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1994,6 +2097,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     leads<T extends User$leadsArgs<ExtArgs> = {}>(args?: Subset<T, User$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     assignedLeads<T extends User$assignedLeadsArgs<ExtArgs> = {}>(args?: Subset<T, User$assignedLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdDeliverables<T extends User$createdDeliverablesArgs<ExtArgs> = {}>(args?: Subset<T, User$createdDeliverablesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2478,6 +2582,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: LeadScalarFieldEnum | LeadScalarFieldEnum[]
+  }
+
+  /**
+   * User.createdDeliverables
+   */
+  export type User$createdDeliverablesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    where?: DeliverableWhereInput
+    orderBy?: DeliverableOrderByWithRelationInput | DeliverableOrderByWithRelationInput[]
+    cursor?: DeliverableWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeliverableScalarFieldEnum | DeliverableScalarFieldEnum[]
   }
 
   /**
@@ -3743,6 +3871,1116 @@ export namespace Prisma {
 
 
   /**
+   * Model Deliverable
+   */
+
+  export type AggregateDeliverable = {
+    _count: DeliverableCountAggregateOutputType | null
+    _min: DeliverableMinAggregateOutputType | null
+    _max: DeliverableMaxAggregateOutputType | null
+  }
+
+  export type DeliverableMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    isActive: boolean | null
+    createdById: string | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DeliverableMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    icon: string | null
+    isActive: boolean | null
+    createdById: string | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DeliverableCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    icon: number
+    isActive: number
+    createdById: number
+    deletedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DeliverableMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    isActive?: true
+    createdById?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DeliverableMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    isActive?: true
+    createdById?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DeliverableCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    icon?: true
+    isActive?: true
+    createdById?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DeliverableAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Deliverable to aggregate.
+     */
+    where?: DeliverableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deliverables to fetch.
+     */
+    orderBy?: DeliverableOrderByWithRelationInput | DeliverableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DeliverableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deliverables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deliverables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Deliverables
+    **/
+    _count?: true | DeliverableCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DeliverableMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DeliverableMaxAggregateInputType
+  }
+
+  export type GetDeliverableAggregateType<T extends DeliverableAggregateArgs> = {
+        [P in keyof T & keyof AggregateDeliverable]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDeliverable[P]>
+      : GetScalarType<T[P], AggregateDeliverable[P]>
+  }
+
+
+
+
+  export type DeliverableGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeliverableWhereInput
+    orderBy?: DeliverableOrderByWithAggregationInput | DeliverableOrderByWithAggregationInput[]
+    by: DeliverableScalarFieldEnum[] | DeliverableScalarFieldEnum
+    having?: DeliverableScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DeliverableCountAggregateInputType | true
+    _min?: DeliverableMinAggregateInputType
+    _max?: DeliverableMaxAggregateInputType
+  }
+
+  export type DeliverableGroupByOutputType = {
+    id: string
+    name: string
+    description: string
+    icon: string
+    isActive: boolean
+    createdById: string
+    deletedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: DeliverableCountAggregateOutputType | null
+    _min: DeliverableMinAggregateOutputType | null
+    _max: DeliverableMaxAggregateOutputType | null
+  }
+
+  type GetDeliverableGroupByPayload<T extends DeliverableGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DeliverableGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DeliverableGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DeliverableGroupByOutputType[P]>
+            : GetScalarType<T[P], DeliverableGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DeliverableSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    isActive?: boolean
+    createdById?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliverable"]>
+
+  export type DeliverableSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    isActive?: boolean
+    createdById?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliverable"]>
+
+  export type DeliverableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    isActive?: boolean
+    createdById?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deliverable"]>
+
+  export type DeliverableSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    icon?: boolean
+    isActive?: boolean
+    createdById?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DeliverableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "icon" | "isActive" | "createdById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["deliverable"]>
+  export type DeliverableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DeliverableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DeliverableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $DeliverablePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Deliverable"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string
+      icon: string
+      isActive: boolean
+      createdById: string
+      deletedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["deliverable"]>
+    composites: {}
+  }
+
+  type DeliverableGetPayload<S extends boolean | null | undefined | DeliverableDefaultArgs> = $Result.GetResult<Prisma.$DeliverablePayload, S>
+
+  type DeliverableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DeliverableFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DeliverableCountAggregateInputType | true
+    }
+
+  export interface DeliverableDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Deliverable'], meta: { name: 'Deliverable' } }
+    /**
+     * Find zero or one Deliverable that matches the filter.
+     * @param {DeliverableFindUniqueArgs} args - Arguments to find a Deliverable
+     * @example
+     * // Get one Deliverable
+     * const deliverable = await prisma.deliverable.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DeliverableFindUniqueArgs>(args: SelectSubset<T, DeliverableFindUniqueArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Deliverable that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DeliverableFindUniqueOrThrowArgs} args - Arguments to find a Deliverable
+     * @example
+     * // Get one Deliverable
+     * const deliverable = await prisma.deliverable.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DeliverableFindUniqueOrThrowArgs>(args: SelectSubset<T, DeliverableFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Deliverable that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliverableFindFirstArgs} args - Arguments to find a Deliverable
+     * @example
+     * // Get one Deliverable
+     * const deliverable = await prisma.deliverable.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DeliverableFindFirstArgs>(args?: SelectSubset<T, DeliverableFindFirstArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Deliverable that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliverableFindFirstOrThrowArgs} args - Arguments to find a Deliverable
+     * @example
+     * // Get one Deliverable
+     * const deliverable = await prisma.deliverable.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DeliverableFindFirstOrThrowArgs>(args?: SelectSubset<T, DeliverableFindFirstOrThrowArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Deliverables that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliverableFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Deliverables
+     * const deliverables = await prisma.deliverable.findMany()
+     * 
+     * // Get first 10 Deliverables
+     * const deliverables = await prisma.deliverable.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const deliverableWithIdOnly = await prisma.deliverable.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DeliverableFindManyArgs>(args?: SelectSubset<T, DeliverableFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Deliverable.
+     * @param {DeliverableCreateArgs} args - Arguments to create a Deliverable.
+     * @example
+     * // Create one Deliverable
+     * const Deliverable = await prisma.deliverable.create({
+     *   data: {
+     *     // ... data to create a Deliverable
+     *   }
+     * })
+     * 
+     */
+    create<T extends DeliverableCreateArgs>(args: SelectSubset<T, DeliverableCreateArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Deliverables.
+     * @param {DeliverableCreateManyArgs} args - Arguments to create many Deliverables.
+     * @example
+     * // Create many Deliverables
+     * const deliverable = await prisma.deliverable.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DeliverableCreateManyArgs>(args?: SelectSubset<T, DeliverableCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Deliverables and returns the data saved in the database.
+     * @param {DeliverableCreateManyAndReturnArgs} args - Arguments to create many Deliverables.
+     * @example
+     * // Create many Deliverables
+     * const deliverable = await prisma.deliverable.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Deliverables and only return the `id`
+     * const deliverableWithIdOnly = await prisma.deliverable.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DeliverableCreateManyAndReturnArgs>(args?: SelectSubset<T, DeliverableCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Deliverable.
+     * @param {DeliverableDeleteArgs} args - Arguments to delete one Deliverable.
+     * @example
+     * // Delete one Deliverable
+     * const Deliverable = await prisma.deliverable.delete({
+     *   where: {
+     *     // ... filter to delete one Deliverable
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DeliverableDeleteArgs>(args: SelectSubset<T, DeliverableDeleteArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Deliverable.
+     * @param {DeliverableUpdateArgs} args - Arguments to update one Deliverable.
+     * @example
+     * // Update one Deliverable
+     * const deliverable = await prisma.deliverable.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DeliverableUpdateArgs>(args: SelectSubset<T, DeliverableUpdateArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Deliverables.
+     * @param {DeliverableDeleteManyArgs} args - Arguments to filter Deliverables to delete.
+     * @example
+     * // Delete a few Deliverables
+     * const { count } = await prisma.deliverable.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DeliverableDeleteManyArgs>(args?: SelectSubset<T, DeliverableDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Deliverables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliverableUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Deliverables
+     * const deliverable = await prisma.deliverable.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DeliverableUpdateManyArgs>(args: SelectSubset<T, DeliverableUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Deliverables and returns the data updated in the database.
+     * @param {DeliverableUpdateManyAndReturnArgs} args - Arguments to update many Deliverables.
+     * @example
+     * // Update many Deliverables
+     * const deliverable = await prisma.deliverable.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Deliverables and only return the `id`
+     * const deliverableWithIdOnly = await prisma.deliverable.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DeliverableUpdateManyAndReturnArgs>(args: SelectSubset<T, DeliverableUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Deliverable.
+     * @param {DeliverableUpsertArgs} args - Arguments to update or create a Deliverable.
+     * @example
+     * // Update or create a Deliverable
+     * const deliverable = await prisma.deliverable.upsert({
+     *   create: {
+     *     // ... data to create a Deliverable
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Deliverable we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DeliverableUpsertArgs>(args: SelectSubset<T, DeliverableUpsertArgs<ExtArgs>>): Prisma__DeliverableClient<$Result.GetResult<Prisma.$DeliverablePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Deliverables.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliverableCountArgs} args - Arguments to filter Deliverables to count.
+     * @example
+     * // Count the number of Deliverables
+     * const count = await prisma.deliverable.count({
+     *   where: {
+     *     // ... the filter for the Deliverables we want to count
+     *   }
+     * })
+    **/
+    count<T extends DeliverableCountArgs>(
+      args?: Subset<T, DeliverableCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DeliverableCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Deliverable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliverableAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DeliverableAggregateArgs>(args: Subset<T, DeliverableAggregateArgs>): Prisma.PrismaPromise<GetDeliverableAggregateType<T>>
+
+    /**
+     * Group by Deliverable.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeliverableGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DeliverableGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DeliverableGroupByArgs['orderBy'] }
+        : { orderBy?: DeliverableGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DeliverableGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDeliverableGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Deliverable model
+   */
+  readonly fields: DeliverableFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Deliverable.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DeliverableClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Deliverable model
+   */
+  interface DeliverableFieldRefs {
+    readonly id: FieldRef<"Deliverable", 'String'>
+    readonly name: FieldRef<"Deliverable", 'String'>
+    readonly description: FieldRef<"Deliverable", 'String'>
+    readonly icon: FieldRef<"Deliverable", 'String'>
+    readonly isActive: FieldRef<"Deliverable", 'Boolean'>
+    readonly createdById: FieldRef<"Deliverable", 'String'>
+    readonly deletedAt: FieldRef<"Deliverable", 'DateTime'>
+    readonly createdAt: FieldRef<"Deliverable", 'DateTime'>
+    readonly updatedAt: FieldRef<"Deliverable", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Deliverable findUnique
+   */
+  export type DeliverableFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * Filter, which Deliverable to fetch.
+     */
+    where: DeliverableWhereUniqueInput
+  }
+
+  /**
+   * Deliverable findUniqueOrThrow
+   */
+  export type DeliverableFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * Filter, which Deliverable to fetch.
+     */
+    where: DeliverableWhereUniqueInput
+  }
+
+  /**
+   * Deliverable findFirst
+   */
+  export type DeliverableFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * Filter, which Deliverable to fetch.
+     */
+    where?: DeliverableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deliverables to fetch.
+     */
+    orderBy?: DeliverableOrderByWithRelationInput | DeliverableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Deliverables.
+     */
+    cursor?: DeliverableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deliverables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deliverables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Deliverables.
+     */
+    distinct?: DeliverableScalarFieldEnum | DeliverableScalarFieldEnum[]
+  }
+
+  /**
+   * Deliverable findFirstOrThrow
+   */
+  export type DeliverableFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * Filter, which Deliverable to fetch.
+     */
+    where?: DeliverableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deliverables to fetch.
+     */
+    orderBy?: DeliverableOrderByWithRelationInput | DeliverableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Deliverables.
+     */
+    cursor?: DeliverableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deliverables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deliverables.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Deliverables.
+     */
+    distinct?: DeliverableScalarFieldEnum | DeliverableScalarFieldEnum[]
+  }
+
+  /**
+   * Deliverable findMany
+   */
+  export type DeliverableFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * Filter, which Deliverables to fetch.
+     */
+    where?: DeliverableWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deliverables to fetch.
+     */
+    orderBy?: DeliverableOrderByWithRelationInput | DeliverableOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Deliverables.
+     */
+    cursor?: DeliverableWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deliverables from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deliverables.
+     */
+    skip?: number
+    distinct?: DeliverableScalarFieldEnum | DeliverableScalarFieldEnum[]
+  }
+
+  /**
+   * Deliverable create
+   */
+  export type DeliverableCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Deliverable.
+     */
+    data: XOR<DeliverableCreateInput, DeliverableUncheckedCreateInput>
+  }
+
+  /**
+   * Deliverable createMany
+   */
+  export type DeliverableCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Deliverables.
+     */
+    data: DeliverableCreateManyInput | DeliverableCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Deliverable createManyAndReturn
+   */
+  export type DeliverableCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * The data used to create many Deliverables.
+     */
+    data: DeliverableCreateManyInput | DeliverableCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Deliverable update
+   */
+  export type DeliverableUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Deliverable.
+     */
+    data: XOR<DeliverableUpdateInput, DeliverableUncheckedUpdateInput>
+    /**
+     * Choose, which Deliverable to update.
+     */
+    where: DeliverableWhereUniqueInput
+  }
+
+  /**
+   * Deliverable updateMany
+   */
+  export type DeliverableUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Deliverables.
+     */
+    data: XOR<DeliverableUpdateManyMutationInput, DeliverableUncheckedUpdateManyInput>
+    /**
+     * Filter which Deliverables to update
+     */
+    where?: DeliverableWhereInput
+    /**
+     * Limit how many Deliverables to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Deliverable updateManyAndReturn
+   */
+  export type DeliverableUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * The data used to update Deliverables.
+     */
+    data: XOR<DeliverableUpdateManyMutationInput, DeliverableUncheckedUpdateManyInput>
+    /**
+     * Filter which Deliverables to update
+     */
+    where?: DeliverableWhereInput
+    /**
+     * Limit how many Deliverables to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Deliverable upsert
+   */
+  export type DeliverableUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Deliverable to update in case it exists.
+     */
+    where: DeliverableWhereUniqueInput
+    /**
+     * In case the Deliverable found by the `where` argument doesn't exist, create a new Deliverable with this data.
+     */
+    create: XOR<DeliverableCreateInput, DeliverableUncheckedCreateInput>
+    /**
+     * In case the Deliverable was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DeliverableUpdateInput, DeliverableUncheckedUpdateInput>
+  }
+
+  /**
+   * Deliverable delete
+   */
+  export type DeliverableDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+    /**
+     * Filter which Deliverable to delete.
+     */
+    where: DeliverableWhereUniqueInput
+  }
+
+  /**
+   * Deliverable deleteMany
+   */
+  export type DeliverableDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Deliverables to delete
+     */
+    where?: DeliverableWhereInput
+    /**
+     * Limit how many Deliverables to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Deliverable without action
+   */
+  export type DeliverableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deliverable
+     */
+    select?: DeliverableSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deliverable
+     */
+    omit?: DeliverableOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeliverableInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Counter
    */
 
@@ -4796,6 +6034,21 @@ export namespace Prisma {
   export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
 
 
+  export const DeliverableScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    icon: 'icon',
+    isActive: 'isActive',
+    createdById: 'createdById',
+    deletedAt: 'deletedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DeliverableScalarFieldEnum = (typeof DeliverableScalarFieldEnum)[keyof typeof DeliverableScalarFieldEnum]
+
+
   export const CounterScalarFieldEnum: {
     id: 'id',
     value: 'value'
@@ -5028,6 +6281,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     leads?: LeadListRelationFilter
     assignedLeads?: LeadListRelationFilter
+    createdDeliverables?: DeliverableListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5055,6 +6309,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     leads?: LeadOrderByRelationAggregateInput
     assignedLeads?: LeadOrderByRelationAggregateInput
+    createdDeliverables?: DeliverableOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5085,6 +6340,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     leads?: LeadListRelationFilter
     assignedLeads?: LeadListRelationFilter
+    createdDeliverables?: DeliverableListRelationFilter
   }, "id" | "clientRegNo" | "designerRegNo" | "email" | "phone">
 
   export type UserOrderByWithAggregationInput = {
@@ -5258,6 +6514,81 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
   }
 
+  export type DeliverableWhereInput = {
+    AND?: DeliverableWhereInput | DeliverableWhereInput[]
+    OR?: DeliverableWhereInput[]
+    NOT?: DeliverableWhereInput | DeliverableWhereInput[]
+    id?: StringFilter<"Deliverable"> | string
+    name?: StringFilter<"Deliverable"> | string
+    description?: StringFilter<"Deliverable"> | string
+    icon?: StringFilter<"Deliverable"> | string
+    isActive?: BoolFilter<"Deliverable"> | boolean
+    createdById?: StringFilter<"Deliverable"> | string
+    deletedAt?: DateTimeNullableFilter<"Deliverable"> | Date | string | null
+    createdAt?: DateTimeFilter<"Deliverable"> | Date | string
+    updatedAt?: DateTimeFilter<"Deliverable"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type DeliverableOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    createdById?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+  }
+
+  export type DeliverableWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: DeliverableWhereInput | DeliverableWhereInput[]
+    OR?: DeliverableWhereInput[]
+    NOT?: DeliverableWhereInput | DeliverableWhereInput[]
+    description?: StringFilter<"Deliverable"> | string
+    icon?: StringFilter<"Deliverable"> | string
+    isActive?: BoolFilter<"Deliverable"> | boolean
+    createdById?: StringFilter<"Deliverable"> | string
+    deletedAt?: DateTimeNullableFilter<"Deliverable"> | Date | string | null
+    createdAt?: DateTimeFilter<"Deliverable"> | Date | string
+    updatedAt?: DateTimeFilter<"Deliverable"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "name">
+
+  export type DeliverableOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    createdById?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DeliverableCountOrderByAggregateInput
+    _max?: DeliverableMaxOrderByAggregateInput
+    _min?: DeliverableMinOrderByAggregateInput
+  }
+
+  export type DeliverableScalarWhereWithAggregatesInput = {
+    AND?: DeliverableScalarWhereWithAggregatesInput | DeliverableScalarWhereWithAggregatesInput[]
+    OR?: DeliverableScalarWhereWithAggregatesInput[]
+    NOT?: DeliverableScalarWhereWithAggregatesInput | DeliverableScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Deliverable"> | string
+    name?: StringWithAggregatesFilter<"Deliverable"> | string
+    description?: StringWithAggregatesFilter<"Deliverable"> | string
+    icon?: StringWithAggregatesFilter<"Deliverable"> | string
+    isActive?: BoolWithAggregatesFilter<"Deliverable"> | boolean
+    createdById?: StringWithAggregatesFilter<"Deliverable"> | string
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"Deliverable"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Deliverable"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Deliverable"> | Date | string
+  }
+
   export type CounterWhereInput = {
     AND?: CounterWhereInput | CounterWhereInput[]
     OR?: CounterWhereInput[]
@@ -5322,6 +6653,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     leads?: LeadCreateNestedManyWithoutClientInput
     assignedLeads?: LeadCreateNestedManyWithoutAssignedDesignerInput
+    createdDeliverables?: DeliverableCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -5349,6 +6681,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     leads?: LeadUncheckedCreateNestedManyWithoutClientInput
     assignedLeads?: LeadUncheckedCreateNestedManyWithoutAssignedDesignerInput
+    createdDeliverables?: DeliverableUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -5376,6 +6709,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leads?: LeadUpdateManyWithoutClientNestedInput
     assignedLeads?: LeadUpdateManyWithoutAssignedDesignerNestedInput
+    createdDeliverables?: DeliverableUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -5403,6 +6737,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leads?: LeadUncheckedUpdateManyWithoutClientNestedInput
     assignedLeads?: LeadUncheckedUpdateManyWithoutAssignedDesignerNestedInput
+    createdDeliverables?: DeliverableUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5611,6 +6946,89 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DeliverableCreateInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    isActive?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutCreatedDeliverablesInput
+  }
+
+  export type DeliverableUncheckedCreateInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    isActive?: boolean
+    createdById: string
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliverableUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutCreatedDeliverablesNestedInput
+  }
+
+  export type DeliverableUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliverableCreateManyInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    isActive?: boolean
+    createdById: string
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliverableUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliverableUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CounterCreateInput = {
     id: string
     value: number
@@ -5761,12 +7179,22 @@ export namespace Prisma {
     none?: LeadWhereInput
   }
 
+  export type DeliverableListRelationFilter = {
+    every?: DeliverableWhereInput
+    some?: DeliverableWhereInput
+    none?: DeliverableWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type LeadOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DeliverableOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6141,6 +7569,47 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type DeliverableCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    createdById?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DeliverableMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    createdById?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DeliverableMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    isActive?: SortOrder
+    createdById?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type CounterCountOrderByAggregateInput = {
     id?: SortOrder
     value?: SortOrder
@@ -6178,6 +7647,13 @@ export namespace Prisma {
     connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
   }
 
+  export type DeliverableCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DeliverableCreateWithoutCreatedByInput, DeliverableUncheckedCreateWithoutCreatedByInput> | DeliverableCreateWithoutCreatedByInput[] | DeliverableUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DeliverableCreateOrConnectWithoutCreatedByInput | DeliverableCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DeliverableCreateManyCreatedByInputEnvelope
+    connect?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+  }
+
   export type LeadUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<LeadCreateWithoutClientInput, LeadUncheckedCreateWithoutClientInput> | LeadCreateWithoutClientInput[] | LeadUncheckedCreateWithoutClientInput[]
     connectOrCreate?: LeadCreateOrConnectWithoutClientInput | LeadCreateOrConnectWithoutClientInput[]
@@ -6190,6 +7666,13 @@ export namespace Prisma {
     connectOrCreate?: LeadCreateOrConnectWithoutAssignedDesignerInput | LeadCreateOrConnectWithoutAssignedDesignerInput[]
     createMany?: LeadCreateManyAssignedDesignerInputEnvelope
     connect?: LeadWhereUniqueInput | LeadWhereUniqueInput[]
+  }
+
+  export type DeliverableUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DeliverableCreateWithoutCreatedByInput, DeliverableUncheckedCreateWithoutCreatedByInput> | DeliverableCreateWithoutCreatedByInput[] | DeliverableUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DeliverableCreateOrConnectWithoutCreatedByInput | DeliverableCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DeliverableCreateManyCreatedByInputEnvelope
+    connect?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6264,6 +7747,20 @@ export namespace Prisma {
     deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
   }
 
+  export type DeliverableUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DeliverableCreateWithoutCreatedByInput, DeliverableUncheckedCreateWithoutCreatedByInput> | DeliverableCreateWithoutCreatedByInput[] | DeliverableUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DeliverableCreateOrConnectWithoutCreatedByInput | DeliverableCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DeliverableUpsertWithWhereUniqueWithoutCreatedByInput | DeliverableUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DeliverableCreateManyCreatedByInputEnvelope
+    set?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    disconnect?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    delete?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    connect?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    update?: DeliverableUpdateWithWhereUniqueWithoutCreatedByInput | DeliverableUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DeliverableUpdateManyWithWhereWithoutCreatedByInput | DeliverableUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DeliverableScalarWhereInput | DeliverableScalarWhereInput[]
+  }
+
   export type LeadUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<LeadCreateWithoutClientInput, LeadUncheckedCreateWithoutClientInput> | LeadCreateWithoutClientInput[] | LeadUncheckedCreateWithoutClientInput[]
     connectOrCreate?: LeadCreateOrConnectWithoutClientInput | LeadCreateOrConnectWithoutClientInput[]
@@ -6290,6 +7787,20 @@ export namespace Prisma {
     update?: LeadUpdateWithWhereUniqueWithoutAssignedDesignerInput | LeadUpdateWithWhereUniqueWithoutAssignedDesignerInput[]
     updateMany?: LeadUpdateManyWithWhereWithoutAssignedDesignerInput | LeadUpdateManyWithWhereWithoutAssignedDesignerInput[]
     deleteMany?: LeadScalarWhereInput | LeadScalarWhereInput[]
+  }
+
+  export type DeliverableUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DeliverableCreateWithoutCreatedByInput, DeliverableUncheckedCreateWithoutCreatedByInput> | DeliverableCreateWithoutCreatedByInput[] | DeliverableUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DeliverableCreateOrConnectWithoutCreatedByInput | DeliverableCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DeliverableUpsertWithWhereUniqueWithoutCreatedByInput | DeliverableUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DeliverableCreateManyCreatedByInputEnvelope
+    set?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    disconnect?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    delete?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    connect?: DeliverableWhereUniqueInput | DeliverableWhereUniqueInput[]
+    update?: DeliverableUpdateWithWhereUniqueWithoutCreatedByInput | DeliverableUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DeliverableUpdateManyWithWhereWithoutCreatedByInput | DeliverableUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DeliverableScalarWhereInput | DeliverableScalarWhereInput[]
   }
 
   export type LeadCreateprojectsInterestedInInput = {
@@ -6347,6 +7858,20 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedLeadsInput, UserUpdateWithoutAssignedLeadsInput>, UserUncheckedUpdateWithoutAssignedLeadsInput>
+  }
+
+  export type UserCreateNestedOneWithoutCreatedDeliverablesInput = {
+    create?: XOR<UserCreateWithoutCreatedDeliverablesInput, UserUncheckedCreateWithoutCreatedDeliverablesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedDeliverablesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutCreatedDeliverablesNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedDeliverablesInput, UserUncheckedCreateWithoutCreatedDeliverablesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedDeliverablesInput
+    upsert?: UserUpsertWithoutCreatedDeliverablesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedDeliverablesInput, UserUpdateWithoutCreatedDeliverablesInput>, UserUncheckedUpdateWithoutCreatedDeliverablesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -6749,6 +8274,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DeliverableCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    isActive?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliverableUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    isActive?: boolean
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliverableCreateOrConnectWithoutCreatedByInput = {
+    where: DeliverableWhereUniqueInput
+    create: XOR<DeliverableCreateWithoutCreatedByInput, DeliverableUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DeliverableCreateManyCreatedByInputEnvelope = {
+    data: DeliverableCreateManyCreatedByInput | DeliverableCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type LeadUpsertWithWhereUniqueWithoutClientInput = {
     where: LeadWhereUniqueInput
     update: XOR<LeadUpdateWithoutClientInput, LeadUncheckedUpdateWithoutClientInput>
@@ -6803,6 +8360,37 @@ export namespace Prisma {
     data: XOR<LeadUpdateManyMutationInput, LeadUncheckedUpdateManyWithoutAssignedDesignerInput>
   }
 
+  export type DeliverableUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: DeliverableWhereUniqueInput
+    update: XOR<DeliverableUpdateWithoutCreatedByInput, DeliverableUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<DeliverableCreateWithoutCreatedByInput, DeliverableUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DeliverableUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: DeliverableWhereUniqueInput
+    data: XOR<DeliverableUpdateWithoutCreatedByInput, DeliverableUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type DeliverableUpdateManyWithWhereWithoutCreatedByInput = {
+    where: DeliverableScalarWhereInput
+    data: XOR<DeliverableUpdateManyMutationInput, DeliverableUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type DeliverableScalarWhereInput = {
+    AND?: DeliverableScalarWhereInput | DeliverableScalarWhereInput[]
+    OR?: DeliverableScalarWhereInput[]
+    NOT?: DeliverableScalarWhereInput | DeliverableScalarWhereInput[]
+    id?: StringFilter<"Deliverable"> | string
+    name?: StringFilter<"Deliverable"> | string
+    description?: StringFilter<"Deliverable"> | string
+    icon?: StringFilter<"Deliverable"> | string
+    isActive?: BoolFilter<"Deliverable"> | boolean
+    createdById?: StringFilter<"Deliverable"> | string
+    deletedAt?: DateTimeNullableFilter<"Deliverable"> | Date | string | null
+    createdAt?: DateTimeFilter<"Deliverable"> | Date | string
+    updatedAt?: DateTimeFilter<"Deliverable"> | Date | string
+  }
+
   export type UserCreateWithoutLeadsInput = {
     id?: string
     clientRegNo?: string | null
@@ -6827,6 +8415,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedLeads?: LeadCreateNestedManyWithoutAssignedDesignerInput
+    createdDeliverables?: DeliverableCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutLeadsInput = {
@@ -6853,6 +8442,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     assignedLeads?: LeadUncheckedCreateNestedManyWithoutAssignedDesignerInput
+    createdDeliverables?: DeliverableUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutLeadsInput = {
@@ -6884,6 +8474,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     leads?: LeadCreateNestedManyWithoutClientInput
+    createdDeliverables?: DeliverableCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedLeadsInput = {
@@ -6910,6 +8501,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     leads?: LeadUncheckedCreateNestedManyWithoutClientInput
+    createdDeliverables?: DeliverableUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedLeadsInput = {
@@ -6952,6 +8544,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedLeads?: LeadUpdateManyWithoutAssignedDesignerNestedInput
+    createdDeliverables?: DeliverableUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLeadsInput = {
@@ -6978,6 +8571,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     assignedLeads?: LeadUncheckedUpdateManyWithoutAssignedDesignerNestedInput
+    createdDeliverables?: DeliverableUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutAssignedLeadsInput = {
@@ -7015,6 +8609,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leads?: LeadUpdateManyWithoutClientNestedInput
+    createdDeliverables?: DeliverableUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedLeadsInput = {
@@ -7041,6 +8636,131 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leads?: LeadUncheckedUpdateManyWithoutClientNestedInput
+    createdDeliverables?: DeliverableUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserCreateWithoutCreatedDeliverablesInput = {
+    id?: string
+    clientRegNo?: string | null
+    designerRegNo?: string | null
+    role: $Enums.Role
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    avatar?: string | null
+    passwordHash?: string | null
+    isVerified?: boolean
+    oauthProvider?: string | null
+    oauthId?: string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: string | null
+    education?: string | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
+    isBlocked?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leads?: LeadCreateNestedManyWithoutClientInput
+    assignedLeads?: LeadCreateNestedManyWithoutAssignedDesignerInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedDeliverablesInput = {
+    id?: string
+    clientRegNo?: string | null
+    designerRegNo?: string | null
+    role: $Enums.Role
+    firstName: string
+    lastName: string
+    email: string
+    phone: string
+    avatar?: string | null
+    passwordHash?: string | null
+    isVerified?: boolean
+    oauthProvider?: string | null
+    oauthId?: string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: string | null
+    education?: string | null
+    projectCount?: number
+    totalRevenue?: Decimal | DecimalJsLike | number | string
+    rating?: number
+    isBlocked?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leads?: LeadUncheckedCreateNestedManyWithoutClientInput
+    assignedLeads?: LeadUncheckedCreateNestedManyWithoutAssignedDesignerInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedDeliverablesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedDeliverablesInput, UserUncheckedCreateWithoutCreatedDeliverablesInput>
+  }
+
+  export type UserUpsertWithoutCreatedDeliverablesInput = {
+    update: XOR<UserUpdateWithoutCreatedDeliverablesInput, UserUncheckedUpdateWithoutCreatedDeliverablesInput>
+    create: XOR<UserCreateWithoutCreatedDeliverablesInput, UserUncheckedCreateWithoutCreatedDeliverablesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedDeliverablesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedDeliverablesInput, UserUncheckedUpdateWithoutCreatedDeliverablesInput>
+  }
+
+  export type UserUpdateWithoutCreatedDeliverablesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    oauthId?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    education?: NullableStringFieldUpdateOperationsInput | string | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUpdateManyWithoutClientNestedInput
+    assignedLeads?: LeadUpdateManyWithoutAssignedDesignerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedDeliverablesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    designerRegNo?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    oauthProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    oauthId?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableJsonNullValueInput | InputJsonValue
+    occupation?: NullableStringFieldUpdateOperationsInput | string | null
+    education?: NullableStringFieldUpdateOperationsInput | string | null
+    projectCount?: IntFieldUpdateOperationsInput | number
+    totalRevenue?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    rating?: FloatFieldUpdateOperationsInput | number
+    isBlocked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leads?: LeadUncheckedUpdateManyWithoutClientNestedInput
+    assignedLeads?: LeadUncheckedUpdateManyWithoutAssignedDesignerNestedInput
   }
 
   export type LeadCreateManyClientInput = {
@@ -7075,6 +8795,17 @@ export namespace Prisma {
     clientId?: string | null
     assignedAt?: Date | string | null
     convertedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeliverableCreateManyCreatedByInput = {
+    id?: string
+    name: string
+    description: string
+    icon: string
+    isActive?: boolean
+    deletedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7183,6 +8914,39 @@ export namespace Prisma {
     clientId?: NullableStringFieldUpdateOperationsInput | string | null
     assignedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     convertedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliverableUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliverableUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeliverableUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    icon?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

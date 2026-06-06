@@ -165,6 +165,18 @@ exports.Prisma.LeadScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DeliverableScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  icon: 'icon',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.CounterScalarFieldEnum = {
   id: 'id',
   value: 'value'
@@ -225,6 +237,7 @@ exports.PackageType = exports.$Enums.PackageType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Lead: 'Lead',
+  Deliverable: 'Deliverable',
   Counter: 'Counter'
 };
 

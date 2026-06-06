@@ -44,6 +44,9 @@ import { CreateDesignerUseCase } from "../../application/use-cases/designer/Crea
 import { UpdateDesignerUseCase } from "../../application/use-cases/designer/UpdateDesignerUseCase";
 import { ToggleDesignerBlockUseCase } from "../../application/use-cases/designer/ToggleDesignerBlockUseCase";
 import { DeleteDesignerUseCase } from "../../application/use-cases/designer/DeleteDesignerUseCase";
+import { DeliverableController } from "../../presentation/api/v1/controllers/admin/DeliverableController";
+import { GetAllDeliverablesUseCase } from "../../application/use-cases/deliverable/GetAllDeliverablesUseCase";
+import { DeliverableRepository } from "../database/prisma/repositories/DeliverableRepository";
 
 const container = new Container();
 
@@ -58,7 +61,8 @@ container.bind(TYPES.IUserRepository).to(UserRepository);
 container.bind(TYPES.IOTPRepository).to(RedisOTPRepository);
 container.bind(TYPES.IPendingUserRepository).to(RedisPendingUserRepository);
 container.bind(TYPES.ILeadRepository).to(LeadRepository);
-container.bind(TYPES.IDesignerRepository).to(DesignerRepository)
+container.bind(TYPES.IDesignerRepository).to(DesignerRepository);
+container.bind(TYPES.IDeliverableRepository).to(DeliverableRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -99,9 +103,12 @@ container.bind(TYPES.IUpdateDesignerUseCase).to(UpdateDesignerUseCase);
 container.bind(TYPES.IToggleDesignerBlockUseCase).to(ToggleDesignerBlockUseCase);
 container.bind(TYPES.IDeleteDesignerUseCase).to(DeleteDesignerUseCase);
 
+container.bind(TYPES.IGetAllDeliverablesUseCase).to(GetAllDeliverablesUseCase);
+
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
 container.bind(TYPES.LeadController).to(LeadController);
 container.bind(TYPES.DesignerController).to(DesignerController);
+container.bind(TYPES.DeliverableController).to(DeliverableController);
 
 export { container };
