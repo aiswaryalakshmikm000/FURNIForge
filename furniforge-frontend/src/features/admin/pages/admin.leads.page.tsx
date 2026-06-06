@@ -6,19 +6,19 @@ import { FilterSortDropdown } from "../../../shared/components/common/filter-sor
 import { PaginationControl } from "../../../shared/components/common/pagination-control";
 import { EmptyState } from "../../../shared/components/common/EmptyState";
 import { PageHeader } from "../../../shared/components/common/page-header";
-import { LeadCard } from "../components/leads/lead-card";
-import { AssignLeadDialog } from "../components/leads/assign-lead-dialog";
-import { LeadFormDialog } from "../components/leads/lead-form-dialog";
-import { useGetAllLeads } from "../hooks/use-get-all-leads";
-import { useGetAllDesignerOptions } from "../hooks/use-get-designer-options";
-import { useAssignDesigner } from "../hooks/use-assign-designer";
-import { useCreateLead } from "../hooks/use-create-lead.";
+import { LeadCard } from "../../lead/components/lead-card";
+import { AssignLeadDialog } from "../../lead/components/assign-lead-dialog";
+import { LeadFormDialog } from "../../lead/components/lead-form-dialog";
+import { useGetAllLeads } from "../../lead/hooks/use-get-all-leads";
+import { useGetAllDesignerOptions } from "../../lead/hooks/use-get-designer-options";
+import { useAssignDesigner } from "../../lead/hooks/use-assign-designer";
+import { useCreateLead } from "../../lead/hooks/use-create-lead.";
 import { useDebounce } from "../../../shared/hooks/use-debounce";
-import { LeadStatus, LeadSource, type LeadResponseDTO, PackageType } from "../types/lead.type";
+import { LeadStatus, LeadSource, type LeadResponseDTO, PackageType } from "../../lead/types/lead.type";
 import { formatEnumLabel } from "../../../shared/utils/format-enum";
 import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
-import { useDeleteLead } from "../hooks/use-delete-leaad";
-import { useUpdateLead } from "../hooks/use-update-lead";
+import { useDeleteLead } from "../../lead/hooks/use-delete-leaad";
+import { useUpdateLead } from "../../lead/hooks/use-update-lead";
 
 export const DEFAULT_DELIVERABLES = [ "Sofa", "TV unit", "Bed"];
 

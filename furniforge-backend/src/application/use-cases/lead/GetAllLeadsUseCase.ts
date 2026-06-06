@@ -3,7 +3,7 @@ import type { GetAllLeadsQueryDTO, GetAllLeadsResponseDTO } from "../../dtos/lea
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
-import { LeadResponseMapper } from "../../mappers/LeadResponseMapper";
+import { LeadResponseMapper } from "../../mappers/lead/LeadResponseMapper";
 import { buildPaginationMeta, getPagination } from "../../../shared/utils/paginate";
 
 @injectable()

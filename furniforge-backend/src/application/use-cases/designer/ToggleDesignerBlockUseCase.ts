@@ -4,7 +4,7 @@ import type { IDesignerRepository } from "../../../domain/repositories/IDesigner
 import type { IToggleDesignerBlockUseCase } from "./interfaces/IToggleDesignerBlockUseCase";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
-import { DesignerCommandMapper } from "../../mappers/DesignerCommandMapper";
+import { DesignerCommandMapper } from "../../mappers/designer/DesignerCommandMapper";
 import type { DesignerCommandRequestDTO, DesignerCommandResponseDTO } from "../../dtos/designer/DesignerCommandDTO";
 
 @injectable()

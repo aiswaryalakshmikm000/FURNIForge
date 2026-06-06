@@ -55,7 +55,6 @@ export class DesignerController {
 
   deleteDesigner = async ( req: Request, res: Response ) => {
     const dto = req.params as DesignerCommandRequestDTO;
-    console.log("delete controller designer")
     const result = await this._deleteDesignerUseCase.execute(dto);
 
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_DELETED ).build()) 

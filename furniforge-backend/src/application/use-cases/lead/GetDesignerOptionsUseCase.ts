@@ -3,7 +3,7 @@ import { TYPES } from "../../../infrastructure/di/types";
 import type { IGetDesignerOptionsUseCase } from "./interfaces/IGetDesignerOptionsUseCase";
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import type { GetDesignerOptionsResponseDTO } from "../../dtos/lead/GetDesignerOptionsDTO";
-import { DesignerOptionMapper } from "../../mappers/DesignerOptionMapper";
+import { DesignerOptionMapper } from "../../mappers/designer/DesignerOptionMapper";
 
 @injectable()
 export class GetDesignerOptionsUseCase implements IGetDesignerOptionsUseCase {

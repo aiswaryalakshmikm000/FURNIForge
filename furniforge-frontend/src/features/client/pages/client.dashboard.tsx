@@ -1,8 +1,8 @@
 import { Send, FileText, CreditCard, Shirt, Tv } from "lucide-react";
 
-import { QuickActions } from "../components/dashboard/quick-actions";
-import { ActiveProjects } from "../components/dashboard/active-projects";
-import { SummaryCard } from "../components/dashboard/summary-card";
+import { QuickActions } from "../../dashboard/components/client-quick-actions";
+import { ActiveProjects } from "../../dashboard/components/client-active-projects";
+import { SummaryCard } from "../../dashboard/components/client-summary-card";
 
 import { PageHeader } from "../../../shared/components/common/page-header";
 import { AnimatedContainer } from "../../../shared/components/common/animated-container";

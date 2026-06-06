@@ -5,7 +5,7 @@ import type { ILeadRepository } from "../../../domain/repositories/ILeadReposito
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
-import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
+import { LeadCommandMapper } from "../../mappers/lead/LeadCommandMapper";
 import type { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
 import { AssignDesignerDTO } from "../../dtos/lead/AssignDesignerDTO";
 

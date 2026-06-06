@@ -3,7 +3,7 @@ import { TYPES } from "../../../infrastructure/di/types";
 import type { IGetAllDesignersUseCase } from "./interfaces/IGetAllDesignersUseCase";
 import type { GetAllDesignersQueryDTO, GetAllDesignersResponseDTO } from "../../dtos/designer/GetAllDesignersDTO";
 import type { IDesignerRepository } from "../../../domain/repositories/IDesignerRepository";
-import { DesignerMapper } from "../../mappers/DesignerMapper";
+import { DesignerMapper } from "../../mappers/designer/DesignerMapper";
 import { buildPaginationMeta, getPagination } from "../../../shared/utils/paginate";
 
 @injectable()

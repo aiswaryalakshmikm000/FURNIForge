@@ -7,7 +7,7 @@ import type { ICreateLeadUseCase } from "./interfaces/ICreateLeadUseCase";
 import { User } from "../../../domain/entities/User";
 import { generateRegNo } from "../../../shared/utils/generateRegNo";
 import { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
-import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
+import { LeadCommandMapper } from "../../mappers/lead/LeadCommandMapper";
 
 @injectable()
 export class CreateLeadUseCase implements ICreateLeadUseCase {

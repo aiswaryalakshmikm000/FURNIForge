@@ -5,7 +5,7 @@ import { TYPES } from "../../../infrastructure/di/types";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { LeadCommandRequestDTO, LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
-import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
+import { LeadCommandMapper } from "../../mappers/lead/LeadCommandMapper";
 
 @injectable()
 export class DeleteLeadUseCase implements IDeleteLeadUseCase {

@@ -5,7 +5,7 @@ import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import type { UpdateDesignerDTO } from "../../dtos/designer/UpdateDesignerDTO";
 import type { IUpdateDesignerUseCase } from "./interfaces/IUpdateDesignerUseCase";
-import { DesignerCommandMapper } from "../../mappers/DesignerCommandMapper";
+import { DesignerCommandMapper } from "../../mappers/designer/DesignerCommandMapper";
 import type { DesignerCommandResponseDTO } from "../../dtos/designer/DesignerCommandDTO";
 
 @injectable()
