@@ -1,13 +1,22 @@
 import { Mail, Phone, Star, Ban, CheckCircle, Edit, Trash2 } from "lucide-react";
 import { Badge } from "../../../../shared/components/ui/badge";
 import { Button } from "../../../../shared/components/ui/button";
+import type { DesignerResponseDTO } from "../../types/get-all-designers.type";
+import type { DesignerCommandResponseDTO } from "../../types/designer-form.type";
+
+interface DesignerCardProps {
+  designer: DesignerResponseDTO;
+  onEdit: (designer: DesignerResponseDTO) => void;
+  onDelete: (designer: DesignerResponseDTO) => void;
+  onToggleBlock: (designer: DesignerCommandResponseDTO) => void | Promise<void>;
+}
 
 export const DesignerCard = ({
   designer,
   onEdit,
   onDelete,
   onToggleBlock,
-}: any) => {
+}: DesignerCardProps) => {
   const initials = `${designer.firstName?.[0] ?? ""}${designer.lastName?.[0] ?? ""}`;
 
   const createdDate = new Date(designer.createdAt).toLocaleDateString("en-US", {
@@ -15,6 +24,19 @@ export const DesignerCard = ({
     day: "numeric",
     year: "numeric",
   });
+
+  const status = designer.isBlocked
+  ? "Blocked"
+  : designer.isVerified
+    ? "Active"
+    : "Pending";
+
+const badgeVariant =
+  designer.isBlocked
+    ? "destructive"
+    : !designer.isVerified
+      ? "secondary"
+      : "success";
 
   return (
     <div className="bg-card rounded-3xl border border-border shadow-warm p-6 transition-all hover:shadow-lg">
@@ -65,8 +87,8 @@ export const DesignerCard = ({
         {/* RIGHT ACTIONS (same pattern as LeadCard) */}
         <div className="flex flex-wrap items-center gap-2">
 
-          <Badge variant={designer.isBlocked ? "destructive" : "success"}>
-            {designer.isBlocked ? "Blocked" : "Active"}
+          <Badge variant={badgeVariant}>
+            {status}
           </Badge>
 
           <Button variant="outline" size="sm" onClick={() => onEdit(designer)}>

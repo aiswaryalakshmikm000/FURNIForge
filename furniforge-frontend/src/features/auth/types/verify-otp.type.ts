@@ -1,4 +1,4 @@
-import type { UserRole } from "../enums/user-role.enum";
+import type { UserRole } from "../../../types/enums/user-role.enum";
 
 export interface VerifyOtpRequestDTO {
   tempUserId: string;

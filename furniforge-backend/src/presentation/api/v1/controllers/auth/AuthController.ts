@@ -70,7 +70,7 @@ export class AuthController {
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
 
-    const { refreshToken, accessToken, ...safeResponse } = result;
+    const { refreshToken: _refreshToken, accessToken: _accessToken, ...safeResponse } = result;
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.VERIFY_EMAIL_SUCCESS).build());
   };
 
@@ -99,7 +99,7 @@ export class AuthController {
 
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
-    const { refreshToken, ...safeResponse } = result;
+    const { refreshToken: _refreshToken, ...safeResponse } = result;
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.TOKEN_REFRESH_SUCCESS).build());
   };
 
@@ -144,7 +144,7 @@ export class AuthController {
     setAccessTokenCookie(res, result.accessToken);
     setRefreshTokenCookie(res, result.refreshToken);
 
-    const { refreshToken, accessToken, ...safeResponse } = result;
+    const { refreshToken: _refreshToken,  accessToken: _accessToken, ...safeResponse } = result;
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(safeResponse, SUCCESS_MESSAGES.AUTH.LOGIN_SUCCESS).build());
   };
 
@@ -208,7 +208,7 @@ export class AuthController {
     setAccessTokenCookie( res, result.accessToken );
     setRefreshTokenCookie( res, result.refreshToken );
 
-    const { accessToken, refreshToken, ...safeResponse } = result;
+    const { accessToken: _accessToken, refreshToken: _refreshToken, ...safeResponse } = result;
 
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success( safeResponse, SUCCESS_MESSAGES.AUTH.GOOGLE_LOGIN_SUCCESS ).build());
   };

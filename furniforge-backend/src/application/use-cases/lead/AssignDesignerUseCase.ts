@@ -3,10 +3,11 @@ import type { IAssignDesignerUseCase } from "./interfaces/IAssignDesignerUseCase
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
-import type { AssignDesignerDTO, AssignDesignerResponseDTO } from "../../dtos/lead/AssignDesignerDTO";
-import { NotFoundError } from "../../../domain/errors/AppError";
+import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
-import { AssignDesignerResponseMapper } from "../../mappers/AssignDesignerResponseMapper";
+import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
+import type { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
+import { AssignDesignerDTO } from "../../dtos/lead/AssignDesignerDTO";
 
 @injectable()
 export class AssignDesignerUseCase implements IAssignDesignerUseCase {
@@ -16,7 +17,7 @@ export class AssignDesignerUseCase implements IAssignDesignerUseCase {
     @inject(TYPES.IUserRepository) private readonly _userRepository: IUserRepository,
   ) {}
 
-  async execute( leadId: string, dto: AssignDesignerDTO ): Promise<AssignDesignerResponseDTO> {
+  async execute( leadId: string, dto: AssignDesignerDTO): Promise<LeadCommandResponseDTO> {
 
     const lead = await this._leadRepository.findById(leadId);
 
@@ -25,11 +26,12 @@ export class AssignDesignerUseCase implements IAssignDesignerUseCase {
     const designer = await this._userRepository.findById(dto.designerId);
 
     if (!designer) throw new NotFoundError(ERROR_MESSAGES.ADMIN.DESIGNER_NOT_FOUND);
+    if (designer.isBlocked) throw new BadRequestError(ERROR_MESSAGES.ADMIN.DESIGNER_BLOCKED)
 
     lead.assignDesigner(designer.id);
 
     const updatedLead = await this._leadRepository.update( lead.id, lead );
 
-    return AssignDesignerResponseMapper.toResponse(updatedLead, designer)
+    return LeadCommandMapper.toResponse(updatedLead)
   }
 }

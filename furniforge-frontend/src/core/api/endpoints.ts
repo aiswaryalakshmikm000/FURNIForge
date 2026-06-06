@@ -23,7 +23,7 @@ export const API_ENDPOINTS = {
       GET_ALL: "/admin/leads",
       CREATE: "/admin/leads",
       ASSIGN_DESIGNER: (id: string) => `/admin/leads/${id}/assign-designer`,
-      DESIGNER_OPTIONS: "/admin/designers/options",
+      DESIGNER_OPTIONS: "/admin/leads/designers-options",
       DELETE: (id: string) => `/admin/leads/${id}`,
       UPDATE: (id: string) => `/admin/leads/${id}`
     },
@@ -31,6 +31,9 @@ export const API_ENDPOINTS = {
     DESIGNERS: {
       GET_ALL: "/admin/designers",
       BLOCK: (id: string) => `/admin/designers/${id}/block`,
+      CREATE: "/admin/designers",
+      UPDATE: (id: string) => `/admin/designers/${id}`,
+      DELETE: (id: string) => `/admin/designers/${id}`
     },
   },
 

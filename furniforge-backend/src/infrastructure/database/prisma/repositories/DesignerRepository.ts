@@ -49,7 +49,7 @@ export class DesignerRepository
 
   async countDesigners(filters?: {
     search?: string;
-    status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
+    status?: "ACTIVE" | "BLOCKED" | "PENDING";
   }): Promise<number> {
     try {
       const where: Prisma.UserWhereInput = { role: "DESIGNER" };
@@ -69,7 +69,7 @@ export class DesignerRepository
       if (filters?.status === "BLOCKED") {
         where.isBlocked = true;
       }
-      if (filters?.status === "INACTIVE") {
+      if (filters?.status === "PENDING") {
         where.isVerified  = false;
         where.isBlocked = false;
       }
@@ -84,7 +84,7 @@ export class DesignerRepository
     skip: number;
     take: number;
     search?: string;
-    status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
+    status?: "ACTIVE" | "BLOCKED" | "PENDING";
     sortBy: "rating" | "projects" | "revenue" | "createdAt";
     sortOrder: "asc" | "desc";
   }): Promise<DesignerListItem[]> {
@@ -109,7 +109,7 @@ export class DesignerRepository
         where.isBlocked = true;
       }
 
-      if (params.status === "INACTIVE") {
+      if (params.status === "PENDING") {
         where.isVerified = false;
         where.isBlocked = false;
       }

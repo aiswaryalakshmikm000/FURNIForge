@@ -4,7 +4,13 @@ import importPlugin from "eslint-plugin-import";
 
 export default [
   {
-    ignores: ["dist", "node_modules", "src/generated/prisma"],
+    ignores: [
+      "node_modules/**",
+      "dist/**",
+      "coverage/**",
+      "prisma/**",
+      "src/generated/prisma/**",
+    ],
   },
 
   js.configs.recommended,
@@ -30,7 +36,13 @@ export default [
 
       "no-unused-vars": "off",
 
-      "@typescript-eslint/no-unused-vars": ["warn"],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          varsIgnorePattern: "^_",
+          argsIgnorePattern: "^_",
+        },
+      ],
 
       "@typescript-eslint/explicit-function-return-type": "off",
 

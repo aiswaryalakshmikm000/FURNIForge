@@ -71,4 +71,13 @@ export class EmailService implements IEmailService {
       throw error;
     }
   }
+
+  async sendDesignerInvitation( email: string, name: string, link: string ): Promise<void> {
+    try {
+      await this._sendEmail(email, 6, { name, setupLink: link });
+    } catch (error) {
+      this._logger.error("Email verification failed", {email, error})
+      throw error;
+    }
+  }
 }

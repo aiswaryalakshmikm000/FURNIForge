@@ -40,6 +40,10 @@ import { DesignerController } from "../../presentation/api/v1/controllers/admin/
 import { VerifyEmailUseCase } from "../../application/use-cases/auth/VerifyEmailUseCase";
 import { DeleteLeadUseCase } from "../../application/use-cases/lead/DeleteLeadUseCase";
 import { UpdateLeadUseCase } from "../../application/use-cases/lead/UpdateLeadUseCase";
+import { CreateDesignerUseCase } from "../../application/use-cases/designer/CreateDesignerUseCase";
+import { UpdateDesignerUseCase } from "../../application/use-cases/designer/UpdateDesignerUseCase";
+import { ToggleDesignerBlockUseCase } from "../../application/use-cases/designer/ToggleDesignerBlockUseCase";
+import { DeleteDesignerUseCase } from "../../application/use-cases/designer/DeleteDesignerUseCase";
 
 const container = new Container();
 
@@ -89,7 +93,11 @@ container.bind(TYPES.ICreateManualLeadUseCase).to(CreateManualLeadUseCase);
 container.bind(TYPES.IDeleteLeadUseCase).to(DeleteLeadUseCase);
 container.bind(TYPES.IUpdateLeadUseCase).to(UpdateLeadUseCase);
 
-container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase)
+container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase);
+container.bind(TYPES.ICreateDesignerUseCase).to(CreateDesignerUseCase);
+container.bind(TYPES.IUpdateDesignerUseCase).to(UpdateDesignerUseCase);
+container.bind(TYPES.IToggleDesignerBlockUseCase).to(ToggleDesignerBlockUseCase);
+container.bind(TYPES.IDeleteDesignerUseCase).to(DeleteDesignerUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

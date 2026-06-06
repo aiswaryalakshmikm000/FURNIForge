@@ -5,3 +5,8 @@ export type CreateLeadDTO = LeadFormValues & {
 };
 
 export type UpdateLeadDTO = Omit<LeadFormValues, "email">;
+
+
+export interface LeadCommandResponseDTO  {
+    id: string
+}

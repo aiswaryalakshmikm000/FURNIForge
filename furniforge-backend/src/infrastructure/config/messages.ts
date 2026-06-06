@@ -30,7 +30,11 @@ export const SUCCESS_MESSAGES = {
     LEAD_CREATED: "Lead created successfully",
     DESIGNER_FETCH_SUCCESS: "Designers fetched successfully",
     LEAD_DELETED: "Lead deleted successfully",
-    LEAD_UPDATED: "Lead updated successfully"
+    LEAD_UPDATED: "Lead updated successfully",
+    DESIGNER_CREATED: "Designer created successfully",
+    DESIGNER_UPDATED:  "Designer updated successfully",
+    DESIGNER_BLOCK_STATUS_UPDATED: "Designer status updated successfully",
+    DESIGNER_DELETED: "Designer deleted successfully",
   },
 
   USER: {
@@ -109,7 +113,8 @@ export const ERROR_MESSAGES = {
     LEAD_NOT_FOUND: "Lead not found",
     DESIGNER_NOT_FOUND: "Designer not found",
     DESIGNER_REG_NO_MISSING: "Designer registration number is missing",
-    CANNOT_ASSIGN_DESIGNER: "Cannot assign designer to converted and lost customers"
+    CANNOT_ASSIGN_DESIGNER: "Cannot assign designer to converted and lost customers",
+    DESIGNER_BLOCKED: "Blocked designers cannot be assigned to leads",
   },
 
   USER: {
@@ -119,6 +124,6 @@ export const ERROR_MESSAGES = {
   },
 
   LEAD: {
-    NOT_FOUND: "Lead not found"
+    NOT_FOUND: "Lead not found dsfdsfsdfdsf"
   }
 };

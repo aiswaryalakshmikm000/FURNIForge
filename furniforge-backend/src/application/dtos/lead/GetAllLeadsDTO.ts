@@ -4,7 +4,6 @@ import { LeadSource, LeadStatus } from "../../../domain/enums/Lead";
 import { PaginationMeta } from "../../../shared/utils/paginate";
 
 export const GetAllLeadsQuerySchema = z.object({
-
   page: z.coerce.number().min(1).default(1),
   limit: z.coerce.number().min(1).max(100).default(10),
   search: z.string().trim().optional(),
@@ -15,8 +14,8 @@ export const GetAllLeadsQuerySchema = z.object({
   sortOrder: z.enum(["asc", "desc"]).default("desc"),
 });
 
-export type GetAllLeadsQueryDTO = z.infer <typeof GetAllLeadsQuerySchema>;
+export type GetAllLeadsQueryDTO = z.infer<typeof GetAllLeadsQuerySchema>;
 
-export interface GetAllLeadsResponseDTO extends PaginationMeta{
+export interface GetAllLeadsResponseDTO extends PaginationMeta {
   leads: LeadResponseDTO[];
 }

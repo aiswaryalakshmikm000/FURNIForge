@@ -6,15 +6,15 @@ import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse";
 import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
 import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages";
 import type {GetAllLeadsQueryDTO } from "../../../../../application/dtos/lead/GetAllLeadsDTO";
-import type { AssignDesignerDTO } from "../../../../../application/dtos/lead/AssignDesignerDTO";
 import type { IAssignDesignerUseCase } from "../../../../../application/use-cases/lead/interfaces/IAssignDesignerUseCase";
 import type { IGetDesignerOptionsUseCase } from "../../../../../application/use-cases/lead/interfaces/IGetDesignerOptionsUseCase";
 import type { ICreateManualLeadUseCase } from "../../../../../application/use-cases/lead/interfaces/ICreateManualLeadUseCase";
-import type { DeleteLeadParamsDTO } from "../../../../../application/dtos/lead/DeleteLeadDTO";
 import type { IDeleteLeadUseCase } from "../../../../../application/use-cases/lead/interfaces/IDeleteLeadUseCase";
 import type { IUpdateLeadUseCase } from "../../../../../application/use-cases/lead/interfaces/IUpdateLeadUseCase";
 import type { CreateLeadDTO } from "../../../../../application/dtos/lead/CreateLeadDTO";
 import type { UpdateLeadFDTO } from "../../../../../application/dtos/lead/UpdateLeadDTO";
+import { LeadCommandRequestDTO } from "../../../../../application/dtos/lead/LeadCommandResponseDTO";
+import { AssignDesignerDTO } from "../../../../../application/dtos/lead/AssignDesignerDTO";
 
 @injectable()
 export class LeadController {
@@ -36,7 +36,7 @@ export class LeadController {
 
   assignDesigner = async (req: Request, res: Response) => {
     const {id} = req.params;
-    const body = req.body as AssignDesignerDTO
+    const body = req.body as AssignDesignerDTO;
 
     const result = await this._assignDesignerUseCase.execute(id, body);
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.DESIGNER_ASSIGNED).build())
@@ -55,7 +55,7 @@ export class LeadController {
   }
 
   deleteLead = async ( req: Request, res: Response ) => {
-    const id  = req.params as DeleteLeadParamsDTO;
+    const id  = req.params as LeadCommandRequestDTO;
     const result = await this._deleteLeadUseCase.execute(id);
 
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEAD_DELETED).build());

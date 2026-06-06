@@ -3,7 +3,6 @@ import { UserResponseDTO } from "../../application/dtos/user/userResponseDTO";
 
 export class UserMapper {
 
-    // ENTITY → RESPONSE 
   static toResponse(user: User): UserResponseDTO {
     return {
       id: user.id,
@@ -13,6 +12,10 @@ export class UserMapper {
       phone: user.phone,
       role: user.role,
       isVerified: user.isVerified,
+      isBlocked: user.isBlocked,
+      avatar: user.avatar,
+      clientRegNo: user.clientRegNo,
+      designerRegNo: user.designerRegNo,
     };
   }
 }

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { resetPasswordApi } from "../api/reset-password.api";
-import type { ResetPasswordRequestDTO } from "../../../types/auth/forgot-password.type";
+import type { ResetPasswordRequestDTO } from "../types/forgot-password.type";
 
 export const useResetPassword = () => {
 

@@ -1,6 +1,6 @@
 import { User } from "../../../../domain/entities/User";
-import { Lead } from "../../../../generated/prisma";
+import { LeadCommandResponseDTO } from "../../../dtos/lead/LeadCommandResponseDTO";
 
 export interface ICreateLeadUseCase {
-  execute(user: User): Promise<Lead>;
+  execute(user: User): Promise<LeadCommandResponseDTO>;
 }

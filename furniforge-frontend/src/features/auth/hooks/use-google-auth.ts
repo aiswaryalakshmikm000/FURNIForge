@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { googleAuthApi } from "../api/google-auth.api";
 import { toast } from "sonner";
 import type { ApiResponse } from "../../../types/api/api-response.type";
-import type { GoogleAuthResponseDTO } from "../../../types/auth/login.type";
+import type { GoogleAuthResponseDTO } from "../types/login.type";
 
 
 export const useGoogleAuth = () => {

@@ -1,7 +1,7 @@
 export interface GetAllDesignersRequestDTO {
   page: number;
   search?: string;
-  status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
+  status?: "ACTIVE" | "BLOCKED" | "PENDING";
   sortBy?: "rating" | "projects" | "revenue" | "createdAt" ;
   sortOrder?: "asc" | "desc";
 }
@@ -20,6 +20,7 @@ export interface DesignerResponseDTO {
   projectCount: number;
   totalRevenue: number;
   isBlocked: boolean;
+  isVerified: boolean;
   createdAt: string;
 }
 

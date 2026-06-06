@@ -3,7 +3,6 @@ export interface DesignerOptionResponseDTO {
   fullName: string;
 }
 
-
 export interface GetDesignerOptionsResponseDTO {
   designers: DesignerOptionResponseDTO[];
 }

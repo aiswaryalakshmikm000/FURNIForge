@@ -9,13 +9,13 @@ export const authorizeRoles = (...allowedRoles: UserRole[]) => {
       const user = req.user;
 
       if (!user) {
+        console.log("sdfdsf")
         throw new UnauthorizedError();
       }
 
       if (!allowedRoles.includes(user.role as UserRole)) {
         throw new ForbiddenError();
       }
-
       next();
     } catch (error) {
       next(error);
