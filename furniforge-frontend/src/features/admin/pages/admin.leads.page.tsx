@@ -12,12 +12,12 @@ import { LeadFormDialog } from "../../lead/components/lead-form-dialog";
 import { useGetAllLeads } from "../../lead/hooks/use-get-all-leads";
 import { useGetAllDesignerOptions } from "../../lead/hooks/use-get-designer-options";
 import { useAssignDesigner } from "../../lead/hooks/use-assign-designer";
-import { useCreateLead } from "../../lead/hooks/use-create-lead.";
+import { useCreateLead } from "../../lead/hooks/use-create-lead";
 import { useDebounce } from "../../../shared/hooks/use-debounce";
 import { LeadStatus, LeadSource, type LeadResponseDTO, PackageType } from "../../lead/types/lead.type";
 import { formatEnumLabel } from "../../../shared/utils/format-enum";
 import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
-import { useDeleteLead } from "../../lead/hooks/use-delete-leaad";
+import { useDeleteLead } from "../../lead/hooks/use-delete-lead";
 import { useUpdateLead } from "../../lead/hooks/use-update-lead";
 
 export const DEFAULT_DELIVERABLES = [ "Sofa", "TV unit", "Bed"];
@@ -25,7 +25,7 @@ export const DEFAULT_DELIVERABLES = [ "Sofa", "TV unit", "Bed"];
 export default function AdminLeadsPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 500)
+  const debouncedSearch = useDebounce(search, 500);
   const [statusFilter, setStatusFilter] = useState<LeadStatus | "All">("All");
   const [sourceFilter, setSourceFilter] = useState<LeadSource | "All">("All");
   const [deliverableFilter, setDeliverableFilter] = useState<string | "All">("All");

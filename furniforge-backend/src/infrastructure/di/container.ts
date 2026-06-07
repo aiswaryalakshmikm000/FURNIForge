@@ -47,6 +47,8 @@ import { DeleteDesignerUseCase } from "../../application/use-cases/designer/Dele
 import { DeliverableController } from "../../presentation/api/v1/controllers/admin/DeliverableController";
 import { GetAllDeliverablesUseCase } from "../../application/use-cases/deliverable/GetAllDeliverablesUseCase";
 import { DeliverableRepository } from "../database/prisma/repositories/DeliverableRepository";
+import { CreateDeliverableUseCase } from "../../application/use-cases/deliverable/CreateDeliverableUseCase";
+import { ToggleDeliverableStatusUseCase } from "../../application/use-cases/deliverable/ToggleDeliverableStatusUseCase";
 
 const container = new Container();
 
@@ -104,6 +106,8 @@ container.bind(TYPES.IToggleDesignerBlockUseCase).to(ToggleDesignerBlockUseCase)
 container.bind(TYPES.IDeleteDesignerUseCase).to(DeleteDesignerUseCase);
 
 container.bind(TYPES.IGetAllDeliverablesUseCase).to(GetAllDeliverablesUseCase);
+container.bind(TYPES.ICreateDeliverableUseCase).to(CreateDeliverableUseCase);
+container.bind(TYPES.IToggleDeliverableStatusUseCase).to(ToggleDeliverableStatusUseCase)
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

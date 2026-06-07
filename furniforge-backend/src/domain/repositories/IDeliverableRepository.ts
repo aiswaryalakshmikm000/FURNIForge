@@ -17,4 +17,6 @@ export interface IDeliverableRepository extends IBaseRepository<Deliverable> {
     search?: string;
     status?: "ACTIVE" | "INACTIVE";
   }): Promise<number>;
+
+  findByName(name: string): Promise<Deliverable | null>;
 }

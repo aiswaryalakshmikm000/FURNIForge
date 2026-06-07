@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toggleDesignerBlockApi } from "../../designers/api/toggleDesignerBlockApi";
+import { toggleDesignerBlockApi } from "../api/toggle-designer-block.api";
 import { toast } from "sonner";
 
 export const useToggleDesignerBlock = () => {

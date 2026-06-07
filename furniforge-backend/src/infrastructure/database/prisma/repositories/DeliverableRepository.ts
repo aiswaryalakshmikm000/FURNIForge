@@ -8,7 +8,6 @@ import { IDeliverableRepository } from "../../../../domain/repositories/IDeliver
 import { DeliverableListItem } from "../../../../domain/read-models/deliverable/DeliverableMapper";
 import { PrismaDeliverableMapper } from "../mapper/PrismaDeliverableMapper";
 
-
 @injectable()
 export class DeliverableRepository
   extends BaseRepository< Deliverable, PrismaDeliverable, Prisma.DeliverableCreateInput, Prisma.DeliverableUpdateInput > implements IDeliverableRepository {
@@ -31,24 +30,12 @@ export class DeliverableRepository
     status?: "ACTIVE" | "INACTIVE";
   }): Promise<number> {
     try {
-      const where: Prisma.DeliverableWhereInput = {
-        deletedAt: null,
-      };
+      const where: Prisma.DeliverableWhereInput = { deletedAt: null };
 
       if (filters?.search) {
         where.OR = [
-          {
-            name: {
-              contains: filters.search,
-              mode: "insensitive",
-            },
-          },
-          {
-            description: {
-              contains: filters.search,
-              mode: "insensitive",
-            },
-          },
+          { name: { contains: filters.search, mode: "insensitive" } },
+          { description: { contains: filters.search, mode: "insensitive" } },
         ];
       }
 
@@ -81,18 +68,8 @@ export class DeliverableRepository
 
       if (params.search) {
         where.OR = [
-          {
-            name: {
-              contains: params.search,
-              mode: "insensitive",
-            },
-          },
-          {
-            description: {
-              contains: params.search,
-              mode: "insensitive",
-            },
-          },
+          { name: { contains: params.search, mode: "insensitive" } },
+          { description: { contains: params.search, mode: "insensitive" } },
         ];
       }
 
@@ -109,9 +86,7 @@ export class DeliverableRepository
       };
 
       if (params.sortBy === "name") {
-        orderBy = {
-          name: params.sortOrder,
-        };
+        orderBy = { name: params.sortOrder };
       }
 
       const raws = await this.model.findMany({
@@ -140,5 +115,10 @@ export class DeliverableRepository
     } catch (error) {
       handlePrismaError(error);
     }
+  }
+
+  async findByName(name: string): Promise<Deliverable | null> {
+    const raw = await prisma.deliverable.findFirst({where: {name, deletedAt: null}});
+    return raw ? this.toDomain(raw) : null
   }
 }

@@ -31,7 +31,7 @@ export class LeadController {
     const query = req.query as unknown as GetAllLeadsQueryDTO;
     const result = await this._getAllLeadsUseCase.execute(query);
 
-    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEADS_FETCH_SUCCESS).build());
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEAD.FETCH_SUCCESS).build());
   };
 
   assignDesigner = async (req: Request, res: Response) => {
@@ -39,7 +39,7 @@ export class LeadController {
     const body = req.body as AssignDesignerDTO;
 
     const result = await this._assignDesignerUseCase.execute(id, body);
-    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.DESIGNER_ASSIGNED).build())
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEAD.DESIGNER_ASSIGNED).build())
   }
 
   getDesignerOptions = async (_req: Request, res: Response) => {
@@ -51,14 +51,14 @@ export class LeadController {
     const body = req.body as CreateLeadDTO;
     const result = await this._createManualLeadUseCase.execute(body)
 
-    res.status(HttpStatusCode.CREATED).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEAD_CREATED).build())
+    res.status(HttpStatusCode.CREATED).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEAD.CREATED).build())
   }
 
   deleteLead = async ( req: Request, res: Response ) => {
     const id  = req.params as LeadCommandRequestDTO;
     const result = await this._deleteLeadUseCase.execute(id);
 
-    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEAD_DELETED).build());
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.LEAD.DELETED).build());
   };
 
   updateLead = async ( req: Request, res: Response ) => {
@@ -68,6 +68,6 @@ export class LeadController {
 
     const result = await this._updateLeadUseCase.execute( id, body );
 
-    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.LEAD_UPDATED).build());
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.LEAD.UPDATED).build());
   };
 }

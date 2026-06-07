@@ -32,6 +32,23 @@ export class Deliverable {
     );
   }
 
+  update( name: string, description: string, icon: string ) {
+    this._name = name;
+    this._description = description;
+    this._icon = icon;
+    this._updatedAt = new Date();
+  }
+
+  toggleStatus() {
+    this._isActive = !this._isActive;
+    this._updatedAt = new Date();
+  }
+
+  softDelete() {
+    this._deletedAt = new Date();
+    this._updatedAt = new Date();
+  }
+
   static fromPersistence( data: IDeliverablePersistence ): Deliverable {
     return new Deliverable(
       data.id,
