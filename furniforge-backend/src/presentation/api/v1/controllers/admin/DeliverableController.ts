@@ -12,6 +12,7 @@ import { AuthRequest } from "../../../middlewares/authMiddleware";
 import { DeliverableCommandRequestDTO } from "../../../../../application/dtos/deliverables/deliverableCommandDTO";
 import type { IToggleDeliverableStatusUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IToggleDeliverableStatusUseCase";
 import type { IUpdateDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IUpdateDeliverableUseCase";
+import type { ISoftDeleteDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/ISoftDeleteDeliverableUseCase";
 
 @injectable()
 export class DeliverableController {
@@ -20,6 +21,7 @@ export class DeliverableController {
     @inject(TYPES.ICreateDeliverableUseCase) private _createDeliverableUseCase: ICreateDeliverableUseCase,
     @inject(TYPES.IToggleDeliverableStatusUseCase) private _toggleDeliverableStatusUseCase: IToggleDeliverableStatusUseCase,
     @inject(TYPES.IUpdateDeliverableUseCase) private _updateDeliverableUseCase: IUpdateDeliverableUseCase,
+    @inject(TYPES.ISoftDeleteDeliverableUseCase) private _softDeleteDeliverableUseCase: ISoftDeleteDeliverableUseCase,
   ) {}
   
 
@@ -51,4 +53,11 @@ export class DeliverableController {
 
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.UPDATED ).build());
   }
+
+  softDeleteDeliverable = async ( req: Request, res: Response ) => {
+    const params = req.params as DeliverableCommandRequestDTO;
+    const result = await this._softDeleteDeliverableUseCase.execute( params );
+
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.DELETED ).build())
+  };
 }

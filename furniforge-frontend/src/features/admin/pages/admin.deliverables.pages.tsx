@@ -145,7 +145,7 @@ export default function AdminDeliverablesPage() {
         onOpenChange={setSoftDeleteOpen}
         title="Archive Deliverable"
         description={`Archive ${deliverableToDelete?.name}?`}
-        confirmText="Archive"
+        confirmText={isSoftDeleting ? "Archiving..." : "Archive"}
         onConfirm={handleConfirmSoftDelete}
       />
 
@@ -154,7 +154,7 @@ export default function AdminDeliverablesPage() {
         onOpenChange={setDeleteOpen}
         title="Delete Deliverable"
         description={`Permanently delete ${deliverableToDelete?.name}?`}
-        confirmText="Delete"
+        confirmText={isDeleting ? "Deleting..." : "Delete"}
         variant="destructive"
         onConfirm={handleConfirmDelete}
       />
