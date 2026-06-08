@@ -11,7 +11,7 @@ import { BadRequestError, UnauthorizedError } from "../../../domain/errors/AppEr
 import { TYPES } from "../../../infrastructure/di/types"
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies";
-import { UserMapper } from "../../../application/mappers/UserMapper";
+import { UserMapper } from "../../../application/mappers/user/UserMapper";
 import { ERROR_CODES } from "../../../shared/constants/errorCodes";
 
 @injectable()

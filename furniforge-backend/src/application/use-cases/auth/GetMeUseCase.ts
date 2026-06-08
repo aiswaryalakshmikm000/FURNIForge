@@ -2,7 +2,7 @@ import { injectable, inject } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { UnauthorizedError } from "../../../domain/errors/AppError";
-import { UserMapper } from "../../mappers/UserMapper";
+import { UserMapper } from "../../mappers/user/UserMapper";
 import type { IGetMeUseCase } from "./interfaces/IGetMeUseCase";
 import type { UserResponseDTO } from "../../dtos/user/userResponseDTO";
 

@@ -33,6 +33,7 @@ model User {
   assignedLeads Lead[]   @relation("DesignerLeads")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  createdDeliverables Deliverable[]
 }
 
 model Lead {
@@ -54,6 +55,21 @@ model Lead {
   convertedAt          DateTime?
   createdAt            DateTime     @default(now())
   updatedAt            DateTime     @updatedAt
+}
+
+model Deliverable {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String
+  icon        String
+  isActive    Boolean  @default(true)
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  deletedAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@index([isActive])
+  @@index([deletedAt])
 }
 
 model Counter {

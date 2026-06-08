@@ -7,16 +7,16 @@ import { PaginationControl } from "../../../shared/components/common/pagination-
 import { EmptyState } from "../../../shared/components/common/EmptyState";
 import { PremiumLoader } from "../../../shared/components/common/loader";
 import { Button } from "../../../shared/components/ui/button";
-import { DesignerCard } from "../components/designers/designer-card";
-import { useGetAllDesigners } from "../hooks/use-get-all-designers";
+import { DesignerCard } from "../../designers/components/designer-card";
+import { useGetAllDesigners } from "../../designers/hooks/use-get-all-designers";
 import { useDebounce } from "../../../shared/hooks/use-debounce";
-import { DesignerFormDialog } from "../components/designers/designer-form-dialog";
-import { useCreateDesigner } from "../hooks/use-create-designer";
-import type { DesignerResponseDTO } from "../types/get-all-designers.type";
-import { useUpdateDesigner } from "../hooks/use-update-designer";
-import { useToggleDesignerBlock } from "../hooks/use-toggle-designer-block";
-import type { DesignerCommandResponseDTO } from "../types/designer-form.type";
-import { useDeleteDesigner } from "../hooks/use-delete-designer";
+import { DesignerFormDialog } from "../../designers/components/designer-form-dialog";
+import { useCreateDesigner } from "../../designers/hooks/use-create-designer";
+import type { DesignerResponseDTO } from "../../designers/types/get-all-designers.type";
+import { useUpdateDesigner } from "../../designers/hooks/use-update-designer";
+import { useToggleDesignerBlock } from "../../designers/hooks/use-toggle-designer-block";
+import type { DesignerCommandResponseDTO } from "../../designers/types/designer-form.type";
+import { useDeleteDesigner } from "../../designers/hooks/use-delete-designer";
 import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
 
 export default function DesignersPage() {

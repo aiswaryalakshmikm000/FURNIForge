@@ -11,7 +11,7 @@ import type { ITokenService } from "../../../domain/services/ITokenService";
 import type { IEmailService } from "../../../domain/services/IEmailService";
 import { env } from "../../../infrastructure/config/env";
 import type { CreateLeadDTO } from "../../dtos/lead/CreateLeadDTO";
-import { LeadCommandMapper } from "../../mappers/LeadCommandMapper";
+import { LeadCommandMapper } from "../../mappers/lead/LeadCommandMapper";
 import { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
 
 @injectable()

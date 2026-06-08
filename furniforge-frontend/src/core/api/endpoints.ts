@@ -35,6 +35,15 @@ export const API_ENDPOINTS = {
       UPDATE: (id: string) => `/admin/designers/${id}`,
       DELETE: (id: string) => `/admin/designers/${id}`
     },
+
+    DELIVERABLES: {
+      GET_ALL: "/admin/deliverables",
+      CREATE: "/admin/deliverables",
+      UPDATE: (id: string) => `/admin/deliverables/${id}`,
+      SOFT_DELETE: (id: string) => `/admin/deliverables/${id}/soft-delete`,
+      DELETE: (id: string) => `/admin/deliverables/${id}`,
+      TOGGLE_STATUS: (id: string) => `/admin/deliverables/${id}/toggle-status`,
+    },
   },
 
   CLIENT: {

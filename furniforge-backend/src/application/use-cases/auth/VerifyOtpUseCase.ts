@@ -17,7 +17,7 @@ import type { ITokenService } from "../../../domain/services/ITokenService";
 import type { ISessionService } from "../../../domain/services/ISessionService";
 import { AuthResult } from "../../../application/dtos/auth/AuthResult";
 import { REFRESH_TOKEN_EXPIRES_DAYS } from "../../../infrastructure/config/cookies";
-import { UserMapper } from "../../../application/mappers/UserMapper";
+import { UserMapper } from "../../../application/mappers/user/UserMapper";
 import type { ICreateLeadUseCase } from "../lead/interfaces/ICreateLeadUseCase";
 
 @injectable()

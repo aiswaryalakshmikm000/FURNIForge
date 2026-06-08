@@ -5,7 +5,7 @@ import type { IUserRepository } from "../../../domain/repositories/IUserReposito
 import type { IGoogleAuthService } from "../../../domain/services/IGoogleAuthService";
 import type { AuthResult } from "../../dtos/auth/AuthResult";
 import { User } from "../../../domain/entities/User";
-import { UserMapper } from "../../mappers/UserMapper";
+import { UserMapper } from "../../mappers/user/UserMapper";
 import type { GoogleAuthDTO } from "../../dtos/auth/GoogleAuthDTO";
 import type { ITokenService } from "../../../domain/services/ITokenService";
 import type { ISessionService } from "../../../domain/services/ISessionService";

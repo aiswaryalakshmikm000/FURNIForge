@@ -12,7 +12,7 @@ import { Email } from "../../../domain/value-objects/Email";
 import { generateRegNo } from "../../../shared/utils/generateRegNo";
 import { User } from "../../../domain/entities/User";
 import { env } from "../../../infrastructure/config/env";
-import { DesignerCommandMapper } from "../../mappers/DesignerCommandMapper";
+import { DesignerCommandMapper } from "../../mappers/designer/DesignerCommandMapper";
 import type { DesignerCommandResponseDTO } from "../../dtos/designer/DesignerCommandDTO";
 
 @injectable()

@@ -28,14 +28,14 @@ export class DesignerController {
     const query = req.query as unknown as GetAllDesignersQueryDTO;
     const result = await this._getAllDesignerUseCase.execute(query);
 
-    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.DESIGNER_FETCH_SUCCESS).build());
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.DESIGNER.FETCH_SUCCESS).build());
   };
 
   createDesigner = async ( req: Request, res: Response ) => {
     const dto = req.body as CreateDesignerDTO;
     const result = await this._createDesignerUseCase.execute(dto);
 
-    res.status(HttpStatusCode.CREATED).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_CREATED).build()) 
+    res.status(HttpStatusCode.CREATED).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER.CREATED).build()) 
   };
 
   updateDesigner = async (req: Request, res: Response) => {
@@ -43,21 +43,20 @@ export class DesignerController {
     const body = req.body as UpdateDesignerDTO;
 
     const result = await this._updateDesignerUseCase.execute(id, body)
-    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_UPDATED).build());
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER.UPDATED).build());
   }
 
   toggleDesignerBlock = async ( req: Request, res: Response ) => {
     const dto = req.params as DesignerCommandRequestDTO;
     const result = await this._toggleDesignerBlockUseCase.execute(dto);
 
-    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_BLOCK_STATUS_UPDATED ).build()) 
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER.BLOCK_STATUS_UPDATED ).build()) 
   };
 
   deleteDesigner = async ( req: Request, res: Response ) => {
     const dto = req.params as DesignerCommandRequestDTO;
-    console.log("delete controller designer")
     const result = await this._deleteDesignerUseCase.execute(dto);
 
-    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER_DELETED ).build()) 
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DESIGNER.DELETED ).build()) 
   }
 }
