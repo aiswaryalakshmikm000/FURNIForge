@@ -13,6 +13,7 @@ import { DeliverableCommandRequestDTO } from "../../../../../application/dtos/de
 import type { IToggleDeliverableStatusUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IToggleDeliverableStatusUseCase";
 import type { IUpdateDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IUpdateDeliverableUseCase";
 import type { ISoftDeleteDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/ISoftDeleteDeliverableUseCase";
+import type { IDeleteDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IDeleteDeliverableUseCase";
 
 @injectable()
 export class DeliverableController {
@@ -22,6 +23,7 @@ export class DeliverableController {
     @inject(TYPES.IToggleDeliverableStatusUseCase) private _toggleDeliverableStatusUseCase: IToggleDeliverableStatusUseCase,
     @inject(TYPES.IUpdateDeliverableUseCase) private _updateDeliverableUseCase: IUpdateDeliverableUseCase,
     @inject(TYPES.ISoftDeleteDeliverableUseCase) private _softDeleteDeliverableUseCase: ISoftDeleteDeliverableUseCase,
+    @inject(TYPES.IDeleteDeliverableUseCase) private _deleteDeliverableUseCase: IDeleteDeliverableUseCase,
   ) {}
   
 
@@ -57,6 +59,13 @@ export class DeliverableController {
   softDeleteDeliverable = async ( req: Request, res: Response ) => {
     const params = req.params as DeliverableCommandRequestDTO;
     const result = await this._softDeleteDeliverableUseCase.execute( params );
+
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.ARCHIVED ).build())
+  };
+
+  deleteDeliverable = async ( req: Request, res: Response ) => {
+    const params = req.params as DeliverableCommandRequestDTO;
+    const result = await this._deleteDeliverableUseCase.execute( params );
 
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.DELETED ).build())
   };

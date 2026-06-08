@@ -43,6 +43,7 @@ export const SUCCESS_MESSAGES = {
       FETCH_SUCCESS: "Deliverables fetched successfully",
       CREATED: "Deliverable created successfully",
       UPDATED: "Deliverable updated successfully",
+      ARCHIVED: "Deliverable archived successfully",
       DELETED: "Deliverable deleted successfully",
       STATUS_UPDATED: "Deliverable status updated successfully",
     },

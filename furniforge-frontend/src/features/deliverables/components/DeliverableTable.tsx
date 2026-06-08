@@ -19,7 +19,7 @@ export const DeliverableTable = ({
   return (
     <div className="bg-card rounded-2xl border border-border shadow-warm overflow-hidden">
       {/* Header */}
-      <div className="grid grid-cols-[80px_180px_1fr_120px_140px_100px] gap-4 px-6 py-3 border-b border-border text-[11px] uppercase tracking-wider text-muted-foreground font-medium">
+      <div className="grid grid-cols-[60px_120px_2fr_60px_120px_90px] gap-4 px-6 py-3 border-b border-border text-[11px] uppercase tracking-wider text-muted-foreground font-medium">
         <span>Icon</span>
         <span>Name</span>
         <span>Description</span>
@@ -32,7 +32,7 @@ export const DeliverableTable = ({
       {deliverables.map((deliverable) => (
         <div
           key={deliverable.id}
-          className="grid grid-cols-[80px_180px_1fr_120px_140px_100px] gap-4 px-6 py-4 border-b border-border last:border-0 items-center hover:bg-muted/20 transition-colors"
+          className="grid grid-cols-[60px_120px_2fr_60px_120px_90px] gap-4 px-6 py-4 border-b border-border last:border-0 items-center hover:bg-muted/20 transition-colors"
         >
           {/* Icon */}
           <div className="flex items-center">

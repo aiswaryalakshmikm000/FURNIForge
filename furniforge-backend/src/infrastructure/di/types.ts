@@ -52,6 +52,7 @@ export const TYPES = {
   IToggleDeliverableStatusUseCase: Symbol.for("IToggleDeliverableStatusUseCase"),
   IUpdateDeliverableUseCase: Symbol.for("IUpdateDeliverableUseCase"),
   ISoftDeleteDeliverableUseCase: Symbol.for("ISoftDeleteDeliverableUseCase"),
+  IDeleteDeliverableUseCase: Symbol.for("IDeleteDeliverableUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

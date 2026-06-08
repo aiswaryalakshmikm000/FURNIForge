@@ -51,6 +51,7 @@ import { CreateDeliverableUseCase } from "../../application/use-cases/deliverabl
 import { ToggleDeliverableStatusUseCase } from "../../application/use-cases/deliverable/ToggleDeliverableStatusUseCase";
 import { UpdateDeliverableUseCase } from "../../application/use-cases/deliverable/UpdateDeliverableUseCase";
 import { SoftDeleteDeliverableUseCase } from "../../application/use-cases/deliverable/SoftDeleteDeliverableUseCase";
+import { DeleteDeliverableUseCase } from "../../application/use-cases/deliverable/DeleteDeliverableUseCase";
 
 const container = new Container();
 
@@ -112,6 +113,7 @@ container.bind(TYPES.ICreateDeliverableUseCase).to(CreateDeliverableUseCase);
 container.bind(TYPES.IToggleDeliverableStatusUseCase).to(ToggleDeliverableStatusUseCase);
 container.bind(TYPES.IUpdateDeliverableUseCase).to(UpdateDeliverableUseCase);
 container.bind(TYPES.ISoftDeleteDeliverableUseCase).to(SoftDeleteDeliverableUseCase);
+container.bind(TYPES.IDeleteDeliverableUseCase).to(DeleteDeliverableUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
