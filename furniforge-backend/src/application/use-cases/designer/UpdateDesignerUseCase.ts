@@ -11,11 +11,11 @@ import type { DesignerCommandResponseDTO } from "../../dtos/designer/DesignerCom
 @injectable()
 export class UpdateDesignerUseCase implements IUpdateDesignerUseCase {
   constructor(
-    @inject(TYPES.IDesignerRepository) private readonly designerRepository: IDesignerRepository
+    @inject(TYPES.IDesignerRepository) private _designerRepository: IDesignerRepository
   ) {}
 
   async execute( designerId: string, dto: UpdateDesignerDTO ): Promise<DesignerCommandResponseDTO> {
-    const designer = await this.designerRepository.findById(designerId);
+    const designer = await this._designerRepository.findById(designerId);
 
     if (!designer) throw new NotFoundError( ERROR_MESSAGES.ADMIN.DESIGNER_NOT_FOUND );
 
@@ -25,7 +25,7 @@ export class UpdateDesignerUseCase implements IUpdateDesignerUseCase {
       phone: dto.phone,
     });
 
-    const updated = await this.designerRepository.update( designer.id, designer );
+    const updated = await this._designerRepository.update( designer.id, designer );
 
     return DesignerCommandMapper.toResponse(updated)
   }

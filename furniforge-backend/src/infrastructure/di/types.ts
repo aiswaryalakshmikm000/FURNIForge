@@ -50,6 +50,7 @@ export const TYPES = {
   IGetAllDeliverablesUseCase: Symbol.for("IGetAllDeliverablesUseCase"),
   ICreateDeliverableUseCase: Symbol.for("ICreateDeliverableUseCase"),
   IToggleDeliverableStatusUseCase: Symbol.for("IToggleDeliverableStatusUseCase"),
+  IUpdateDeliverableUseCase: Symbol.for("IUpdateDeliverableUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

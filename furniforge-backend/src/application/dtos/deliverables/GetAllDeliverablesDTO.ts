@@ -16,6 +16,3 @@ export type GetAllDeliverablesQueryDTO = z.infer< typeof GetAllDeliverablesQuery
 export interface GetAllDeliverablesResponseDTO extends PaginationMeta {
   deliverables: DeliverableResponseDTO[];
 }
-
-
-

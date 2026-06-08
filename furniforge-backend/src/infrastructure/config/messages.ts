@@ -41,7 +41,7 @@ export const SUCCESS_MESSAGES = {
 
     DELIVERABLES: {
       FETCH_SUCCESS: "Deliverables fetched successfully",
-      CREATED: "Deliverable updated successfully",
+      CREATED: "Deliverable created successfully",
       UPDATED: "Deliverable updated successfully",
       DELETED: "Deliverable deleted successfully",
       STATUS_UPDATED: "Deliverable status updated successfully",
@@ -126,7 +126,7 @@ export const ERROR_MESSAGES = {
     DESIGNER_BLOCKED: "Blocked designers cannot be assigned to leads",
 
     DELIVERABLE: {
-      CONFLICT: "Deliverable already exists",
+      CONFLICT: "Deliverable with this name already exists",
       NOT_FOUND: "Deliverable not found",
     },
   },

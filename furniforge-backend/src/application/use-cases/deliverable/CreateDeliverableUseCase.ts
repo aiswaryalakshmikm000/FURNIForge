@@ -4,7 +4,7 @@ import type { IDeliverableRepository } from "../../../domain/repositories/IDeliv
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ICreateDeliverableUseCase } from "./interfaces/ICreateDeliverableUseCase";
 import type { DeliverableCommandResponseDTO } from "../../dtos/deliverables/deliverableCommandDTO";
-import type { CreateDeliverableDTO } from "../../dtos/deliverables/createDeliverableDTO";
+import type { DeliverableFormDTO } from "../../dtos/deliverables/deliverableFormDTO";
 import { DeliverableCommandMapper } from "../../mappers/deliverable/DeliverableCommandMapper";
 import { ConflictError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
@@ -15,7 +15,7 @@ export class CreateDeliverableUseCase implements ICreateDeliverableUseCase{
         @inject(TYPES.IDeliverableRepository) private _deliverableRepository: IDeliverableRepository,
   ) {}
 
-  async execute( dto: CreateDeliverableDTO & {createdById: string}): Promise<DeliverableCommandResponseDTO> {
+  async execute( dto: DeliverableFormDTO & {createdById: string}): Promise<DeliverableCommandResponseDTO> {
 
     const exists = await this._deliverableRepository.findByName(dto.name);
 

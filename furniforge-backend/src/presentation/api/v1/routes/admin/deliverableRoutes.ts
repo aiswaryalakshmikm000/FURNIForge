@@ -8,7 +8,7 @@ import { validateBody, validateParams, validateQuery } from "../../../middleware
 import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
 import { GetAllDeliverablesQuerySchema } from "../../../../../application/dtos/deliverables/GetAllDeliverablesDTO";
 import { DeliverableController } from "../../controllers/admin/DeliverableController";
-import { CreateDeliverableDTOSchema } from "../../../../../application/dtos/deliverables/createDeliverableDTO";
+import { DeliverableFormDTOSchema } from "../../../../../application/dtos/deliverables/deliverableFormDTO";
 import { DeliverableCommandParamsSchema } from "../../../../../application/dtos/deliverables/deliverableCommandDTO";
 
 const router = Router();
@@ -16,8 +16,8 @@ const router = Router();
 const controller = container.get<DeliverableController>( TYPES.DeliverableController );
 
 router.get("/deliverables", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetAllDeliverablesQuerySchema), asyncHandler(controller.getAllDeliverables))
-router.post("/deliverables", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateDeliverableDTOSchema), asyncHandler(controller.createDeliverable) );
-// router.patch( "/deliverables/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), validateBody(UpdateDeliverableDTOSchema), asyncHandler(controller.updateDeliverable) );
+router.post("/deliverables", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(DeliverableFormDTOSchema), asyncHandler(controller.createDeliverable) );
+router.patch( "/deliverables/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), validateBody(DeliverableFormDTOSchema), asyncHandler(controller.updateDeliverable) );
 router.patch( "/deliverables/:id/toggle-status", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.toggleDeliverableStatus) );
 // router.delete( "/deliverables/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.deleteDeliverable) );
 

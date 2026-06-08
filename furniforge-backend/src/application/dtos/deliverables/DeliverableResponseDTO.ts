@@ -6,5 +6,3 @@ export interface DeliverableResponseDTO {
   isActive: boolean;
   createdAt: Date;
 }
-
-

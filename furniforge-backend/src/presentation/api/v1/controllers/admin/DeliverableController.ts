@@ -6,11 +6,12 @@ import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages"
 import type { GetAllDeliverablesQueryDTO } from "../../../../../application/dtos/deliverables/GetAllDeliverablesDTO";
 import type { IGetAllDeliverablesUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IGetAllDeliverablesUseCase";
 import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
-import type { CreateDeliverableDTO } from "../../../../../application/dtos/deliverables/createDeliverableDTO";
+import type { DeliverableFormDTO } from "../../../../../application/dtos/deliverables/deliverableFormDTO";
 import type { ICreateDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/ICreateDeliverableUseCase";
 import { AuthRequest } from "../../../middlewares/authMiddleware";
 import { DeliverableCommandRequestDTO } from "../../../../../application/dtos/deliverables/deliverableCommandDTO";
 import type { IToggleDeliverableStatusUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IToggleDeliverableStatusUseCase";
+import type { IUpdateDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IUpdateDeliverableUseCase";
 
 @injectable()
 export class DeliverableController {
@@ -18,7 +19,9 @@ export class DeliverableController {
     @inject(TYPES.IGetAllDeliverablesUseCase) private _getAllDeliverablesUseCase: IGetAllDeliverablesUseCase,
     @inject(TYPES.ICreateDeliverableUseCase) private _createDeliverableUseCase: ICreateDeliverableUseCase,
     @inject(TYPES.IToggleDeliverableStatusUseCase) private _toggleDeliverableStatusUseCase: IToggleDeliverableStatusUseCase,
+    @inject(TYPES.IUpdateDeliverableUseCase) private _updateDeliverableUseCase: IUpdateDeliverableUseCase,
   ) {}
+  
 
   getAllDeliverables = async (req: Request, res: Response) => {
     const query = req.query as unknown as GetAllDeliverablesQueryDTO;
@@ -28,17 +31,24 @@ export class DeliverableController {
   };
 
   createDeliverable = async ( req: AuthRequest, res: Response ) => {
-    console.log("Hit")
-    const dto = req.body as CreateDeliverableDTO;
+    const dto = req.body as DeliverableFormDTO;
     const result = await this._createDeliverableUseCase.execute({...dto, createdById: req.user!.userId});
 
     res.status(HttpStatusCode.CREATED).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.CREATED ).build() )
   };
 
   toggleDeliverableStatus = async (req: Request, res: Response) => {
-    const dto = req.params as DeliverableCommandRequestDTO;
-    const result = await this._toggleDeliverableStatusUseCase.execute(dto);
+    const params = req.params as DeliverableCommandRequestDTO;
+    const result = await this._toggleDeliverableStatusUseCase.execute(params);
 
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.STATUS_UPDATED).build());
+  }
+
+  updateDeliverable = async (req: Request, res: Response) => {
+    const dto = req.body as DeliverableFormDTO;
+    const params = req.params as DeliverableCommandRequestDTO;
+    const result = await this._updateDeliverableUseCase.execute(params.id, dto)
+
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.UPDATED ).build());
   }
 }
