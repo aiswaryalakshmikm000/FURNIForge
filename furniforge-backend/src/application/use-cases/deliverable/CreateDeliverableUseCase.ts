@@ -19,7 +19,7 @@ export class CreateDeliverableUseCase implements ICreateDeliverableUseCase{
 
     const exists = await this._deliverableRepository.findByName(dto.name);
 
-    if (exists) throw new ConflictError(ERROR_MESSAGES.ADMIN.DELIVERABLE.CONFLICT);
+    if (exists) throw new ConflictError(ERROR_MESSAGES.ADMIN.DELIVERABLE.ALREADY_EXISTS);
 
     const deliverable = Deliverable.create({
       name: dto.name,

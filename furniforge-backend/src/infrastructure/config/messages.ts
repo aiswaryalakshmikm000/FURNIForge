@@ -47,6 +47,13 @@ export const SUCCESS_MESSAGES = {
       DELETED: "Deliverable deleted successfully",
       STATUS_UPDATED: "Deliverable status updated successfully",
     },
+
+    TEMPLATES: {
+      FETCH_SUCCESS: "Templates fetched successfully",
+      CREATED: "Template created successfully",
+      UPDATED: "Template updated successfully",
+      DELETED: "Template deleted successfully",
+    }
   },
 
   USER: {
@@ -127,9 +134,13 @@ export const ERROR_MESSAGES = {
     DESIGNER_BLOCKED: "Blocked designers cannot be assigned to leads",
 
     DELIVERABLE: {
-      CONFLICT: "Deliverable with this name already exists",
+      ALREADY_EXISTS: "Deliverable with this name already exists",
       NOT_FOUND: "Deliverable not found",
     },
+
+    TEMPLATE: {
+      ALREADY_EXISTS: "Deliverable with this name already exists",
+    }
   },
 
   USER: {
