@@ -139,7 +139,8 @@ export const ERROR_MESSAGES = {
     },
 
     TEMPLATE: {
-      ALREADY_EXISTS: "Deliverable with this name already exists",
+      ALREADY_EXISTS: "Template with this name already exists",
+      NOT_FOUND: "Template not found",
     }
   },
 

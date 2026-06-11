@@ -55,6 +55,7 @@ import { DeleteDeliverableUseCase } from "../../application/use-cases/deliverabl
 import { TemplateRepository } from "../database/prisma/repositories/TemplateRepository";
 import { CreateTemplateUseCase } from "../../application/use-cases/template/CreateTemplateUseCase";
 import { TemplateController } from "../../presentation/api/v1/controllers/admin/TemplateController";
+import { UpdateTemplateUseCase } from "../../application/use-cases/template/UpdateTemplateUseCase";
 
 const container = new Container();
 
@@ -120,6 +121,7 @@ container.bind(TYPES.ISoftDeleteDeliverableUseCase).to(SoftDeleteDeliverableUseC
 container.bind(TYPES.IDeleteDeliverableUseCase).to(DeleteDeliverableUseCase);
 
 container.bind(TYPES.ICreateTemplateUseCase).to(CreateTemplateUseCase);
+container.bind(TYPES.IUpdateTemplateUseCase).to(UpdateTemplateUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
