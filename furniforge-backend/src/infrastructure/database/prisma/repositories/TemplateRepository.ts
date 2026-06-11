@@ -1,36 +1,35 @@
 import prisma from "../client";
 import { injectable } from "inversify";
-import { Prisma, Deliverable as PrismaDeliverable } from "../../../../generated/prisma";
+import { Prisma, Template as PrismaTemplate } from "../../../../generated/prisma";
 import { BaseRepository } from "./BaseRepository";
 import { handlePrismaError } from "../errors/handlePrismaError";
-import { Deliverable } from "../../../../domain/entities/Deliverable";
-import { IDeliverableRepository } from "../../../../domain/repositories/IDeliverableRepository";
-import { DeliverableListItem } from "../../../../domain/read-models/deliverable/DeliverableMapper";
-import { PrismaDeliverableMapper } from "../mapper/PrismaDeliverableMapper";
+import { Template } from "../../../../domain/entities/Template";
+import { PrismaTemplateMapper } from "../mapper/PrismaTemplateMapper";
+import { TemplateListItem } from "../../../../domain/read-models/template/TemplateListItem";
+import { ITemplateRepository } from "../../../../domain/repositories/ITemplateRepository";
 
 @injectable()
-export class DeliverableRepository
-  extends BaseRepository< Deliverable, PrismaDeliverable, Prisma.DeliverableCreateInput, Prisma.DeliverableUpdateInput > implements IDeliverableRepository {
-  protected model = prisma.deliverable;
+export class TemplateRepository extends BaseRepository< Template, PrismaTemplate, Prisma.TemplateCreateInput, Prisma.TemplateUpdateInput > implements ITemplateRepository {
+  protected model = prisma.template;
 
-  protected toDomain(raw: PrismaDeliverable): Deliverable {
-    return PrismaDeliverableMapper.toDomain(raw);
+  protected toDomain(raw: PrismaTemplate): Template {
+    return PrismaTemplateMapper.toDomain(raw);
   }
 
-  protected toCreate(entity: Deliverable): Prisma.DeliverableCreateInput {
-    return PrismaDeliverableMapper.toCreatePersistence(entity);
+  protected toCreate(entity: Template): Prisma.TemplateCreateInput {
+    return PrismaTemplateMapper.toCreatePersistence(entity);
   }
 
-  protected toUpdate(entity: Deliverable): Prisma.DeliverableUpdateInput {
-    return PrismaDeliverableMapper.toUpdatePersistence(entity);
+  protected toUpdate(entity: Template): Prisma.TemplateUpdateInput {
+    return PrismaTemplateMapper.toUpdatePersistence(entity);
   }
 
-  async countDeliverables(filters?: {
+  async countTemplates(filters?: {
     search?: string;
     status?: "ACTIVE" | "INACTIVE";
   }): Promise<number> {
     try {
-      const where: Prisma.DeliverableWhereInput = { deletedAt: null };
+      const where: Prisma.TemplateWhereInput = { deletedAt: null };
 
       if (filters?.search) {
         where.OR = [
@@ -53,16 +52,16 @@ export class DeliverableRepository
     }
   }
 
-  async findAllDeliverableRows(params: {
+  async findAllTemplateRows(params: {
     skip: number;
     take: number;
     search?: string;
     status?: "ACTIVE" | "INACTIVE";
     sortBy: "name" | "createdAt";
     sortOrder: "asc" | "desc";
-  }): Promise<DeliverableListItem[]> {
+  }): Promise<TemplateListItem[]> {
     try {
-      const where: Prisma.DeliverableWhereInput = {
+      const where: Prisma.TemplateWhereInput = {
         deletedAt: null,
       };
 
@@ -81,7 +80,7 @@ export class DeliverableRepository
         where.isActive = false;
       }
 
-      let orderBy: Prisma.DeliverableOrderByWithRelationInput = {
+      let orderBy: Prisma.TemplateOrderByWithRelationInput = {
         createdAt: params.sortOrder,
       };
 
@@ -97,8 +96,8 @@ export class DeliverableRepository
         select: {
           id: true,
           name: true,
+          deliverableId: true,
           description: true,
-          icon: true,
           isActive: true,
           createdAt: true,
         },
@@ -107,8 +106,8 @@ export class DeliverableRepository
       return raws.map((raw) => ({
         id: raw.id,
         name: raw.name,
+        deliverableId: raw.deliverableId,
         description: raw.description,
-        icon: raw.icon,
         isActive: raw.isActive,
         createdAt: raw.createdAt,
       }));
@@ -117,11 +116,9 @@ export class DeliverableRepository
     }
   }
 
-  async findByName(name: string): Promise<Deliverable | null> {
-    try {
-      return await this.findFirst({where: {name, deletedAt: null}});
-    } catch (error) {
-      handlePrismaError(error);
-    }
+  async findByDeliverableAndName( deliverableId: string, name: string ): Promise<Template | null> {
+    return await this.findFirst({
+      where: { deliverableId, name, deletedAt: null },
+    });
   }
 }

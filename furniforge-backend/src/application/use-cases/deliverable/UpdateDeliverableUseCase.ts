@@ -22,7 +22,7 @@ export class UpdateDeliverableUseCase implements IUpdateDeliverableUseCase {
   const existing = await this._deliverableRepository.findByName(dto.name);
 
   if ( existing && existing.id !== deliverable.id ) {
-    throw new ConflictError( ERROR_MESSAGES.ADMIN.DELIVERABLE.CONFLICT );
+    throw new ConflictError( ERROR_MESSAGES.ADMIN.DELIVERABLE.ALREADY_EXISTS );
   }
 
   deliverable.update(

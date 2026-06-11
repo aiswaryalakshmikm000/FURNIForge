@@ -18,7 +18,11 @@ export class ToggleDesignerBlockUseCase implements IToggleDesignerBlockUseCase {
 
     if (!designer) throw new NotFoundError( ERROR_MESSAGES.ADMIN.DESIGNER_NOT_FOUND );
 
-    designer.isBlocked ? designer.unblock() : designer.block()
+    if (designer.isBlocked) {
+      designer.unblock();
+    } else {
+      designer.block();
+    }
 
     const updatedDesigner = await this._designerRepository.update(
         designer.id,

@@ -27,7 +27,6 @@ export class PrismaDeliverableMapper {
       description: deliverable.description,
       icon: deliverable.icon,
       isActive: deliverable.isActive,
-
       createdBy: {
         connect: {
           id: deliverable.createdById,

@@ -52,6 +52,12 @@ import { ToggleDeliverableStatusUseCase } from "../../application/use-cases/deli
 import { UpdateDeliverableUseCase } from "../../application/use-cases/deliverable/UpdateDeliverableUseCase";
 import { SoftDeleteDeliverableUseCase } from "../../application/use-cases/deliverable/SoftDeleteDeliverableUseCase";
 import { DeleteDeliverableUseCase } from "../../application/use-cases/deliverable/DeleteDeliverableUseCase";
+import { TemplateRepository } from "../database/prisma/repositories/TemplateRepository";
+import { CreateTemplateUseCase } from "../../application/use-cases/template/CreateTemplateUseCase";
+import { TemplateController } from "../../presentation/api/v1/controllers/admin/TemplateController";
+import { UpdateTemplateUseCase } from "../../application/use-cases/template/UpdateTemplateUseCase";
+import { DeleteTemplateUseCase } from "../../application/use-cases/template/DeleteTemplateUseCase";
+import { ToggleTemplateStatusUseCase } from "../../application/use-cases/template/ToggleTemplateStatusUseCase";
 
 const container = new Container();
 
@@ -68,6 +74,7 @@ container.bind(TYPES.IPendingUserRepository).to(RedisPendingUserRepository);
 container.bind(TYPES.ILeadRepository).to(LeadRepository);
 container.bind(TYPES.IDesignerRepository).to(DesignerRepository);
 container.bind(TYPES.IDeliverableRepository).to(DeliverableRepository);
+container.bind(TYPES.ITemplateRepository).to(TemplateRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -115,10 +122,16 @@ container.bind(TYPES.IUpdateDeliverableUseCase).to(UpdateDeliverableUseCase);
 container.bind(TYPES.ISoftDeleteDeliverableUseCase).to(SoftDeleteDeliverableUseCase);
 container.bind(TYPES.IDeleteDeliverableUseCase).to(DeleteDeliverableUseCase);
 
+container.bind(TYPES.ICreateTemplateUseCase).to(CreateTemplateUseCase);
+container.bind(TYPES.IUpdateTemplateUseCase).to(UpdateTemplateUseCase);
+container.bind(TYPES.IDeleteTemplateUseCase).to(DeleteTemplateUseCase);
+container.bind(TYPES.IToggleTemplateStatusUseCase).to(ToggleTemplateStatusUseCase);
+
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
 container.bind(TYPES.LeadController).to(LeadController);
 container.bind(TYPES.DesignerController).to(DesignerController);
 container.bind(TYPES.DeliverableController).to(DeliverableController);
+container.bind(TYPES.TemplateController).to(TemplateController);
 
 export { container };
