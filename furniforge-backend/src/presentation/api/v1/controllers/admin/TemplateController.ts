@@ -11,6 +11,7 @@ import { UpdateTemplateDTO } from "../../../../../application/dtos/templates/Upd
 import type { IUpdateTemplateUseCase } from "../../../../../application/use-cases/template/interfaces/IUpdateTemplateUseCase";
 import type { TemplateCommandRequestDTO } from "../../../../../application/dtos/templates/templateCommandDTO";
 import type { IDeleteTemplateUseCase } from "../../../../../application/use-cases/template/interfaces/IDeleteTemplateUseCase";
+import type { IToggleTemplateStatusUseCase } from "../../../../../application/use-cases/template/interfaces/IToggleTemplateStatusUseCase";
 
 @injectable()
 export class TemplateController {
@@ -18,6 +19,7 @@ export class TemplateController {
     @inject(TYPES.ICreateTemplateUseCase) private _createTemplateUseCase: ICreateTemplateUseCase,
     @inject(TYPES.IUpdateTemplateUseCase) private _updateTemplateUseCase: IUpdateTemplateUseCase,
     @inject(TYPES.IDeleteTemplateUseCase) private _deleteTemplateUseCase: IDeleteTemplateUseCase,
+    @inject(TYPES.IToggleTemplateStatusUseCase) private _toggleTemplateStatusUseCase: IToggleTemplateStatusUseCase,
   ) {}
 
   createTemplate = async ( req: AuthRequest, res: Response ) => {
@@ -40,6 +42,13 @@ export class TemplateController {
   const result = await this._deleteTemplateUseCase.execute(params);
 
   res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TEMPLATES.DELETED ).build());
+  };
+
+  toggleTemplateStatus = async (req: Request, res: Response) => {
+  const  params = req.params as TemplateCommandRequestDTO;
+  const result = await this._toggleTemplateStatusUseCase.execute(params);
+
+  res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TEMPLATES.UPDATED ).build());
   };
 }
 

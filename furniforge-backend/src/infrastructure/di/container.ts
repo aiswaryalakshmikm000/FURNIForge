@@ -57,6 +57,7 @@ import { CreateTemplateUseCase } from "../../application/use-cases/template/Crea
 import { TemplateController } from "../../presentation/api/v1/controllers/admin/TemplateController";
 import { UpdateTemplateUseCase } from "../../application/use-cases/template/UpdateTemplateUseCase";
 import { DeleteTemplateUseCase } from "../../application/use-cases/template/DeleteTemplateUseCase";
+import { ToggleTemplateStatusUseCase } from "../../application/use-cases/template/ToggleTemplateStatusUseCase";
 
 const container = new Container();
 
@@ -124,6 +125,7 @@ container.bind(TYPES.IDeleteDeliverableUseCase).to(DeleteDeliverableUseCase);
 container.bind(TYPES.ICreateTemplateUseCase).to(CreateTemplateUseCase);
 container.bind(TYPES.IUpdateTemplateUseCase).to(UpdateTemplateUseCase);
 container.bind(TYPES.IDeleteTemplateUseCase).to(DeleteTemplateUseCase);
+container.bind(TYPES.IToggleTemplateStatusUseCase).to(ToggleTemplateStatusUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

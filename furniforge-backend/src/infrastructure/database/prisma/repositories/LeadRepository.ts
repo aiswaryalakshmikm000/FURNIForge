@@ -62,7 +62,7 @@ export class LeadRepository
                 ] } : {},
           filters?.status ? { status: filters.status as LeadStatus } : {},
           filters?.source ? { source: filters.source as LeadSource } : {},
-          filters?. deliverable ? { projectsInterestedIn: {has: filters.deliverable}} : {}
+          filters?.deliverable ? { projectsInterestedIn: {has: filters.deliverable}} : {}
         ],
       };
 

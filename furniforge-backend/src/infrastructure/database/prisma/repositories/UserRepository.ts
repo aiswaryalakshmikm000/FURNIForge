@@ -65,11 +65,7 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
 
   async findByOAuthId(provider: string, oauthId: string): Promise<User | null> {
     try {
-      const raw = await this.model.findFirst({ 
-          where: {oauthProvider:provider, oauthId}}
-      );
-      return raw ? this.toDomain(raw) : null;
-
+      return await this.findFirst({ where: {oauthProvider:provider, oauthId}} );
     } catch (error) {
       handlePrismaError(error)
     }

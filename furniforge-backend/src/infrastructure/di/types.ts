@@ -58,6 +58,7 @@ export const TYPES = {
   ICreateTemplateUseCase: Symbol.for("ICreateTemplateUseCase"),
   IUpdateTemplateUseCase: Symbol.for("IUpdateTemplateUseCase"),
   IDeleteTemplateUseCase: Symbol.for("IDeleteTemplateUseCase"),
+  IToggleTemplateStatusUseCase: Symbol.for("IToggleTemplateStatusUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

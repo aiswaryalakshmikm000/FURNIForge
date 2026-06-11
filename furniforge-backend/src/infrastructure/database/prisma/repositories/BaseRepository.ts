@@ -5,6 +5,7 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
   protected abstract model: {
     create(args: { data: TCreateInput }): Promise<TPrisma>;
     findUnique(args: any): Promise<TPrisma | null>; 
+    findFirst(args?: any): Promise<TPrisma | null>;
     findMany(args?: any): Promise<TPrisma[]>; 
     update(args: { where: any; data: TUpdateInput }): Promise<TPrisma>;
     delete(args: { where: any }): Promise<TPrisma>;
@@ -30,6 +31,15 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
       const raw = await this.model.findUnique({ where: { id }});
       return raw ? this.toDomain(raw) : null;
 
+    } catch (error) {
+      handlePrismaError(error);
+    }
+  }
+
+  async findFirst(params?: any): Promise<TDomain | null> {
+    try {
+      const raw = await this.model.findFirst(params);
+      return raw ? this.toDomain(raw) : null;
     } catch (error) {
       handlePrismaError(error);
     }

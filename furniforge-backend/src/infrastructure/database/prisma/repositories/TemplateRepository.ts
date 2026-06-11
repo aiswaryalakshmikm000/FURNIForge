@@ -117,10 +117,8 @@ export class TemplateRepository extends BaseRepository< Template, PrismaTemplate
   }
 
   async findByDeliverableAndName( deliverableId: string, name: string ): Promise<Template | null> {
-  const raw = await prisma.template.findFirst({
-    where: { deliverableId, name, deletedAt: null },
-  });
-
-  return raw ? this.toDomain(raw) : null;
-}
+    return await this.findFirst({
+      where: { deliverableId, name, deletedAt: null },
+    });
+  }
 }

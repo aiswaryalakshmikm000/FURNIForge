@@ -118,7 +118,10 @@ export class DeliverableRepository
   }
 
   async findByName(name: string): Promise<Deliverable | null> {
-    const raw = await prisma.deliverable.findFirst({where: {name, deletedAt: null}});
-    return raw ? this.toDomain(raw) : null
+    try {
+      return await this.findFirst({where: {name, deletedAt: null}});
+    } catch (error) {
+      handlePrismaError(error);
+    }
   }
 }
