@@ -56,6 +56,7 @@ import { TemplateRepository } from "../database/prisma/repositories/TemplateRepo
 import { CreateTemplateUseCase } from "../../application/use-cases/template/CreateTemplateUseCase";
 import { TemplateController } from "../../presentation/api/v1/controllers/admin/TemplateController";
 import { UpdateTemplateUseCase } from "../../application/use-cases/template/UpdateTemplateUseCase";
+import { DeleteTemplateUseCase } from "../../application/use-cases/template/DeleteTemplateUseCase";
 
 const container = new Container();
 
@@ -122,6 +123,7 @@ container.bind(TYPES.IDeleteDeliverableUseCase).to(DeleteDeliverableUseCase);
 
 container.bind(TYPES.ICreateTemplateUseCase).to(CreateTemplateUseCase);
 container.bind(TYPES.IUpdateTemplateUseCase).to(UpdateTemplateUseCase);
+container.bind(TYPES.IDeleteTemplateUseCase).to(DeleteTemplateUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

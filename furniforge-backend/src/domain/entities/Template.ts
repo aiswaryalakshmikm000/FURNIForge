@@ -43,11 +43,6 @@ export class Template {
     this._updatedAt = new Date();
   }
 
-  softDelete() {
-    this._deletedAt = new Date();
-    this._updatedAt = new Date();
-  }
-
   static fromPersistence(
     data: ITemplatePersistence,
   ): Template {

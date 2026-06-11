@@ -17,5 +17,6 @@ const controller = container.get<TemplateController>( TYPES.TemplateController )
 
 router.post("/templates", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateTemplateDTOSchema), asyncHandler(controller.createTemplate) );
 router.put("/templates/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TemplateCommandParamsSchema), validateBody(UpdateTemplateDTOSchema), asyncHandler(controller.updateTemplate));
+router.delete("/templates/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TemplateCommandParamsSchema), asyncHandler(controller.deleteTemplate) );
 
 export default router;

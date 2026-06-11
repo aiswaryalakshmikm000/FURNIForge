@@ -70,7 +70,6 @@ model Deliverable {
   deletedAt   DateTime?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-
   @@index([isActive])
   @@index([deletedAt])
 }
@@ -88,7 +87,6 @@ model Template {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   deletedAt     DateTime?
-
   @@unique([deliverableId, name])
   @@index([deliverableId])
 }
@@ -102,7 +100,6 @@ model TemplateTab {
   fields       TemplateField[]
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
-
   @@unique([templateId, name])
   @@index([templateId])
 }
@@ -121,7 +118,6 @@ model TemplateField {
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
   requestValues RequestFieldValue[]
-
   @@unique([tabId, label])
   @@unique([tabId, fieldKey])
   @@index([tabId])
@@ -134,7 +130,6 @@ model RequestFieldValue {
   field     TemplateField @relation(fields: [fieldId], references: [id])
   value     Json
   createdAt DateTime      @default(now())
-
   @@index([fieldId])
 }
 
