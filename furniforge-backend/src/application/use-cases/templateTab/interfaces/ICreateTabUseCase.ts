@@ -1,7 +1,7 @@
-import { TabCommandResponseDTO } from "../../../dtos/templateTabs/templateTabCommandDTO";
-import { TemplateTabFormDTO } from "../../../dtos/templateTabs/templateTabFormDTO";
+import { TabCommandResponseDTO } from "../../../dtos/templateTabs/tabCommandDTO";
+import { CreateTabDTO } from "../../../dtos/templateTabs/createTabDTO";
 
 
 export interface ICreateTabUseCase {
-  execute( dto: TemplateTabFormDTO ): Promise<TabCommandResponseDTO>;
+  execute( dto: CreateTabDTO ): Promise<TabCommandResponseDTO>;
 }

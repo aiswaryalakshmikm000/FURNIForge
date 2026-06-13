@@ -1,6 +1,6 @@
 import { ITemplateTabPersistence } from "../types/ITemplateTaPersistance";
 
-export class TemplateTab {
+export class Tab {
 
   private constructor(
     private _id: string,
@@ -17,7 +17,7 @@ export class TemplateTab {
     name: string;
     displayOrder: number;
   }) {
-    return new TemplateTab(
+    return new Tab(
       crypto.randomUUID(),
       data.templateId,
       data.name,
@@ -28,10 +28,7 @@ export class TemplateTab {
     );
   }
 
-  update(
-    name: string,
-    displayOrder: number,
-  ) {
+  update( name: string, displayOrder: number ) {
     this._name = name;
     this._displayOrder = displayOrder;
     this._updatedAt = new Date();
@@ -43,7 +40,7 @@ export class TemplateTab {
   }
 
   static fromPersistence( data: ITemplateTabPersistence ) {
-    return new TemplateTab(
+    return new Tab(
       data.id,
       data.templateId,
       data.name,

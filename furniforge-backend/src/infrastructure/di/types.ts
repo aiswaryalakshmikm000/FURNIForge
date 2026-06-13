@@ -10,7 +10,7 @@ export const TYPES = {
   IDesignerRepository: Symbol.for("IDesignerRepository"),
   IDeliverableRepository: Symbol.for("IDeliverableRepository"),
   ITemplateRepository: Symbol.for("ITemplateRepository"),
-  ITemplateTabRepository: Symbol.for("ITemplateTabRepository"),
+  ITabRepository: Symbol.for("ITabRepository"),
 
   IPasswordService: Symbol.for("IPasswordService"),
   IOtpService: Symbol.for("IOtpService"),
@@ -62,11 +62,12 @@ export const TYPES = {
   IToggleTemplateStatusUseCase: Symbol.for("IToggleTemplateStatusUseCase"),
 
   ICreateTabUseCase: Symbol.for("ICreateTabUseCase"),
+  IUpdateTabUseCase: Symbol.for("UpdateTabUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),
   DesignerController: Symbol.for("DesignerController"),
   DeliverableController: Symbol.for("DeliverableController"),
   TemplateController: Symbol.for("TemplateController"),
-  TemplateTabController: Symbol.for("TemplateTabController"),
+  TabController: Symbol.for("TabController"),
 };

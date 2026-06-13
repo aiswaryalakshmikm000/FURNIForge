@@ -3,16 +3,19 @@ import { container } from "../../../../../infrastructure/di/container";
 import { authMiddleware } from "../../../middlewares/authMiddleware";
 import { authorizeRoles } from "../../../middlewares/roleGuardMiddleware";
 import { UserRole } from "../../../../../domain/enums/UserRole";
-import { validateBody } from "../../../middlewares/validationMiddleware";
+import { validateBody, validateParams } from "../../../middlewares/validationMiddleware";
 import { TYPES } from "../../../../../infrastructure/di/types";
 import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
-import { TemplateTabFormDTOSchema } from "../../../../../application/dtos/templateTabs/templateTabFormDTO";
-import { TemplateTabController } from "../../controllers/admin/TemplateTabController";
+import { TabController } from "../../controllers/admin/TabController";
+import { CreateTabDTOSchema } from "../../../../../application/dtos/templateTabs/createTabDTO";
+import { TabCommandParamsSchema } from "../../../../../application/dtos/templateTabs/tabCommandDTO";
+import { UpdateTabDTOSchema } from "../../../../../application/dtos/templateTabs/updateTabDTO";
 
 const router = Router();
 
-const controller = container.get<TemplateTabController>( TYPES.TemplateTabController );
+const controller = container.get<TabController>( TYPES.TabController );
 
-router.post("/tabs", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(TemplateTabFormDTOSchema), asyncHandler(controller.createTab) );
+router.post("/tabs", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateTabDTOSchema), asyncHandler(controller.createTab));
+router.patch("/tabs/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TabCommandParamsSchema), validateBody(UpdateTabDTOSchema), asyncHandler(controller.updateTab));
 
 export default router;

@@ -1,10 +1,10 @@
 import { Prisma, TemplateTab as PrismaTemplateTab } from "../../../../generated/prisma";
-import { TemplateTab } from "../../../../domain/entities/TemplateTab";
+import { Tab } from "../../../../domain/entities/Tab";
 
-export class PrismaTemplateTabMapper {
+export class PrismaTabMapper {
 
-  static toDomain( raw: PrismaTemplateTab ): TemplateTab {
-    return TemplateTab.fromPersistence({
+  static toDomain( raw: PrismaTemplateTab ): Tab {
+    return Tab.fromPersistence({
       id: raw.id,
       templateId: raw.templateId,
       name: raw.name,
@@ -15,7 +15,7 @@ export class PrismaTemplateTabMapper {
     });
   }
 
-  static toCreatePersistence( tab: TemplateTab ): Prisma.TemplateTabCreateInput {
+  static toCreatePersistence( tab: Tab ): Prisma.TemplateTabCreateInput {
     return {
       id: tab.id,
       name: tab.name,
@@ -29,7 +29,7 @@ export class PrismaTemplateTabMapper {
     };
   }
 
-  static toUpdatePersistence( tab: TemplateTab ): Prisma.TemplateTabUpdateInput {
+  static toUpdatePersistence( tab: Tab ): Prisma.TemplateTabUpdateInput {
     return {
       name: tab.name,
       displayOrder: tab.displayOrder,

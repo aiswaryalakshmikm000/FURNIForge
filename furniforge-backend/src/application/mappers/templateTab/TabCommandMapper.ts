@@ -1,8 +1,8 @@
-import { TemplateTab } from "../../../domain/entities/TemplateTab";
-import { TabCommandResponseDTO } from "../../dtos/templateTabs/templateTabCommandDTO";
+import { Tab } from "../../../domain/entities/Tab";
+import { TabCommandResponseDTO } from "../../dtos/templateTabs/tabCommandDTO";
 
 export class TabCommandMapper {
-  static toResponse( tab: TemplateTab ): TabCommandResponseDTO {
+  static toResponse( tab: Tab ): TabCommandResponseDTO {
     return {
       id: tab.id,
     };

@@ -58,9 +58,10 @@ import { TemplateController } from "../../presentation/api/v1/controllers/admin/
 import { UpdateTemplateUseCase } from "../../application/use-cases/template/UpdateTemplateUseCase";
 import { DeleteTemplateUseCase } from "../../application/use-cases/template/DeleteTemplateUseCase";
 import { ToggleTemplateStatusUseCase } from "../../application/use-cases/template/ToggleTemplateStatusUseCase";
-import { TemplateTabRepository } from "../database/prisma/repositories/TemplateTabRepository";
 import { CreateTabUseCase } from "../../application/use-cases/templateTab/CreateTabUseCase";
-import { TemplateTabController } from "../../presentation/api/v1/controllers/admin/TemplateTabController";
+import { TabController } from "../../presentation/api/v1/controllers/admin/TabController";
+import { TabRepository } from "../database/prisma/repositories/TemplateTabRepository";
+import { UpdateTabUseCase } from "../../application/use-cases/templateTab/UpdateTabUseCase";
 
 const container = new Container();
 
@@ -78,7 +79,7 @@ container.bind(TYPES.ILeadRepository).to(LeadRepository);
 container.bind(TYPES.IDesignerRepository).to(DesignerRepository);
 container.bind(TYPES.IDeliverableRepository).to(DeliverableRepository);
 container.bind(TYPES.ITemplateRepository).to(TemplateRepository);
-container.bind(TYPES.ITemplateTabRepository).to(TemplateTabRepository);
+container.bind(TYPES.ITabRepository).to(TabRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -132,6 +133,8 @@ container.bind(TYPES.IDeleteTemplateUseCase).to(DeleteTemplateUseCase);
 container.bind(TYPES.IToggleTemplateStatusUseCase).to(ToggleTemplateStatusUseCase);
 
 container.bind(TYPES.ICreateTabUseCase).to(CreateTabUseCase);
+container.bind(TYPES.IUpdateTabUseCase).to(UpdateTabUseCase);
+
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
@@ -139,6 +142,6 @@ container.bind(TYPES.LeadController).to(LeadController);
 container.bind(TYPES.DesignerController).to(DesignerController);
 container.bind(TYPES.DeliverableController).to(DeliverableController);
 container.bind(TYPES.TemplateController).to(TemplateController);
-container.bind(TYPES.TemplateTabController).to(TemplateTabController);
+container.bind(TYPES.TabController).to(TabController);
 
 export { container };

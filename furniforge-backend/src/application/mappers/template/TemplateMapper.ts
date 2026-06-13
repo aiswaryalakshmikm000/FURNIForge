@@ -2,9 +2,7 @@ import { TemplateListItem } from "../../../domain/read-models/template/TemplateL
 import { TemplateResponseDTO } from "../../dtos/templates/TemplateResponseDTO";
 
 export class TemplateMapper {
-  static toResponse(
-    template: TemplateListItem,
-  ): TemplateResponseDTO {
+  static toResponse( template: TemplateListItem ): TemplateResponseDTO {
     return {
       id: template.id,
       name: template.name,
@@ -13,3 +11,4 @@ export class TemplateMapper {
     };
   }
 }
+
