@@ -15,11 +15,9 @@ export class DeleteDeliverableUseCase implements IDeleteDeliverableUseCase {
 
   async execute( dto: DeliverableCommandRequestDTO ): Promise<DeliverableCommandResponseDTO> {
     const deliverable = await this._deliverableRepository.findById(dto.id);
-
     if (!deliverable) throw new NotFoundError( ERROR_MESSAGES.ADMIN.DELIVERABLE.NOT_FOUND );
     
     await this._deliverableRepository.delete(dto.id);
-
     return DeliverableCommandMapper.toResponse( deliverable );
   }
 }

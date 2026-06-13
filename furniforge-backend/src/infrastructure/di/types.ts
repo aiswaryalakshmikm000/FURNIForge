@@ -63,6 +63,7 @@ export const TYPES = {
 
   ICreateTabUseCase: Symbol.for("ICreateTabUseCase"),
   IUpdateTabUseCase: Symbol.for("UpdateTabUseCase"),
+  IDeleteTabUseCase: Symbol.for("IDeleteTabUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

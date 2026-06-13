@@ -7,7 +7,7 @@ import adminLeadRoutes from "./presentation/api/v1/routes/admin/leadRoutes"
 import adminDesignerRoutes from "./presentation/api/v1/routes/admin/designerRoutes"
 import adminDeliverableRoutes from "./presentation/api/v1/routes/admin/deliverableRoutes"
 import adminTemplateRoutes from "./presentation/api/v1/routes/admin/templateRoutes"
-import adminTemplateTabRoutes from "./presentation/api/v1/routes/admin/templateTabRoutes"
+import adminTemplateTabRoutes from "./presentation/api/v1/routes/admin/TabRoutes"
 import { SUCCESS_MESSAGES } from "./infrastructure/config/messages";
 import { morganConfig } from "./infrastructure/config/morganConfig";
 import { cookieConfig } from "./infrastructure/config/cookieConfig";

@@ -1,4 +1,4 @@
-import { ITemplateTabPersistence } from "../types/ITemplateTaPersistance";
+import { ITabPersistence } from "../types/ITabPersistance";
 
 export class Tab {
 
@@ -39,7 +39,7 @@ export class Tab {
     this._updatedAt = new Date()
   }
 
-  static fromPersistence( data: ITemplateTabPersistence ) {
+  static fromPersistence( data: ITabPersistence ) {
     return new Tab(
       data.id,
       data.templateId,

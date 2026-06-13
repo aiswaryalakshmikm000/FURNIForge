@@ -94,7 +94,7 @@ model Template {
 model TemplateTab {
   id           String          @id @default(uuid())
   templateId   String
-  template     Template        @relation(fields: [templateId], references: [id])
+  template     Template        @relation(fields: [templateId], references: [id], onDelete: Cascade)
   name         String
   displayOrder Int
   isActive     Boolean @default(true)
@@ -108,7 +108,7 @@ model TemplateTab {
 model TemplateField {
   id            String              @id @default(uuid())
   tabId         String
-  tab           TemplateTab         @relation(fields: [tabId], references: [id])
+  tab           TemplateTab         @relation(fields: [tabId], references: [id], onDelete: Cascade)
   label         String
   fieldKey      String
   fieldType     FieldType

@@ -21,7 +21,7 @@ router.get("/leads", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQue
 router.patch("/leads/:id/assign-designer", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(LeadCommandParamsSchema), validateBody(AssignDesignerSchema), asyncHandler(controller.assignDesigner))
 router.get("/leads/designers-options", authMiddleware, authorizeRoles(UserRole.ADMIN), asyncHandler(controller.getDesignerOptions))
 router.post("/leads", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateLeadDTOSchema), asyncHandler(controller.createManualLead))
-router.delete("/leads/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(LeadCommandParamsSchema), asyncHandler(controller.deleteLead));
+router.delete("/leads/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(LeadCommandParamsSchema), asyncHandler(controller.deleteLead)); // no need
 router.patch("/leads/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(LeadCommandParamsSchema), validateBody(UpdateLeadDTOSchema), asyncHandler(controller.updateLead ));
 
 export default router;

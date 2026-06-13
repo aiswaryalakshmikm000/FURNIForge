@@ -1,4 +1,4 @@
-export interface ITemplateTabPersistence {
+export interface ITabPersistence {
   id: string;
   templateId: string;
   name: string;

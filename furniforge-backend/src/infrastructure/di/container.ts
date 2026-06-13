@@ -60,8 +60,9 @@ import { DeleteTemplateUseCase } from "../../application/use-cases/template/Dele
 import { ToggleTemplateStatusUseCase } from "../../application/use-cases/template/ToggleTemplateStatusUseCase";
 import { CreateTabUseCase } from "../../application/use-cases/templateTab/CreateTabUseCase";
 import { TabController } from "../../presentation/api/v1/controllers/admin/TabController";
-import { TabRepository } from "../database/prisma/repositories/TemplateTabRepository";
+import { TabRepository } from "../database/prisma/repositories/TabRepository";
 import { UpdateTabUseCase } from "../../application/use-cases/templateTab/UpdateTabUseCase";
+import { DeleteTabUseCase } from "../../application/use-cases/templateTab/DeleteTabUseCase";
 
 const container = new Container();
 
@@ -134,6 +135,7 @@ container.bind(TYPES.IToggleTemplateStatusUseCase).to(ToggleTemplateStatusUseCas
 
 container.bind(TYPES.ICreateTabUseCase).to(CreateTabUseCase);
 container.bind(TYPES.IUpdateTabUseCase).to(UpdateTabUseCase);
+container.bind(TYPES.IDeleteTabUseCase).to(DeleteTabUseCase);
 
 
 // Controller

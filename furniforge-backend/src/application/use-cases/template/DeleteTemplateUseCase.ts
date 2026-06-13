@@ -13,7 +13,7 @@ import { TemplateCommandMapper } from "../../mappers/template/TemplateCommandMap
 @injectable()
 export class DeleteTemplateUseCase implements IDeleteTemplateUseCase {
   constructor(
-    @inject(TYPES.ITemplateRepository) private readonly _templateRepository: ITemplateRepository,
+    @inject(TYPES.ITemplateRepository) private _templateRepository: ITemplateRepository,
   ) {}
 
   async execute( dto: TemplateCommandRequestDTO, ): Promise<TemplateCommandResponseDTO> {
@@ -22,7 +22,6 @@ export class DeleteTemplateUseCase implements IDeleteTemplateUseCase {
     if (!template)  throw new NotFoundError( ERROR_MESSAGES.ADMIN.TEMPLATE.NOT_FOUND );
 
     await this._templateRepository.delete( dto.id );
-
     return TemplateCommandMapper.toResponse(template);
   }
 }
