@@ -2,9 +2,7 @@ import { Template } from "../../../../domain/entities/Template";
 import { Prisma, Template as PrismaTemplate } from "../../../../generated/prisma";
 
 export class PrismaTemplateMapper {
-  static toDomain(
-    raw: PrismaTemplate,
-  ): Template {
+  static toDomain( raw: PrismaTemplate ): Template {
     return Template.fromPersistence({
       id: raw.id,
       deliverableId: raw.deliverableId,
@@ -18,9 +16,7 @@ export class PrismaTemplateMapper {
     });
   }
 
-  static toCreatePersistence(
-    template: Template,
-  ): Prisma.TemplateCreateInput {
+  static toCreatePersistence( template: Template ): Prisma.TemplateCreateInput {
     return {
       id: template.id,
       name: template.name,
@@ -35,9 +31,7 @@ export class PrismaTemplateMapper {
     };
   }
 
-  static toUpdatePersistence(
-    template: Template,
-  ): Prisma.TemplateUpdateInput {
+  static toUpdatePersistence( template: Template ): Prisma.TemplateUpdateInput {
     return {
       name: template.name,
       description: template.description,

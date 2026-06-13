@@ -194,6 +194,7 @@ exports.Prisma.TemplateTabScalarFieldEnum = {
   templateId: 'templateId',
   name: 'name',
   displayOrder: 'displayOrder',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -207,6 +208,7 @@ exports.Prisma.TemplateFieldScalarFieldEnum = {
   displayOrder: 'displayOrder',
   options: 'options',
   defaultValue: 'defaultValue',
+  isActive: 'isActive',
   isRequired: 'isRequired',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

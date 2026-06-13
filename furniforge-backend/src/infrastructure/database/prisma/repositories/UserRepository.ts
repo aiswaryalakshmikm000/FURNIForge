@@ -45,7 +45,10 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
 
   async updatePassword(id: string, passwordHash: string): Promise<void> {
     try {
-      await this.model.update({ where: { id }, data: { passwordHash } });
+      await this.model.update({ 
+        where: { id }, 
+        data: { passwordHash } 
+      });
     } catch (error) {
       handlePrismaError(error);
     }
@@ -73,7 +76,7 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
 
   async linkGoogleAccount(userId: string, googleId: string): Promise<void> {
     try {
-      await this.model.update({
+      await this.model.update({ 
         where: {id: userId}, 
         data: {oauthProvider: "google", oauthId: googleId}
       })
