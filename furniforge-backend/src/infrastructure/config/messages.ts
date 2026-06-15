@@ -58,7 +58,7 @@ export const SUCCESS_MESSAGES = {
     TABS: {
       FETCH_SUCCESS: "Tab fetched successfully",
       CREATED: "Tab created successfully",
-      UPDATED: "Tab updated successfully",
+      UPDATED: "Tab status updated successfully",
       DELETED: "Tab deleted successfully",
     }
   },

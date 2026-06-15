@@ -60,10 +60,12 @@ export const TYPES = {
   IUpdateTemplateUseCase: Symbol.for("IUpdateTemplateUseCase"),
   IDeleteTemplateUseCase: Symbol.for("IDeleteTemplateUseCase"),
   IToggleTemplateStatusUseCase: Symbol.for("IToggleTemplateStatusUseCase"),
+  ISoftDeleteTemplateUseCase: Symbol.for("ISoftDeleteTemplateUseCase"),
 
   ICreateTabUseCase: Symbol.for("ICreateTabUseCase"),
   IUpdateTabUseCase: Symbol.for("UpdateTabUseCase"),
   IDeleteTabUseCase: Symbol.for("IDeleteTabUseCase"),
+  IToggleTabStatusUseCase: Symbol.for("IToggleTabStatusUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

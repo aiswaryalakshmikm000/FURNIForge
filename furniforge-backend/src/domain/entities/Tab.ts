@@ -7,7 +7,7 @@ export class Tab {
     private _templateId: string,
     private _name: string,
     private _displayOrder: number,
-    private _isActive: Boolean,
+    private _isActive: boolean,
     private _createdAt: Date,
     private _updatedAt: Date,
   ) {}
@@ -34,9 +34,9 @@ export class Tab {
     this._updatedAt = new Date();
   }
 
-  toggleSatus() {
-    this._isActive = !this._isActive,
-    this._updatedAt = new Date()
+  toggleStatus() {
+    this._isActive = !this._isActive;
+    this._updatedAt = new Date();
   }
 
   static fromPersistence( data: ITabPersistence ) {

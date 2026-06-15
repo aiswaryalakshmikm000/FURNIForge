@@ -2,7 +2,7 @@ export interface TabListItem {
   id: string;
   templateId: string;
   name: string;
-  displayOrder: Number;
+  displayOrder: number;
   isActive: boolean;
   createdAt: Date;
 }

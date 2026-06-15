@@ -10,6 +10,7 @@ import type { UpdateTabDTO } from "../../../../../application/dtos/templateTabs/
 import type { IUpdateTabUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IUpdateTabUseCase";
 import type { IDeleteTabUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IDeleteTabUseCase";
 import type { TabCommandRequestDTO } from "../../../../../application/dtos/templateTabs/tabCommandDTO";
+import type { IToggleTabStatusUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IToggleTabUseCase";
 
 @injectable()
 export class TabController {
@@ -17,6 +18,7 @@ export class TabController {
     @inject(TYPES.ICreateTabUseCase) private _createTabUseCase: ICreateTabUseCase,
     @inject(TYPES.IUpdateTabUseCase) private _updateTabUseCase: IUpdateTabUseCase,
     @inject(TYPES.IDeleteTabUseCase) private _deleteTabUseCase: IDeleteTabUseCase,
+    @inject(TYPES.IToggleTabStatusUseCase) private _toggleTabStatusUseCase: IToggleTabStatusUseCase,
 ) {}
 
   createTab = async ( req: Request, res: Response ) => {
@@ -39,6 +41,13 @@ export class TabController {
   await this._deleteTabUseCase.execute(params);
 
   res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.ADMIN.TABS.DELETED ).build());
+  };
+
+  toggleStatus = async ( req: Request, res: Response ) => {
+  const params = req.params as TabCommandRequestDTO;
+  const result = await this._toggleTabStatusUseCase.execute(params);
+
+  res.status(HttpStatusCode.OK).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TABS.UPDATED).build());
   };
 }
 

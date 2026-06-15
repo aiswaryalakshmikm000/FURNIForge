@@ -3,7 +3,7 @@ export interface ITabPersistence {
   templateId: string;
   name: string;
   displayOrder: number;
-  isActive: Boolean;
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

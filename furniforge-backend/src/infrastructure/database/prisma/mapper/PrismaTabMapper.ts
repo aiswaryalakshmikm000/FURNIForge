@@ -33,6 +33,7 @@ export class PrismaTabMapper {
     return {
       name: tab.name,
       displayOrder: tab.displayOrder,
+      isActive: tab.isActive,
     };
   }
 }
