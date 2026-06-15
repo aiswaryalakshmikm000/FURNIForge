@@ -94,10 +94,7 @@ export class Lead {
   }
 
   assignDesigner(designerId: string) {
-    if (
-      this._status === LeadStatus.CONVERTED ||
-      this._status === LeadStatus.LOST
-    ) {
+    if ( this._status === LeadStatus.CONVERTED || this._status === LeadStatus.LOST ) {
       throw new BadRequestError(ERROR_MESSAGES.ADMIN.CANNOT_ASSIGN_DESIGNER);
     }
     this._assignedDesignerId = designerId;
@@ -124,52 +121,20 @@ export class Lead {
   }
 
   // GETTERS
-  get id() {
-    return this._id;
-  }
-  get leadRegNo() {
-    return this._leadRegNo;
-  }
-  get name() {
-    return this._name;
-  }
-  get email() {
-    return this._email;
-  }
-  get phone() {
-    return this._phone;
-  }
-  get location() {
-    return this._location;
-  }
-  get source() {
-    return this._source;
-  }
-  get status() {
-    return this._status;
-  }
-  get projectsInterestedIn() {
-    return this._projectsInterestedIn;
-  }
-  get packageType() {
-    return this._packageType;
-  }
-  get clientId() {
-    return this._clientId;
-  }
-  get assignedDesignerId() {
-    return this._assignedDesignerId;
-  }
-  get assignedAt() {
-    return this._assignedAt;
-  }
-  get convertedAt() {
-    return this._convertedAt;
-  }
-  get createdAt() {
-    return this._createdAt;
-  }
-  get updatedAt() {
-    return this._updatedAt;
-  }
+  get id() { return this._id }
+  get leadRegNo() { return this._leadRegNo }
+  get name() { return this._name }
+  get email() { return this._email }
+  get phone() { return this._phone }
+  get location() { return this._location }
+  get source() { return this._source }
+  get status() { return this._status }
+  get projectsInterestedIn() { return this._projectsInterestedIn }
+  get packageType() { return this._packageType }
+  get clientId() { return this._clientId }
+  get assignedDesignerId() { return this._assignedDesignerId }
+  get assignedAt() { return this._assignedAt }
+  get convertedAt() { return this._convertedAt }
+  get createdAt() { return this._createdAt }
+  get updatedAt() { return this._updatedAt }
 }

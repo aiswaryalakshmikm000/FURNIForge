@@ -53,6 +53,13 @@ export const SUCCESS_MESSAGES = {
       CREATED: "Template created successfully",
       UPDATED: "Template updated successfully",
       DELETED: "Template deleted successfully",
+    },
+
+    TABS: {
+      FETCH_SUCCESS: "Tab fetched successfully",
+      CREATED: "Tab created successfully",
+      UPDATED: "Tab status updated successfully",
+      DELETED: "Tab deleted successfully",
     }
   },
 
@@ -141,6 +148,12 @@ export const ERROR_MESSAGES = {
     TEMPLATE: {
       ALREADY_EXISTS: "Template with this name already exists",
       NOT_FOUND: "Template not found",
+    },
+
+    TAB: {
+      ALREADY_EXISTS: "Tab with this name already exists",
+      NOT_FOUND: "Tab not found",
+      DISPLAY_ORDER_EXISTS: "Display order already exists",
     }
   },
 

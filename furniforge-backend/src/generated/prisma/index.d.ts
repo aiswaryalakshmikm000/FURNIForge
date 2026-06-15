@@ -6730,6 +6730,7 @@ export namespace Prisma {
     templateId: string | null
     name: string | null
     displayOrder: number | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6739,6 +6740,7 @@ export namespace Prisma {
     templateId: string | null
     name: string | null
     displayOrder: number | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -6748,6 +6750,7 @@ export namespace Prisma {
     templateId: number
     name: number
     displayOrder: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -6767,6 +6770,7 @@ export namespace Prisma {
     templateId?: true
     name?: true
     displayOrder?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6776,6 +6780,7 @@ export namespace Prisma {
     templateId?: true
     name?: true
     displayOrder?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -6785,6 +6790,7 @@ export namespace Prisma {
     templateId?: true
     name?: true
     displayOrder?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6881,6 +6887,7 @@ export namespace Prisma {
     templateId: string
     name: string
     displayOrder: number
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: TemplateTabCountAggregateOutputType | null
@@ -6909,6 +6916,7 @@ export namespace Prisma {
     templateId?: boolean
     name?: boolean
     displayOrder?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     template?: boolean | TemplateDefaultArgs<ExtArgs>
@@ -6921,6 +6929,7 @@ export namespace Prisma {
     templateId?: boolean
     name?: boolean
     displayOrder?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     template?: boolean | TemplateDefaultArgs<ExtArgs>
@@ -6931,6 +6940,7 @@ export namespace Prisma {
     templateId?: boolean
     name?: boolean
     displayOrder?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     template?: boolean | TemplateDefaultArgs<ExtArgs>
@@ -6941,11 +6951,12 @@ export namespace Prisma {
     templateId?: boolean
     name?: boolean
     displayOrder?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TemplateTabOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "templateId" | "name" | "displayOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["templateTab"]>
+  export type TemplateTabOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "templateId" | "name" | "displayOrder" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["templateTab"]>
   export type TemplateTabInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     template?: boolean | TemplateDefaultArgs<ExtArgs>
     fields?: boolean | TemplateTab$fieldsArgs<ExtArgs>
@@ -6969,6 +6980,7 @@ export namespace Prisma {
       templateId: string
       name: string
       displayOrder: number
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["templateTab"]>
@@ -7400,6 +7412,7 @@ export namespace Prisma {
     readonly templateId: FieldRef<"TemplateTab", 'String'>
     readonly name: FieldRef<"TemplateTab", 'String'>
     readonly displayOrder: FieldRef<"TemplateTab", 'Int'>
+    readonly isActive: FieldRef<"TemplateTab", 'Boolean'>
     readonly createdAt: FieldRef<"TemplateTab", 'DateTime'>
     readonly updatedAt: FieldRef<"TemplateTab", 'DateTime'>
   }
@@ -7867,6 +7880,7 @@ export namespace Prisma {
     fieldKey: string | null
     fieldType: $Enums.FieldType | null
     displayOrder: number | null
+    isActive: boolean | null
     isRequired: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7879,6 +7893,7 @@ export namespace Prisma {
     fieldKey: string | null
     fieldType: $Enums.FieldType | null
     displayOrder: number | null
+    isActive: boolean | null
     isRequired: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7893,6 +7908,7 @@ export namespace Prisma {
     displayOrder: number
     options: number
     defaultValue: number
+    isActive: number
     isRequired: number
     createdAt: number
     updatedAt: number
@@ -7915,6 +7931,7 @@ export namespace Prisma {
     fieldKey?: true
     fieldType?: true
     displayOrder?: true
+    isActive?: true
     isRequired?: true
     createdAt?: true
     updatedAt?: true
@@ -7927,6 +7944,7 @@ export namespace Prisma {
     fieldKey?: true
     fieldType?: true
     displayOrder?: true
+    isActive?: true
     isRequired?: true
     createdAt?: true
     updatedAt?: true
@@ -7941,6 +7959,7 @@ export namespace Prisma {
     displayOrder?: true
     options?: true
     defaultValue?: true
+    isActive?: true
     isRequired?: true
     createdAt?: true
     updatedAt?: true
@@ -8042,6 +8061,7 @@ export namespace Prisma {
     displayOrder: number
     options: JsonValue | null
     defaultValue: JsonValue | null
+    isActive: boolean
     isRequired: boolean
     createdAt: Date
     updatedAt: Date
@@ -8075,6 +8095,7 @@ export namespace Prisma {
     displayOrder?: boolean
     options?: boolean
     defaultValue?: boolean
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8092,6 +8113,7 @@ export namespace Prisma {
     displayOrder?: boolean
     options?: boolean
     defaultValue?: boolean
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8107,6 +8129,7 @@ export namespace Prisma {
     displayOrder?: boolean
     options?: boolean
     defaultValue?: boolean
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8122,12 +8145,13 @@ export namespace Prisma {
     displayOrder?: boolean
     options?: boolean
     defaultValue?: boolean
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TemplateFieldOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tabId" | "label" | "fieldKey" | "fieldType" | "displayOrder" | "options" | "defaultValue" | "isRequired" | "createdAt" | "updatedAt", ExtArgs["result"]["templateField"]>
+  export type TemplateFieldOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tabId" | "label" | "fieldKey" | "fieldType" | "displayOrder" | "options" | "defaultValue" | "isActive" | "isRequired" | "createdAt" | "updatedAt", ExtArgs["result"]["templateField"]>
   export type TemplateFieldInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tab?: boolean | TemplateTabDefaultArgs<ExtArgs>
     requestValues?: boolean | TemplateField$requestValuesArgs<ExtArgs>
@@ -8155,6 +8179,7 @@ export namespace Prisma {
       displayOrder: number
       options: Prisma.JsonValue | null
       defaultValue: Prisma.JsonValue | null
+      isActive: boolean
       isRequired: boolean
       createdAt: Date
       updatedAt: Date
@@ -8591,6 +8616,7 @@ export namespace Prisma {
     readonly displayOrder: FieldRef<"TemplateField", 'Int'>
     readonly options: FieldRef<"TemplateField", 'Json'>
     readonly defaultValue: FieldRef<"TemplateField", 'Json'>
+    readonly isActive: FieldRef<"TemplateField", 'Boolean'>
     readonly isRequired: FieldRef<"TemplateField", 'Boolean'>
     readonly createdAt: FieldRef<"TemplateField", 'DateTime'>
     readonly updatedAt: FieldRef<"TemplateField", 'DateTime'>
@@ -11175,6 +11201,7 @@ export namespace Prisma {
     templateId: 'templateId',
     name: 'name',
     displayOrder: 'displayOrder',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -11191,6 +11218,7 @@ export namespace Prisma {
     displayOrder: 'displayOrder',
     options: 'options',
     defaultValue: 'defaultValue',
+    isActive: 'isActive',
     isRequired: 'isRequired',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -11867,6 +11895,7 @@ export namespace Prisma {
     templateId?: StringFilter<"TemplateTab"> | string
     name?: StringFilter<"TemplateTab"> | string
     displayOrder?: IntFilter<"TemplateTab"> | number
+    isActive?: BoolFilter<"TemplateTab"> | boolean
     createdAt?: DateTimeFilter<"TemplateTab"> | Date | string
     updatedAt?: DateTimeFilter<"TemplateTab"> | Date | string
     template?: XOR<TemplateScalarRelationFilter, TemplateWhereInput>
@@ -11878,6 +11907,7 @@ export namespace Prisma {
     templateId?: SortOrder
     name?: SortOrder
     displayOrder?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     template?: TemplateOrderByWithRelationInput
@@ -11893,6 +11923,7 @@ export namespace Prisma {
     templateId?: StringFilter<"TemplateTab"> | string
     name?: StringFilter<"TemplateTab"> | string
     displayOrder?: IntFilter<"TemplateTab"> | number
+    isActive?: BoolFilter<"TemplateTab"> | boolean
     createdAt?: DateTimeFilter<"TemplateTab"> | Date | string
     updatedAt?: DateTimeFilter<"TemplateTab"> | Date | string
     template?: XOR<TemplateScalarRelationFilter, TemplateWhereInput>
@@ -11904,6 +11935,7 @@ export namespace Prisma {
     templateId?: SortOrder
     name?: SortOrder
     displayOrder?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: TemplateTabCountOrderByAggregateInput
@@ -11921,6 +11953,7 @@ export namespace Prisma {
     templateId?: StringWithAggregatesFilter<"TemplateTab"> | string
     name?: StringWithAggregatesFilter<"TemplateTab"> | string
     displayOrder?: IntWithAggregatesFilter<"TemplateTab"> | number
+    isActive?: BoolWithAggregatesFilter<"TemplateTab"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"TemplateTab"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TemplateTab"> | Date | string
   }
@@ -11937,6 +11970,7 @@ export namespace Prisma {
     displayOrder?: IntFilter<"TemplateField"> | number
     options?: JsonNullableFilter<"TemplateField">
     defaultValue?: JsonNullableFilter<"TemplateField">
+    isActive?: BoolFilter<"TemplateField"> | boolean
     isRequired?: BoolFilter<"TemplateField"> | boolean
     createdAt?: DateTimeFilter<"TemplateField"> | Date | string
     updatedAt?: DateTimeFilter<"TemplateField"> | Date | string
@@ -11953,6 +11987,7 @@ export namespace Prisma {
     displayOrder?: SortOrder
     options?: SortOrderInput | SortOrder
     defaultValue?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     isRequired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11974,6 +12009,7 @@ export namespace Prisma {
     displayOrder?: IntFilter<"TemplateField"> | number
     options?: JsonNullableFilter<"TemplateField">
     defaultValue?: JsonNullableFilter<"TemplateField">
+    isActive?: BoolFilter<"TemplateField"> | boolean
     isRequired?: BoolFilter<"TemplateField"> | boolean
     createdAt?: DateTimeFilter<"TemplateField"> | Date | string
     updatedAt?: DateTimeFilter<"TemplateField"> | Date | string
@@ -11990,6 +12026,7 @@ export namespace Prisma {
     displayOrder?: SortOrder
     options?: SortOrderInput | SortOrder
     defaultValue?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     isRequired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12012,6 +12049,7 @@ export namespace Prisma {
     displayOrder?: IntWithAggregatesFilter<"TemplateField"> | number
     options?: JsonNullableWithAggregatesFilter<"TemplateField">
     defaultValue?: JsonNullableWithAggregatesFilter<"TemplateField">
+    isActive?: BoolWithAggregatesFilter<"TemplateField"> | boolean
     isRequired?: BoolWithAggregatesFilter<"TemplateField"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"TemplateField"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"TemplateField"> | Date | string
@@ -12610,6 +12648,7 @@ export namespace Prisma {
     id?: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     template: TemplateCreateNestedOneWithoutTabsInput
@@ -12621,6 +12660,7 @@ export namespace Prisma {
     templateId: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     fields?: TemplateFieldUncheckedCreateNestedManyWithoutTabInput
@@ -12630,6 +12670,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     template?: TemplateUpdateOneRequiredWithoutTabsNestedInput
@@ -12641,6 +12682,7 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fields?: TemplateFieldUncheckedUpdateManyWithoutTabNestedInput
@@ -12651,6 +12693,7 @@ export namespace Prisma {
     templateId: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12659,6 +12702,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12668,6 +12712,7 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12680,6 +12725,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12696,6 +12742,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12710,6 +12757,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12726,6 +12774,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12741,6 +12790,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12754,6 +12804,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12768,6 +12819,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13500,6 +13552,7 @@ export namespace Prisma {
     templateId?: SortOrder
     name?: SortOrder
     displayOrder?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13513,6 +13566,7 @@ export namespace Prisma {
     templateId?: SortOrder
     name?: SortOrder
     displayOrder?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13522,6 +13576,7 @@ export namespace Prisma {
     templateId?: SortOrder
     name?: SortOrder
     displayOrder?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13571,6 +13626,7 @@ export namespace Prisma {
     displayOrder?: SortOrder
     options?: SortOrder
     defaultValue?: SortOrder
+    isActive?: SortOrder
     isRequired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13587,6 +13643,7 @@ export namespace Prisma {
     fieldKey?: SortOrder
     fieldType?: SortOrder
     displayOrder?: SortOrder
+    isActive?: SortOrder
     isRequired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13599,6 +13656,7 @@ export namespace Prisma {
     fieldKey?: SortOrder
     fieldType?: SortOrder
     displayOrder?: SortOrder
+    isActive?: SortOrder
     isRequired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -15394,6 +15452,7 @@ export namespace Prisma {
     id?: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     fields?: TemplateFieldCreateNestedManyWithoutTabInput
@@ -15403,6 +15462,7 @@ export namespace Prisma {
     id?: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     fields?: TemplateFieldUncheckedCreateNestedManyWithoutTabInput
@@ -15544,6 +15604,7 @@ export namespace Prisma {
     templateId?: StringFilter<"TemplateTab"> | string
     name?: StringFilter<"TemplateTab"> | string
     displayOrder?: IntFilter<"TemplateTab"> | number
+    isActive?: BoolFilter<"TemplateTab"> | boolean
     createdAt?: DateTimeFilter<"TemplateTab"> | Date | string
     updatedAt?: DateTimeFilter<"TemplateTab"> | Date | string
   }
@@ -15585,6 +15646,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15599,6 +15661,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15678,6 +15741,7 @@ export namespace Prisma {
     displayOrder?: IntFilter<"TemplateField"> | number
     options?: JsonNullableFilter<"TemplateField">
     defaultValue?: JsonNullableFilter<"TemplateField">
+    isActive?: BoolFilter<"TemplateField"> | boolean
     isRequired?: BoolFilter<"TemplateField"> | boolean
     createdAt?: DateTimeFilter<"TemplateField"> | Date | string
     updatedAt?: DateTimeFilter<"TemplateField"> | Date | string
@@ -15687,6 +15751,7 @@ export namespace Prisma {
     id?: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     template: TemplateCreateNestedOneWithoutTabsInput
@@ -15697,6 +15762,7 @@ export namespace Prisma {
     templateId: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15745,6 +15811,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     template?: TemplateUpdateOneRequiredWithoutTabsNestedInput
@@ -15755,6 +15822,7 @@ export namespace Prisma {
     templateId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15794,6 +15862,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15809,6 +15878,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15838,6 +15908,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15853,6 +15924,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16144,6 +16216,7 @@ export namespace Prisma {
     id?: string
     name: string
     displayOrder: number
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16152,6 +16225,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fields?: TemplateFieldUpdateManyWithoutTabNestedInput
@@ -16161,6 +16235,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fields?: TemplateFieldUncheckedUpdateManyWithoutTabNestedInput
@@ -16170,6 +16245,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16182,6 +16258,7 @@ export namespace Prisma {
     displayOrder: number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
     isRequired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16195,6 +16272,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16209,6 +16287,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16223,6 +16302,7 @@ export namespace Prisma {
     displayOrder?: IntFieldUpdateOperationsInput | number
     options?: NullableJsonNullValueInput | InputJsonValue
     defaultValue?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     isRequired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

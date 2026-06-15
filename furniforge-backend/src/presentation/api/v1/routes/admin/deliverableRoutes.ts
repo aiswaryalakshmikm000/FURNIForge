@@ -20,6 +20,6 @@ router.post("/deliverables", authMiddleware, authorizeRoles(UserRole.ADMIN), val
 router.patch("/deliverables/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), validateBody(DeliverableFormDTOSchema), asyncHandler(controller.updateDeliverable) );
 router.patch("/deliverables/:id/toggle-status", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.toggleDeliverableStatus) );
 router.patch("/deliverables/:id/soft-delete", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.softDeleteDeliverable) );
-router.delete( "/deliverables/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.deleteDeliverable) );
+router.delete( "/deliverables/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.deleteDeliverable) ); // no hard delete needed
 
 export default router;

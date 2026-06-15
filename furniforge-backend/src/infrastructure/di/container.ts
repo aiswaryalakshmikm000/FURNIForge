@@ -58,6 +58,13 @@ import { TemplateController } from "../../presentation/api/v1/controllers/admin/
 import { UpdateTemplateUseCase } from "../../application/use-cases/template/UpdateTemplateUseCase";
 import { DeleteTemplateUseCase } from "../../application/use-cases/template/DeleteTemplateUseCase";
 import { ToggleTemplateStatusUseCase } from "../../application/use-cases/template/ToggleTemplateStatusUseCase";
+import { CreateTabUseCase } from "../../application/use-cases/templateTab/CreateTabUseCase";
+import { TabController } from "../../presentation/api/v1/controllers/admin/TabController";
+import { TabRepository } from "../database/prisma/repositories/TabRepository";
+import { UpdateTabUseCase } from "../../application/use-cases/templateTab/UpdateTabUseCase";
+import { DeleteTabUseCase } from "../../application/use-cases/templateTab/DeleteTabUseCase";
+import { ToggleTabStatusUseCase } from "../../application/use-cases/templateTab/ToggleTabStatusUseCase";
+import { SoftDeleteTemplateUseCase } from "../../application/use-cases/template/SoftDeleteTemplateUseCase";
 
 const container = new Container();
 
@@ -75,6 +82,7 @@ container.bind(TYPES.ILeadRepository).to(LeadRepository);
 container.bind(TYPES.IDesignerRepository).to(DesignerRepository);
 container.bind(TYPES.IDeliverableRepository).to(DeliverableRepository);
 container.bind(TYPES.ITemplateRepository).to(TemplateRepository);
+container.bind(TYPES.ITabRepository).to(TabRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -126,6 +134,13 @@ container.bind(TYPES.ICreateTemplateUseCase).to(CreateTemplateUseCase);
 container.bind(TYPES.IUpdateTemplateUseCase).to(UpdateTemplateUseCase);
 container.bind(TYPES.IDeleteTemplateUseCase).to(DeleteTemplateUseCase);
 container.bind(TYPES.IToggleTemplateStatusUseCase).to(ToggleTemplateStatusUseCase);
+container.bind(TYPES.ISoftDeleteTemplateUseCase).to(SoftDeleteTemplateUseCase);
+
+container.bind(TYPES.ICreateTabUseCase).to(CreateTabUseCase);
+container.bind(TYPES.IUpdateTabUseCase).to(UpdateTabUseCase);
+container.bind(TYPES.IDeleteTabUseCase).to(DeleteTabUseCase);
+container.bind(TYPES.IToggleTabStatusUseCase).to(ToggleTabStatusUseCase);
+
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
@@ -133,5 +148,6 @@ container.bind(TYPES.LeadController).to(LeadController);
 container.bind(TYPES.DesignerController).to(DesignerController);
 container.bind(TYPES.DeliverableController).to(DeliverableController);
 container.bind(TYPES.TemplateController).to(TemplateController);
+container.bind(TYPES.TabController).to(TabController);
 
 export { container };

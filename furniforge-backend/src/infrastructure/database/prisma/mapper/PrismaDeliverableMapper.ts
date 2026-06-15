@@ -2,9 +2,7 @@ import { Deliverable } from "../../../../domain/entities/Deliverable";
 import { Prisma, Deliverable as PrismaDeliverable } from "../../../../generated/prisma";
 
 export class PrismaDeliverableMapper {
-  static toDomain(
-    raw: PrismaDeliverable,
-  ): Deliverable {
+  static toDomain( raw: PrismaDeliverable ): Deliverable {
     return Deliverable.fromPersistence({
       id: raw.id,
       name: raw.name,
@@ -18,9 +16,7 @@ export class PrismaDeliverableMapper {
     });
   }
 
-  static toCreatePersistence(
-    deliverable: Deliverable,
-  ): Prisma.DeliverableCreateInput {
+  static toCreatePersistence( deliverable: Deliverable ): Prisma.DeliverableCreateInput {
     return {
       id: deliverable.id,
       name: deliverable.name,
@@ -35,9 +31,7 @@ export class PrismaDeliverableMapper {
     };
   }
 
-  static toUpdatePersistence(
-    deliverable: Deliverable,
-  ): Prisma.DeliverableUpdateInput {
+  static toUpdatePersistence( deliverable: Deliverable ): Prisma.DeliverableUpdateInput {
     return {
       name: deliverable.name,
       description: deliverable.description,
