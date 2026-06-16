@@ -115,9 +115,8 @@ model TemplateField {
   label         String
   fieldKey      String
   fieldType     FieldType
-  displayOrder  Int
-  options       Json?
-  defaultValue  Json?
+  options       String[]            @default([])
+  defaultValue  String?
   isActive      Boolean             @default(true)
   isRequired    Boolean             @default(false)
   createdAt     DateTime            @default(now())

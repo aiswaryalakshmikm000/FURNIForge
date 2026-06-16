@@ -205,7 +205,6 @@ exports.Prisma.TemplateFieldScalarFieldEnum = {
   label: 'label',
   fieldKey: 'fieldKey',
   fieldType: 'fieldType',
-  displayOrder: 'displayOrder',
   options: 'options',
   defaultValue: 'defaultValue',
   isActive: 'isActive',

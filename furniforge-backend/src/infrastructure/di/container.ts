@@ -65,6 +65,9 @@ import { UpdateTabUseCase } from "../../application/use-cases/templateTab/Update
 import { DeleteTabUseCase } from "../../application/use-cases/templateTab/DeleteTabUseCase";
 import { ToggleTabStatusUseCase } from "../../application/use-cases/templateTab/ToggleTabStatusUseCase";
 import { SoftDeleteTemplateUseCase } from "../../application/use-cases/template/SoftDeleteTemplateUseCase";
+import { FieldController } from "../../presentation/api/v1/controllers/admin/FieldController";
+import { FieldRepository } from "../database/prisma/repositories/FieldRepository";
+import { CreateFieldUseCase } from "../../application/use-cases/field/CreateUseCase";
 
 const container = new Container();
 
@@ -83,6 +86,7 @@ container.bind(TYPES.IDesignerRepository).to(DesignerRepository);
 container.bind(TYPES.IDeliverableRepository).to(DeliverableRepository);
 container.bind(TYPES.ITemplateRepository).to(TemplateRepository);
 container.bind(TYPES.ITabRepository).to(TabRepository);
+container.bind(TYPES.IFieldRepository).to(FieldRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -141,6 +145,7 @@ container.bind(TYPES.IUpdateTabUseCase).to(UpdateTabUseCase);
 container.bind(TYPES.IDeleteTabUseCase).to(DeleteTabUseCase);
 container.bind(TYPES.IToggleTabStatusUseCase).to(ToggleTabStatusUseCase);
 
+container.bind(TYPES.ICreateFieldUseCase).to(CreateFieldUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
@@ -149,5 +154,7 @@ container.bind(TYPES.DesignerController).to(DesignerController);
 container.bind(TYPES.DeliverableController).to(DeliverableController);
 container.bind(TYPES.TemplateController).to(TemplateController);
 container.bind(TYPES.TabController).to(TabController);
+container.bind(TYPES.FieldController).to(FieldController);
+
 
 export { container };
