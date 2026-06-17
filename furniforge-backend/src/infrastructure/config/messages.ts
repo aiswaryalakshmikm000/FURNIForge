@@ -165,6 +165,7 @@ export const ERROR_MESSAGES = {
     },
 
     FIELD: {
+      NOT_FOUND: "Field not found",
       LABEL_ALREADY_EXISTS: "Field label already exists in this tab",
       FIELD_KEY_ALREADY_EXISTS: "Field key already exists in this tab",
       OPTIONS_REQUIRED: "Options are required for this field type",

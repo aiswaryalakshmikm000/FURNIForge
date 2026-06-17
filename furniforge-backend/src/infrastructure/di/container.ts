@@ -68,6 +68,7 @@ import { SoftDeleteTemplateUseCase } from "../../application/use-cases/template/
 import { FieldController } from "../../presentation/api/v1/controllers/admin/FieldController";
 import { FieldRepository } from "../database/prisma/repositories/FieldRepository";
 import { CreateFieldUseCase } from "../../application/use-cases/field/CreateUseCase";
+import { UpdateFieldUseCase } from "../../application/use-cases/field/UpdateFieldUseCase";
 
 const container = new Container();
 
@@ -146,6 +147,7 @@ container.bind(TYPES.IDeleteTabUseCase).to(DeleteTabUseCase);
 container.bind(TYPES.IToggleTabStatusUseCase).to(ToggleTabStatusUseCase);
 
 container.bind(TYPES.ICreateFieldUseCase).to(CreateFieldUseCase);
+container.bind(TYPES.IUpdateFieldUseCase).to(UpdateFieldUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

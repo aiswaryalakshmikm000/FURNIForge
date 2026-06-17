@@ -51,11 +51,9 @@ export class CreateFieldUseCase implements ICreateFieldUseCase {
 
     if (isOptionField && options.length === 0)  throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.OPTIONS_REQUIRED );
     
+    if (!isOptionField && options.length > 0)  throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.OPTIONS_NOT_ALLOWED );    
 
-    if (!isOptionField && options.length > 0)  throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.OPTIONS_NOT_ALLOWED );
-    
-
-    if ( dto.defaultValue && isOptionField && !options.includes(dto.defaultValue) ) {
+    if (dto.defaultValue && isOptionField && !options.includes(dto.defaultValue)) {
       throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.INVALID_DEFAULT_VALUE );
     }
 

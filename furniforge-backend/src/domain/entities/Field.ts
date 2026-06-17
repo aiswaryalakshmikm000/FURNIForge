@@ -57,6 +57,23 @@ export class Field {
     );
   }
 
+  update(data: {
+    label: string;
+    fieldKey: string;
+    fieldType: FieldType;
+    options: string[];
+    defaultValue: string | null;
+    isRequired: boolean;
+  }) {
+    this._label = data.label;
+    this._fieldKey = data.fieldKey;
+    this._fieldType = data.fieldType;
+    this._options = data.options;
+    this._defaultValue = data.defaultValue;
+    this._isRequired = data.isRequired;
+    this._updatedAt = new Date();
+  }
+
   get id() { return this._id; }
   get tabId() { return this._tabId; }
   get label() { return this._label; }

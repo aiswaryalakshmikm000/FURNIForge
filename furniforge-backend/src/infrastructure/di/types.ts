@@ -69,6 +69,7 @@ export const TYPES = {
   IToggleTabStatusUseCase: Symbol.for("IToggleTabStatusUseCase"),
 
   ICreateFieldUseCase: Symbol.for("ICreateFieldUseCase"),
+  IUpdateFieldUseCase: Symbol.for("IUpdateFieldUseCase"),
   
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),
