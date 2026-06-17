@@ -1,13 +1,10 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
-
 import type { IDeleteTemplateUseCase } from "./interfaces/IDeleteTemplateUseCase";
 import type { ITemplateRepository } from "../../../domain/repositories/ITemplateRepository";
-
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
-
-import { TemplateCommandRequestDTO, TemplateCommandResponseDTO } from "../../dtos/templates/templateCommandDTO";
+import type { TemplateCommandRequestDTO, TemplateCommandResponseDTO } from "../../dtos/templates/templateCommandDTO";
 import { TemplateCommandMapper } from "../../mappers/template/TemplateCommandMapper";
 
 @injectable()

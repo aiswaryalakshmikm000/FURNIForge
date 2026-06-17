@@ -9,6 +9,7 @@ export interface FieldListItem {
   options: string[];
   defaultValue: string | null;
   isRequired: boolean;
+  deletedAt: Date | null;
   isActive: boolean;
   createdAt: Date;
 }

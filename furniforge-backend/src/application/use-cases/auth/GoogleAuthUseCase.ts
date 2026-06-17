@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { IGoogleAuthUseCase } from "./interfaces/IGoogleAuthUseCase";
+import type { IGoogleAuthUseCase } from "./interfaces/IGoogleAuthUseCase";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import type { IGoogleAuthService } from "../../../domain/services/IGoogleAuthService";

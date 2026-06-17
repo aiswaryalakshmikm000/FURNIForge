@@ -1,6 +1,6 @@
 import z from "zod";
 import { PaginationMeta } from "../../../shared/utils/paginate";
-import { DeliverableResponseDTO } from "./DeliverableResponseDTO";
+import type { DeliverableResponseDTO } from "./DeliverableResponseDTO";
 
 export const GetAllDeliverablesQuerySchema = z.object({
   page: z.coerce.number().min(1).default(1),

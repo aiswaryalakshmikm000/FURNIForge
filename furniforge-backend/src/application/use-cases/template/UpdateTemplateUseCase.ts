@@ -6,7 +6,7 @@ import { UpdateTemplateDTO } from "../../dtos/templates/UpdateTemplateDTO";
 import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { TemplateCommandMapper } from "../../mappers/template/TemplateCommandMapper";
-import { TemplateCommandResponseDTO } from "../../dtos/templates/templateCommandDTO";
+import type { TemplateCommandResponseDTO } from "../../dtos/templates/templateCommandDTO";
 
 @injectable()
 export class UpdateTemplateUseCase implements IUpdateTemplateUseCase {

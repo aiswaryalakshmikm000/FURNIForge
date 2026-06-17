@@ -1,5 +1,5 @@
-import { FieldCommandRequestDTO, FieldCommandResponseDTO } from "../../../dtos/fields/fieldCommandDTO";
-import { UpdateFieldDTO } from "../../../dtos/fields/updateFieldDTO";
+import type { FieldCommandRequestDTO, FieldCommandResponseDTO } from "../../../dtos/fields/fieldCommandDTO";
+import type { UpdateFieldDTO } from "../../../dtos/fields/updateFieldDTO";
 
 
 export interface IUpdateFieldUseCase {

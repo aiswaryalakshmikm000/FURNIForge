@@ -13,6 +13,7 @@ export class Field {
     private _defaultValue: string | null,
     private _isActive: boolean,
     private _isRequired: boolean,
+    private _deletedAt: Date | null,
     private _createdAt: Date,
     private _updatedAt: Date,
   ) {}
@@ -36,6 +37,7 @@ export class Field {
       data.defaultValue ?? null,
       true,
       data.isRequired ?? false,
+      null,
       new Date(),
       new Date()
     );
@@ -52,6 +54,7 @@ export class Field {
       data.defaultValue ?? null,
       data.isActive,
       data.isRequired,
+      data.deletedAt,
       data.createdAt,
       data.updatedAt
     );
@@ -74,15 +77,22 @@ export class Field {
     this._updatedAt = new Date();
   }
 
-  get id() { return this._id; }
-  get tabId() { return this._tabId; }
-  get label() { return this._label; }
-  get fieldKey() { return this._fieldKey; }
-  get fieldType() { return this._fieldType; }
-  get options() { return this._options; }
-  get defaultValue(): string | null { return this._defaultValue; }
-  get isActive() { return this._isActive; }
-  get isRequired() { return this._isRequired; }
-  get createdAt() { return this._createdAt; }
-  get updatedAt() { return this._updatedAt; }
+  softDelete() {
+    this._deletedAt = new Date();
+    this._isActive = false;
+    this._updatedAt = new Date();
+  }
+
+  get id() { return this._id }
+  get tabId() { return this._tabId }
+  get label() { return this._label }
+  get fieldKey() { return this._fieldKey }
+  get fieldType() { return this._fieldType }
+  get options() { return this._options }
+  get defaultValue(): string | null { return this._defaultValue }
+  get isActive() { return this._isActive }
+  get isRequired() { return this._isRequired }
+  get deletedAt() { return this._deletedAt }
+  get createdAt() { return this._createdAt }
+  get updatedAt() { return this._updatedAt }
 }

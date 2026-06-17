@@ -69,6 +69,7 @@ import { FieldController } from "../../presentation/api/v1/controllers/admin/Fie
 import { FieldRepository } from "../database/prisma/repositories/FieldRepository";
 import { CreateFieldUseCase } from "../../application/use-cases/field/CreateUseCase";
 import { UpdateFieldUseCase } from "../../application/use-cases/field/UpdateFieldUseCase";
+import { softDeleteFieldUseCasea } from "../../application/use-cases/field/SoftDeleteFieldUseCase";
 
 const container = new Container();
 
@@ -148,6 +149,7 @@ container.bind(TYPES.IToggleTabStatusUseCase).to(ToggleTabStatusUseCase);
 
 container.bind(TYPES.ICreateFieldUseCase).to(CreateFieldUseCase);
 container.bind(TYPES.IUpdateFieldUseCase).to(UpdateFieldUseCase);
+container.bind(TYPES.ISoftDeleteFieldUseCase).to(softDeleteFieldUseCasea);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

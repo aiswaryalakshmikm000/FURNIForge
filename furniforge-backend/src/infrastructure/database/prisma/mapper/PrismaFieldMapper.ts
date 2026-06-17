@@ -15,6 +15,7 @@ export class PrismaFieldMapper {
       defaultValue: raw.defaultValue ?? null,
       isActive: raw.isActive,
       isRequired: raw.isRequired,
+      deletedAt: raw.deletedAt,
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt,
     });
@@ -41,6 +42,7 @@ export class PrismaFieldMapper {
       options: field.options,
       defaultValue: field.defaultValue ?? null,
       isRequired: field.isRequired,
+      deletedAt: field.deletedAt,
       isActive: field.isActive,
     };
   }

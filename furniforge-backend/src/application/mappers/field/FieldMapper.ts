@@ -1,5 +1,5 @@
 import { FieldListItem } from "../../../domain/read-models/field/FieldListItem";
-import { FieldResponseDTO } from "../../dtos/fields/fieldResponseDTO";
+import type { FieldResponseDTO } from "../../dtos/fields/fieldResponseDTO";
 
 export class FieldMapper {
 
@@ -13,6 +13,7 @@ export class FieldMapper {
       options: field.options,
       defaultValue: field.defaultValue,
       isRequired: field.isRequired,
+      deletedAt: field.deletedAt,
       isActive: field.isActive,
     };
   }

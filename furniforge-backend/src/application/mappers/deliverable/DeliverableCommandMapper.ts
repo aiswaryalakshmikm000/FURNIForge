@@ -1,5 +1,5 @@
 import { Deliverable } from "../../../domain/entities/Deliverable";
-import { DeliverableCommandResponseDTO } from "../../dtos/deliverables/deliverableCommandDTO";
+import type { DeliverableCommandResponseDTO } from "../../dtos/deliverables/deliverableCommandDTO";
 
 export class DeliverableCommandMapper {
   static toResponse(deliverable: Deliverable): DeliverableCommandResponseDTO {

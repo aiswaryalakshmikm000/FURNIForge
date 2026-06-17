@@ -1,5 +1,5 @@
 import { NotFoundError } from "../../../domain/errors/AppError";
-import type{ IUserRepository } from "../../../domain/repositories/IUserRepository";
+import type { IUserRepository } from "../../../domain/repositories/IUserRepository";
 import { Email } from "../../../domain/value-objects/Email";
 import { OTP } from "../../../domain/value-objects/OTP";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";

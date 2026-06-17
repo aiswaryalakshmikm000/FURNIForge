@@ -1,5 +1,5 @@
 import z from "zod";
-import { DesignerResponseDTO } from "./DesignerResponseDTO";
+import type { DesignerResponseDTO } from "./DesignerResponseDTO";
 import { PaginationMeta } from "../../../shared/utils/paginate";
 
 export const GetAllDesignersQuerySchema = z.object({

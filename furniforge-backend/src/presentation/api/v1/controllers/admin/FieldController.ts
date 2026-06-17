@@ -9,12 +9,14 @@ import type { ICreateFieldUseCase } from "../../../../../application/use-cases/f
 import type { FieldCommandRequestDTO } from "../../../../../application/dtos/fields/fieldCommandDTO";
 import type { IUpdateFieldUseCase } from "../../../../../application/use-cases/field/interfaces/IUpdateFieldUseCase";
 import { UpdateFieldDTO } from "../../../../../application/dtos/fields/updateFieldDTO";
+import type { ISoftDeleteFieldUseCase } from "../../../../../application/use-cases/field/interfaces/ISoftDeleteFieldUseCase";
 
 @injectable()
 export class FieldController {
   constructor(
     @inject(TYPES.ICreateFieldUseCase) private _createFieldUseCase: ICreateFieldUseCase,
     @inject(TYPES.IUpdateFieldUseCase) private _updateFieldUseCase: IUpdateFieldUseCase,
+    @inject(TYPES.ISoftDeleteFieldUseCase) private _softDeleteFieldUseCase: ISoftDeleteFieldUseCase,
   ) {}
   createField = async (req: Request, res: Response) => {
     const dto = req.body as CreateFieldDTO;
@@ -24,11 +26,18 @@ export class FieldController {
   };
 
   updateField = async ( req: Request, res: Response ) => {
-  const params = req.params as FieldCommandRequestDTO;
-  const dto = req.body as UpdateFieldDTO;
-  console.log()
+    const params = req.params as FieldCommandRequestDTO;
+    const dto = req.body as UpdateFieldDTO;
+    console.log()
 
-  const result = await this._updateFieldUseCase.execute( params, dto );
-  res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.FIELDS.UPDATED ).build() );
+    const result = await this._updateFieldUseCase.execute( params, dto );
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.FIELDS.UPDATED ).build() );
+  };
+
+  softDelete = async (req: Request, res: Response) => {
+    const params = req.params as FieldCommandRequestDTO;
+    const result = await this._softDeleteFieldUseCase.execute(params);
+
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.FIELDS.DELETED));
   };
 }

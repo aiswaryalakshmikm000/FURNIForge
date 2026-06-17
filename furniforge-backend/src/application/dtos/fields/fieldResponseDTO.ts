@@ -9,5 +9,6 @@ export interface FieldResponseDTO {
   options?: string[];
   defaultValue: string | null;
   isRequired: boolean;
+  deletedAt: Date | null;
   isActive: boolean;
 }

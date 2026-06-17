@@ -17,5 +17,6 @@ const controller = container.get<FieldController>( TYPES.FieldController );
 
 router.post("/fields", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateFieldDTOSchema), asyncHandler(controller.createField));
 router.put("/fields/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(FieldCommandParamsSchema), validateBody(UpdateFieldDTOSchema), asyncHandler(controller.updateField) );
+router.patch("/fields/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(FieldCommandParamsSchema), asyncHandler(controller.softDelete));
 
 export default router;

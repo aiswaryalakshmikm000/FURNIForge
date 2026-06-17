@@ -1,5 +1,5 @@
 import { DesignerListItem } from "../../../domain/read-models/designer/DesignerListItem";
-import { DesignerResponseDTO } from "../../dtos/designer/DesignerResponseDTO";
+import type { DesignerResponseDTO } from "../../dtos/designer/DesignerResponseDTO";
 
 export class DesignerMapper {
   static toResponse(designer: DesignerListItem): DesignerResponseDTO {

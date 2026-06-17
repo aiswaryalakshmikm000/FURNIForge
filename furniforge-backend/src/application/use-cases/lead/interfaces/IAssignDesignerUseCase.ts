@@ -1,5 +1,5 @@
-import { AssignDesignerDTO } from "../../../dtos/lead/AssignDesignerDTO";
-import { LeadCommandResponseDTO } from "../../../dtos/lead/LeadCommandResponseDTO";
+import type { AssignDesignerDTO } from "../../../dtos/lead/AssignDesignerDTO";
+import type { LeadCommandResponseDTO } from "../../../dtos/lead/LeadCommandResponseDTO";
 
 
 export interface IAssignDesignerUseCase {

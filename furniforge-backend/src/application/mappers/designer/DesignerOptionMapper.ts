@@ -1,5 +1,5 @@
 import { DesignerOptionItem } from "../../../domain/read-models/designer/DesignerOptionItem";
-import { DesignerOptionResponseDTO } from "../../dtos/lead/GetDesignerOptionsDTO";
+import type { DesignerOptionResponseDTO } from "../../dtos/lead/GetDesignerOptionsDTO";
 
 export class DesignerOptionMapper {
   static toResponse(designer: DesignerOptionItem): DesignerOptionResponseDTO {

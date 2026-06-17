@@ -4,7 +4,7 @@ import type { ILeadRepository } from "../../../domain/repositories/ILeadReposito
 import { TYPES } from "../../../infrastructure/di/types";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { NotFoundError } from "../../../domain/errors/AppError";
-import { LeadCommandRequestDTO, LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
+import type { LeadCommandRequestDTO, LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
 import { LeadCommandMapper } from "../../mappers/lead/LeadCommandMapper";
 
 @injectable()

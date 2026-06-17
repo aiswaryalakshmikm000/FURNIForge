@@ -1,4 +1,4 @@
-import { LeadResponseDTO } from "../../dtos/lead/LeadResponseDTO";
+import type { LeadResponseDTO } from "../../dtos/lead/LeadResponseDTO";
 import { LeadListItem } from "../../../domain/read-models/lead/LeadListItems";
 
 export class LeadResponseMapper {

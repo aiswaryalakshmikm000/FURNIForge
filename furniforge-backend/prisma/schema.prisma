@@ -99,6 +99,7 @@ model TemplateTab {
   displayOrder Int
   isActive     Boolean @default(true)
   fields       TemplateField[]
+  deletedAt     DateTime?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
   @@unique([templateId, name])
@@ -116,6 +117,7 @@ model TemplateField {
   defaultValue  String?
   isActive      Boolean             @default(true)
   isRequired    Boolean             @default(false)
+  deletedAt     DateTime?
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
   requestValues RequestFieldValue[]
