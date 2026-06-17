@@ -101,6 +101,7 @@ model TemplateTab {
   displayOrder Int
   isActive     Boolean         @default(true)
   fields       TemplateField[]
+  deletedAt    DateTime?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
 
@@ -115,11 +116,11 @@ model TemplateField {
   label         String
   fieldKey      String
   fieldType     FieldType
-  displayOrder  Int
-  options       Json?
-  defaultValue  Json?
+  options       String[]            @default([])
+  defaultValue  String?
   isActive      Boolean             @default(true)
   isRequired    Boolean             @default(false)
+  deletedAt     DateTime?
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
   requestValues RequestFieldValue[]

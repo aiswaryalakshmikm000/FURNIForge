@@ -1,5 +1,5 @@
 import { DeliverableListItem } from "../../../domain/read-models/deliverable/DeliverableMapper";
-import { DeliverableResponseDTO } from "../../dtos/deliverables/DeliverableResponseDTO";
+import type { DeliverableResponseDTO } from "../../dtos/deliverables/DeliverableResponseDTO";
 
 export class DeliverableMapper {
   static toResponse(

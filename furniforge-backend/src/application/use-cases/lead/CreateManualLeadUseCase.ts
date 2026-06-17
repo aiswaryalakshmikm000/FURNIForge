@@ -12,7 +12,7 @@ import type { IEmailService } from "../../../domain/services/IEmailService";
 import { env } from "../../../infrastructure/config/env";
 import type { CreateLeadDTO } from "../../dtos/lead/CreateLeadDTO";
 import { LeadCommandMapper } from "../../mappers/lead/LeadCommandMapper";
-import { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
+import type { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
 
 @injectable()
 export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {

@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { IUpdateLeadUseCase } from "./interfaces/IUpdateLeadUseCase";
+import type { IUpdateLeadUseCase } from "./interfaces/IUpdateLeadUseCase";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ILeadRepository } from "../../../domain/repositories/ILeadRepository";
 import { NotFoundError } from "../../../domain/errors/AppError";

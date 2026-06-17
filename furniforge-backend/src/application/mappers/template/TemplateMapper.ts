@@ -1,5 +1,5 @@
 import { TemplateListItem } from "../../../domain/read-models/template/TemplateListItem";
-import { TemplateResponseDTO } from "../../dtos/templates/TemplateResponseDTO";
+import type { TemplateResponseDTO } from "../../dtos/templates/TemplateResponseDTO";
 
 export class TemplateMapper {
   static toResponse( template: TemplateListItem ): TemplateResponseDTO {

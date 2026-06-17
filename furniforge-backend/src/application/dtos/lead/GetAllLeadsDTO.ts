@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LeadResponseDTO } from "./LeadResponseDTO";
+import type { LeadResponseDTO } from "./LeadResponseDTO";
 import { LeadSource, LeadStatus } from "../../../domain/enums/Lead";
 import { PaginationMeta } from "../../../shared/utils/paginate";
 

@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { IUpdateTabUseCase } from "./interfaces/IUpdateTabUseCase";
+import type { IUpdateTabUseCase } from "./interfaces/IUpdateTabUseCase";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { TabCommandResponseDTO } from "../../dtos/templateTabs/tabCommandDTO";
 import type { UpdateTabDTO } from "../../dtos/templateTabs/updateTabDTO";

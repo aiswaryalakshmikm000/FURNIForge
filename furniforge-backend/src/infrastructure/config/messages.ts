@@ -56,10 +56,17 @@ export const SUCCESS_MESSAGES = {
     },
 
     TABS: {
-      FETCH_SUCCESS: "Tab fetched successfully",
+      FETCH_SUCCESS: "Tabs fetched successfully",
       CREATED: "Tab created successfully",
       UPDATED: "Tab status updated successfully",
       DELETED: "Tab deleted successfully",
+    },
+
+    FIELDS: {
+      FETCH_SUCCESS: "Fields fetched successfully",
+      CREATED: "Field created successfully",
+      UPDATED: "Field status updated successfully",
+      DELETED: "Field deleted successfully",
     }
   },
 
@@ -93,7 +100,8 @@ export const ERROR_MESSAGES = {
 
     PASSWORD_REQUIRED: "Password is required",
     PASSWORD_MIN_LENGTH: "Password must be at least 8 characters",
-    PASSWORD_INVALID: "Password must contain uppercase, lowercase, number and min 8 chars",
+    PASSWORD_INVALID:
+      "Password must contain uppercase, lowercase, number and min 8 chars",
 
     PHONE_ALREADY_EXISTS: "User with this phone already exists",
 
@@ -154,7 +162,16 @@ export const ERROR_MESSAGES = {
       ALREADY_EXISTS: "Tab with this name already exists",
       NOT_FOUND: "Tab not found",
       DISPLAY_ORDER_EXISTS: "Display order already exists",
-    }
+    },
+
+    FIELD: {
+      NOT_FOUND: "Field not found",
+      LABEL_ALREADY_EXISTS: "Field label already exists in this tab",
+      FIELD_KEY_ALREADY_EXISTS: "Field key already exists in this tab",
+      OPTIONS_REQUIRED: "Options are required for this field type",
+      OPTIONS_NOT_ALLOWED: "Options are not allowed for this field type",
+      INVALID_DEFAULT_VALUE: "Default value must exist in options",
+    },
   },
 
   USER: {
