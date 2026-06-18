@@ -1,14 +1,14 @@
 import { inject, injectable } from "inversify";
 import { Request, Response } from "express";
 import { TYPES } from "../../../../../infrastructure/di/types";
-import type { CreateFieldDTO } from "../../../../../application/dtos/fields/createFieldDTO";
+import type { CreateFieldDTO } from "../../../../../application/dtos/fields/CreateFieldDTO";
 import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
 import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse";
 import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages";
 import type { ICreateFieldUseCase } from "../../../../../application/use-cases/field/interfaces/ICreateFieldUseCase";
-import type { FieldCommandRequestDTO } from "../../../../../application/dtos/fields/fieldCommandDTO";
+import type { FieldCommandRequestDTO } from "../../../../../application/dtos/fields/FieldCommandDTO";
 import type { IUpdateFieldUseCase } from "../../../../../application/use-cases/field/interfaces/IUpdateFieldUseCase";
-import { UpdateFieldDTO } from "../../../../../application/dtos/fields/updateFieldDTO";
+import { UpdateFieldDTO } from "../../../../../application/dtos/fields/UpdateFieldDTO";
 import type { ISoftDeleteFieldUseCase } from "../../../../../application/use-cases/field/interfaces/ISoftDeleteFieldUseCase";
 
 @injectable()

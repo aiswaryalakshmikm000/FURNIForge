@@ -70,6 +70,8 @@ import { FieldRepository } from "../database/prisma/repositories/FieldRepository
 import { CreateFieldUseCase } from "../../application/use-cases/field/CreateUseCase";
 import { UpdateFieldUseCase } from "../../application/use-cases/field/UpdateFieldUseCase";
 import { softDeleteFieldUseCasea } from "../../application/use-cases/field/SoftDeleteFieldUseCase";
+import { RequirementFieldController } from "../../presentation/api/v1/controllers/admin/requirementFieldController";
+import { GetRequirementFieldDeliverablesUseCase } from "../../application/use-cases/deliverable/GetRequirementFieldDeliverablesUseCase";
 
 const container = new Container();
 
@@ -151,6 +153,8 @@ container.bind(TYPES.ICreateFieldUseCase).to(CreateFieldUseCase);
 container.bind(TYPES.IUpdateFieldUseCase).to(UpdateFieldUseCase);
 container.bind(TYPES.ISoftDeleteFieldUseCase).to(softDeleteFieldUseCasea);
 
+container.bind(TYPES.IGetRequirementFieldDeliverablesUseCase).to(GetRequirementFieldDeliverablesUseCase);
+
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
 container.bind(TYPES.LeadController).to(LeadController);
@@ -159,6 +163,7 @@ container.bind(TYPES.DeliverableController).to(DeliverableController);
 container.bind(TYPES.TemplateController).to(TemplateController);
 container.bind(TYPES.TabController).to(TabController);
 container.bind(TYPES.FieldController).to(FieldController);
+container.bind(TYPES.RequirementFieldController).to(RequirementFieldController);
 
 
 export { container };

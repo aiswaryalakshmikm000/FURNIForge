@@ -9,6 +9,7 @@ import adminDeliverableRoutes from "./presentation/api/v1/routes/admin/deliverab
 import adminTemplateRoutes from "./presentation/api/v1/routes/admin/templateRoutes"
 import adminTemplateTabRoutes from "./presentation/api/v1/routes/admin/TabRoutes"
 import adminTemplateFieldRoutes from "./presentation/api/v1/routes/admin/fieldRoutes"
+import adminRequirementFieldRoutes from "./presentation/api/v1/routes/admin/requirementFieldRoutes"
 import { SUCCESS_MESSAGES } from "./infrastructure/config/messages";
 import { morganConfig } from "./infrastructure/config/morganConfig";
 import { cookieConfig } from "./infrastructure/config/cookieConfig";
@@ -29,6 +30,7 @@ app.use("/api/v1/admin", adminDeliverableRoutes)
 app.use("/api/v1/admin", adminTemplateRoutes)
 app.use("/api/v1/admin", adminTemplateTabRoutes)
 app.use("/api/v1/admin", adminTemplateFieldRoutes)
+app.use("/api/v1/admin", adminRequirementFieldRoutes)
 
 app.get("/health", (_req, res) => {
   res.json({ message: SUCCESS_MESSAGES.GENERAL.HEALTH_CHECK })

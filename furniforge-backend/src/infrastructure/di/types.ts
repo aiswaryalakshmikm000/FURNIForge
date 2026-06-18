@@ -71,6 +71,8 @@ export const TYPES = {
   ICreateFieldUseCase: Symbol.for("ICreateFieldUseCase"),
   IUpdateFieldUseCase: Symbol.for("IUpdateFieldUseCase"),
   ISoftDeleteFieldUseCase: Symbol.for("ISoftDeleteFieldUseCase"),
+
+  IGetRequirementFieldDeliverablesUseCase: Symbol.for("IGetRequirementFieldDeliverablesUseCase"),
   
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),
@@ -79,4 +81,5 @@ export const TYPES = {
   TemplateController: Symbol.for("TemplateController"),
   TabController: Symbol.for("TabController"),
   FieldController: Symbol.for("FieldController"),
+  RequirementFieldController: Symbol.for("RequirementFieldController"),
 };

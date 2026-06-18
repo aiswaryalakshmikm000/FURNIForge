@@ -67,6 +67,10 @@ export const SUCCESS_MESSAGES = {
       CREATED: "Field created successfully",
       UPDATED: "Field status updated successfully",
       DELETED: "Field deleted successfully",
+    },
+
+    REQUIREMENT_FIELDS: {
+      FETCH_SUCCESS: "Requirement fields fetched successfully",
     }
   },
 

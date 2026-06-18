@@ -6,10 +6,10 @@ import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages"
 import type { GetAllDeliverablesQueryDTO } from "../../../../../application/dtos/deliverables/GetAllDeliverablesDTO";
 import type { IGetAllDeliverablesUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IGetAllDeliverablesUseCase";
 import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
-import type { DeliverableFormDTO } from "../../../../../application/dtos/deliverables/deliverableFormDTO";
+import type { DeliverableFormDTO } from "../../../../../application/dtos/deliverables/DeliverableFormDTO";
 import type { ICreateDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/ICreateDeliverableUseCase";
 import { AuthRequest } from "../../../middlewares/authMiddleware";
-import { DeliverableCommandRequestDTO } from "../../../../../application/dtos/deliverables/deliverableCommandDTO";
+import { DeliverableCommandRequestDTO } from "../../../../../application/dtos/deliverables/DeliverableCommandDTO";
 import type { IToggleDeliverableStatusUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IToggleDeliverableStatusUseCase";
 import type { IUpdateDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IUpdateDeliverableUseCase";
 import type { ISoftDeleteDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/ISoftDeleteDeliverableUseCase";

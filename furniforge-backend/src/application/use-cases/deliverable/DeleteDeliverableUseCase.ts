@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { IDeliverableRepository } from "../../../domain/repositories/IDeliverableRepository";
 import type { IDeleteDeliverableUseCase } from "./interfaces/IDeleteDeliverableUseCase";
-import type { DeliverableCommandRequestDTO, DeliverableCommandResponseDTO } from "../../dtos/deliverables/deliverableCommandDTO";
+import type { DeliverableCommandRequestDTO, DeliverableCommandResponseDTO } from "../../dtos/deliverables/DeliverableCommandDTO";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { DeliverableCommandMapper } from "../../mappers/deliverable/DeliverableCommandMapper";
