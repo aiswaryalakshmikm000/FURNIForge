@@ -74,6 +74,7 @@ export const TYPES = {
 
   IGetRequirementFieldDeliverablesUseCase: Symbol.for("IGetRequirementFieldDeliverablesUseCase"),
   IGetTemplatesByDeliverableUseCase: Symbol.for("IGetTemplatesByDeliverableUseCase"),
+  IGetTabsByTemplateUseCase: Symbol.for("IGetTabsByTemplateUseCase"),
   
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

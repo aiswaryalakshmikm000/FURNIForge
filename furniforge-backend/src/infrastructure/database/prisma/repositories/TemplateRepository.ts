@@ -133,8 +133,10 @@ export class TemplateRepository extends BaseRepository< Template, PrismaTemplate
           description: true,
           isActive: true,
           _count: {select: {tabs: {where: {deletedAt: null, isActive: true}}}},
-          tabs: {where: {deletedAt: null, isActive: true}, 
-                 select: {_count: {select: {fields: {where: {deletedAt: null, isActive: true}}}}}}
+          tabs: {
+            where: {deletedAt: null, isActive: true}, 
+            select: {_count: {select: {fields: {where: {deletedAt: null, isActive: true}}}}}
+          }
         },
         orderBy: {name: "asc"}
       });

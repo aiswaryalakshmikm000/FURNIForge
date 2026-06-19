@@ -73,6 +73,7 @@ import { softDeleteFieldUseCasea } from "../../application/use-cases/field/SoftD
 import { RequirementFieldController } from "../../presentation/api/v1/controllers/admin/requirementFieldController";
 import { GetRequirementFieldDeliverablesUseCase } from "../../application/use-cases/deliverable/GetRequirementFieldDeliverablesUseCase";
 import { GetTemplatesByDeliverableUseCase } from "../../application/use-cases/template/GetTemplatesByDeliverableUseCase";
+import { GetTabsByTemplateUseCase } from "../../application/use-cases/templateTab/GetTabsByTemplateUseCase";
 
 const container = new Container();
 
@@ -156,6 +157,7 @@ container.bind(TYPES.ISoftDeleteFieldUseCase).to(softDeleteFieldUseCasea);
 
 container.bind(TYPES.IGetRequirementFieldDeliverablesUseCase).to(GetRequirementFieldDeliverablesUseCase);
 container.bind(TYPES.IGetTemplatesByDeliverableUseCase).to(GetTemplatesByDeliverableUseCase);
+container.bind(TYPES.IGetTabsByTemplateUseCase).to(GetTabsByTemplateUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

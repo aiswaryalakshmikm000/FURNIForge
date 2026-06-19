@@ -9,6 +9,7 @@ import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
 import { validateQuery } from "../../../middlewares/validationMiddleware";
 import { GetRequirementFieldDeliverablesQuerySchema } from "../../../../../application/dtos/requirementFields/GetRequirementFieldDeliverablesDTO";
 import { GetTemplatesByDeliverableQuerySchema } from "../../../../../application/dtos/requirementFields/GetTemplatesByDeliverableDTO";
+import { GetTabsByTemplateQuerySchema } from "../../../../../application/dtos/requirementFields/GetTabsByTemplateDTO";
 
 const router = Router();
 
@@ -16,6 +17,6 @@ const controller = container.get<RequirementFieldController>( TYPES.RequirementF
 
 router.get("/requirement-fields/deliverables", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetRequirementFieldDeliverablesQuerySchema), asyncHandler(controller.getDeliverables))
 router.get("/requirement-fields/templates", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetTemplatesByDeliverableQuerySchema), asyncHandler(controller.getTemplates))
-
+router.get("/requirement-fields/tabs", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetTabsByTemplateQuerySchema), asyncHandler(controller.getTabs))
 
 export default router;
