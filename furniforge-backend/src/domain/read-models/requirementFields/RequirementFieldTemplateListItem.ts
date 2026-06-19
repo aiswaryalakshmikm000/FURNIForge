@@ -1,4 +1,4 @@
-export interface RequirementFieldTemplateDTO {
+export interface RequirementFieldTemplateListItem {
   id: string;
   name: string;
   description: string;

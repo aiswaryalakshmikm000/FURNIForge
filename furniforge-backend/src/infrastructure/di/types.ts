@@ -73,6 +73,7 @@ export const TYPES = {
   ISoftDeleteFieldUseCase: Symbol.for("ISoftDeleteFieldUseCase"),
 
   IGetRequirementFieldDeliverablesUseCase: Symbol.for("IGetRequirementFieldDeliverablesUseCase"),
+  IGetTemplatesByDeliverableUseCase: Symbol.for("IGetTemplatesByDeliverableUseCase"),
   
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

@@ -6,18 +6,27 @@ import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages"
 import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
 import type { IGetRequirementFieldDeliverablesUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IGetRequirementFieldDeliverablesUseCase";
 import type { GetRequirementFieldDeliverablesQueryDTO } from "../../../../../application/dtos/requirementFields/GetRequirementFieldDeliverablesDTO";
+import type { GetTemplatesByDeliverableQueryDTO } from "../../../../../application/dtos/requirementFields/GetTemplatesByDeliverableDTO";
+import type { IGetTemplatesByDeliverableUseCase } from "../../../../../application/use-cases/template/interfaces/IGetTemplatesByDeliverableUseCase";
 
 @injectable()
 export class RequirementFieldController {
   constructor(
-    @inject(TYPES.IGetRequirementFieldDeliverablesUseCase) private _getRequirementFieldDeliverablesUseCase: IGetRequirementFieldDeliverablesUseCase
+    @inject(TYPES.IGetRequirementFieldDeliverablesUseCase) private _getRequirementFieldDeliverablesUseCase: IGetRequirementFieldDeliverablesUseCase,
+    @inject(TYPES.IGetTemplatesByDeliverableUseCase) private _getTemplatesByDeliverablesUseCase: IGetTemplatesByDeliverableUseCase
   ) {}
 
   getDeliverables = async ( req: Request, res: Response ) => {
+    const query = req.query as GetRequirementFieldDeliverablesQueryDTO
+    const result = await this._getRequirementFieldDeliverablesUseCase.execute(query);
 
-  const query = req.query as GetRequirementFieldDeliverablesQueryDTO
-  const result = await this._getRequirementFieldDeliverablesUseCase.execute(query);
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.REQUIREMENT_FIELDS.DELIVARABLE_FETCH_SUCCESS ).build() );
+  };
 
-  res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.REQUIREMENT_FIELDS.FETCH_SUCCESS ).build() );
+  getTemplates = async ( req: Request, res: Response ) => {
+    const query = req.query as GetTemplatesByDeliverableQueryDTO;
+    const result = await this._getTemplatesByDeliverablesUseCase.execute(query);
+
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.REQUIREMENT_FIELDS.TEMPLATES_FETCH_SUCCESS ).build() );
   };
 }

@@ -7,6 +7,7 @@ import { Template } from "../../../../domain/entities/Template";
 import { PrismaTemplateMapper } from "../mapper/PrismaTemplateMapper";
 import { TemplateListItem } from "../../../../domain/read-models/template/TemplateListItem";
 import { ITemplateRepository } from "../../../../domain/repositories/ITemplateRepository";
+import { RequirementFieldTemplateListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldTemplateListItem";
 
 @injectable()
 export class TemplateRepository extends BaseRepository< Template, PrismaTemplate, Prisma.TemplateCreateInput, Prisma.TemplateUpdateInput > implements ITemplateRepository {
@@ -120,5 +121,33 @@ export class TemplateRepository extends BaseRepository< Template, PrismaTemplate
     return await this.findFirst({
       where: { deliverableId, name, deletedAt: null },
     });
+  }
+
+  async findTemplatesByDeliverable(deliverableId: string): Promise<RequirementFieldTemplateListItem[]> {
+    try {
+      const rows = await this.model.findMany({
+        where: {deliverableId, deletedAt: null},
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          isActive: true,
+          _count: {select: {tabs: {where: {deletedAt: null, isActive: true}}}},
+          tabs: {where: {deletedAt: null, isActive: true}, 
+                 select: {_count: {select: {fields: {where: {deletedAt: null, isActive: true}}}}}}
+        },
+        orderBy: {name: "asc"}
+      });
+      return rows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        description: row.description,
+        isActive: row.isActive,
+        tabCount: row._count.tabs,
+        fieldCount: row.tabs.reduce((total, tab) => total + tab._count.fields, 0)
+      }));
+    } catch (error) {
+      handlePrismaError(error)
+    }
   }
 }

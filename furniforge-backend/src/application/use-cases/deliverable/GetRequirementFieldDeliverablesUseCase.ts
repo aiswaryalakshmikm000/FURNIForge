@@ -14,6 +14,6 @@ export class GetRequirementFieldDeliverablesUseCase implements IGetRequirementFi
 
         const rows = await this._deliverableRepository.findRequirementFieldDeliverables(query.search);
 
-        return {deliverables: rows.map(RequirementFieldMapper.toDeliverableDTO)}
+        return {deliverables: rows.map(RequirementFieldMapper.toDeliverableResponse)}
     }
 }
