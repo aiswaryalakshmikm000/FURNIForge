@@ -9,8 +9,8 @@ interface Props {
 export function RequirementFieldRow({ field }: Props) {
 
   return (
-    <div className="flex items-center  text-[12px] gap-4 py-3 px-6 border-b border-border last:border-0 hover:bg-muted/10 transition-colors">
-      <div className="flex-1">
+    <div className="flex items-center text-[12px] gap-4 min-w-0 py-3 px-6 border-b border-border last:border-0 hover:bg-muted/10 transition-colors">
+      <div className="flex-1 min-w-[180px]">
         <p className="font-medium">{field.label}</p>
       </div>
 
@@ -19,13 +19,13 @@ export function RequirementFieldRow({ field }: Props) {
       </span>
 
       {(field.options ?? []).length > 0 && (
-        <span className="text-[12px] text-muted-foreground font-sans max-w-[220px] truncate">
+        <span className="text-[12px] text-muted-foreground font-sans max-w-[250px] truncate shrink">
           {field.options?.join(", ")}
         </span>
       )}
 
       {field.defaultValue && (
-        <span className="px-2 py-1 rounded-full bg-accent/10 text-accent text-xs">
+        <span className="px-2 py-1 rounded-full bg-accent/10 text-accent text-xs shrink-0">
           Default: {field.defaultValue}
         </span>
       )}
@@ -40,7 +40,7 @@ export function RequirementFieldRow({ field }: Props) {
         {field.isRequired ? "Required" : "Optional"}
       </span>
 
-      <button
+      <button 
         type="button"
         className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-accent"
       >
@@ -49,7 +49,7 @@ export function RequirementFieldRow({ field }: Props) {
 
       <button
         type="button"
-        className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-destructive"
+        className="p-1.5 rounded-lg hover:bg-muted text-destructive"
       >
         <Trash2 size={14} />
       </button>

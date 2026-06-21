@@ -35,14 +35,10 @@ export function RequirementTemplateTabs({ template }: Props) {
         </div>
 
         <div className="flex items-center gap-2">
-  <span className="text-xs text-muted-foreground">
-    Template Status
-  </span>
+          <span className="text-xs text-muted-foreground">Template Status</span>
 
-  <StatusToggle
-    isActive={template.isActive}
-  />
-</div>
+          <StatusToggle isActive={template.isActive} />
+        </div>
       </div>
 
       {isLoading ? (
@@ -50,50 +46,50 @@ export function RequirementTemplateTabs({ template }: Props) {
       ) : (
         <>
           {/* Tabs */}
-          <div className="px-6 py-3 flex items-center gap-2 border-b border-border">
-            <div className="flex gap-2 flex-wrap flex-1">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setSelectedTabId(tab.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border ${
-                    activeTab?.id === tab.id
-                      ? "bg-accent/10 text-accent border-accent/30"
-                      : "bg-card border-border text-muted-foreground"
-                  }`}
-                >
-                  {tab.name} ({tab.fieldCount})
-                </button>
-              ))}
+<div className="px-6 py-3 border-b border-border">
+  <div className="flex items-center gap-3">
+    <div className="flex-1 overflow-x-auto scrollbar-thin">
+      <div className="flex gap-2 min-w-max pb-2">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setSelectedTabId(tab.id)}
+            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium border ${
+              activeTab?.id === tab.id
+                ? "bg-accent/10 text-accent border-accent/30"
+                : "bg-card border-border text-muted-foreground"
+            }`}
+          >
+            {tab.name} ({tab.fieldCount})
+          </button>
+        ))}
 
-              <button className="px-3 py-1.5 rounded-lg text-xs font-medium border border-dashed border-border text-muted-foreground hover:text-accent flex items-center gap-1">
-                <Plus size={10} />
-                Add Tab
-              </button>
-            </div>
+        <button className="whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium border border-dashed border-border text-muted-foreground hover:text-accent flex items-center gap-1">
+          <Plus size={10} />
+          Add Tab
+        </button>
+      </div>
+    </div>
 
-            {activeTab && (
-              <div className="flex items-center gap-3 pl-3 border-l border-border">
-                <div className="flex items-center gap-2">
-  <span className="text-xs text-muted-foreground">
-    Tab Status
-  </span>
+    {activeTab && (
+      <div className="flex items-center gap-3 pl-3 border-l border-border shrink-0">
+        <span className="text-xs text-muted-foreground">
+          Tab Status
+        </span>
 
-  <StatusToggle
-    isActive={activeTab.isActive}
-  />
+        <StatusToggle isActive={activeTab.isActive} />
+
+        <button className="p-1.5 rounded-lg hover:bg-muted">
+          <Pencil size={14} />
+        </button>
+
+        <button className="p-1.5 rounded-lg hover:bg-muted text-destructive">
+          <Trash2 size={14} />
+        </button>
+      </div>
+    )}
+  </div>
 </div>
-
-                <button className="p-1.5 rounded-lg hover:bg-muted">
-                  <Pencil size={14} />
-                </button>
-
-                <button className="p-1.5 rounded-lg hover:bg-muted text-destructive">
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            )}
-          </div>
 
           {/* FIELD HEADER */}
           {activeTab && (

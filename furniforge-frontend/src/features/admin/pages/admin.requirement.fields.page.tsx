@@ -9,13 +9,16 @@ import { Button } from "../../../shared/components/ui/button";
 import { useGetRequirementFieldDeliverables } from "../../requirement-fields/hooks/use-get-requirement-field-deliverables";
 import { RequirementDeliverableAccordion } from "../../requirement-fields/components/DeliverableAccordion";
 import { HowItWorksDialog } from "../../requirement-fields/components/HowItWorksDialog";
+import { TemplateFormDialog } from "../../requirement-fields/components/TemplateFormDialog";
+import { useCreateTemplate } from "../../requirement-fields/hooks/use-create-template";
+import type { TemplateFormValues } from "../../requirement-fields/validation/template-form.validation";
 
 export default function AdminRequirementFieldsPage() {
   const [showInfo, setShowInfo] = useState(false);
   const [search, setSearch] = useState("");
-  const [expandedDeliverableId, setExpandedDeliverableId] = useState<
-    string | null
-  >(null);
+  const [expandedDeliverableId, setExpandedDeliverableId] = useState< string | null >(null);
+  const [createTemplateOpen, setCreateTemplateOpen] = useState(false);
+  const [selectedDeliverableId, setSelectedDeliverableId] = useState<string | null>(null);
 
   const debouncedSearch = useDebounce(search, 500);
 
@@ -26,9 +29,34 @@ export default function AdminRequirementFieldsPage() {
   const deliverables = data?.data?.deliverables ?? [];
   const activeDeliverableId = expandedDeliverableId ?? deliverables[0]?.id ?? null;
 
+  const { mutateAsync: createTemplate, isPending: isCreatingTemplate } = useCreateTemplate();
+
+  const handleAddTemplate = (deliverableId: string) => {
+    setSelectedDeliverableId(deliverableId);
+    setCreateTemplateOpen(true);
+  };
+
+  const handleCreateTemplate = async ( data: TemplateFormValues ) => {
+    if (!selectedDeliverableId) return;
+
+    await createTemplate({
+      deliverableId: selectedDeliverableId,
+      ...data,
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between">
+
+        <TemplateFormDialog
+          open={createTemplateOpen}
+          onOpenChange={setCreateTemplateOpen}
+          mode="create"
+          isLoading={isCreatingTemplate}
+          onSubmit={handleCreateTemplate}
+        />
+
         <PageHeader
           title="Requirement Fields"
           description="Configure deliverables, templates and requirement fields."
@@ -69,6 +97,7 @@ export default function AdminRequirementFieldsPage() {
                   prev === deliverable.id ? null : deliverable.id,
                 )
               }
+              onAddTemplate={handleAddTemplate}
             />
           ))}
         </div>

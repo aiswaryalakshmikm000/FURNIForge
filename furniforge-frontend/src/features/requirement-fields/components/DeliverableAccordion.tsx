@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Pencil, Trash2, Plus, Layout, } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Pencil,
+  Trash2,
+  Plus,
+  Layout,
+} from "lucide-react";
+
 import type { RequirementFieldDeliverableResponseDTO } from "../types/deliverable.type";
 import { useGetTemplatesByDeliverableId } from "../hooks/use-get-templates-by-deliverableId";
 import { RequirementTemplateTabs } from "./TemplateTabs";
@@ -8,19 +16,19 @@ interface Props {
   deliverable: RequirementFieldDeliverableResponseDTO;
   isOpen: boolean;
   onToggle: () => void;
+  onAddTemplate: (deliverableId: string) => void;
 }
 
 export function RequirementDeliverableAccordion({
   deliverable,
   isOpen,
   onToggle,
+  onAddTemplate,
 }: Props) {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
 
   const { data, isLoading } = useGetTemplatesByDeliverableId(
-    {
-      deliverableId: deliverable.id,
-    },
+    { deliverableId: deliverable.id },
     isOpen,
   );
 
@@ -42,16 +50,16 @@ export function RequirementDeliverableAccordion({
             <ChevronRight size={18} className="text-muted-foreground" />
           )}
 
-          <h2 className="text-lg font-bold font-display text-foreground">
+          <h2 className="text-lg font-bold">
             {deliverable.name}
           </h2>
 
-          <span className="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs font-sans">
+          <span className="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs">
             {deliverable.templateCount} templates
           </span>
         </div>
 
-        <p className="text-xs text-muted-foreground font-sans">
+        <p className="text-xs text-muted-foreground max-w-[350px] truncate">
           {deliverable.description}
         </p>
       </button>
@@ -62,45 +70,56 @@ export function RequirementDeliverableAccordion({
             <div className="p-6">Loading templates...</div>
           ) : (
             <>
-              <div className="px-6 py-3 bg-muted/20 flex items-center gap-2 border-b border-border">
-                <Layout size={14} className="text-muted-foreground" />
+              {/* TEMPLATE BAR */}
+              <div className="px-6 py-3 bg-muted/20 border-b border-border">
+                <div className="flex items-center gap-2">
+                  <Layout
+                    size={14}
+                    className="text-muted-foreground shrink-0"
+                  />
 
-                <div className="flex items-center gap-2 flex-wrap flex-1">
-                  {templates.map((template) => (
-                    <button
-                      key={template.id}
-                      onClick={() => setSelectedTemplateId(template.id)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                        selectedTemplate?.id === template.id
-                          ? "bg-accent text-white"
-                          : "bg-card border border-border text-muted-foreground"
-                      }`}
-                    >
-                      {template.name}
-                    </button>
-                  ))}
+                  <div className="flex-1 overflow-x-auto scrollbar-thin">
+                    <div className="flex items-center gap-2 min-w-max pb-2">
+                      {templates.map((template) => (
+                        <button
+                          key={template.id}
+                          onClick={() => setSelectedTemplateId(template.id)}
+                          className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                            selectedTemplate?.id === template.id
+                              ? "bg-accent text-white"
+                              : "bg-card border border-border text-muted-foreground"
+                          }`}
+                        >
+                          {template.name}
+                        </button>
+                      ))}
 
-                  <button className="px-3 py-1.5 rounded-lg text-xs font-medium border border-dashed border-border text-muted-foreground hover:text-accent transition-colors flex items-center gap-1">
-                    <Plus size={10} />
-                    Add Template
-                  </button>
-                </div>
-
-                {selectedTemplate && (
-                  <div className="flex items-center gap-1 ml-auto pl-2 border-l border-border">
-                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                      Selected
-                    </span>
-
-                    <button className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-accent">
-                      <Pencil size={14} />
-                    </button>
-
-                    <button className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-destructive">
-                      <Trash2 size={14} />
-                    </button>
+                      <button
+                        onClick={() => onAddTemplate(deliverable.id)}
+                        className="whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium border border-dashed border-border text-muted-foreground hover:text-accent flex items-center gap-1"
+                      >
+                        <Plus size={10} />
+                        Add Template
+                      </button>
+                    </div>
                   </div>
-                )}
+
+                  {selectedTemplate && (
+                    <div className="flex items-center gap-1 pl-3 border-l border-border shrink-0">
+                      <span className="text-[10px] uppercase text-muted-foreground">
+                        Selected
+                      </span>
+
+                      <button className="p-1.5 rounded-lg hover:bg-muted">
+                        <Pencil size={14} />
+                      </button>
+
+                      <button className="p-1.5 rounded-lg hover:bg-muted text-destructive">
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {selectedTemplate && (
