@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import type { ISoftDeleteFieldUseCase } from "./interfaces/ISoftDeleteFieldUseCase";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { IFieldRepository } from "../../../domain/repositories/IFieldRepository";
-import type { FieldCommandRequestDTO, FieldCommandResponseDTO } from "../../dtos/fields/fieldCommandDTO";
+import type { FieldCommandRequestDTO, FieldCommandResponseDTO } from "../../dtos/fields/FieldCommandDTO";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { FieldCommandMapper } from "../../mappers/field/FieldCommandMapper";

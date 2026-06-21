@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import type { IUpdateTabUseCase } from "./interfaces/IUpdateTabUseCase";
 import { TYPES } from "../../../infrastructure/di/types";
-import type { TabCommandResponseDTO } from "../../dtos/templateTabs/tabCommandDTO";
-import type { UpdateTabDTO } from "../../dtos/templateTabs/updateTabDTO";
+import type { TabCommandResponseDTO } from "../../dtos/templateTabs/TabCommandDTO";
+import type { UpdateTabDTO } from "../../dtos/templateTabs/UpdateTabDTO";
 import type { ITabRepository } from "../../../domain/repositories/ITabRepository";
 import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";

@@ -44,6 +44,13 @@ export const API_ENDPOINTS = {
       DELETE: (id: string) => `/admin/deliverables/${id}`,
       TOGGLE_STATUS: (id: string) => `/admin/deliverables/${id}/toggle-status`,
     },
+
+    REQUIREMENT_FIELDS :{
+      GET_ALL_DELIVERABLES: "/admin/requirement-fields/deliverables",
+      GET_TEMPLATES_BY_DELIVERABLEID: "/admin/requirement-fields/templates",
+      GET_TABS_BY_TEMPLATEID: "/admin/requirement-fields/tabs",
+      GET_FIELDS_BY_TABID: "/admin/requirement-fields/fields",
+    }
   },
 
   CLIENT: {

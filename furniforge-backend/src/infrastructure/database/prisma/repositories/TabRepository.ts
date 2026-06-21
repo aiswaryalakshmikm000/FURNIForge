@@ -5,6 +5,8 @@ import { PrismaTabMapper } from "../mapper/PrismaTabMapper";
 import { Prisma, TemplateTab as PrismaTab } from "../../../../generated/prisma";
 import { Tab } from "../../../../domain/entities/Tab";
 import { ITabRepository } from "../../../../domain/repositories/ITabRepository";
+import { handlePrismaError } from "../errors/handlePrismaError";
+import { RequirementFieldTabListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldTabListItem"
 
 @injectable()
 export class TabRepository extends BaseRepository< Tab, PrismaTab, Prisma.TemplateTabCreateInput, Prisma.TemplateTabUpdateInput > implements ITabRepository {
@@ -37,4 +39,29 @@ export class TabRepository extends BaseRepository< Tab, PrismaTab, Prisma.Templa
       where: {templateId, displayOrder}
     })
   } 
+
+  async findTabsByTemplate( templateId: string): Promise<RequirementFieldTabListItem[]> {
+    try {
+      const rows = await this.model.findMany({
+        where: {templateId, isActive: true},
+        select: {
+          id: true,
+          name: true,
+          displayOrder: true,
+          isActive: true,
+          _count: {select: {fields: {where: {isActive: true, deletedAt: null}}}}
+        },
+        orderBy: {name: "asc"}
+      });
+      return rows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        displayOrder: row.displayOrder,
+        isActive: row.isActive,
+        fieldCount: row._count.fields,
+      }))
+    } catch (error) {
+      handlePrismaError(error)
+    }
+  }
 }

@@ -7,9 +7,9 @@ import { authorizeRoles } from "../../../middlewares/roleGuardMiddleware";
 import { validateBody, validateParams } from "../../../middlewares/validationMiddleware";
 import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
 import { FieldController } from "../../controllers/admin/FieldController";
-import { CreateFieldDTOSchema } from "../../../../../application/dtos/fields/createFieldDTO";
-import { FieldCommandParamsSchema } from "../../../../../application/dtos/fields/fieldCommandDTO";
-import { UpdateFieldDTOSchema } from "../../../../../application/dtos/fields/updateFieldDTO";
+import { CreateFieldDTOSchema } from "../../../../../application/dtos/fields/CreateFieldDTO";
+import { FieldCommandParamsSchema } from "../../../../../application/dtos/fields/FieldCommandDTO";
+import { UpdateFieldDTOSchema } from "../../../../../application/dtos/fields/UpdateFieldDTO";
 
 const router = Router();
 

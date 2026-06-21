@@ -7,9 +7,9 @@ import { validateBody, validateParams } from "../../../middlewares/validationMid
 import { TYPES } from "../../../../../infrastructure/di/types";
 import { asyncHandler } from "../../../../../shared/utils/asyncHandler";
 import { TabController } from "../../controllers/admin/TabController";
-import { CreateTabDTOSchema } from "../../../../../application/dtos/templateTabs/createTabDTO";
-import { TabCommandParamsSchema } from "../../../../../application/dtos/templateTabs/tabCommandDTO";
-import { UpdateTabDTOSchema } from "../../../../../application/dtos/templateTabs/updateTabDTO";
+import { CreateTabDTOSchema } from "../../../../../application/dtos/templateTabs/CreateTabDTO";
+import { TabCommandParamsSchema } from "../../../../../application/dtos/templateTabs/TabCommandDTO";
+import { UpdateTabDTOSchema } from "../../../../../application/dtos/templateTabs/UpdateTabDTO";
 
 const router = Router();
 

@@ -1,5 +1,5 @@
 import { FieldListItem } from "../../../domain/read-models/field/FieldListItem";
-import type { FieldResponseDTO } from "../../dtos/fields/fieldResponseDTO";
+import type { FieldResponseDTO } from "../../dtos/fields/FieldResponseDTO";
 
 export class FieldMapper {
 

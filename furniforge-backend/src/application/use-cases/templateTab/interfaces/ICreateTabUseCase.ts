@@ -1,5 +1,5 @@
-import type { TabCommandResponseDTO } from "../../../dtos/templateTabs/tabCommandDTO";
-import type { CreateTabDTO } from "../../../dtos/templateTabs/createTabDTO";
+import type { TabCommandResponseDTO } from "../../../dtos/templateTabs/TabCommandDTO";
+import type { CreateTabDTO } from "../../../dtos/templateTabs/CreateTabDTO";
 
 
 export interface ICreateTabUseCase {

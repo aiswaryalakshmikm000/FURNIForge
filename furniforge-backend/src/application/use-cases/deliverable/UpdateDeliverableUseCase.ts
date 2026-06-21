@@ -1,9 +1,9 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { IUpdateDeliverableUseCase } from "./interfaces/IUpdateDeliverableUseCase";
-import type { DeliverableFormDTO } from "../../dtos/deliverables/deliverableFormDTO";
+import type { DeliverableFormDTO } from "../../dtos/deliverables/DeliverableFormDTO";
 import type { IDeliverableRepository } from "../../../domain/repositories/IDeliverableRepository";
-import { DeliverableCommandResponseDTO } from "../../dtos/deliverables/deliverableCommandDTO";
+import { DeliverableCommandResponseDTO } from "../../dtos/deliverables/DeliverableCommandDTO";
 import { ConflictError, NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { DeliverableCommandMapper } from "../../mappers/deliverable/DeliverableCommandMapper";

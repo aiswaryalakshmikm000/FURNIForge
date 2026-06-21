@@ -5,11 +5,11 @@ import type { ICreateTabUseCase } from "../../../../../application/use-cases/tem
 import { HttpStatusCode } from "../../../../../domain/enums/HttpStatusCode";
 import { ResponseBuilder } from "../../../../../shared/responses/ApiResponse";
 import { SUCCESS_MESSAGES } from "../../../../../infrastructure/config/messages";
-import type { CreateTabDTO } from "../../../../../application/dtos/templateTabs/createTabDTO";
-import type { UpdateTabDTO } from "../../../../../application/dtos/templateTabs/updateTabDTO";
+import type { CreateTabDTO } from "../../../../../application/dtos/templateTabs/CreateTabDTO";
+import type { UpdateTabDTO } from "../../../../../application/dtos/templateTabs/UpdateTabDTO";
 import type { IUpdateTabUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IUpdateTabUseCase";
 import type { IDeleteTabUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IDeleteTabUseCase";
-import type { TabCommandRequestDTO } from "../../../../../application/dtos/templateTabs/tabCommandDTO";
+import type { TabCommandRequestDTO } from "../../../../../application/dtos/templateTabs/TabCommandDTO";
 import type { IToggleTabStatusUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IToggleTabUseCase";
 
 @injectable()

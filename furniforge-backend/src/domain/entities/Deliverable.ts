@@ -45,6 +45,7 @@ export class Deliverable {
   }
 
   softDelete() {
+    this._isActive = false
     this._deletedAt = new Date();
     this._updatedAt = new Date();
   }

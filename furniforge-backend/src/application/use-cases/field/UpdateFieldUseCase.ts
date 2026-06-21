@@ -6,9 +6,9 @@ import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError"
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { FieldType } from "../../../domain/enums/FieldType";
 import { generateFieldKey } from "../../../shared/utils/generateFieldKey";
-import type { FieldCommandRequestDTO, FieldCommandResponseDTO } from "../../dtos/fields/fieldCommandDTO";
+import type { FieldCommandRequestDTO, FieldCommandResponseDTO } from "../../dtos/fields/FieldCommandDTO";
 import { FieldCommandMapper } from "../../mappers/field/FieldCommandMapper";
-import type { UpdateFieldDTO } from "../../dtos/fields/updateFieldDTO";
+import type { UpdateFieldDTO } from "../../dtos/fields/UpdateFieldDTO";
 
 @injectable()
 export class UpdateFieldUseCase implements IUpdateFieldUseCase {

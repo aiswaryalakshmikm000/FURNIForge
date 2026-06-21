@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { DeliverableCommandDTO } from "../types/deliverable-command-type";
+import type { DeliverableCommandDTO } from "../types/deliverable-command.type";
 import { updateDeliverableApi } from "../api/update-deliverable.api";
 import { toast } from "sonner";
 

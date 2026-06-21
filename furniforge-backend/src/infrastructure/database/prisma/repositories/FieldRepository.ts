@@ -6,6 +6,8 @@ import { Field } from "../../../../domain/entities/Field";
 import { IFieldRepository } from "../../../../domain/repositories/IFieldRepository";
 import { PrismaFieldMapper } from "../mapper/PrismaFieldMapper";
 import { handlePrismaError } from "../errors/handlePrismaError";
+import { RequirementFieldFieldListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldFieldListItem";
+import { FieldType } from "../../../../domain/enums/FieldType";
 
 @injectable()
 export class FieldRepository extends BaseRepository< Field, PrismaField, Prisma.TemplateFieldCreateInput, Prisma.TemplateFieldUpdateInput > implements IFieldRepository {
@@ -40,4 +42,37 @@ export class FieldRepository extends BaseRepository< Field, PrismaField, Prisma.
       handlePrismaError(error);
     }
   }
+
+  async findFieldsByTab( tabId: string ): Promise<RequirementFieldFieldListItem[]> {
+  try {
+    const rows = await this.model.findMany({
+      where: { tabId, deletedAt: null },
+      select: {
+        id: true,
+        tabId: true,
+        label: true,
+        fieldKey: true,
+        fieldType: true,
+        options: true,
+        defaultValue: true,
+        isRequired: true,
+        isActive: true,
+      },
+      orderBy: { createdAt: "asc" },
+    });
+    return rows.map((row) => ({
+      id: row.id,
+      tabId: row.tabId,
+      label: row.label,
+      fieldKey: row.fieldKey,
+      fieldType: row.fieldType as FieldType,
+      options: row.options,
+      defaultValue: row.defaultValue,
+      isRequired: row.isRequired,
+      isActive: row.isActive,
+    }));
+  } catch (error) {
+    handlePrismaError(error);
+  }
+}
 }

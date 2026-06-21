@@ -4,7 +4,7 @@ import type { ITabRepository } from "../../../domain/repositories/ITabRepository
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import type { IDeleteTabUseCase } from "./interfaces/IDeleteTabUseCase";
-import type { TabCommandRequestDTO, TabCommandResponseDTO } from "../../dtos/templateTabs/tabCommandDTO";
+import type { TabCommandRequestDTO, TabCommandResponseDTO } from "../../dtos/templateTabs/TabCommandDTO";
 import { TabCommandMapper } from "../../mappers/templateTab/TabCommandMapper";
 
 @injectable()

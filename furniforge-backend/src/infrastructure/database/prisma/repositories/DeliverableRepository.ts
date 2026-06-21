@@ -7,6 +7,7 @@ import { Deliverable } from "../../../../domain/entities/Deliverable";
 import { IDeliverableRepository } from "../../../../domain/repositories/IDeliverableRepository";
 import { DeliverableListItem } from "../../../../domain/read-models/deliverable/DeliverableMapper";
 import { PrismaDeliverableMapper } from "../mapper/PrismaDeliverableMapper";
+import { RequirementFieldDeliverableListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldDeliverableListItem";
 
 @injectable()
 export class DeliverableRepository
@@ -123,5 +124,34 @@ export class DeliverableRepository
     } catch (error) {
       handlePrismaError(error);
     }
+  }
+
+  async findRequirementFieldDeliverables(search?: string): Promise<RequirementFieldDeliverableListItem[]> {
+    try {
+      const rows = await this.model.findMany({
+        where: {deletedAt: null,
+        ...(search && { OR: [
+          {name: {contains: search, mode: "insensitive"}},
+          {templates: {some: {deletedAt: null, name: {contains: search, mode: "insensitive"}}},}
+          ]})},
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          isActive: true,
+          _count: {select: {templates: {where: { deletedAt: null, isActive: true }}}}
+        },
+        orderBy: { name: "asc" }
+      });
+      return rows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        description: row.description,
+        isActive: row.isActive,
+        templateCount: row._count.templates,
+      }));
+    } catch (error) {
+      handlePrismaError(error);
+    } 
   }
 }

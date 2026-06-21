@@ -1,5 +1,6 @@
 import { Deliverable } from "../entities/Deliverable";
 import { DeliverableListItem } from "../read-models/deliverable/DeliverableMapper";
+import { RequirementFieldDeliverableListItem } from "../read-models/requirementFields/RequirementFieldDeliverableListItem";
 import { IBaseRepository } from "./IBaseRepository";
 
 export interface IDeliverableRepository extends IBaseRepository<Deliverable> {
@@ -19,4 +20,6 @@ export interface IDeliverableRepository extends IBaseRepository<Deliverable> {
   }): Promise<number>;
 
   findByName(name: string): Promise<Deliverable | null>;
+
+  findRequirementFieldDeliverables( search?: string ): Promise<RequirementFieldDeliverableListItem[]>;
 }

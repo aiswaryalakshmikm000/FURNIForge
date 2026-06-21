@@ -1,0 +1,14 @@
+export enum FieldType {
+  TEXT = 'TEXT',
+  TEXTAREA = 'TEXTAREA',
+  NUMBER = 'NUMBER',
+  SELECT = 'SELECT',
+  MULTI_SELECT = 'MULTI_SELECT',
+  CHECKBOX = 'CHECKBOX',
+  RADIO = 'RADIO',
+  DATE = 'DATE',
+  FILE = 'FILE',
+  IMAGE = 'IMAGE',
+  EMAIL = 'EMAIL',
+  PHONE = 'PHONE',
+}

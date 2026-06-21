@@ -13,9 +13,7 @@ export const GetAllDesignersQuerySchema = z.object({
   sortOrder: z.enum(["asc", "desc"]).default("desc"),
 });
 
-export type GetAllDesignersQueryDTO = z.infer<
-  typeof GetAllDesignersQuerySchema
->;
+export type GetAllDesignersQueryDTO = z.infer< typeof GetAllDesignersQuerySchema >;
 
 export interface GetAllDesignersResponseDTO extends PaginationMeta {
   designers: DesignerResponseDTO[];

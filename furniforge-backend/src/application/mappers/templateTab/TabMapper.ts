@@ -1,5 +1,5 @@
 import { TabListItem } from "../../../domain/read-models/templateTab/TabListItem";
-import type { TabResponseDTO } from "../../dtos/templateTabs/tabResponseMapper";
+import type { TabResponseDTO } from "../../dtos/templateTabs/TabResponseMapper";
 
 export class TabMapper {
   static toResponse( tab: TabListItem ): TabResponseDTO {
