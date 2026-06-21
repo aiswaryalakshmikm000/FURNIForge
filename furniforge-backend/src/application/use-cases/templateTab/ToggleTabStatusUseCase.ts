@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ITabRepository } from "../../../domain/repositories/ITabRepository";
-import type { TabCommandRequestDTO, TabCommandResponseDTO } from "../../dtos/templateTabs/tabCommandDTO";
+import type { TabCommandRequestDTO, TabCommandResponseDTO } from "../../dtos/templateTabs/TabCommandDTO";
 import type { IToggleTabStatusUseCase } from "./interfaces/IToggleTabUseCase";
 import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";

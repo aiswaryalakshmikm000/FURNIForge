@@ -4,7 +4,7 @@ import type { IUserRepository } from "../../../domain/repositories/IUserReposito
 import { UnauthorizedError } from "../../../domain/errors/AppError";
 import { UserMapper } from "../../mappers/user/UserMapper";
 import type { IGetMeUseCase } from "./interfaces/IGetMeUseCase";
-import type { UserResponseDTO } from "../../dtos/user/userResponseDTO";
+import type { UserResponseDTO } from "../../dtos/user/UserResponseDTO";
 
 @injectable()
 export class GetMeUseCase implements IGetMeUseCase {

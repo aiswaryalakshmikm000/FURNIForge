@@ -1,5 +1,5 @@
 import { Tab } from "../../../domain/entities/Tab";
-import type { TabCommandResponseDTO } from "../../dtos/templateTabs/tabCommandDTO";
+import type { TabCommandResponseDTO } from "../../dtos/templateTabs/TabCommandDTO";
 
 export class TabCommandMapper {
   static toResponse( tab: Tab ): TabCommandResponseDTO {

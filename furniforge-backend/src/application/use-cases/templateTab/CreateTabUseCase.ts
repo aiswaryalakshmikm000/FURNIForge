@@ -1,14 +1,14 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ITabRepository } from "../../../domain/repositories/ITabRepository";
-import type { TabCommandResponseDTO } from "../../dtos/templateTabs/tabCommandDTO";
+import type { TabCommandResponseDTO } from "../../dtos/templateTabs/TabCommandDTO";
 import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import { Tab } from "../../../domain/entities/Tab";
 import { TabCommandMapper } from "../../mappers/templateTab/TabCommandMapper";
 import type { ICreateTabUseCase } from "./interfaces/ICreateTabUseCase";
 import type { ITemplateRepository } from "../../../domain/repositories/ITemplateRepository";
-import type { CreateTabDTO } from "../../dtos/templateTabs/createTabDTO";
+import type { CreateTabDTO } from "../../dtos/templateTabs/CreateTabDTO";
 
 @injectable()
 export class CreateTabUseCase implements ICreateTabUseCase {

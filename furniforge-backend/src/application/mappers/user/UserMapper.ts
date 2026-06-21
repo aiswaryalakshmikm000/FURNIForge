@@ -1,5 +1,5 @@
 import { User } from "../../../domain/entities/User";
-import type { UserResponseDTO } from "../../../application/dtos/user/userResponseDTO";
+import type { UserResponseDTO } from "../../dtos/user/UserResponseDTO";
 
 export class UserMapper {
 
