@@ -118,9 +118,13 @@ export class TemplateRepository extends BaseRepository< Template, PrismaTemplate
   }
 
   async findByDeliverableAndName( deliverableId: string, name: string ): Promise<Template | null> {
-    return await this.findFirst({
-      where: { deliverableId, name, deletedAt: null },
-    });
+    try {
+      return await this.findFirst({
+        where: { deliverableId, name, deletedAt: null },
+      });
+    } catch (error) {
+      handlePrismaError(error)
+    }
   }
 
   async findTemplatesByDeliverable(deliverableId: string): Promise<RequirementFieldTemplateListItem[]> {

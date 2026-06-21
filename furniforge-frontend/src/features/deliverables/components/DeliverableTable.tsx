@@ -1,5 +1,6 @@
-import { Pencil, Trash2, ToggleLeft, ToggleRight, Archive } from "lucide-react";
+import { Pencil, Trash2, Archive } from "lucide-react";
 import type { DeliverableResponseDTO } from "../types/get-all-deliverables.type";
+import { StatusToggle } from "../../../shared/components/ui/statusToggle";
 
 interface Props {
   deliverables: DeliverableResponseDTO[];
@@ -58,56 +59,38 @@ export const DeliverableTable = ({
 
           {/* Status */}
           <div className="flex justify-center">
-            <button
+            <StatusToggle
+              isActive={deliverable.isActive}
               onClick={() => onToggleStatus(deliverable)}
-              className="flex items-center gap-2 transition-colors"
-            >
-              {deliverable.isActive ? (
-                <>
-                  <ToggleRight size={24} className="text-accent" />
-                  <span className="text-xs font-medium text-accent">
-                    Active
-                  </span>
-                </>
-              ) : (
-                <>
-                  <ToggleLeft size={24} className="text-muted-foreground" />
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Inactive
-                  </span>
-                </>
-              )}
-            </button>
+            />
           </div>
 
           {/* Actions */}
           <div className="flex justify-end items-center gap-1">
+            <button
+              onClick={() => onEdit(deliverable)}
+              className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-accent transition-colors"
+              title="Edit"
+            >
+              <Pencil size={15} />
+            </button>
 
-  <button
-    onClick={() => onEdit(deliverable)}
-    className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-accent transition-colors"
-    title="Edit"
-  >
-    <Pencil size={15} />
-  </button>
+            <button
+              onClick={() => onSoftDelete(deliverable)}
+              className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-amber-500 transition-colors"
+              title="Soft Delete"
+            >
+              <Archive size={15} />
+            </button>
 
-  <button
-    onClick={() => onSoftDelete(deliverable)}
-    className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-amber-500 transition-colors"
-    title="Soft Delete"
-  >
-    <Archive size={15} />
-  </button>
-
-  <button
-    onClick={() => onDelete(deliverable)}
-    className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-destructive transition-colors"
-    title="Permanent Delete"
-  >
-    <Trash2 size={15} />
-  </button>
-
-</div>
+            <button
+              onClick={() => onDelete(deliverable)}
+              className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-destructive transition-colors"
+              title="Permanent Delete"
+            >
+              <Trash2 size={15} />
+            </button>
+          </div>
         </div>
       ))}
     </div>

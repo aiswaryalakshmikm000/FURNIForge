@@ -73,6 +73,7 @@ export const SUCCESS_MESSAGES = {
       DELIVARABLE_FETCH_SUCCESS: "Requirement fields fetched successfully",
       TEMPLATES_FETCH_SUCCESS: "Templates fetched successfully",
       TABS_FETCH_SUCCESS: "Tabs fetched successfully",
+      FIELDS_FETCH_SUCCESS: "Fields fetched successfully",
     }
   },
 

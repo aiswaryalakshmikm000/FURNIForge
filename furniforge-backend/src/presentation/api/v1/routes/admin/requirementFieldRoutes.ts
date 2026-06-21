@@ -10,6 +10,7 @@ import { validateQuery } from "../../../middlewares/validationMiddleware";
 import { GetRequirementFieldDeliverablesQuerySchema } from "../../../../../application/dtos/requirementFields/GetRequirementFieldDeliverablesDTO";
 import { GetTemplatesByDeliverableQuerySchema } from "../../../../../application/dtos/requirementFields/GetTemplatesByDeliverableDTO";
 import { GetTabsByTemplateQuerySchema } from "../../../../../application/dtos/requirementFields/GetTabsByTemplateDTO";
+import { GetFieldsByTabQuerySchema } from "../../../../../application/dtos/requirementFields/GetFieldsByTabDTO";
 
 const router = Router();
 
@@ -18,5 +19,6 @@ const controller = container.get<RequirementFieldController>( TYPES.RequirementF
 router.get("/requirement-fields/deliverables", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetRequirementFieldDeliverablesQuerySchema), asyncHandler(controller.getDeliverables))
 router.get("/requirement-fields/templates", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetTemplatesByDeliverableQuerySchema), asyncHandler(controller.getTemplates))
 router.get("/requirement-fields/tabs", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetTabsByTemplateQuerySchema), asyncHandler(controller.getTabs))
+router.get("/requirement-fields/fields", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetFieldsByTabQuerySchema), asyncHandler(controller.getFields))
 
 export default router;

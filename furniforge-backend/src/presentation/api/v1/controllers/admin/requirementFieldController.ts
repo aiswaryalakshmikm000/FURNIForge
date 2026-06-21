@@ -10,13 +10,16 @@ import type { GetTemplatesByDeliverableQueryDTO } from "../../../../../applicati
 import type { IGetTemplatesByDeliverableUseCase } from "../../../../../application/use-cases/template/interfaces/IGetTemplatesByDeliverableUseCase";
 import type { GetTabsByTemplateQueryDTO } from "../../../../../application/dtos/requirementFields/GetTabsByTemplateDTO";
 import type { IGetTabsByTemplateUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IGetTabsByTemplateUseCase";
+import type { IGetFieldsByTabUseCase } from "../../../../../application/use-cases/field/interfaces/IGetFieldsByTabUseCase";
+import { GetFieldsByTabQueryDTO } from "../../../../../application/dtos/requirementFields/GetFieldsByTabDTO";
 
 @injectable()
 export class RequirementFieldController {
   constructor(
     @inject(TYPES.IGetRequirementFieldDeliverablesUseCase) private _getRequirementFieldDeliverablesUseCase: IGetRequirementFieldDeliverablesUseCase,
     @inject(TYPES.IGetTemplatesByDeliverableUseCase) private _getTemplatesByDeliverablesUseCase: IGetTemplatesByDeliverableUseCase,
-    @inject(TYPES.IGetTabsByTemplateUseCase) private _getTabsByTemplateUseCase: IGetTabsByTemplateUseCase
+    @inject(TYPES.IGetTabsByTemplateUseCase) private _getTabsByTemplateUseCase: IGetTabsByTemplateUseCase,
+    @inject(TYPES.IGetFieldsByTabUseCase ) private _getFieldsByTabUseCase: IGetFieldsByTabUseCase,
   ) {}
 
   getDeliverables = async ( req: Request, res: Response ) => {
@@ -35,8 +38,15 @@ export class RequirementFieldController {
 
   getTabs = async ( req: Request, res: Response ) => {
   const query = req.query as GetTabsByTemplateQueryDTO;
-  const result = await this._getTabsByTemplateUseCase.execute( query );
+  const result = await this._getTabsByTemplateUseCase.execute(query);
 
   res.status(HttpStatusCode.OK).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.REQUIREMENT_FIELDS.TABS_FETCH_SUCCESS ).build());
   };
+
+  getFields = async ( req: Request, res: Response ) => {
+    const query = req.query as GetFieldsByTabQueryDTO;
+    const result = await this._getFieldsByTabUseCase.execute(query)
+
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.REQUIREMENT_FIELDS.FIELDS_FETCH_SUCCESS).build());
+  }
 }

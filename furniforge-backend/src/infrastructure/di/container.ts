@@ -74,6 +74,7 @@ import { RequirementFieldController } from "../../presentation/api/v1/controller
 import { GetRequirementFieldDeliverablesUseCase } from "../../application/use-cases/deliverable/GetRequirementFieldDeliverablesUseCase";
 import { GetTemplatesByDeliverableUseCase } from "../../application/use-cases/template/GetTemplatesByDeliverableUseCase";
 import { GetTabsByTemplateUseCase } from "../../application/use-cases/templateTab/GetTabsByTemplateUseCase";
+import { GetFieldsByTabUseCase } from "../../application/use-cases/field/GetFieldsByTabUseCase";
 
 const container = new Container();
 
@@ -158,6 +159,7 @@ container.bind(TYPES.ISoftDeleteFieldUseCase).to(softDeleteFieldUseCasea);
 container.bind(TYPES.IGetRequirementFieldDeliverablesUseCase).to(GetRequirementFieldDeliverablesUseCase);
 container.bind(TYPES.IGetTemplatesByDeliverableUseCase).to(GetTemplatesByDeliverableUseCase);
 container.bind(TYPES.IGetTabsByTemplateUseCase).to(GetTabsByTemplateUseCase);
+container.bind(TYPES.IGetFieldsByTabUseCase).to(GetFieldsByTabUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

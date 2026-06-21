@@ -17,6 +17,7 @@ import { useUpdateDeliverable } from "../../deliverables/hooks/use-update-delive
 import { DeliverableTable } from "../../deliverables/components/DeliverableTable";
 import { useDebounce } from "../../../shared/hooks/use-debounce";
 import { useSoftDeleteDeliverable } from "../../deliverables/hooks/use-soft-delete-deliverable";
+import { PremiumLoader } from "../../../shared/components/common/loader";
 
 export default function AdminDeliverablesPage() {
   const [page, setPage] = useState(1);
@@ -234,7 +235,7 @@ export default function AdminDeliverablesPage() {
 
       {isLoading ? (
         <div className="py-20 text-center text-muted-foreground">
-          Loading deliverables...
+          <PremiumLoader />
         </div>
       ) : deliverables.length === 0 ? (
         <EmptyState

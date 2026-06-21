@@ -19,6 +19,7 @@ import { formatEnumLabel } from "../../../shared/utils/format-enum";
 import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
 import { useDeleteLead } from "../../lead/hooks/use-delete-lead";
 import { useUpdateLead } from "../../lead/hooks/use-update-lead";
+import { PremiumLoader } from "../../../shared/components/common/loader";
 
 export const DEFAULT_DELIVERABLES = [ "Sofa", "TV unit", "Bed"];
 
@@ -231,7 +232,7 @@ export default function AdminLeadsPage() {
       />
 
       {isLoading ? (
-        <p>Loading...</p>
+        <PremiumLoader />
       ) : leads.length === 0 ? (
         <EmptyState
           title="No leads found"
