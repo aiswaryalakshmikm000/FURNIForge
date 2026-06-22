@@ -3,9 +3,10 @@ import { RequirementFieldRow } from "./FieldRow";
 
 interface Props {
   tabId?: string;
+  disabled?: boolean;
 }
 
-export function RequirementFieldList({ tabId }: Props) {
+export function RequirementFieldList({ tabId, disabled = false }: Props) {
   const { data, isLoading } = useGetFieldsByTabsId({ tabId: tabId! }, !!tabId);
 
   if (!tabId) return null;
@@ -27,7 +28,7 @@ export function RequirementFieldList({ tabId }: Props) {
   return (
     <div>
       {fields.map((field) => (
-        <RequirementFieldRow key={field.id} field={field} />
+        <RequirementFieldRow key={field.id} field={field} disabled={disabled} />
       ))}
     </div>
   );

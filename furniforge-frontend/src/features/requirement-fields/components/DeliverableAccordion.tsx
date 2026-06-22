@@ -17,8 +17,9 @@ interface Props {
   isOpen: boolean;
   onToggle: () => void;
   onAddTemplate: (deliverableId: string) => void;
-  onEditTemplate: ( template: RequirementFieldTemplateResponseDTO ) => void;
-  onSoftDeleteTemplate: (
+  onEditTemplate: (template: RequirementFieldTemplateResponseDTO) => void;
+  onSoftDeleteTemplate: (template: RequirementFieldTemplateResponseDTO) => void;
+  onToggleTemplateStatus: (
     template: RequirementFieldTemplateResponseDTO,
   ) => void;
 }
@@ -30,6 +31,7 @@ export function RequirementDeliverableAccordion({
   onAddTemplate,
   onEditTemplate,
   onSoftDeleteTemplate,
+  onToggleTemplateStatus,
 }: Props) {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
 
@@ -40,7 +42,8 @@ export function RequirementDeliverableAccordion({
 
   const templates = data?.data?.templates ?? [];
 
-  const selectedTemplate = templates.find((t) => t.id === selectedTemplateId) ?? templates[0];
+  const selectedTemplate =
+    templates.find((t) => t.id === selectedTemplateId) ?? templates[0];
 
   return (
     <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-sm">
@@ -55,9 +58,7 @@ export function RequirementDeliverableAccordion({
             <ChevronRight size={18} className="text-muted-foreground" />
           )}
 
-          <h2 className="text-lg font-bold">
-            {deliverable.name}
-          </h2>
+          <h2 className="text-lg font-bold">{deliverable.name}</h2>
 
           <span className="px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs">
             {deliverable.templateCount} templates
@@ -89,13 +90,22 @@ export function RequirementDeliverableAccordion({
                         <button
                           key={template.id}
                           onClick={() => setSelectedTemplateId(template.id)}
-                          className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                          className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${
                             selectedTemplate?.id === template.id
-                              ? "bg-accent text-white"
-                              : "bg-card border border-border text-muted-foreground"
+                              ? !template.isActive
+                                ? "bg-muted text-muted-foreground/70 border border-destructive/50 ring-1 ring-destructive/50"
+                                : "bg-accent text-white"
+                              : !template.isActive
+                                ? "bg-card border border-destructive/30 text-muted-foreground/50"
+                                : "bg-card border border-border text-muted-foreground"
                           }`}
                         >
                           {template.name}
+                          {!template.isActive && (
+                            <span className="text-[10px] opacity-70">
+                              (inactive)
+                            </span>
+                          )}
                         </button>
                       ))}
 
@@ -115,15 +125,22 @@ export function RequirementDeliverableAccordion({
                         Selected
                       </span>
 
-                      <button 
-                      onClick={() => onEditTemplate(selectedTemplate)}
-                      className="p-1.5 rounded-lg hover:bg-muted">
+                      <button
+                        disabled={!selectedTemplate.isActive}
+                        onClick={() => onEditTemplate(selectedTemplate)}
+                        className={`p-1.5 rounded-lg transition-colors ${
+                          !selectedTemplate.isActive
+                            ? "text-muted-foreground/40 cursor-not-allowed"
+                            : "hover:bg-muted text-muted-foreground hover:text-accent"
+                        }`}
+                      >
                         <Pencil size={14} />
                       </button>
 
                       <button
-                      onClick={() => onSoftDeleteTemplate(selectedTemplate)} 
-                      className="p-1.5 rounded-lg hover:bg-muted text-destructive">
+                        onClick={() => onSoftDeleteTemplate(selectedTemplate)}
+                        className="p-1.5 rounded-lg hover:bg-muted text-destructive"
+                      >
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -132,7 +149,10 @@ export function RequirementDeliverableAccordion({
               </div>
 
               {selectedTemplate && (
-                <RequirementTemplateTabs template={selectedTemplate} />
+                <RequirementTemplateTabs
+                  template={selectedTemplate}
+                  onToggleTemplateStatus={onToggleTemplateStatus}
+                />
               )}
             </>
           )}

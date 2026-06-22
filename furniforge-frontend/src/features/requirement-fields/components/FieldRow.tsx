@@ -4,52 +4,86 @@ import type { RequirementFieldResponseDTO } from "../types/field.type";
 
 interface Props {
   field: RequirementFieldResponseDTO;
+  disabled?: boolean;
 }
 
-export function RequirementFieldRow({ field }: Props) {
-
+export function RequirementFieldRow({ field, disabled = false }: Props) {
   return (
     <div className="flex items-center text-[12px] gap-4 min-w-0 py-3 px-6 border-b border-border last:border-0 hover:bg-muted/10 transition-colors">
       <div className="flex-1 min-w-[180px]">
-        <p className="font-medium">{field.label}</p>
+        <p
+          className={`font-medium ${
+            disabled ? "text-muted-foreground/50" : ""
+          }`}
+        >
+          {field.label}
+        </p>
       </div>
 
-      <span className="px-2 py-1 rounded-full bg-muted text-[10px] text-muted-foreground font-sans">
+      <span
+        className={`px-2 py-1 rounded-full text-[10px] font-sans ${
+          disabled
+            ? "bg-muted text-muted-foreground/50"
+            : "bg-muted text-muted-foreground"
+        }`}
+      >
         {field.fieldType}
       </span>
 
       {(field.options ?? []).length > 0 && (
-        <span className="text-[12px] text-muted-foreground font-sans max-w-[250px] truncate shrink">
+        <span
+          className={`text-[12px] font-sans max-w-[250px] truncate shrink ${
+            disabled ? "text-muted-foreground/50" : "text-muted-foreground"
+          }`}
+        >
           {field.options?.join(", ")}
         </span>
       )}
 
       {field.defaultValue && (
-        <span className="px-2 py-1 rounded-full bg-accent/10 text-accent text-xs shrink-0">
+        <span
+          className={`px-2 py-1 rounded-full text-xs shrink-0 ${
+            disabled
+              ? "bg-muted text-muted-foreground/50"
+              : "bg-accent/10 text-accent"
+          }`}
+        >
           Default: {field.defaultValue}
         </span>
       )}
 
       <span
         className={
-          field.isRequired
-            ? "text-accent text-xs font-sans whitespace-nowrap"
-            : "text-muted-foreground text-xs whitespace-nowrap"
+          disabled
+            ? "text-muted-foreground/50 text-xs whitespace-nowrap"
+            : field.isRequired
+              ? "text-accent text-xs whitespace-nowrap"
+              : "text-muted-foreground text-xs whitespace-nowrap"
         }
       >
         {field.isRequired ? "Required" : "Optional"}
       </span>
 
-      <button 
+      <button
+        disabled={disabled}
         type="button"
-        className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-accent"
+        className={`p-1.5 rounded-lg ${
+          disabled
+            ? "text-muted-foreground/40 cursor-not-allowed"
+            : "hover:bg-muted text-muted-foreground hover:text-accent"
+        }`}
       >
         <Pencil size={14} />
       </button>
 
       <button
+        disabled={disabled}
         type="button"
-        className="p-1.5 rounded-lg hover:bg-muted text-destructive"
+        className={`p-1.5 rounded-lg ${
+          disabled
+            ? "text-muted-foreground/40 cursor-not-allowed"
+            : "hover:bg-muted text-destructive"
+        }`}
       >
         <Trash2 size={14} />
       </button>

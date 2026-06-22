@@ -16,6 +16,7 @@ import type { RequirementFieldTemplateResponseDTO } from "../../requirement-fiel
 import { useUpdateTemplate } from "../../requirement-fields/hooks/use-update-template";
 import { useSoftDeleteTemplate } from "../../requirement-fields/hooks/use-soft-delete-template";
 import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
+import { useToggleTemplateStatus } from "../../requirement-fields/hooks/use-toggle-template-status";
 
 export default function AdminRequirementFieldsPage() {
   const [showInfo, setShowInfo] = useState(false);
@@ -24,15 +25,17 @@ export default function AdminRequirementFieldsPage() {
     string | null
   >(null);
   const [createTemplateOpen, setCreateTemplateOpen] = useState(false);
-  
+
   const [selectedDeliverableId, setSelectedDeliverableId] = useState<
     string | null
   >(null);
   const [editTemplateOpen, setEditTemplateOpen] = useState(false);
-  const [templateToEdit, setTemplateToEdit] = useState<RequirementFieldTemplateResponseDTO | null>(null);
-  
+  const [templateToEdit, setTemplateToEdit] =
+    useState<RequirementFieldTemplateResponseDTO | null>(null);
+
   const [softDeleteOpen, setSoftDeleteOpen] = useState(false);
-  const [templateToDelete, setTemplateToDelete] = useState<RequirementFieldTemplateResponseDTO | null>(null);
+  const [templateToDelete, setTemplateToDelete] =
+    useState<RequirementFieldTemplateResponseDTO | null>(null);
 
   const debouncedSearch = useDebounce(search, 500);
 
@@ -48,15 +51,15 @@ export default function AdminRequirementFieldsPage() {
     useCreateTemplate();
   const { mutateAsync: updateTemplate, isPending: isUpdatingTemplate } =
     useUpdateTemplate();
-  const { mutateAsync: softDeleteTemplate, isPending: isSoftDeletingTemplate } = useSoftDeleteTemplate();
-  
+  const { mutateAsync: softDeleteTemplate, isPending: isSoftDeletingTemplate } =
+    useSoftDeleteTemplate();
+  const { mutateAsync: toggleTemplateStatus } = useToggleTemplateStatus();
 
   const handleAddTemplate = (deliverableId: string) => {
     setSelectedDeliverableId(deliverableId);
     setCreateTemplateOpen(true);
   };
 
-  
   const handleCreateTemplate = async (data: TemplateFormValues) => {
     if (!selectedDeliverableId) return;
 
@@ -72,8 +75,7 @@ export default function AdminRequirementFieldsPage() {
     setTemplateToEdit(template);
     setEditTemplateOpen(true);
   };
-  
-  
+
   const handleUpdateTemplate = async (data: TemplateFormValues) => {
     if (!templateToEdit) return;
 
@@ -83,19 +85,30 @@ export default function AdminRequirementFieldsPage() {
     });
   };
 
-  const handleSoftDeleteTemplate = ( template: RequirementFieldTemplateResponseDTO ) => {
+  const handleSoftDeleteTemplate = (
+    template: RequirementFieldTemplateResponseDTO,
+  ) => {
     setTemplateToDelete(template);
     setSoftDeleteOpen(true);
   };
 
   const handleConfirmSoftDeleteTemplate = async () => {
-  if (!templateToDelete) return;
+    if (!templateToDelete) return;
 
-  await softDeleteTemplate({templateId: templateToDelete.id});
+    await softDeleteTemplate({ templateId: templateToDelete.id });
+    setSoftDeleteOpen(false);
+    setTemplateToDelete(null);
+  };
 
-  setSoftDeleteOpen(false);
-  setTemplateToDelete(null);
-};
+  const handleToggleTemplateStatus = async (
+    template: RequirementFieldTemplateResponseDTO,
+  ) => {
+    try {
+      await toggleTemplateStatus(template.id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -125,17 +138,13 @@ export default function AdminRequirementFieldsPage() {
         />
 
         <ConfirmDialog
-  open={softDeleteOpen}
-  onOpenChange={setSoftDeleteOpen}
-  title="Archive Template"
-  description={`Archive ${templateToDelete?.name}?`}
-  confirmText={
-    isSoftDeletingTemplate
-      ? "Archiving..."
-      : "Archive"
-  }
-  onConfirm={handleConfirmSoftDeleteTemplate}
-/>
+          open={softDeleteOpen}
+          onOpenChange={setSoftDeleteOpen}
+          title="Archive Template"
+          description={`Archive ${templateToDelete?.name}?`}
+          confirmText={isSoftDeletingTemplate ? "Archiving..." : "Archive"}
+          onConfirm={handleConfirmSoftDeleteTemplate}
+        />
 
         <PageHeader
           title="Requirement Fields"
@@ -180,6 +189,7 @@ export default function AdminRequirementFieldsPage() {
               onAddTemplate={handleAddTemplate}
               onEditTemplate={handleEditTemplate}
               onSoftDeleteTemplate={handleSoftDeleteTemplate}
+              onToggleTemplateStatus={handleToggleTemplateStatus}
             />
           ))}
         </div>
