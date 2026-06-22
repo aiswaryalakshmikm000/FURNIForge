@@ -37,23 +37,21 @@ export function TemplateFormDialog({
       description: "",
     },
   });
+  
+useEffect(() => {
+  if (!open) return;
 
-  useEffect(() => {
-    if (open) {
-      reset(
-        initialData ?? {
-          name: "",
-          description: "",
-        },
-      );
-    }
-  }, [open, initialData, reset]);
+  reset(
+    initialData ?? {
+      name: "",
+      description: "",
+    },
+  );
+}, [open]);
 
   const submitHandler = async (data: TemplateFormValues) => {
     await onSubmit(data);
-
     reset();
-
     onOpenChange(false);
   };
 

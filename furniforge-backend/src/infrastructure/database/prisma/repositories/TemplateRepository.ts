@@ -120,7 +120,7 @@ export class TemplateRepository extends BaseRepository< Template, PrismaTemplate
   async findByDeliverableAndName( deliverableId: string, name: string ): Promise<Template | null> {
     try {
       return await this.findFirst({
-        where: { deliverableId, name, deletedAt: null },
+        where: { deliverableId, name},
       });
     } catch (error) {
       handlePrismaError(error)
@@ -156,4 +156,5 @@ export class TemplateRepository extends BaseRepository< Template, PrismaTemplate
       handlePrismaError(error)
     }
   }
+
 }

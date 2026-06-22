@@ -12,13 +12,27 @@ import { HowItWorksDialog } from "../../requirement-fields/components/HowItWorks
 import { TemplateFormDialog } from "../../requirement-fields/components/TemplateFormDialog";
 import { useCreateTemplate } from "../../requirement-fields/hooks/use-create-template";
 import type { TemplateFormValues } from "../../requirement-fields/validation/template-form.validation";
+import type { RequirementFieldTemplateResponseDTO } from "../../requirement-fields/types/template.type";
+import { useUpdateTemplate } from "../../requirement-fields/hooks/use-update-template";
+import { useSoftDeleteTemplate } from "../../requirement-fields/hooks/use-soft-delete-template";
+import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
 
 export default function AdminRequirementFieldsPage() {
   const [showInfo, setShowInfo] = useState(false);
   const [search, setSearch] = useState("");
-  const [expandedDeliverableId, setExpandedDeliverableId] = useState< string | null >(null);
+  const [expandedDeliverableId, setExpandedDeliverableId] = useState<
+    string | null
+  >(null);
   const [createTemplateOpen, setCreateTemplateOpen] = useState(false);
-  const [selectedDeliverableId, setSelectedDeliverableId] = useState<string | null>(null);
+  
+  const [selectedDeliverableId, setSelectedDeliverableId] = useState<
+    string | null
+  >(null);
+  const [editTemplateOpen, setEditTemplateOpen] = useState(false);
+  const [templateToEdit, setTemplateToEdit] = useState<RequirementFieldTemplateResponseDTO | null>(null);
+  
+  const [softDeleteOpen, setSoftDeleteOpen] = useState(false);
+  const [templateToDelete, setTemplateToDelete] = useState<RequirementFieldTemplateResponseDTO | null>(null);
 
   const debouncedSearch = useDebounce(search, 500);
 
@@ -27,16 +41,23 @@ export default function AdminRequirementFieldsPage() {
   });
 
   const deliverables = data?.data?.deliverables ?? [];
-  const activeDeliverableId = expandedDeliverableId ?? deliverables[0]?.id ?? null;
+  const activeDeliverableId =
+    expandedDeliverableId ?? deliverables[0]?.id ?? null;
 
-  const { mutateAsync: createTemplate, isPending: isCreatingTemplate } = useCreateTemplate();
+  const { mutateAsync: createTemplate, isPending: isCreatingTemplate } =
+    useCreateTemplate();
+  const { mutateAsync: updateTemplate, isPending: isUpdatingTemplate } =
+    useUpdateTemplate();
+  const { mutateAsync: softDeleteTemplate, isPending: isSoftDeletingTemplate } = useSoftDeleteTemplate();
+  
 
   const handleAddTemplate = (deliverableId: string) => {
     setSelectedDeliverableId(deliverableId);
     setCreateTemplateOpen(true);
   };
 
-  const handleCreateTemplate = async ( data: TemplateFormValues ) => {
+  
+  const handleCreateTemplate = async (data: TemplateFormValues) => {
     if (!selectedDeliverableId) return;
 
     await createTemplate({
@@ -45,10 +66,40 @@ export default function AdminRequirementFieldsPage() {
     });
   };
 
+  const handleEditTemplate = (
+    template: RequirementFieldTemplateResponseDTO,
+  ) => {
+    setTemplateToEdit(template);
+    setEditTemplateOpen(true);
+  };
+  
+  
+  const handleUpdateTemplate = async (data: TemplateFormValues) => {
+    if (!templateToEdit) return;
+
+    await updateTemplate({
+      templateId: templateToEdit.id,
+      payload: data,
+    });
+  };
+
+  const handleSoftDeleteTemplate = ( template: RequirementFieldTemplateResponseDTO ) => {
+    setTemplateToDelete(template);
+    setSoftDeleteOpen(true);
+  };
+
+  const handleConfirmSoftDeleteTemplate = async () => {
+  if (!templateToDelete) return;
+
+  await softDeleteTemplate({templateId: templateToDelete.id});
+
+  setSoftDeleteOpen(false);
+  setTemplateToDelete(null);
+};
+
   return (
     <div className="space-y-6">
       <div className="flex items-start justify-between">
-
         <TemplateFormDialog
           open={createTemplateOpen}
           onOpenChange={setCreateTemplateOpen}
@@ -56,6 +107,35 @@ export default function AdminRequirementFieldsPage() {
           isLoading={isCreatingTemplate}
           onSubmit={handleCreateTemplate}
         />
+
+        <TemplateFormDialog
+          open={editTemplateOpen}
+          onOpenChange={setEditTemplateOpen}
+          mode="edit"
+          isLoading={isUpdatingTemplate}
+          initialData={
+            templateToEdit
+              ? {
+                  name: templateToEdit.name,
+                  description: templateToEdit.description,
+                }
+              : undefined
+          }
+          onSubmit={handleUpdateTemplate}
+        />
+
+        <ConfirmDialog
+  open={softDeleteOpen}
+  onOpenChange={setSoftDeleteOpen}
+  title="Archive Template"
+  description={`Archive ${templateToDelete?.name}?`}
+  confirmText={
+    isSoftDeletingTemplate
+      ? "Archiving..."
+      : "Archive"
+  }
+  onConfirm={handleConfirmSoftDeleteTemplate}
+/>
 
         <PageHeader
           title="Requirement Fields"
@@ -98,6 +178,8 @@ export default function AdminRequirementFieldsPage() {
                 )
               }
               onAddTemplate={handleAddTemplate}
+              onEditTemplate={handleEditTemplate}
+              onSoftDeleteTemplate={handleSoftDeleteTemplate}
             />
           ))}
         </div>

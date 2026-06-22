@@ -83,4 +83,5 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
       handlePrismaError(error);
     }
   }
+  
 }

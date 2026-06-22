@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../../../infrastructure/di/types";
 import type { ICreateTemplateUseCase } from "./interfaces/ICreateTemplateUseCase";
 import { Template } from "../../../domain/entities/Template";
-import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
+import { NotFoundError } from "../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../infrastructure/config/messages";
 import type { CreateTemplateDTO } from "../../dtos/templates/CreateTemplateDTO";
 import type { TemplateCommandResponseDTO } from "../../dtos/templates/templateCommandDTO";
@@ -26,7 +26,12 @@ export class CreateTemplateUseCase implements ICreateTemplateUseCase {
         dto.deliverableId,
         dto.name
       );
-    if (existingTemplate) throw new BadRequestError( ERROR_MESSAGES.ADMIN.TEMPLATE.ALREADY_EXISTS );
+    if (existingTemplate?.deletedAt) {
+      existingTemplate.restore();
+
+      const restored = await this._templateRepository.update( existingTemplate.id, existingTemplate);
+      return TemplateCommandMapper.toResponse(restored);
+    }
 
     const template = Template.create({
       deliverableId: dto.deliverableId,

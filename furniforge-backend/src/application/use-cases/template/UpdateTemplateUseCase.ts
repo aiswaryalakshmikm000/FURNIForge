@@ -24,7 +24,12 @@ export class UpdateTemplateUseCase implements IUpdateTemplateUseCase {
       dto.name,
     );
 
-    if (duplicate && duplicate.id !== templateId) throw new BadRequestError(ERROR_MESSAGES.ADMIN.TEMPLATE.ALREADY_EXISTS);
+    if (duplicate && duplicate.id !== templateId) {
+      if(duplicate.deletedAt) {
+        throw new BadRequestError(ERROR_MESSAGES.ADMIN.TEMPLATE.DELETED_ALREADY_EXISTS);
+      }
+      throw new BadRequestError(ERROR_MESSAGES.ADMIN.TEMPLATE.ALREADY_EXISTS);
+    }
 
     template.update(dto.name, dto.description);
 

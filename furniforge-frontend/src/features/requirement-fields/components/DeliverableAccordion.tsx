@@ -7,16 +7,20 @@ import {
   Plus,
   Layout,
 } from "lucide-react";
-
 import type { RequirementFieldDeliverableResponseDTO } from "../types/deliverable.type";
 import { useGetTemplatesByDeliverableId } from "../hooks/use-get-templates-by-deliverableId";
 import { RequirementTemplateTabs } from "./TemplateTabs";
+import type { RequirementFieldTemplateResponseDTO } from "../types/template.type";
 
 interface Props {
   deliverable: RequirementFieldDeliverableResponseDTO;
   isOpen: boolean;
   onToggle: () => void;
   onAddTemplate: (deliverableId: string) => void;
+  onEditTemplate: ( template: RequirementFieldTemplateResponseDTO ) => void;
+  onSoftDeleteTemplate: (
+    template: RequirementFieldTemplateResponseDTO,
+  ) => void;
 }
 
 export function RequirementDeliverableAccordion({
@@ -24,6 +28,8 @@ export function RequirementDeliverableAccordion({
   isOpen,
   onToggle,
   onAddTemplate,
+  onEditTemplate,
+  onSoftDeleteTemplate,
 }: Props) {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
 
@@ -34,8 +40,7 @@ export function RequirementDeliverableAccordion({
 
   const templates = data?.data?.templates ?? [];
 
-  const selectedTemplate =
-    templates.find((t) => t.id === selectedTemplateId) ?? templates[0];
+  const selectedTemplate = templates.find((t) => t.id === selectedTemplateId) ?? templates[0];
 
   return (
     <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-sm">
@@ -110,11 +115,15 @@ export function RequirementDeliverableAccordion({
                         Selected
                       </span>
 
-                      <button className="p-1.5 rounded-lg hover:bg-muted">
+                      <button 
+                      onClick={() => onEditTemplate(selectedTemplate)}
+                      className="p-1.5 rounded-lg hover:bg-muted">
                         <Pencil size={14} />
                       </button>
 
-                      <button className="p-1.5 rounded-lg hover:bg-muted text-destructive">
+                      <button
+                      onClick={() => onSoftDeleteTemplate(selectedTemplate)} 
+                      className="p-1.5 rounded-lg hover:bg-muted text-destructive">
                         <Trash2 size={14} />
                       </button>
                     </div>
