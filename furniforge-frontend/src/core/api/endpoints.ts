@@ -50,6 +50,22 @@ export const API_ENDPOINTS = {
       GET_TEMPLATES_BY_DELIVERABLEID: "/admin/requirement-fields/templates",
       GET_TABS_BY_TEMPLATEID: "/admin/requirement-fields/tabs",
       GET_FIELDS_BY_TABID: "/admin/requirement-fields/fields",
+    },
+
+    TEMPLATES: {
+      CREATE: "/admin/templates",
+      UPDATE: (id: string) => `/admin/templates/${id}`,
+      SOFT_DELETE: (id: string) => `/admin/templates/${id}/soft-delete`,
+      // DELETE: (id: string) => `/admin/templates/${id}`,
+      TOGGLE_STATUS: (id: string) => `/admin/templates/${id}/status`,
+    },
+
+    TABS: {
+      CREATE: "/admin/tabs",
+      UPDATE: (id: string) => `/admin/tabs/${id}`,
+      SOFT_DELETE: (id: string) => `/admin/tabs/${id}/soft-delete`,
+      // DELETE: (id: string) => `/admin/tabs/${id}`,
+      TOGGLE_STATUS: (id: string) => `/admin/tabs/${id}/status`,
     }
   },
 

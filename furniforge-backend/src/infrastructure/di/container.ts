@@ -75,6 +75,7 @@ import { GetRequirementFieldDeliverablesUseCase } from "../../application/use-ca
 import { GetTemplatesByDeliverableUseCase } from "../../application/use-cases/template/GetTemplatesByDeliverableUseCase";
 import { GetTabsByTemplateUseCase } from "../../application/use-cases/templateTab/GetTabsByTemplateUseCase";
 import { GetFieldsByTabUseCase } from "../../application/use-cases/field/GetFieldsByTabUseCase";
+import { SoftDeleteTabUseCase } from "../../application/use-cases/templateTab/SoftDeleteTabUseCase";
 
 const container = new Container();
 
@@ -151,6 +152,7 @@ container.bind(TYPES.ICreateTabUseCase).to(CreateTabUseCase);
 container.bind(TYPES.IUpdateTabUseCase).to(UpdateTabUseCase);
 container.bind(TYPES.IDeleteTabUseCase).to(DeleteTabUseCase);
 container.bind(TYPES.IToggleTabStatusUseCase).to(ToggleTabStatusUseCase);
+container.bind(TYPES.ISoftDeleteTabUseCase).to(SoftDeleteTabUseCase);
 
 container.bind(TYPES.ICreateFieldUseCase).to(CreateFieldUseCase);
 container.bind(TYPES.IUpdateFieldUseCase).to(UpdateFieldUseCase);

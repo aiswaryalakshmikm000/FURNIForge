@@ -43,7 +43,7 @@ export class TabRepository extends BaseRepository< Tab, PrismaTab, Prisma.Templa
   async findTabsByTemplate( templateId: string): Promise<RequirementFieldTabListItem[]> {
     try {
       const rows = await this.model.findMany({
-        where: {templateId, isActive: true},
+        where: {templateId, deletedAt: null,},
         select: {
           id: true,
           name: true,
@@ -51,7 +51,7 @@ export class TabRepository extends BaseRepository< Tab, PrismaTab, Prisma.Templa
           isActive: true,
           _count: {select: {fields: {where: {isActive: true, deletedAt: null}}}}
         },
-        orderBy: {name: "asc"}
+        orderBy: {displayOrder: "asc"}
       });
       return rows.map((row) => ({
         id: row.id,

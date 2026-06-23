@@ -1,4 +1,10 @@
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription } from "../../../shared/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+} from "../../../shared/components/ui/alert-dialog";
 import { X } from "lucide-react";
 import { Button } from "../../../shared/components/ui/button";
 
@@ -16,7 +22,8 @@ export function HowItWorksDialog({ open, onOpenChange }: Props) {
           variant="close"
           size="icon"
           onClick={() => onOpenChange(false)}
-          className="absolute top-4 right-4 h-8 w-8">
+          className="absolute top-4 right-4 h-8 w-8"
+        >
           <X size={16} />
         </Button>
         <AlertDialogHeader>

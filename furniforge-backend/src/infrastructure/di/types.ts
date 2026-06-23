@@ -67,6 +67,7 @@ export const TYPES = {
   IUpdateTabUseCase: Symbol.for("UpdateTabUseCase"),
   IDeleteTabUseCase: Symbol.for("IDeleteTabUseCase"),
   IToggleTabStatusUseCase: Symbol.for("IToggleTabStatusUseCase"),
+  ISoftDeleteTabUseCase: Symbol.for("ISoftDeleteTabUseCase"),
 
   ICreateFieldUseCase: Symbol.for("ICreateFieldUseCase"),
   IUpdateFieldUseCase: Symbol.for("IUpdateFieldUseCase"),

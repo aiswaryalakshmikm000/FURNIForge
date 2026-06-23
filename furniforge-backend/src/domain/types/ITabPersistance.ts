@@ -4,6 +4,7 @@ export interface ITabPersistence {
   name: string;
   displayOrder: number;
   isActive: boolean;
+  deletedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }

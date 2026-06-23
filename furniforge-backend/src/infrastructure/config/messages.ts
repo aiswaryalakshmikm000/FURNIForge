@@ -161,6 +161,7 @@ export const ERROR_MESSAGES = {
     },
 
     TEMPLATE: {
+      DELETED_ALREADY_EXISTS: "An archived template with this name already exists. Please restore it instead.",
       ALREADY_EXISTS: "Template with this name already exists",
       NOT_FOUND: "Template not found",
     },

@@ -1,22 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toggleDeliverableStatusApi } from "../api/toggle-deliverable-status.api";
 import { toast } from "sonner";
+import { toggleTabStatusApi } from "../api/toggle-tab-status.api";
 
-export const useToggleDeliverableStatus = () => {
+export const useToggleTabStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (deliverableId: string) => toggleDeliverableStatusApi(deliverableId),
+    mutationFn: (tabId: string) => toggleTabStatusApi(tabId),
 
     onSuccess: (response) => {
       toast.success(response.message);
 
       queryClient.invalidateQueries({
-        queryKey: ["admin-deliverables"],
+        queryKey: ["admin-requirement-field-tabs"],
       });
 
       queryClient.invalidateQueries({
-        queryKey: ["admin-requirement-field-deliverables"],
+        queryKey: ["admin-requirement-field-fields"],
       });
     },
   });

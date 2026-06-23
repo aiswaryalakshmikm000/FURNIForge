@@ -11,6 +11,7 @@ import type { IUpdateTabUseCase } from "../../../../../application/use-cases/tem
 import type { IDeleteTabUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IDeleteTabUseCase";
 import type { TabCommandRequestDTO } from "../../../../../application/dtos/templateTabs/TabCommandDTO";
 import type { IToggleTabStatusUseCase } from "../../../../../application/use-cases/templateTab/interfaces/IToggleTabUseCase";
+import type { ISoftDeleteTabUseCase } from "../../../../../application/use-cases/templateTab/interfaces/ISoftDeleteTabUseCase";
 
 @injectable()
 export class TabController {
@@ -18,36 +19,45 @@ export class TabController {
     @inject(TYPES.ICreateTabUseCase) private _createTabUseCase: ICreateTabUseCase,
     @inject(TYPES.IUpdateTabUseCase) private _updateTabUseCase: IUpdateTabUseCase,
     @inject(TYPES.IDeleteTabUseCase) private _deleteTabUseCase: IDeleteTabUseCase,
+    @inject(TYPES.ISoftDeleteTabUseCase) private _softDeleteTabUseCase: ISoftDeleteTabUseCase,
     @inject(TYPES.IToggleTabStatusUseCase) private _toggleTabStatusUseCase: IToggleTabStatusUseCase,
 ) {}
 
   createTab = async ( req: Request, res: Response ) => {
-  const dto = req.body as CreateTabDTO;
-  const result = await this._createTabUseCase.execute(dto);
-
-  res.status(HttpStatusCode.CREATED).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TABS.CREATED ).build());
+    const dto = req.body as CreateTabDTO;
+    const result = await this._createTabUseCase.execute(dto);
+  
+    res.status(HttpStatusCode.CREATED).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TABS.CREATED ).build());
   };
 
   updateTab = async ( req: Request, res: Response ) => {
-  const { id } = req.params;
-  const dto = req.body as UpdateTabDTO;
+    const { id } = req.params;
+    const dto = req.body as UpdateTabDTO;
 
-  const result = await this._updateTabUseCase.execute( id, dto );
-  res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TABS.UPDATED ).build() );
+    const result = await this._updateTabUseCase.execute( id, dto );
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TABS.UPDATED ).build() );
   };
 
   deleteTab = async ( req: Request, res: Response ) => {
-  const params = req.params as TabCommandRequestDTO;
-  await this._deleteTabUseCase.execute(params);
+    const params = req.params as TabCommandRequestDTO;
+    await this._deleteTabUseCase.execute(params);
 
-  res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.ADMIN.TABS.DELETED ).build());
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.ADMIN.TABS.DELETED ).build());
+  };
+
+  softDeleteTab = async ( req: Request, res: Response ) => {
+    const params = req.params as TabCommandRequestDTO;
+    console.log(params)
+    await this._softDeleteTabUseCase.execute(params);
+
+    res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.ADMIN.TABS.DELETED ).build());
   };
 
   toggleStatus = async ( req: Request, res: Response ) => {
-  const params = req.params as TabCommandRequestDTO;
-  const result = await this._toggleTabStatusUseCase.execute(params);
+    const params = req.params as TabCommandRequestDTO;
+    const result = await this._toggleTabStatusUseCase.execute(params);
 
-  res.status(HttpStatusCode.OK).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TABS.UPDATED).build());
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.TABS.UPDATED).build());
   };
 }
 

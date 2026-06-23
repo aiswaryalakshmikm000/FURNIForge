@@ -1,22 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { softDeleteDeliverableApi } from "../api/soft-delete-deliverable.api";
+import { toggleTemplateStatusApi } from "../api/toggle-template-status.api";
 
-export const useSoftDeleteDeliverable = () => {
+export const useToggleTemplateStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (deliverableId: string) =>
-      softDeleteDeliverableApi(deliverableId),
+    mutationFn: (templateId: string) => toggleTemplateStatusApi(templateId),
 
     onSuccess: (response) => {
       toast.success(response.message);
 
       queryClient.invalidateQueries({
-        queryKey: ["admin-deliverables"],
+        queryKey: ["admin-requirement-field-templates"],
       });
-      
-      
     },
   });
 };

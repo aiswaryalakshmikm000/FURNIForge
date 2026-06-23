@@ -1,18 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { softDeleteTemplateApi } from "../api/soft-delete-template.api";
 import { toast } from "sonner";
-import { createDeliverableApi } from "../api/create-deliverable.api";
 
-export const useCreateDeliverable = () => {
+export const useSoftDeleteTemplate = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createDeliverableApi,
+
+    mutationFn: ({ templateId }: {
+      templateId: string;
+    }) => softDeleteTemplateApi( templateId ),
 
     onSuccess: (response) => {
-      toast.success( response.message );
 
+      toast.success(response.message);
       queryClient.invalidateQueries({
-        queryKey: ["admin-deliverables"],
+        queryKey: ["admin-requirement-field-templates"],
       });
 
       queryClient.invalidateQueries({

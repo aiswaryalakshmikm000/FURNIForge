@@ -10,6 +10,7 @@ export class PrismaTabMapper {
       name: raw.name,
       displayOrder: raw.displayOrder,
       isActive: raw.isActive,
+      deletedAt: raw.deletedAt,
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt,
     });
@@ -34,6 +35,7 @@ export class PrismaTabMapper {
       name: tab.name,
       displayOrder: tab.displayOrder,
       isActive: tab.isActive,
+      deletedAt: tab.deletedAt,
     };
   }
 }
