@@ -9,6 +9,4 @@ export enum FieldType {
   DATE = 'DATE',
   FILE = 'FILE',
   IMAGE = 'IMAGE',
-  EMAIL = 'EMAIL',
-  PHONE = 'PHONE',
 }

@@ -20,7 +20,7 @@ export function RequirementFieldList({ tabId, disabled = false }: Props) {
   if (fields.length === 0) {
     return (
       <div className="p-8 text-center text-muted-foreground">
-        No fields found.
+        No fields found. Add your first field!
       </div>
     );
   }

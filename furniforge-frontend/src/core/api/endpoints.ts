@@ -66,7 +66,14 @@ export const API_ENDPOINTS = {
       SOFT_DELETE: (id: string) => `/admin/tabs/${id}/soft-delete`,
       // DELETE: (id: string) => `/admin/tabs/${id}`,
       TOGGLE_STATUS: (id: string) => `/admin/tabs/${id}/status`,
+    },
+
+    FIELD: {
+      CREATE: "/admin/fields",
+      UPDATE: (id: string) => `/admin/fields/${id}`,
+      SOFT_DELETE: (id: string) => `/admin/fields/${id}/soft-delete`,
     }
+    
   },
 
   CLIENT: {

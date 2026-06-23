@@ -56,7 +56,7 @@ export function TabFormDialog({
         displayOrder: 1,
       },
     );
-  }, [open]);
+  }, [open,  initialData, reset]);
 
   const submitHandler = async (data: TabFormValues) => {
     await onSubmit(data);

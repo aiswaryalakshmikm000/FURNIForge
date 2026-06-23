@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { StatusToggle } from "../../../shared/components/ui/statusToggle";
 import type { RequirementFieldTemplateResponseDTO } from "../types/template.type";
 import { useGetTabsByTemplateId } from "../hooks/use-get-tabs-by-templateId";
 import { RequirementFieldList } from "./FieldList";
 import type { RequirementFieldTabResponseDTO } from "../types/tab.type";
+import { FieldFormRow } from "./FieldFormRow";
+import { useState } from "react";
 
 interface Props {
   template: RequirementFieldTemplateResponseDTO;
@@ -26,7 +27,8 @@ export function RequirementTemplateTabs({
   onSoftDeleteTab,
 }: Props) {
   const [selectedTabId, setSelectedTabId] = useState<string>();
-
+  const [creatingFieldTabId, setCreatingFieldTabId] = useState<string | null>(null);
+ 
   const { data, isLoading } = useGetTabsByTemplateId({
     templateId: template.id,
   });
@@ -36,6 +38,7 @@ export function RequirementTemplateTabs({
     tabs.length > 0 ? Math.max(...tabs.map((tab) => tab.displayOrder)) + 1 : 1;
 
   const activeTab = tabs.find((tab) => tab.id === selectedTabId) ?? tabs[0];
+
   const templateDisabled = !template.isActive;
   const tabDisabled = !activeTab?.isActive;
   const isDisabled = templateDisabled || tabDisabled;
@@ -105,10 +108,10 @@ export function RequirementTemplateTabs({
                       onClick={() => setSelectedTabId(tab.id)}
                       className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                         activeTab?.id === tab.id
-                          ? tabDisabled
+                          ? !tab.isActive
                             ? "bg-muted text-muted-foreground/70 border-destructive/50 ring-1 ring-destructive/50"
                             : "bg-accent/10 text-accent border-accent/30"
-                          : tabDisabled
+                          : !tab.isActive
                             ? "bg-card border-destructive/30 text-muted-foreground/50"
                             : "bg-card border-border text-muted-foreground"
                       }`}
@@ -211,7 +214,12 @@ export function RequirementTemplateTabs({
 
               <button
                 disabled={isDisabled}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm ${
+                onClick={() => {
+  if (activeTab) {
+    setCreatingFieldTabId(activeTab.id);
+  }
+}}
+                className={`flex items-center gap-2 px-2 py-1 rounded-xl border text-sm ${
                   isDisabled
                     ? "border-destructive/30 text-muted-foreground/50 cursor-not-allowed"
                     : "border-border hover:bg-muted"
@@ -222,6 +230,14 @@ export function RequirementTemplateTabs({
               </button>
             </div>
           )}
+
+          {creatingFieldTabId === activeTab?.id && activeTab && (
+  <FieldFormRow
+    tabId={activeTab.id}
+    onSuccess={() => setCreatingFieldTabId(null)}
+    onCancel={() => setCreatingFieldTabId(null)}
+  />
+)}
 
           <div className={isDisabled ? "opacity-50" : ""}>
             <RequirementFieldList tabId={activeTab?.id} disabled={isDisabled} />

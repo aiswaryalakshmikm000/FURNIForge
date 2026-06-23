@@ -56,7 +56,7 @@ export function TemplateFormDialog({
         description: "",
       },
     );
-  }, [open]);
+  }, [open, initialData, reset]);
 
   const submitHandler = async (data: TemplateFormValues) => {
     await onSubmit(data);
