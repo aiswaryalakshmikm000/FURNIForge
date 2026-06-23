@@ -1,5 +1,4 @@
 import { Pencil, Trash2 } from "lucide-react";
-
 import type { RequirementFieldResponseDTO } from "../types/field.type";
 
 interface Props {

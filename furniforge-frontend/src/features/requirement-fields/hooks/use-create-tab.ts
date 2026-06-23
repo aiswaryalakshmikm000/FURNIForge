@@ -1,22 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTabApi } from "../api/create-tab.api";
 import { toast } from "sonner";
-import { softDeleteDeliverableApi } from "../api/soft-delete-deliverable.api";
 
-export const useSoftDeleteDeliverable = () => {
+export const useCreateTab = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (deliverableId: string) =>
-      softDeleteDeliverableApi(deliverableId),
+    mutationFn: createTabApi,
 
     onSuccess: (response) => {
       toast.success(response.message);
 
       queryClient.invalidateQueries({
-        queryKey: ["admin-deliverables"],
+        queryKey: ["admin-requirement-field-tabs"],
       });
-      
-      
     },
   });
 };

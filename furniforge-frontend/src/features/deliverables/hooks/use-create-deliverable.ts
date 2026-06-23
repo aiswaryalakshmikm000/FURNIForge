@@ -14,6 +14,10 @@ export const useCreateDeliverable = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-deliverables"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["admin-requirement-field-deliverables"],
+      });
     },
   });
 };

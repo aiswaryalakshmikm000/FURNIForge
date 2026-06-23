@@ -11,6 +11,7 @@ import type { RequirementFieldDeliverableResponseDTO } from "../types/deliverabl
 import { useGetTemplatesByDeliverableId } from "../hooks/use-get-templates-by-deliverableId";
 import { RequirementTemplateTabs } from "./TemplateTabs";
 import type { RequirementFieldTemplateResponseDTO } from "../types/template.type";
+import type { RequirementFieldTabResponseDTO } from "../types/tab.type";
 
 interface Props {
   deliverable: RequirementFieldDeliverableResponseDTO;
@@ -22,6 +23,10 @@ interface Props {
   onToggleTemplateStatus: (
     template: RequirementFieldTemplateResponseDTO,
   ) => void;
+  onAddTab: (templateId: string, nextOrder: number) => void;
+  onEditTab: (tab: RequirementFieldTabResponseDTO) => void;
+  onToggleTabStatus: (tab: RequirementFieldTabResponseDTO) => void;
+  onSoftDeleteTab: (tab: RequirementFieldTabResponseDTO) => void;
 }
 
 export function RequirementDeliverableAccordion({
@@ -32,6 +37,10 @@ export function RequirementDeliverableAccordion({
   onEditTemplate,
   onSoftDeleteTemplate,
   onToggleTemplateStatus,
+  onAddTab,
+  onEditTab,
+  onToggleTabStatus,
+  onSoftDeleteTab,
 }: Props) {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
 
@@ -152,6 +161,10 @@ export function RequirementDeliverableAccordion({
                 <RequirementTemplateTabs
                   template={selectedTemplate}
                   onToggleTemplateStatus={onToggleTemplateStatus}
+                  onAddTab={onAddTab}
+                  onEditTab={onEditTab}
+                  onToggleTabStatus={onToggleTabStatus}
+                  onSoftDeleteTab={onSoftDeleteTab}
                 />
               )}
             </>

@@ -17,7 +17,8 @@ const controller = container.get<TabController>( TYPES.TabController );
 
 router.post("/tabs", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(CreateTabDTOSchema), asyncHandler(controller.createTab));
 router.patch("/tabs/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TabCommandParamsSchema), validateBody(UpdateTabDTOSchema), asyncHandler(controller.updateTab));
-router.delete("/tabs/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TabCommandParamsSchema), asyncHandler(controller.deleteTab));
-router.patch("/tabs/:id/toggle-status", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TabCommandParamsSchema), asyncHandler(controller.toggleStatus));
+// router.delete("/tabs/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TabCommandParamsSchema), asyncHandler(controller.deleteTab));
+router.patch("/tabs/:id/status", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TabCommandParamsSchema), asyncHandler(controller.toggleStatus));
+router.patch("/tabs/:id/soft-delete", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(TabCommandParamsSchema), asyncHandler(controller.softDeleteTab));
 
 export default router;
