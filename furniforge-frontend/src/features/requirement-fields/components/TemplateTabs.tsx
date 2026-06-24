@@ -6,16 +6,19 @@ import { RequirementFieldList } from "./FieldList";
 import type { RequirementFieldTabResponseDTO } from "../types/tab.type";
 import { FieldFormRow } from "./FieldFormRow";
 import { useState } from "react";
+import type { FieldFormValues } from "../validation/field-form-validation";
 
 interface Props {
   template: RequirementFieldTemplateResponseDTO;
-  onToggleTemplateStatus: (
-    template: RequirementFieldTemplateResponseDTO,
-  ) => void;
+  onToggleTemplateStatus: (template: RequirementFieldTemplateResponseDTO) => void;
   onAddTab: (templateId: string, nextOrder: number) => void;
   onEditTab: (tab: RequirementFieldTabResponseDTO) => void;
   onToggleTabStatus: (tab: RequirementFieldTabResponseDTO) => void;
   onSoftDeleteTab: (tab: RequirementFieldTabResponseDTO) => void;
+  onCreateField: (tabId: string, data: FieldFormValues) => Promise<void>;
+  isCreatingField: boolean;
+  onUpdateField: (fieldId: string, data: FieldFormValues) => Promise<void>;
+  isUpdatingField: boolean;
 }
 
 export function RequirementTemplateTabs({
@@ -25,6 +28,10 @@ export function RequirementTemplateTabs({
   onEditTab,
   onToggleTabStatus,
   onSoftDeleteTab,
+  onCreateField,
+  isCreatingField,
+  onUpdateField,
+  isUpdatingField,
 }: Props) {
   const [selectedTabId, setSelectedTabId] = useState<string>();
   const [creatingFieldTabId, setCreatingFieldTabId] = useState<string | null>(null);
@@ -37,7 +44,7 @@ export function RequirementTemplateTabs({
   const nextDisplayOrder =
     tabs.length > 0 ? Math.max(...tabs.map((tab) => tab.displayOrder)) + 1 : 1;
 
-  const activeTab = tabs.find((tab) => tab.id === selectedTabId) ?? tabs[0];
+  const activeTab = tabs.find((tab) => tab.id === selectedTabId) || tabs[0] || null;
 
   const templateDisabled = !template.isActive;
   const tabDisabled = !activeTab?.isActive;
@@ -117,7 +124,7 @@ export function RequirementTemplateTabs({
                       }`}
                     >
                       {tab.name} ({tab.fieldCount})
-                      {tabDisabled && (
+                      {!tab.isActive && (
                         <span className="ml-1 text-[10px] opacity-70">
                           (inactive)
                         </span>
@@ -233,14 +240,20 @@ export function RequirementTemplateTabs({
 
           {creatingFieldTabId === activeTab?.id && activeTab && (
   <FieldFormRow
-    tabId={activeTab.id}
+  isLoading={isCreatingField}
+    onSubmit={(data) => onCreateField(activeTab.id, data)}
     onSuccess={() => setCreatingFieldTabId(null)}
     onCancel={() => setCreatingFieldTabId(null)}
   />
 )}
 
           <div className={isDisabled ? "opacity-50" : ""}>
-            <RequirementFieldList tabId={activeTab?.id} disabled={isDisabled} />
+            <RequirementFieldList 
+            tabId={activeTab?.id} 
+            disabled={isDisabled} 
+            onUpdateField={onUpdateField}
+            isUpdatingField={isUpdatingField}
+            />
           </div>
         </>
       )}

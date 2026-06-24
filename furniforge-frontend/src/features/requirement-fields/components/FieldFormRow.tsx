@@ -1,28 +1,27 @@
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, X } from "lucide-react";
-
 import {
   FieldFormSchema,
   type FieldFormValues,
 } from "../validation/field-form-validation";
-
 import { FieldType } from "../../../types/enums/field-type.enum";
-import { useCreateField } from "../hooks/use-create-field";
 
 interface Props {
-  tabId: string;
-  onSuccess: () => void;
+  initialData?: FieldFormValues;
+  isLoading?: boolean;
+  onSubmit: (data: FieldFormValues) => Promise<void>;
+  onSuccess?: () => void;
   onCancel: () => void;
 }
 
 export function FieldFormRow({
-  tabId,
+  initialData,
+  isLoading,
+  onSubmit,
   onSuccess,
   onCancel,
 }: Props) {
-  const { mutate, isPending } = useCreateField();
-
   const {
     register,
     control,
@@ -32,7 +31,7 @@ export function FieldFormRow({
   } = useForm<FieldFormValues>({
     resolver: zodResolver(FieldFormSchema),
     mode: "onChange",
-    defaultValues: {
+    defaultValues: initialData ?? {
       label: "",
       fieldType: FieldType.TEXT,
       options: "",
@@ -48,22 +47,15 @@ export function FieldFormRow({
     FieldType.RADIO,
   ];
 
-  const selectedFieldType = useWatch({control, name: "fieldType"});
+  const selectedFieldType = useWatch({ control, name: "fieldType" });
 
   const showOptions =
-    selectedFieldType &&
-    optionTypes.includes(selectedFieldType as FieldType);
+    selectedFieldType && optionTypes.includes(selectedFieldType as FieldType);
 
-  const submitHandler = (data: FieldFormValues) => {
-    mutate(
-      { tabId, ...data },
-      {
-        onSuccess: () => {
-          reset();
-          onSuccess();
-        },
-      }
-    );
+  const submitHandler = async (data: FieldFormValues) => {
+    await onSubmit(data);
+    reset();
+    onSuccess?.();
   };
 
   return (
@@ -72,21 +64,13 @@ export function FieldFormRow({
       className="px-6 py-6 border-b border-border bg-card"
     >
       <div className="grid grid-cols-12 gap-4 mb-2">
-        <div className="col-span-4 text-xs text-muted-foreground">
-          Label
-        </div>
+        <div className="col-span-4 text-xs text-muted-foreground">Label</div>
 
-        <div className="col-span-2 text-xs text-muted-foreground">
-          Type
-        </div>
+        <div className="col-span-2 text-xs text-muted-foreground">Type</div>
 
-        <div className="col-span-2 text-xs text-muted-foreground">
-          Options
-        </div>
+        <div className="col-span-2 text-xs text-muted-foreground">Options</div>
 
-        <div className="col-span-2 text-xs text-muted-foreground">
-          Default
-        </div>
+        <div className="col-span-2 text-xs text-muted-foreground">Default</div>
 
         <div className="col-span-2 text-xs text-muted-foreground text-right">
           Actions
@@ -133,7 +117,6 @@ export function FieldFormRow({
         <div className="col-span-2">
           <input
             {...register("options")}
-            disabled={!showOptions}
             placeholder="Comma-separated"
             className="w-full h-12 rounded-xl border border-border px-4 disabled:opacity-50"
           />
@@ -141,6 +124,18 @@ export function FieldFormRow({
           {errors.options && (
             <p className="mt-1 text-xs text-destructive">
               {errors.options.message}
+            </p>
+          )}
+
+          {!errors.options && showOptions && (
+            <p className="mt-1 text-xs text-amber-600">
+              Enter comma-separated options.
+            </p>
+          )}
+
+          {!errors.options && !showOptions && (
+            <p className="mt-1 text-xs text-muted-foreground">
+              Options not allowed
             </p>
           )}
         </div>
@@ -163,26 +158,19 @@ export function FieldFormRow({
         {/* Actions */}
         <div className="col-span-2 flex items-center justify-end gap-4 h-12">
           <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              {...register("isRequired")}
-            />
+            <input type="checkbox" {...register("isRequired")} />
             Req
           </label>
 
           <button
             type="submit"
-            disabled={!isValid || isPending}
+            disabled={!isValid || isLoading}
             className="text-green-600 disabled:opacity-50"
           >
-            <Check size={18} />
+            {isLoading ? "Saving..." : <Check size={18} />}
           </button>
 
-          <button
-            type="button"
-            onClick={onCancel}
-            className="text-destructive"
-          >
+          <button type="button" onClick={onCancel} className="text-destructive">
             <X size={18} />
           </button>
         </div>

@@ -24,29 +24,42 @@ import type { RequirementFieldTabResponseDTO } from "../../requirement-fields/ty
 import { useUpdateTab } from "../../requirement-fields/hooks/use-update-tab";
 import { useToggleTabStatus } from "../../requirement-fields/hooks/use-toggle-tab-status";
 import { useSoftDeleteTab } from "../../requirement-fields/hooks/use-soft-delete-tab";
+import { useCreateField } from "../../requirement-fields/hooks/use-create-field";
+import type { FieldFormValues } from "../../requirement-fields/validation/field-form-validation";
+import { useUpdateField } from "../../requirement-fields/hooks/use-update-field";
 
 export default function AdminRequirementFieldsPage() {
   const [showInfo, setShowInfo] = useState(false);
   const [search, setSearch] = useState("");
   const [nextDisplayOrder, setNextDisplayOrder] = useState(1);
-  const [expandedDeliverableId, setExpandedDeliverableId] = useState< string | null >(null);
+  const [expandedDeliverableId, setExpandedDeliverableId] = useState<
+    string | null
+  >(null);
   const [createTemplateOpen, setCreateTemplateOpen] = useState(false);
   const [createTabOpen, setCreateTabOpen] = useState(false);
 
-  const [selectedDeliverableId, setSelectedDeliverableId] = useState< string | null >(null);
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(null);
+  const [selectedDeliverableId, setSelectedDeliverableId] = useState<
+    string | null
+  >(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
+    null,
+  );
 
   const [editTemplateOpen, setEditTemplateOpen] = useState(false);
-  const [templateToEdit, setTemplateToEdit] = useState<RequirementFieldTemplateResponseDTO | null>(null);
+  const [templateToEdit, setTemplateToEdit] =
+    useState<RequirementFieldTemplateResponseDTO | null>(null);
 
   const [softDeleteOpen, setSoftDeleteOpen] = useState(false);
-  const [templateToDelete, setTemplateToDelete] = useState<RequirementFieldTemplateResponseDTO | null>(null);
+  const [templateToDelete, setTemplateToDelete] =
+    useState<RequirementFieldTemplateResponseDTO | null>(null);
 
   const [editTabOpen, setEditTabOpen] = useState(false);
-  const [tabToEdit, setTabToEdit] = useState<RequirementFieldTabResponseDTO | null>(null);
+  const [tabToEdit, setTabToEdit] =
+    useState<RequirementFieldTabResponseDTO | null>(null);
 
   const [softDeleteTabOpen, setSoftDeleteTabOpen] = useState(false);
-  const [tabToDelete, setTabToDelete] = useState<RequirementFieldTabResponseDTO | null>(null);
+  const [tabToDelete, setTabToDelete] =
+    useState<RequirementFieldTabResponseDTO | null>(null);
 
   const debouncedSearch = useDebounce(search, 500);
 
@@ -58,15 +71,26 @@ export default function AdminRequirementFieldsPage() {
   const activeDeliverableId =
     expandedDeliverableId ?? deliverables[0]?.id ?? null;
 
-  const { mutateAsync: createTemplate, isPending: isCreatingTemplate } = useCreateTemplate();
-  const { mutateAsync: updateTemplate, isPending: isUpdatingTemplate } = useUpdateTemplate();
-  const { mutateAsync: softDeleteTemplate, isPending: isSoftDeletingTemplate } = useSoftDeleteTemplate();
+  const { mutateAsync: createTemplate, isPending: isCreatingTemplate } =
+    useCreateTemplate();
+  const { mutateAsync: updateTemplate, isPending: isUpdatingTemplate } =
+    useUpdateTemplate();
+  const { mutateAsync: softDeleteTemplate, isPending: isSoftDeletingTemplate } =
+    useSoftDeleteTemplate();
   const { mutateAsync: toggleTemplateStatus } = useToggleTemplateStatus();
 
   const { mutateAsync: createTab, isPending: isCreatingTab } = useCreateTab();
   const { mutateAsync: updateTab, isPending: isUpdatingTab } = useUpdateTab();
   const { mutateAsync: toggleTabStatus } = useToggleTabStatus();
-  const { mutateAsync: softDeleteTab, isPending: isSoftDeletingTab } = useSoftDeleteTab();
+  const { mutateAsync: softDeleteTab, isPending: isSoftDeletingTab } =
+    useSoftDeleteTab();
+
+  const { mutateAsync: createField, isPending: isCreatingField } =
+    useCreateField();
+  const { mutateAsync: updateField, isPending: isUpdatingField } =
+    useUpdateField();
+  // const { mutateAsync: softDeleteField, isPending: isSoftDeletingField } =
+  //   useSoftDeleteField();
 
   const handleAddTemplate = (deliverableId: string) => {
     setSelectedDeliverableId(deliverableId);
@@ -138,43 +162,57 @@ export default function AdminRequirementFieldsPage() {
     });
   };
 
-  const handleEditTab = ( tab: RequirementFieldTabResponseDTO ) => {
-  setTabToEdit(tab);
-  setEditTabOpen(true);
-};
+  const handleEditTab = (tab: RequirementFieldTabResponseDTO) => {
+    setTabToEdit(tab);
+    setEditTabOpen(true);
+  };
 
-const handleUpdateTab = async ( data: TabFormValues ) => {
-  if (!tabToEdit) return;
+  const handleUpdateTab = async (data: TabFormValues) => {
+    if (!tabToEdit) return;
 
-  await updateTab({
-    tabId: tabToEdit.id,
-    payload: data,
-  });
-};
+    await updateTab({
+      tabId: tabToEdit.id,
+      payload: data,
+    });
+  };
 
-const handleToggleTabStatus = async ( tab: RequirementFieldTabResponseDTO ) => {
-  try {
-    await toggleTabStatus(tab.id);
-  } catch (error) {
-    console.error(error);
-  }
-};
+  const handleToggleTabStatus = async (tab: RequirementFieldTabResponseDTO) => {
+    try {
+      await toggleTabStatus(tab.id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-const handleSoftDeleteTab = ( tab: RequirementFieldTabResponseDTO ) => {
-  setTabToDelete(tab);
-  setSoftDeleteTabOpen(true);
-};
+  const handleSoftDeleteTab = (tab: RequirementFieldTabResponseDTO) => {
+    setTabToDelete(tab);
+    setSoftDeleteTabOpen(true);
+  };
 
-const handleConfirmSoftDeleteTab = async () => {
-  if (!tabToDelete) return;
+  const handleConfirmSoftDeleteTab = async () => {
+    if (!tabToDelete) return;
 
-  await softDeleteTab({
-    tabId: tabToDelete.id,
-  });
+    await softDeleteTab({
+      tabId: tabToDelete.id,
+    });
 
-  setSoftDeleteTabOpen(false);
-  setTabToDelete(null);
-};
+    setSoftDeleteTabOpen(false);
+    setTabToDelete(null);
+  };
+
+  const handleCreateField = async (tabId: string, data: FieldFormValues) => {
+    await createField({
+      tabId,
+      ...data,
+    });
+  };
+
+  const handleUpdateField = async (fieldId: string, data: FieldFormValues) => {
+    await updateField({
+      fieldId,
+      payload: data,
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -204,32 +242,32 @@ const handleConfirmSoftDeleteTab = async () => {
         />
 
         <TabFormDialog
-  open={createTabOpen}
-  onOpenChange={setCreateTabOpen}
-  mode="create"
-  isLoading={isCreatingTab}
-  initialData={{
-    name: "",
-    displayOrder: nextDisplayOrder,
-  }}
-  onSubmit={handleCreateTab}
-/>
+          open={createTabOpen}
+          onOpenChange={setCreateTabOpen}
+          mode="create"
+          isLoading={isCreatingTab}
+          initialData={{
+            name: "",
+            displayOrder: nextDisplayOrder,
+          }}
+          onSubmit={handleCreateTab}
+        />
 
-<TabFormDialog
-  open={editTabOpen}
-  onOpenChange={setEditTabOpen}
-  mode="edit"
-  isLoading={isUpdatingTab}
-  initialData={
-    tabToEdit
-      ? {
-          name: tabToEdit.name,
-          displayOrder: tabToEdit.displayOrder,
-        }
-      : undefined
-  }
-  onSubmit={handleUpdateTab}
-/>
+        <TabFormDialog
+          open={editTabOpen}
+          onOpenChange={setEditTabOpen}
+          mode="edit"
+          isLoading={isUpdatingTab}
+          initialData={
+            tabToEdit
+              ? {
+                  name: tabToEdit.name,
+                  displayOrder: tabToEdit.displayOrder,
+                }
+              : undefined
+          }
+          onSubmit={handleUpdateTab}
+        />
 
         <ConfirmDialog
           open={softDeleteOpen}
@@ -240,14 +278,14 @@ const handleConfirmSoftDeleteTab = async () => {
           onConfirm={handleConfirmSoftDeleteTemplate}
         />
 
-<ConfirmDialog
-  open={softDeleteTabOpen}
-  onOpenChange={setSoftDeleteTabOpen}
-  title="Archive Tab"
-  description={`Archive ${tabToDelete?.name}?`}
-  confirmText={ isSoftDeletingTab ? "Archiving..." : "Archive" }
-  onConfirm={handleConfirmSoftDeleteTab}
-/>
+        <ConfirmDialog
+          open={softDeleteTabOpen}
+          onOpenChange={setSoftDeleteTabOpen}
+          title="Archive Tab"
+          description={`Archive ${tabToDelete?.name}?`}
+          confirmText={isSoftDeletingTab ? "Archiving..." : "Archive"}
+          onConfirm={handleConfirmSoftDeleteTab}
+        />
         <PageHeader
           title="Requirement Fields"
           description="Configure deliverables, templates and requirement fields."
@@ -292,11 +330,14 @@ const handleConfirmSoftDeleteTab = async () => {
               onEditTemplate={handleEditTemplate}
               onSoftDeleteTemplate={handleSoftDeleteTemplate}
               onToggleTemplateStatus={handleToggleTemplateStatus}
-
               onAddTab={handleAddTab}
               onEditTab={handleEditTab}
               onToggleTabStatus={handleToggleTabStatus}
               onSoftDeleteTab={handleSoftDeleteTab}
+              onCreateField={handleCreateField}
+              isCreatingField={isCreatingField}
+              onUpdateField={handleUpdateField}
+              isUpdatingField={isUpdatingField}
             />
           ))}
         </div>

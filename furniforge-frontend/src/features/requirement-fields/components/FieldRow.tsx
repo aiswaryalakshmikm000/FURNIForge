@@ -4,9 +4,11 @@ import type { RequirementFieldResponseDTO } from "../types/field.type";
 interface Props {
   field: RequirementFieldResponseDTO;
   disabled?: boolean;
+  onEdit: () => void;
+  // onDelete: () => void;
 }
 
-export function RequirementFieldRow({ field, disabled = false }: Props) {
+export function RequirementFieldRow({ field, disabled = false, onEdit }: Props) {
   return (
     <div className="flex items-center text-[12px] gap-4 min-w-0 py-3 px-6 border-b border-border last:border-0 hover:bg-muted/10 transition-colors">
       <div className="flex-1 min-w-[180px]">
@@ -65,6 +67,7 @@ export function RequirementFieldRow({ field, disabled = false }: Props) {
 
       <button
         disabled={disabled}
+        onClick={onEdit}
         type="button"
         className={`p-1.5 rounded-lg ${
           disabled
@@ -78,6 +81,7 @@ export function RequirementFieldRow({ field, disabled = false }: Props) {
       <button
         disabled={disabled}
         type="button"
+        // onClick={onDelete}
         className={`p-1.5 rounded-lg ${
           disabled
             ? "text-muted-foreground/40 cursor-not-allowed"
