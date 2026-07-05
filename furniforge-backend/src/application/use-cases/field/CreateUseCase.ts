@@ -3,7 +3,6 @@ import { TYPES } from "../../../infrastructure/di/types";
 import type { ICreateFieldUseCase } from "./interfaces/ICreateFieldUseCase";
 import type { IFieldRepository } from "../../../domain/repositories/IFieldRepository";
 import { Field } from "../../../domain/entities/Field";
-import { FieldType } from "../../../domain/enums/FieldType";
 import { BadRequestError, NotFoundError } from "../../../domain/errors/AppError";
 import type { ITabRepository } from "../../../domain/repositories/ITabRepository";
 import type { CreateFieldDTO } from "../../dtos/fields/CreateFieldDTO";
@@ -38,24 +37,7 @@ export class CreateFieldUseCase implements ICreateFieldUseCase {
       );
     if (existingFieldKey) throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.FIELD_KEY_ALREADY_EXISTS );
     
-    const options = dto.options ?.split(",").map((option) => option.trim()).filter(Boolean) ?? [];
-
-    const optionBasedFields = [
-      FieldType.SELECT,
-      FieldType.MULTI_SELECT,
-      FieldType.CHECKBOX,
-      FieldType.RADIO,
-    ];
-
-    const isOptionField = optionBasedFields.includes(dto.fieldType);
-
-    if (isOptionField && options.length === 0)  throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.OPTIONS_REQUIRED );
-    
-    if (!isOptionField && options.length > 0)  throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.OPTIONS_NOT_ALLOWED );    
-
-    if (dto.defaultValue && isOptionField && !options.includes(dto.defaultValue)) {
-      throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.INVALID_DEFAULT_VALUE );
-    }
+    const options = dto.options ?? [];
 
     const field = Field.create({
       tabId: dto.tabId,

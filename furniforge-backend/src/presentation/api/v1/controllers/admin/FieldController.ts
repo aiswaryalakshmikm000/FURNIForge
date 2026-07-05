@@ -28,7 +28,6 @@ export class FieldController {
   updateField = async ( req: Request, res: Response ) => {
     const params = req.params as FieldCommandRequestDTO;
     const dto = req.body as UpdateFieldDTO;
-    console.log()
 
     const result = await this._updateFieldUseCase.execute( params, dto );
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.FIELDS.UPDATED ).build() );

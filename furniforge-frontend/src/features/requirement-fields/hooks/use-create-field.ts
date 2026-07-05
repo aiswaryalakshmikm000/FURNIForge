@@ -1,18 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { UpdateTemplateDTO } from "../types/template-command.type";
-import { updateTemplateApi } from "../api/update-template.api";
+import { createFieldApi } from "../api/create-field.api";
 import { toast } from "sonner";
 
-export const useUpdateTemplate = () => {
+export const useCreateField = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-
-    mutationFn: ({ templateId, payload }: { templateId: string, payload: UpdateTemplateDTO }) => updateTemplateApi( templateId, payload ),
+    mutationFn: createFieldApi,
 
     onSuccess: (response) => {
-
       toast.success(response.message);
+
+      queryClient.invalidateQueries({
+        queryKey: ["admin-requirement-field-fields"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["admin-requirement-field-tabs"],
+      });
+      
       queryClient.invalidateQueries({
         queryKey: ["admin-requirement-field-templates"],
       });

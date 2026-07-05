@@ -15,6 +15,10 @@ export const useCreateTemplate = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-requirement-field-templates"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["admin-requirement-field-deliverables"],
+      });
     },
   });
 };

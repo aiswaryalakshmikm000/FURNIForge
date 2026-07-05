@@ -12,6 +12,8 @@ import { useGetTemplatesByDeliverableId } from "../hooks/use-get-templates-by-de
 import { RequirementTemplateTabs } from "./TemplateTabs";
 import type { RequirementFieldTemplateResponseDTO } from "../types/template.type";
 import type { RequirementFieldTabResponseDTO } from "../types/tab.type";
+import type { FieldFormValues } from "../validation/field-form-validation";
+import type { RequirementFieldResponseDTO } from "../types/field.type";
 
 interface Props {
   deliverable: RequirementFieldDeliverableResponseDTO;
@@ -20,13 +22,16 @@ interface Props {
   onAddTemplate: (deliverableId: string) => void;
   onEditTemplate: (template: RequirementFieldTemplateResponseDTO) => void;
   onSoftDeleteTemplate: (template: RequirementFieldTemplateResponseDTO) => void;
-  onToggleTemplateStatus: (
-    template: RequirementFieldTemplateResponseDTO,
-  ) => void;
+  onToggleTemplateStatus: (template: RequirementFieldTemplateResponseDTO) => void;
   onAddTab: (templateId: string, nextOrder: number) => void;
   onEditTab: (tab: RequirementFieldTabResponseDTO) => void;
   onToggleTabStatus: (tab: RequirementFieldTabResponseDTO) => void;
   onSoftDeleteTab: (tab: RequirementFieldTabResponseDTO) => void;
+  onCreateField: (tabId: string, data: FieldFormValues) => Promise<void>;
+  isCreatingField: boolean;
+  onUpdateField: (fieldId: string, data: FieldFormValues) => Promise<void>;
+  isUpdatingField: boolean;
+  onSoftDeleteField: (field: RequirementFieldResponseDTO) => void;
 }
 
 export function RequirementDeliverableAccordion({
@@ -41,6 +46,11 @@ export function RequirementDeliverableAccordion({
   onEditTab,
   onToggleTabStatus,
   onSoftDeleteTab,
+  onCreateField,
+  isCreatingField,
+  onUpdateField,
+  isUpdatingField,
+  onSoftDeleteField,
 }: Props) {
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>();
 
@@ -165,6 +175,11 @@ export function RequirementDeliverableAccordion({
                   onEditTab={onEditTab}
                   onToggleTabStatus={onToggleTabStatus}
                   onSoftDeleteTab={onSoftDeleteTab}
+                  onCreateField={onCreateField}
+                  isCreatingField={isCreatingField}
+                  onUpdateField={onUpdateField}
+                  isUpdatingField={isUpdatingField}
+                  onSoftDeleteField={onSoftDeleteField}
                 />
               )}
             </>

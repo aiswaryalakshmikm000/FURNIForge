@@ -7,9 +7,7 @@ export const useSoftDeleteTemplate = () => {
 
   return useMutation({
 
-    mutationFn: ({ templateId }: {
-      templateId: string;
-    }) => softDeleteTemplateApi( templateId ),
+    mutationFn: ({ templateId }: { templateId: string }) => softDeleteTemplateApi( templateId ),
 
     onSuccess: (response) => {
 
