@@ -7,6 +7,7 @@ import type { RequirementFieldTabResponseDTO } from "../types/tab.type";
 import { FieldFormRow } from "./FieldFormRow";
 import { useState } from "react";
 import type { FieldFormValues } from "../validation/field-form-validation";
+import type { RequirementFieldResponseDTO } from "../types/field.type";
 
 interface Props {
   template: RequirementFieldTemplateResponseDTO;
@@ -19,6 +20,7 @@ interface Props {
   isCreatingField: boolean;
   onUpdateField: (fieldId: string, data: FieldFormValues) => Promise<void>;
   isUpdatingField: boolean;
+  onSoftDeleteField: (field: RequirementFieldResponseDTO) => void;
 }
 
 export function RequirementTemplateTabs({
@@ -32,6 +34,7 @@ export function RequirementTemplateTabs({
   isCreatingField,
   onUpdateField,
   isUpdatingField,
+  onSoftDeleteField,
 }: Props) {
   const [selectedTabId, setSelectedTabId] = useState<string>();
   const [creatingFieldTabId, setCreatingFieldTabId] = useState<string | null>(null);
@@ -253,6 +256,7 @@ export function RequirementTemplateTabs({
             disabled={isDisabled} 
             onUpdateField={onUpdateField}
             isUpdatingField={isUpdatingField}
+            onSoftDeleteField={onSoftDeleteField}
             />
           </div>
         </>

@@ -9,10 +9,7 @@ export const useUpdateTab = () => {
 
   return useMutation({
 
-    mutationFn: ({ tabId, payload }: {
-      tabId: string;
-      payload: UpdateTabDTO;
-    }) => updateTabApi( tabId, payload ),
+    mutationFn: ({ tabId, payload }: { tabId: string, payload: UpdateTabDTO }) => updateTabApi( tabId, payload ),
 
     onSuccess: (response: ApiResponse<TabCommandResponseDTO>) => {
 

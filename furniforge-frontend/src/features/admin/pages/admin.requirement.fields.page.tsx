@@ -27,6 +27,8 @@ import { useSoftDeleteTab } from "../../requirement-fields/hooks/use-soft-delete
 import { useCreateField } from "../../requirement-fields/hooks/use-create-field";
 import type { FieldFormValues } from "../../requirement-fields/validation/field-form-validation";
 import { useUpdateField } from "../../requirement-fields/hooks/use-update-field";
+import { useSoftDeleteField } from "../../requirement-fields/hooks/use-soft-delete-field";
+import type { RequirementFieldResponseDTO } from "../../requirement-fields/types/field.type";
 
 export default function AdminRequirementFieldsPage() {
   const [showInfo, setShowInfo] = useState(false);
@@ -61,6 +63,10 @@ export default function AdminRequirementFieldsPage() {
   const [tabToDelete, setTabToDelete] =
     useState<RequirementFieldTabResponseDTO | null>(null);
 
+  const [softDeleteFieldOpen, setSoftDeleteFieldOpen] = useState(false);
+  const [fieldToDelete, setFieldToDelete] =
+    useState<RequirementFieldResponseDTO | null>(null);
+  
   const debouncedSearch = useDebounce(search, 500);
 
   const { data, isLoading } = useGetRequirementFieldDeliverables({
@@ -89,8 +95,8 @@ export default function AdminRequirementFieldsPage() {
     useCreateField();
   const { mutateAsync: updateField, isPending: isUpdatingField } =
     useUpdateField();
-  // const { mutateAsync: softDeleteField, isPending: isSoftDeletingField } =
-  //   useSoftDeleteField();
+  const { mutateAsync: softDeleteField, isPending: isSoftDeletingField } =
+    useSoftDeleteField();
 
   const handleAddTemplate = (deliverableId: string) => {
     setSelectedDeliverableId(deliverableId);
@@ -208,11 +214,21 @@ export default function AdminRequirementFieldsPage() {
   };
 
   const handleUpdateField = async (fieldId: string, data: FieldFormValues) => {
-    await updateField({
-      fieldId,
-      payload: data,
-    });
+    await updateField({ fieldId, payload: data  });
   };
+
+  const handleSoftDeleteField = ( field: RequirementFieldResponseDTO ) => {
+  setFieldToDelete(field);
+  setSoftDeleteFieldOpen(true);
+};
+
+const handleConfirmSoftDeleteField = async () => {
+  if (!fieldToDelete) return;
+
+  await softDeleteField({ fieldId: fieldToDelete.id });
+  setSoftDeleteFieldOpen(false);
+  setFieldToDelete(null);
+};
 
   return (
     <div className="space-y-6">
@@ -286,6 +302,16 @@ export default function AdminRequirementFieldsPage() {
           confirmText={isSoftDeletingTab ? "Archiving..." : "Archive"}
           onConfirm={handleConfirmSoftDeleteTab}
         />
+
+        <ConfirmDialog
+  open={softDeleteFieldOpen}
+  onOpenChange={setSoftDeleteFieldOpen}
+  title="Archive Field"
+  description={`Archive ${fieldToDelete?.label}?`}
+  confirmText={isSoftDeletingField ? "Archiving..." : "Archive"}
+  onConfirm={handleConfirmSoftDeleteField}
+/>
+
         <PageHeader
           title="Requirement Fields"
           description="Configure deliverables, templates and requirement fields."
@@ -338,6 +364,7 @@ export default function AdminRequirementFieldsPage() {
               isCreatingField={isCreatingField}
               onUpdateField={handleUpdateField}
               isUpdatingField={isUpdatingField}
+              onSoftDeleteField={handleSoftDeleteField}
             />
           ))}
         </div>

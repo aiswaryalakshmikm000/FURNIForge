@@ -8,10 +8,7 @@ export const useUpdateTemplate = () => {
 
   return useMutation({
 
-    mutationFn: ({ templateId, payload }: {
-      templateId: string;
-      payload: UpdateTemplateDTO;
-    }) => updateTemplateApi( templateId, payload ),
+    mutationFn: ({ templateId, payload }: { templateId: string, payload: UpdateTemplateDTO }) => updateTemplateApi( templateId, payload ),
 
     onSuccess: (response) => {
 

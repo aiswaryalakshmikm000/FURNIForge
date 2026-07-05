@@ -68,7 +68,7 @@ export const API_ENDPOINTS = {
       TOGGLE_STATUS: (id: string) => `/admin/tabs/${id}/status`,
     },
 
-    FIELD: {
+    FIELDS: {
       CREATE: "/admin/fields",
       UPDATE: (id: string) => `/admin/fields/${id}`,
       SOFT_DELETE: (id: string) => `/admin/fields/${id}/soft-delete`,

@@ -7,7 +7,6 @@ export const useGetTemplatesByDeliverableId = ( query: GetTemplatesByDeliverable
     queryKey: ["admin-requirement-field-templates", query],
     
     queryFn: () => getTemplateByDeliverableIdApi(query),
-    //   staleTime: 1000 * 60 * 5, 
       enabled
   });
 };

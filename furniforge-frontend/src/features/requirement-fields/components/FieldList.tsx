@@ -10,9 +10,10 @@ interface Props {
   disabled?: boolean;
   onUpdateField: (fieldId: string, data: FieldFormValues) => Promise<void>;
   isUpdatingField: boolean;
+  onSoftDeleteField: (field: RequirementFieldResponseDTO) => void;
 }
 
-export function RequirementFieldList({ tabId, disabled = false, onUpdateField, isUpdatingField }: Props) {
+export function RequirementFieldList({ tabId, disabled = false, onUpdateField, isUpdatingField, onSoftDeleteField }: Props) {
   const [editingField, setEditingField] = useState<RequirementFieldResponseDTO | null>(null);
   const { data, isLoading } = useGetFieldsByTabsId({ tabId: tabId! }, !!tabId);
 
@@ -57,6 +58,7 @@ export function RequirementFieldList({ tabId, disabled = false, onUpdateField, i
             field={field}
             disabled={disabled}
             onEdit={() => setEditingField(field)}
+            onDelete={() => onSoftDeleteField(field)}
           />
         )}
       </div>

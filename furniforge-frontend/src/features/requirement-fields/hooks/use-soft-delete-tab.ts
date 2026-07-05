@@ -9,9 +9,7 @@ export const useSoftDeleteTab  = () => {
 
   return useMutation({
 
-    mutationFn: ({ tabId }: {
-      tabId: string;
-    }) => softDeleteTabApi( tabId ),
+    mutationFn: ({ tabId }: { tabId: string }) => softDeleteTabApi( tabId ),
 
     onSuccess: (response:ApiResponse<TabCommandResponseDTO>) => {
 

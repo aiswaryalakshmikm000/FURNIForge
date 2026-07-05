@@ -14,6 +14,14 @@ export const useCreateField = () => {
       queryClient.invalidateQueries({
         queryKey: ["admin-requirement-field-fields"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["admin-requirement-field-tabs"],
+      });
+      
+      queryClient.invalidateQueries({
+        queryKey: ["admin-requirement-field-templates"],
+      });
     },
   });
 };
