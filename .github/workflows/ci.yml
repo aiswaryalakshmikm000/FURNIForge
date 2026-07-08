@@ -2,7 +2,7 @@ name: FurniForge CI
 
 on:
   push:
-    branches: [develop, main, feature/**]
+    branches: [develop, main, feature/**, chore/**, fix/**]
   pull_request:
     branches: [develop, main]
 
