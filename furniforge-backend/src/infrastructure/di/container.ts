@@ -38,6 +38,44 @@ import { DesignerRepository } from "../database/prisma/repositories/DesignerRepo
 import { GetAllDesignersUseCase } from "../../application/use-cases/designer/GetAllDesignersUseCase";
 import { DesignerController } from "../../presentation/api/v1/controllers/admin/DesignerController";
 import { VerifyEmailUseCase } from "../../application/use-cases/auth/VerifyEmailUseCase";
+import { DeleteLeadUseCase } from "../../application/use-cases/lead/DeleteLeadUseCase";
+import { UpdateLeadUseCase } from "../../application/use-cases/lead/UpdateLeadUseCase";
+import { CreateDesignerUseCase } from "../../application/use-cases/designer/CreateDesignerUseCase";
+import { UpdateDesignerUseCase } from "../../application/use-cases/designer/UpdateDesignerUseCase";
+import { ToggleDesignerBlockUseCase } from "../../application/use-cases/designer/ToggleDesignerBlockUseCase";
+import { DeleteDesignerUseCase } from "../../application/use-cases/designer/DeleteDesignerUseCase";
+import { DeliverableController } from "../../presentation/api/v1/controllers/admin/DeliverableController";
+import { GetAllDeliverablesUseCase } from "../../application/use-cases/deliverable/GetAllDeliverablesUseCase";
+import { DeliverableRepository } from "../database/prisma/repositories/DeliverableRepository";
+import { CreateDeliverableUseCase } from "../../application/use-cases/deliverable/CreateDeliverableUseCase";
+import { ToggleDeliverableStatusUseCase } from "../../application/use-cases/deliverable/ToggleDeliverableStatusUseCase";
+import { UpdateDeliverableUseCase } from "../../application/use-cases/deliverable/UpdateDeliverableUseCase";
+import { SoftDeleteDeliverableUseCase } from "../../application/use-cases/deliverable/SoftDeleteDeliverableUseCase";
+import { DeleteDeliverableUseCase } from "../../application/use-cases/deliverable/DeleteDeliverableUseCase";
+import { TemplateRepository } from "../database/prisma/repositories/TemplateRepository";
+import { CreateTemplateUseCase } from "../../application/use-cases/template/CreateTemplateUseCase";
+import { TemplateController } from "../../presentation/api/v1/controllers/admin/TemplateController";
+import { UpdateTemplateUseCase } from "../../application/use-cases/template/UpdateTemplateUseCase";
+import { DeleteTemplateUseCase } from "../../application/use-cases/template/DeleteTemplateUseCase";
+import { ToggleTemplateStatusUseCase } from "../../application/use-cases/template/ToggleTemplateStatusUseCase";
+import { CreateTabUseCase } from "../../application/use-cases/templateTab/CreateTabUseCase";
+import { TabController } from "../../presentation/api/v1/controllers/admin/TabController";
+import { TabRepository } from "../database/prisma/repositories/TabRepository";
+import { UpdateTabUseCase } from "../../application/use-cases/templateTab/UpdateTabUseCase";
+import { DeleteTabUseCase } from "../../application/use-cases/templateTab/DeleteTabUseCase";
+import { ToggleTabStatusUseCase } from "../../application/use-cases/templateTab/ToggleTabStatusUseCase";
+import { SoftDeleteTemplateUseCase } from "../../application/use-cases/template/SoftDeleteTemplateUseCase";
+import { FieldController } from "../../presentation/api/v1/controllers/admin/FieldController";
+import { FieldRepository } from "../database/prisma/repositories/FieldRepository";
+import { CreateFieldUseCase } from "../../application/use-cases/field/CreateUseCase";
+import { UpdateFieldUseCase } from "../../application/use-cases/field/UpdateFieldUseCase";
+import { softDeleteFieldUseCasea } from "../../application/use-cases/field/SoftDeleteFieldUseCase";
+import { RequirementFieldController } from "../../presentation/api/v1/controllers/admin/requirementFieldController";
+import { GetRequirementFieldDeliverablesUseCase } from "../../application/use-cases/deliverable/GetRequirementFieldDeliverablesUseCase";
+import { GetTemplatesByDeliverableUseCase } from "../../application/use-cases/template/GetTemplatesByDeliverableUseCase";
+import { GetTabsByTemplateUseCase } from "../../application/use-cases/templateTab/GetTabsByTemplateUseCase";
+import { GetFieldsByTabUseCase } from "../../application/use-cases/field/GetFieldsByTabUseCase";
+import { SoftDeleteTabUseCase } from "../../application/use-cases/templateTab/SoftDeleteTabUseCase";
 
 const container = new Container();
 
@@ -52,7 +90,11 @@ container.bind(TYPES.IUserRepository).to(UserRepository);
 container.bind(TYPES.IOTPRepository).to(RedisOTPRepository);
 container.bind(TYPES.IPendingUserRepository).to(RedisPendingUserRepository);
 container.bind(TYPES.ILeadRepository).to(LeadRepository);
-container.bind(TYPES.IDesignerRepository).to(DesignerRepository)
+container.bind(TYPES.IDesignerRepository).to(DesignerRepository);
+container.bind(TYPES.IDeliverableRepository).to(DeliverableRepository);
+container.bind(TYPES.ITemplateRepository).to(TemplateRepository);
+container.bind(TYPES.ITabRepository).to(TabRepository);
+container.bind(TYPES.IFieldRepository).to(FieldRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -84,11 +126,52 @@ container.bind(TYPES.IGetAllLeadsUseCase).to(GetAllLeadsUseCase);
 container.bind(TYPES.IGetDesignerOptionsUseCase).to(GetDesignerOptionsUseCase);
 container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
 container.bind(TYPES.ICreateManualLeadUseCase).to(CreateManualLeadUseCase);
-container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase)
+container.bind(TYPES.IDeleteLeadUseCase).to(DeleteLeadUseCase);
+container.bind(TYPES.IUpdateLeadUseCase).to(UpdateLeadUseCase);
+
+container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase);
+container.bind(TYPES.ICreateDesignerUseCase).to(CreateDesignerUseCase);
+container.bind(TYPES.IUpdateDesignerUseCase).to(UpdateDesignerUseCase);
+container.bind(TYPES.IToggleDesignerBlockUseCase).to(ToggleDesignerBlockUseCase);
+container.bind(TYPES.IDeleteDesignerUseCase).to(DeleteDesignerUseCase);
+
+container.bind(TYPES.IGetAllDeliverablesUseCase).to(GetAllDeliverablesUseCase);
+container.bind(TYPES.ICreateDeliverableUseCase).to(CreateDeliverableUseCase);
+container.bind(TYPES.IToggleDeliverableStatusUseCase).to(ToggleDeliverableStatusUseCase);
+container.bind(TYPES.IUpdateDeliverableUseCase).to(UpdateDeliverableUseCase);
+container.bind(TYPES.ISoftDeleteDeliverableUseCase).to(SoftDeleteDeliverableUseCase);
+container.bind(TYPES.IDeleteDeliverableUseCase).to(DeleteDeliverableUseCase);
+
+container.bind(TYPES.ICreateTemplateUseCase).to(CreateTemplateUseCase);
+container.bind(TYPES.IUpdateTemplateUseCase).to(UpdateTemplateUseCase);
+container.bind(TYPES.IDeleteTemplateUseCase).to(DeleteTemplateUseCase);
+container.bind(TYPES.IToggleTemplateStatusUseCase).to(ToggleTemplateStatusUseCase);
+container.bind(TYPES.ISoftDeleteTemplateUseCase).to(SoftDeleteTemplateUseCase);
+
+container.bind(TYPES.ICreateTabUseCase).to(CreateTabUseCase);
+container.bind(TYPES.IUpdateTabUseCase).to(UpdateTabUseCase);
+container.bind(TYPES.IDeleteTabUseCase).to(DeleteTabUseCase);
+container.bind(TYPES.IToggleTabStatusUseCase).to(ToggleTabStatusUseCase);
+container.bind(TYPES.ISoftDeleteTabUseCase).to(SoftDeleteTabUseCase);
+
+container.bind(TYPES.ICreateFieldUseCase).to(CreateFieldUseCase);
+container.bind(TYPES.IUpdateFieldUseCase).to(UpdateFieldUseCase);
+container.bind(TYPES.ISoftDeleteFieldUseCase).to(softDeleteFieldUseCasea);
+
+container.bind(TYPES.IGetRequirementFieldDeliverablesUseCase).to(GetRequirementFieldDeliverablesUseCase);
+container.bind(TYPES.IGetTemplatesByDeliverableUseCase).to(GetTemplatesByDeliverableUseCase);
+container.bind(TYPES.IGetTabsByTemplateUseCase).to(GetTabsByTemplateUseCase);
+container.bind(TYPES.IGetFieldsByTabUseCase).to(GetFieldsByTabUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
 container.bind(TYPES.LeadController).to(LeadController);
 container.bind(TYPES.DesignerController).to(DesignerController);
+container.bind(TYPES.DeliverableController).to(DeliverableController);
+container.bind(TYPES.TemplateController).to(TemplateController);
+container.bind(TYPES.TabController).to(TabController);
+container.bind(TYPES.FieldController).to(FieldController);
+container.bind(TYPES.RequirementFieldController).to(RequirementFieldController);
+
 
 export { container };

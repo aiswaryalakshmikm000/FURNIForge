@@ -1,8 +1,6 @@
-import { UserResponseDTO } from "../user/userResponseDTO";
+import { UserResponseDTO } from "../user/UserResponseDTO";
 
 export type AuthResponseDTO = {
   user: UserResponseDTO;
   accessToken: string;
 };
-
-

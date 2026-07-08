@@ -1,5 +1,5 @@
 import { httpClient } from "../../../core/api/http-client";
-import type { RegisterRequestDTO, RegisterResponseDTO } from "../../../types/auth/register.type";
+import type { RegisterRequestDTO, RegisterResponseDTO } from "../types/register.type";
 import type { ApiResponse } from "../../../types/api/api-response.type";
 import { API_ENDPOINTS } from "../../../core/api/endpoints";
 

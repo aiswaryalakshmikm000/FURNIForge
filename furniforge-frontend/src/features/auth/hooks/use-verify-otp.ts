@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { verifyOtpApi } from "../api/verify-otp.api";
-import type { VerifyOtpRequestDTO, VerifyOtpResponseDTO } from "../../../types/auth/verify-otp.type";
+import type { VerifyOtpRequestDTO, VerifyOtpResponseDTO } from "../types/verify-otp.type";
 import type { ApiResponse } from "../../../types/api/api-response.type";
 import { toast } from "sonner";
 

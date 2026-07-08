@@ -11,8 +11,7 @@ import { InternalServerError } from "../../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../config/messages";
 
 @injectable()
-export class DesignerRepository
-  extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput > implements IDesignerRepository {
+export class DesignerRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput > implements IDesignerRepository {
   protected model = prisma.user;
 
   protected toDomain(raw: PrismaUser): User {
@@ -31,7 +30,7 @@ export class DesignerRepository
     try {
       const counter = await prisma.counter.update({
         where: { id: "designer" },
-        data: {value: { increment: 1} },
+        data: { value: { increment: 1 } },
       });
 
       return counter.value;
@@ -42,7 +41,7 @@ export class DesignerRepository
 
   async countDesigners(filters?: {
     search?: string;
-    status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
+    status?: "ACTIVE" | "BLOCKED" | "PENDING";
   }): Promise<number> {
     try {
       const where: Prisma.UserWhereInput = { role: "DESIGNER" };
@@ -56,14 +55,15 @@ export class DesignerRepository
         ] };
 
       if (filters?.status === "ACTIVE") {
-        where.isActive = true;
+        where.isVerified  = true;
         where.isBlocked = false;
       }
       if (filters?.status === "BLOCKED") {
         where.isBlocked = true;
       }
-      if (filters?.status === "INACTIVE") {
-        where.isActive = false;
+      if (filters?.status === "PENDING") {
+        where.isVerified  = false;
+        where.isBlocked = false;
       }
 
       return await this.model.count({ where });
@@ -76,8 +76,8 @@ export class DesignerRepository
     skip: number;
     take: number;
     search?: string;
-    status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
-    sortBy: "rating" | "projects" |"revenue" | "createdAt";
+    status?: "ACTIVE" | "BLOCKED" | "PENDING";
+    sortBy: "rating" | "projects" | "revenue" | "createdAt";
     sortOrder: "asc" | "desc";
   }): Promise<DesignerListItem[]> {
     try {
@@ -89,10 +89,11 @@ export class DesignerRepository
           { lastName: { contains: params.search, mode: "insensitive" } },
           { email: { contains: params.search, mode: "insensitive" } },
           { phone: { contains: params.search } },
-        ] };
+        ];
+      }
 
       if (params.status === "ACTIVE") {
-        where.isActive = true;
+        where.isVerified = true;
         where.isBlocked = false;
       }
 
@@ -100,8 +101,9 @@ export class DesignerRepository
         where.isBlocked = true;
       }
 
-      if (params.status === "INACTIVE") {
-        where.isActive = false;
+      if (params.status === "PENDING") {
+        where.isVerified = false;
+        where.isBlocked = false;
       }
 
       let orderBy: Prisma.UserOrderByWithRelationInput = {
@@ -144,17 +146,24 @@ export class DesignerRepository
           rating: true,
           projectCount: true,
           totalRevenue: true,
-          isActive: true,
           isBlocked: true,
+          isVerified: true,
           createdAt: true,
         },
       });
 
       return raws.map((raw) => {
-        if(!raw.designerRegNo) throw new InternalServerError(ERROR_MESSAGES.ADMIN.DESIGNER_REG_NO_MISSING)
+        if (!raw.designerRegNo)
+          throw new InternalServerError(
+            ERROR_MESSAGES.ADMIN.DESIGNER_REG_NO_MISSING,
+          );
         let location: string | null = null;
 
-        if ( raw.address && typeof raw.address === "object" && !Array.isArray(raw.address) ) {
+        if (
+          raw.address &&
+          typeof raw.address === "object" &&
+          !Array.isArray(raw.address)
+        ) {
           location = (raw.address as { city?: string }).city ?? null;
         }
 
@@ -171,13 +180,14 @@ export class DesignerRepository
           rating: raw.rating,
           projectCount: raw.projectCount,
           totalRevenue: raw.totalRevenue ? Number(raw.totalRevenue) : 0,
-          isActive: raw.isActive,
           isBlocked: raw.isBlocked,
-          createdAt: raw.createdAt
+          isVerified: raw.isVerified,
+          createdAt: raw.createdAt,
         };
       });
     } catch (error) {
       handlePrismaError(error);
     }
   }
+
 }

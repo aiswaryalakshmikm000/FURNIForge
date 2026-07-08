@@ -6,6 +6,7 @@ import { injectable } from "inversify";
 import { PrismaUserMapper } from "../mapper/PrismaUserMapper";
 import { User as PrismaUser, Prisma } from "../../../../generated/prisma/index";
 import { handlePrismaError } from "../errors/handlePrismaError";
+import { DesignerOptionItem } from "../../../../domain/read-models/designer/DesignerOptionItem";
 
 @injectable()
 export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput > implements IUserRepository
@@ -44,19 +45,22 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
 
   async updatePassword(id: string, passwordHash: string): Promise<void> {
     try {
-      await this.model.update({ where: { id }, data: { passwordHash } });
+      await this.model.update({ 
+        where: { id }, 
+        data: { passwordHash } 
+      });
     } catch (error) {
       handlePrismaError(error);
     }
   }
 
-  async findDesigners(): Promise<User[]> {
+  async findDesigners(): Promise<DesignerOptionItem[]> {
     try {
-      const raws = await this.model.findMany({
-        where: {role: "DESIGNER", isActive: true, isBlocked: false, isVerified: true},
+      return await this.model.findMany({
+        where: {role: "DESIGNER", isBlocked: false, isVerified: true},
+        select: { id: true, firstName: true, lastName: true },
         orderBy: {firstName: "asc"}},    
       );
-      return raws.map((raw) => this.toDomain(raw))
     } catch (error) {
       handlePrismaError(error)
     }
@@ -64,11 +68,7 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
 
   async findByOAuthId(provider: string, oauthId: string): Promise<User | null> {
     try {
-      const raw = await this.model.findFirst({ 
-          where: {oauthProvider:provider, oauthId}}
-      );
-      return raw ? this.toDomain(raw) : null;
-
+      return await this.findFirst({ where: {oauthProvider:provider, oauthId}} );
     } catch (error) {
       handlePrismaError(error)
     }
@@ -76,7 +76,7 @@ export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.Use
 
   async linkGoogleAccount(userId: string, googleId: string): Promise<void> {
     try {
-      await this.model.update({
+      await this.model.update({ 
         where: {id: userId}, 
         data: {oauthProvider: "google", oauthId: googleId}
       })

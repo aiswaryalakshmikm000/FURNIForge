@@ -1,6 +1,6 @@
-import { ResendOtpResponseDTO } from "../../../dtos/auth/ResendOtpResponseDTO";
-import { ResendOtpDTO } from "../../../../application/dtos/auth/ResendOtpDTO";
+import type { ResendOtpResponseDTO } from "../../../dtos/auth/ResendOtpResponseDTO";
+import type { ResendOtpDTO } from "../../../../application/dtos/auth/ResendOtpDTO";
 
 export interface IResendOtpUseCase {
- execute(data: ResendOtpDTO): Promise<ResendOtpResponseDTO> 
+  execute(data: ResendOtpDTO): Promise<ResendOtpResponseDTO>;
 }

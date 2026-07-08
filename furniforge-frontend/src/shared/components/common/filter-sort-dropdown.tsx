@@ -22,7 +22,7 @@ export interface SortOption {
 }
 
 interface Props {
-  filters: FilterOption[];
+  filters?: FilterOption[];
   sortOptions?: SortOption[];
   sortValue?: string;
   onSortChange?: (v: string) => void;
@@ -48,9 +48,15 @@ export const FilterSortDropdown = ({
 }: Props) => {
   const [open, setOpen] = useState(false);
 
-  const activeCount =
-    filters.filter((f) => f.value !== "All").length +
-    (sortValue && sortValue !== "none" ? 1 : 0);
+  const filterList = filters ?? [];
+
+const hasFilters =
+  filterList.length > 0 ||
+  (sortOptions?.length ?? 0) > 0;
+
+const activeCount =
+  filterList.filter((f) => f.value !== "All").length +
+  (sortValue && sortValue !== "none" ? 1 : 0);
 
   const hasActiveFilters = activeCount > 0;
 
@@ -82,22 +88,24 @@ export const FilterSortDropdown = ({
           </div>
         )}
 
-        <button
-          onClick={() => setOpen((prev) => !prev)}
-          className={`relative flex items-center gap-2 px-6 h-12 rounded-2xl border transition-all ${
-            open
-              ? "bg-accent text-accent-foreground border-accent"
-              : "border-border bg-background hover:bg-muted"
-          }`}
-        >
-          <SlidersHorizontal size={16} />
-          Filters
-        </button>
+        {hasFilters && (
+          <button
+            onClick={() => setOpen((prev) => !prev)}
+            className={`relative flex items-center gap-2 px-6 h-12 rounded-2xl border transition-all ${
+              open
+                ? "bg-accent text-accent-foreground border-accent"
+                : "border-border bg-background hover:bg-muted"
+            }`}
+          >
+            <SlidersHorizontal size={16} />
+            Filters
+          </button>
+        )}
       </div>
 
       {/* FILTER PANEL */}
       <AnimatePresence>
-        {open && (
+        {hasFilters && open && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -106,7 +114,7 @@ export const FilterSortDropdown = ({
           >
             <div className="bg-card rounded-2xl border border-border p-6 shadow-warm">
               <div className="flex flex-wrap items-start gap-8">
-                {filters.map((filter) => (
+                {filterList.map((filter) => (
                   <div key={filter.key}>
                     <p className="text-xs uppercase mb-3 font-semibold text-muted-foreground font-sans tracking-wider">
                       {filter.label}
@@ -129,9 +137,7 @@ export const FilterSortDropdown = ({
                 {sortOptions && (
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <p
-                        className=" text-xs uppercase font-semibold text-muted-foreground font-sans tracking-wider "
-                      >
+                      <p className=" text-xs uppercase font-semibold text-muted-foreground font-sans tracking-wider ">
                         Sort By
                       </p>
 

@@ -141,7 +141,6 @@ exports.Prisma.UserScalarFieldEnum = {
   projectCount: 'projectCount',
   totalRevenue: 'totalRevenue',
   rating: 'rating',
-  isActive: 'isActive',
   isBlocked: 'isBlocked',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -166,6 +165,64 @@ exports.Prisma.LeadScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.DeliverableScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  icon: 'icon',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TemplateScalarFieldEnum = {
+  id: 'id',
+  deliverableId: 'deliverableId',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+};
+
+exports.Prisma.TemplateTabScalarFieldEnum = {
+  id: 'id',
+  templateId: 'templateId',
+  name: 'name',
+  displayOrder: 'displayOrder',
+  isActive: 'isActive',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TemplateFieldScalarFieldEnum = {
+  id: 'id',
+  tabId: 'tabId',
+  label: 'label',
+  fieldKey: 'fieldKey',
+  fieldType: 'fieldType',
+  options: 'options',
+  defaultValue: 'defaultValue',
+  isActive: 'isActive',
+  isRequired: 'isRequired',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RequestFieldValueScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  fieldId: 'fieldId',
+  value: 'value',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.CounterScalarFieldEnum = {
   id: 'id',
   value: 'value'
@@ -178,6 +235,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -223,9 +284,29 @@ exports.PackageType = exports.$Enums.PackageType = {
   PREMIUM: 'PREMIUM'
 };
 
+exports.FieldType = exports.$Enums.FieldType = {
+  TEXT: 'TEXT',
+  TEXTAREA: 'TEXTAREA',
+  NUMBER: 'NUMBER',
+  SELECT: 'SELECT',
+  MULTI_SELECT: 'MULTI_SELECT',
+  CHECKBOX: 'CHECKBOX',
+  RADIO: 'RADIO',
+  DATE: 'DATE',
+  FILE: 'FILE',
+  IMAGE: 'IMAGE',
+  EMAIL: 'EMAIL',
+  PHONE: 'PHONE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Lead: 'Lead',
+  Deliverable: 'Deliverable',
+  Template: 'Template',
+  TemplateTab: 'TemplateTab',
+  TemplateField: 'TemplateField',
+  RequestFieldValue: 'RequestFieldValue',
   Counter: 'Counter'
 };
 

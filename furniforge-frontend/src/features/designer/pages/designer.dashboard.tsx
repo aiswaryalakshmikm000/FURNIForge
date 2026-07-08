@@ -1,9 +1,9 @@
 import { Users, FileText, UserPlus, CalendarCheck, IndianRupee, Target} from "lucide-react";
 
 import { StatCard } from "../../../shared/components/common/stat-card";
-import { TargetProgress } from "../components/dashboard/target-progress";
-import { RecentActivity } from "../components/dashboard/recent-activity";
-import { UpcomingSchedule } from "../components/dashboard/upcoming-schedule";
+import { TargetProgress } from "../../dashboard/components/designer-target-progress";
+import { RecentActivity } from "../../dashboard/components/designer-recent-activity";
+import { UpcomingSchedule } from "../../dashboard/components/designer-upcoming-schedule";
 
 import { PageHeader } from "../../../shared/components/common/page-header";
 import { AnimatedContainer } from "../../../shared/components/common/animated-container";

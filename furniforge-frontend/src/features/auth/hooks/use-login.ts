@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { loginApi } from "../api/login.api";
 import { toast } from "sonner";
-import type { LoginRequestDTO, LoginResponseDTO } from "../../../types/auth/login.type";
+import type { LoginRequestDTO, LoginResponseDTO } from "../types/login.type";
 import type { ApiResponse } from "../../../types/api/api-response.type";
 
 export const useLogin = () => {

@@ -1,4 +1,3 @@
-
 export interface DesignerResponseDTO {
   id: string;
   designerRegNo: string;
@@ -12,7 +11,7 @@ export interface DesignerResponseDTO {
   rating: number;
   projectCount: number;
   totalRevenue: number;
-  isActive: boolean;
   isBlocked: boolean;
+  isVerified: boolean;
   createdAt: Date;
 }

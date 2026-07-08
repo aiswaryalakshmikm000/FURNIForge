@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { DollarSign, Package, UserPlus, CreditCard, AlertTriangle, TrendingUp, Star} from "lucide-react";
 
-import { StatCard } from "../components/dashboard/stat-card";
+import { StatCard } from "../../dashboard/components/admin-stat-card";
 import { SectionCard } from "../../../shared/components/common/section-card";
-import { RevenueChart } from "../components/dashboard/revenue-chart";
-import { BestDesigners } from "../components/dashboard/best-designers";
-import { TopClients } from "../components/dashboard/top-clients";
-import { PendingPayments } from "../components/dashboard/pending-payments";
-import { TargetProgress } from "../components/dashboard/target-progress";
+import { RevenueChart } from "../../dashboard/components/admin-revenue-chart";
+import { BestDesigners } from "../../dashboard/components/admin-best-designers";
+import { TopClients } from "../../dashboard/components/admin-top-clients";
+import { PendingPayments } from "../../dashboard/components/admin-pending-payments";
+import { TargetProgress } from "../../dashboard/components/admin-target-progress";
 import { PageHeader } from "../../../shared/components/common/page-header";
 import { AnimatedContainer } from "../../../shared/components/common/animated-container";
 

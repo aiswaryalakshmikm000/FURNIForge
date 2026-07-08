@@ -3,16 +3,14 @@
 export const SUCCESS_MESSAGES = {
   AUTH: {
     REGISTER_SUCCESS: "Registration successful. Please check your email for verification code",
-
-    VERIFY_EMAIL_SUCCESS: 'Email verified successfully',
-    RESEND_OTP_SUCCESS: 'A new OTP has been sent to your email',
+    VERIFY_EMAIL_SUCCESS: "Email verified successfully",
+    RESEND_OTP_SUCCESS: "A new OTP has been sent to your email",
     OTP_SUCCESS: "OTP sent to email",
     VERIFY_OTP_SUCCESS: "OTP verified successfully",
 
-    
-    LOGOUT_SUCCESS: 'Logged out successfully',
+    LOGOUT_SUCCESS: "Logged out successfully",
     LOGIN_SUCCESS: "Login successful",
-    
+
     TOKEN_REFRESH_SUCCESS: "Access token refreshed successfully",
     ME_FETCH: "User fetched successfully",
     FORGOT_PASSWORD: "If an account with this email exists, a reset OTP has been sent",
@@ -21,19 +19,67 @@ export const SUCCESS_MESSAGES = {
   },
 
   GENERAL: {
-    HEALTH_CHECK: 'Service is healthy',
+    HEALTH_CHECK: "Service is healthy",
   },
 
   ADMIN: {
-    LEADS_FETCH_SUCCESS: "Leads fetched successfully",
-    DESIGNER_ASSIGNED: "Designer assigned successfully",
-    LEAD_CREATED: "Lead created successfully",
-    DESIGNER_FETCH_SUCCESS: "Designers fetched successfully",
+    LEAD: {
+      FETCH_SUCCESS: "Leads fetched successfully",
+      CREATED: "Lead created successfully",
+      UPDATED: "Lead updated successfully",
+      DELETED: "Lead deleted successfully",
+      DESIGNER_ASSIGNED: "Designer assigned successfully",
+    },
+
+    DESIGNER: {
+      FETCH_SUCCESS: "Designers fetched successfully",
+      CREATED: "Designer created successfully",
+      UPDATED: "Designer updated successfully",
+      BLOCK_STATUS_UPDATED: "Designer status updated successfully",
+      DELETED: "Designer deleted successfully",
+    },
+
+    DELIVERABLES: {
+      FETCH_SUCCESS: "Deliverables fetched successfully",
+      CREATED: "Deliverable created successfully",
+      UPDATED: "Deliverable updated successfully",
+      ARCHIVED: "Deliverable archived successfully",
+      DELETED: "Deliverable deleted successfully",
+      STATUS_UPDATED: "Deliverable status updated successfully",
+    },
+
+    TEMPLATES: {
+      FETCH_SUCCESS: "Templates fetched successfully",
+      CREATED: "Template created successfully",
+      UPDATED: "Template updated successfully",
+      DELETED: "Template deleted successfully",
+    },
+
+    TABS: {
+      FETCH_SUCCESS: "Tabs fetched successfully",
+      CREATED: "Tab created successfully",
+      UPDATED: "Tab status updated successfully",
+      DELETED: "Tab deleted successfully",
+    },
+
+    FIELDS: {
+      FETCH_SUCCESS: "Fields fetched successfully",
+      CREATED: "Field created successfully",
+      UPDATED: "Field status updated successfully",
+      DELETED: "Field deleted successfully",
+    },
+
+    REQUIREMENT_FIELDS: {
+      DELIVARABLE_FETCH_SUCCESS: "Requirement fields fetched successfully",
+      TEMPLATES_FETCH_SUCCESS: "Templates fetched successfully",
+      TABS_FETCH_SUCCESS: "Tabs fetched successfully",
+      FIELDS_FETCH_SUCCESS: "Fields fetched successfully",
+    }
   },
 
   USER: {
     EMAIL_VERIFY_SUCCESS: "Email verified successfully",
-  }
+  },
 };
 
 //========================ERROR MESSAGES=============================
@@ -44,34 +90,35 @@ export const ERROR_MESSAGES = {
     FORBIDDEN: "Forbidden",
     INTERNAL_SERVER_ERROR: "Internal server error",
     BAD_REQUEST: "Bad request",
-    VALIDATION_FAILED: 'Validation Failed',
+    VALIDATION_FAILED: "Validation Failed",
     NOT_FOUND: "Resource not found",
     CONFLICT: "Conflict occurred",
     TOO_MANY_REQUESTS: "Too many requests, please try again later",
     UNPROCESSABLE_ENTITY: "Unprocessable entity",
-    EMAIL_SEND_FAILED: 'Failed to send email. Please try again',
+    EMAIL_SEND_FAILED: "Failed to send email. Please try again",
   },
 
   AUTH: {
     INVALID_CREDENTIALS: "Invalid email or password",
     INVALID_EMAIL: "Invalid email address",
-    EMAIL_ALREADY_EXISTS: 'User with this email already exists',
-    EMAIL_REQUIRED: 'Email is required',
+    EMAIL_ALREADY_EXISTS: "User with this email already exists",
+    EMAIL_REQUIRED: "Email is required",
     EMAIL_ALREADY_VERIFIED: "Email already verified",
 
-    PASSWORD_REQUIRED: 'Password is required',
+    PASSWORD_REQUIRED: "Password is required",
     PASSWORD_MIN_LENGTH: "Password must be at least 8 characters",
-    PASSWORD_INVALID: "Password must contain uppercase, lowercase, number and min 8 chars",
+    PASSWORD_INVALID:
+      "Password must contain uppercase, lowercase, number and min 8 chars",
 
     PHONE_ALREADY_EXISTS: "User with this phone already exists",
 
-    INVALID_OTP: 'Invalid OTP',
-    OTP_ALREADY_SENT : "OTP already sent",
+    INVALID_OTP: "Invalid OTP",
+    OTP_ALREADY_SENT: "OTP already sent",
     OTP_NOT_FOUND: "OTP not found or invalid session",
     OTP_EXPIRED: "OTP expired",
-    OTP_MAX_ATTEMPTS: 'Maximum verification attempts exceeded. Please request a new OTP',
+    OTP_MAX_ATTEMPTS: "Maximum verification attempts exceeded. Please request a new OTP",
 
-    PENDING_USER_NOT_FOUND: 'No pending verification found. Please register again', 
+    PENDING_USER_NOT_FOUND: "No pending verification found. Please register again",
 
     SESSION_INVALID: "Session invalid",
     SESSION_CONFLICT: "Session already used or rotated",
@@ -79,9 +126,7 @@ export const ERROR_MESSAGES = {
     SESSION_NOT_FOUND: "Session not found",
 
     INVALID_ROLE: "Invalid role",
-
     USER_INVALID: "User no longer valid",
-
     ACCOUNT_NOT_VERIFIED: "Please verify your account",
 
     OLD_PASSWORD: "Cannot reuse old password",
@@ -99,7 +144,7 @@ export const ERROR_MESSAGES = {
       INVALID_RESET_TOKEN: "Invalid reset token",
       ACCESS_TOKEN_EXPIRED: "Access token expired",
       REFRESH_TOKEN_EXPIRED: "Refresh token expired",
-      RESET_TOKEN_EXPIRED: "Reset token expired"
+      RESET_TOKEN_EXPIRED: "Reset token expired",
     },
   },
 
@@ -107,11 +152,43 @@ export const ERROR_MESSAGES = {
     LEAD_NOT_FOUND: "Lead not found",
     DESIGNER_NOT_FOUND: "Designer not found",
     DESIGNER_REG_NO_MISSING: "Designer registration number is missing",
+    CANNOT_ASSIGN_DESIGNER: "Cannot assign designer to converted and lost customers",
+    DESIGNER_BLOCKED: "Blocked designers cannot be assigned to leads",
+
+    DELIVERABLE: {
+      ALREADY_EXISTS: "Deliverable with this name already exists",
+      NOT_FOUND: "Deliverable not found",
+    },
+
+    TEMPLATE: {
+      DELETED_ALREADY_EXISTS: "An archived template with this name already exists. Please restore it instead.",
+      ALREADY_EXISTS: "Template with this name already exists",
+      NOT_FOUND: "Template not found",
+    },
+
+    TAB: {
+      ALREADY_EXISTS: "Tab with this name already exists",
+      NOT_FOUND: "Tab not found",
+      DISPLAY_ORDER_EXISTS: "Display order already exists",
+    },
+
+    FIELD: {
+      NOT_FOUND: "Field not found",
+      LABEL_ALREADY_EXISTS: "Field label already exists in this tab",
+      FIELD_KEY_ALREADY_EXISTS: "Field key already exists in this tab",
+      OPTIONS_REQUIRED: "Options are required for this field type",
+      OPTIONS_NOT_ALLOWED: "Options are not allowed for this field type",
+      INVALID_DEFAULT_VALUE: "Default value must exist in options",
+    },
   },
 
   USER: {
     NOT_FOUND: "User not found",
     INVALID_ACCOUNT_VERIFY_TOKEN: "Invalid verification link",
-    VERIFY_TOKEN_EXPIRED: "Verify token expired"
+    VERIFY_TOKEN_EXPIRED: "Verify token expired",
+  },
+
+  LEAD: {
+    NOT_FOUND: "Lead not found dsfdsfsdfdsf",
   },
 };

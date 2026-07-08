@@ -8,14 +8,14 @@ export interface IDesignerRepository extends IBaseRepository<User> {
 
   countDesigners(filters?: {
     search?: string;
-    status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
+    status?: "ACTIVE" | "BLOCKED" | "PENDING";
   }): Promise<number>;
 
   findAllDesignerRows(params: {
     skip: number;
     take: number;
     search?: string;
-    status?: "ACTIVE" | "BLOCKED" | "INACTIVE";
+    status?: "ACTIVE" | "BLOCKED" | "PENDING";
     sortBy: "rating" | "projects" | "revenue" | "createdAt";
     sortOrder: "asc" | "desc";
   }): Promise<DesignerListItem[]>;

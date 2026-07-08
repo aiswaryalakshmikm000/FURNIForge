@@ -1,4 +1,6 @@
+import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
 import { LeadStatus, LeadSource, PackageType } from "../enums/Lead";
+import { BadRequestError } from "../errors/AppError";
 import { ILeadPersistence } from "../types/ILeadPersistence";
 
 export class Lead {
@@ -21,7 +23,6 @@ export class Lead {
     private _updatedAt: Date,
   ) {}
 
-  // ✅ For NEW leads
   static create(data: {
     leadRegNo: string;
     name: string;
@@ -44,7 +45,7 @@ export class Lead {
       LeadStatus.UNASSIGNED,
       data.projectsInterestedIn ?? [],
       data.packageType ?? null,
-      data.clientId ?? null, 
+      data.clientId ?? null,
       null, // assignedDesignerId
       null, // assignedAt
       null, // convertedAt
@@ -53,7 +54,7 @@ export class Lead {
     );
   }
 
-   // For DB → ENTITY
+  // For DB → ENTITY
   static fromPersistence(data: ILeadPersistence): Lead {
     return new Lead(
       data.id,
@@ -75,7 +76,27 @@ export class Lead {
     );
   }
 
+  updateDetails(data: {
+    name: string;
+    phone: string;
+    location?: string | null;
+    source: LeadSource;
+    packageType: PackageType | null;
+    projectsInterestedIn: string[];
+  }) {
+    this._name = data.name;
+    this._phone = data.phone;
+    this._location = data.location ?? null;
+    this._source = data.source;
+    this._packageType = data.packageType;
+    this._projectsInterestedIn = data.projectsInterestedIn;
+    this._updatedAt = new Date();
+  }
+
   assignDesigner(designerId: string) {
+    if ( this._status === LeadStatus.CONVERTED || this._status === LeadStatus.LOST ) {
+      throw new BadRequestError(ERROR_MESSAGES.ADMIN.CANNOT_ASSIGN_DESIGNER);
+    }
     this._assignedDesignerId = designerId;
     this._assignedAt = new Date();
     this._status = LeadStatus.ASSIGNED;
@@ -100,20 +121,20 @@ export class Lead {
   }
 
   // GETTERS
-  get id() { return this._id; }
-  get leadRegNo() { return this._leadRegNo; }
-  get name() { return this._name; }
-  get email() { return this._email; }
-  get phone() { return this._phone; }
-  get location() { return this._location; }
-  get source() { return this._source; }
-  get status() { return this._status; }
-  get projectsInterestedIn() { return this._projectsInterestedIn; }
-  get packageType() { return this._packageType; }
-  get clientId() { return this._clientId; }
-  get assignedDesignerId() { return this._assignedDesignerId; }
-  get assignedAt() { return this._assignedAt; }
-  get convertedAt() { return this._convertedAt; }
-  get createdAt() { return this._createdAt; }
-  get updatedAt() { return this._updatedAt; }
+  get id() { return this._id }
+  get leadRegNo() { return this._leadRegNo }
+  get name() { return this._name }
+  get email() { return this._email }
+  get phone() { return this._phone }
+  get location() { return this._location }
+  get source() { return this._source }
+  get status() { return this._status }
+  get projectsInterestedIn() { return this._projectsInterestedIn }
+  get packageType() { return this._packageType }
+  get clientId() { return this._clientId }
+  get assignedDesignerId() { return this._assignedDesignerId }
+  get assignedAt() { return this._assignedAt }
+  get convertedAt() { return this._convertedAt }
+  get createdAt() { return this._createdAt }
+  get updatedAt() { return this._updatedAt }
 }
