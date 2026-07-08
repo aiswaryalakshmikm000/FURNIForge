@@ -27,7 +27,22 @@ export class CreateFieldUseCase implements ICreateFieldUseCase {
       dto.tabId,
       dto.label
     );
-    if (existingLabel) throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.LABEL_ALREADY_EXISTS );
+    if (existingLabel) {
+      if(existingLabel.deletedAt) {
+        existingLabel.restore();
+        existingLabel.update({
+          label: dto.label,
+          fieldKey: generateFieldKey(dto.label),
+          fieldType: dto.fieldType,
+          options: dto.options ?? [],
+          defaultValue: dto.defaultValue ?? null,
+          isRequired: dto.isRequired,
+        })
+        const restored = await this.fieldRepository.update(existingLabel.id, existingLabel);
+        return FieldCommandMapper.toResponse(restored)
+      }
+      throw new BadRequestError(ERROR_MESSAGES.ADMIN.FIELD.LABEL_ALREADY_EXISTS);
+    }
     
     const fieldKey = generateFieldKey(dto.label);
 

@@ -77,6 +77,12 @@ export class Field {
     this._updatedAt = new Date();
   }
 
+  restore() {
+    this._deletedAt = null;
+    this._isActive = true;
+    this._updatedAt = new Date();
+  }
+
   softDelete() {
     this._deletedAt = new Date();
     this._isActive = false;
