@@ -223,6 +223,20 @@ exports.Prisma.RequestFieldValueScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ConfigRateScalarFieldEnum = {
+  id: 'id',
+  category: 'category',
+  itemName: 'itemName',
+  brand: 'brand',
+  rate: 'rate',
+  marginPercent: 'marginPercent',
+  finalRate: 'finalRate',
+  unit: 'unit',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.CounterScalarFieldEnum = {
   id: 'id',
   value: 'value'
@@ -299,6 +313,20 @@ exports.FieldType = exports.$Enums.FieldType = {
   PHONE: 'PHONE'
 };
 
+exports.ConfigCategory = exports.$Enums.ConfigCategory = {
+  FINISH: 'FINISH',
+  MATERIAL: 'MATERIAL',
+  HANDLE: 'HANDLE',
+  HINGE: 'HINGE',
+  ACCESSORY: 'ACCESSORY'
+};
+
+exports.ConfigUnit = exports.$Enums.ConfigUnit = {
+  SQFT: 'SQFT',
+  RUNNING_LENGTH: 'RUNNING_LENGTH',
+  PIECE: 'PIECE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Lead: 'Lead',
@@ -307,6 +335,7 @@ exports.Prisma.ModelName = {
   TemplateTab: 'TemplateTab',
   TemplateField: 'TemplateField',
   RequestFieldValue: 'RequestFieldValue',
+  ConfigRate: 'ConfigRate',
   Counter: 'Counter'
 };
 

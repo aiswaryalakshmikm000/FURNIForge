@@ -76,6 +76,9 @@ import { GetTemplatesByDeliverableUseCase } from "../../application/use-cases/te
 import { GetTabsByTemplateUseCase } from "../../application/use-cases/templateTab/GetTabsByTemplateUseCase";
 import { GetFieldsByTabUseCase } from "../../application/use-cases/field/GetFieldsByTabUseCase";
 import { SoftDeleteTabUseCase } from "../../application/use-cases/templateTab/SoftDeleteTabUseCase";
+import { GetAllConfigRatesUseCase } from "../../application/use-cases/configRate/GetAllConfigRatesUseCase";
+import { ConfigRateController } from "../../presentation/api/v1/controllers/admin/ConfigRateController";
+import { ConfigRateRepository } from "../database/prisma/repositories/ConfigRateRepository";
 
 const container = new Container();
 
@@ -95,6 +98,7 @@ container.bind(TYPES.IDeliverableRepository).to(DeliverableRepository);
 container.bind(TYPES.ITemplateRepository).to(TemplateRepository);
 container.bind(TYPES.ITabRepository).to(TabRepository);
 container.bind(TYPES.IFieldRepository).to(FieldRepository);
+container.bind(TYPES.IConfigRateRepository).to(ConfigRateRepository);
 
 // Services
 container.bind(TYPES.IPasswordService).to(BcryptPasswordService);
@@ -163,6 +167,8 @@ container.bind(TYPES.IGetTemplatesByDeliverableUseCase).to(GetTemplatesByDeliver
 container.bind(TYPES.IGetTabsByTemplateUseCase).to(GetTabsByTemplateUseCase);
 container.bind(TYPES.IGetFieldsByTabUseCase).to(GetFieldsByTabUseCase);
 
+container.bind(TYPES.IGetAllConfigRatesUseCase).to(GetAllConfigRatesUseCase);
+
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);
 container.bind(TYPES.LeadController).to(LeadController);
@@ -172,6 +178,7 @@ container.bind(TYPES.TemplateController).to(TemplateController);
 container.bind(TYPES.TabController).to(TabController);
 container.bind(TYPES.FieldController).to(FieldController);
 container.bind(TYPES.RequirementFieldController).to(RequirementFieldController);
+container.bind(TYPES.ConfigRateController).to(ConfigRateController);
 
 
 export { container };

@@ -12,6 +12,7 @@ export const TYPES = {
   ITemplateRepository: Symbol.for("ITemplateRepository"),
   ITabRepository: Symbol.for("ITabRepository"),
   IFieldRepository: Symbol.for("IFieldRepository"),
+  IConfigRateRepository: Symbol.for("IConfigRateRepository"),
 
   IPasswordService: Symbol.for("IPasswordService"),
   IOtpService: Symbol.for("IOtpService"),
@@ -78,6 +79,8 @@ export const TYPES = {
   IGetTabsByTemplateUseCase: Symbol.for("IGetTabsByTemplateUseCase"),
   IGetFieldsByTabUseCase: Symbol.for("IGetFieldsByTabUseCase"),
 
+  IGetAllConfigRatesUseCase: Symbol.for("IGetAllConfigRatesUseCase"),
+
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),
   DesignerController: Symbol.for("DesignerController"),
@@ -86,4 +89,5 @@ export const TYPES = {
   TabController: Symbol.for("TabController"),
   FieldController: Symbol.for("FieldController"),
   RequirementFieldController: Symbol.for("RequirementFieldController"),
+  ConfigRateController: Symbol.for("ConfigRateController"),
 };

@@ -141,6 +141,25 @@ model RequestFieldValue {
   @@index([fieldId])
 }
 
+model ConfigRate {
+  id            String         @id @default(uuid())
+  category      ConfigCategory
+  itemName      String
+  brand         String
+  rate          Decimal        @db.Decimal(10, 2)
+  marginPercent Decimal        @db.Decimal(5, 2)
+  finalRate     Decimal        @db.Decimal(10, 2)
+  unit          ConfigUnit
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([category])
+  @@index([isActive])
+  @@index([itemName])
+  @@index([brand])
+}
+
 model Counter {
   id    String @id
   value Int
@@ -186,4 +205,18 @@ enum FieldType {
   IMAGE
   EMAIL
   PHONE
+}
+
+enum ConfigCategory {
+  FINISH
+  MATERIAL
+  HANDLE
+  HINGE
+  ACCESSORY
+}
+
+enum ConfigUnit {
+  SQFT
+  RUNNING_LENGTH
+  PIECE
 }

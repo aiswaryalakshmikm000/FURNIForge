@@ -72,6 +72,14 @@ export const API_ENDPOINTS = {
       CREATE: "/admin/fields",
       UPDATE: (id: string) => `/admin/fields/${id}`,
       SOFT_DELETE: (id: string) => `/admin/fields/${id}/soft-delete`,
+    },
+
+    CONFIG_RATES: {
+      GET_ALL_CONFIG_RATES: "/admin/config-rates",
+      CREATE: "/admin/config-rates",
+      UPDATE: (id: string) => `/admin/config-rates/${id}`,
+      SOFT_DELETE: (id: string) => `/admin/config-rates/${id}/soft-delete`,
+      TOGGLE_STATUS: (id: string) => `/admin/config-rates/${id}/status`,
     }
     
   },

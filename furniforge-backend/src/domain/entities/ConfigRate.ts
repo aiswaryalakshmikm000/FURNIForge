@@ -1,0 +1,75 @@
+import { ConfigCategory, ConfigUnit } from "../enums/Config";
+import { IConfigRatePersistence } from "../types/IConfigRatePersistence";
+
+export class ConfigRate {
+  private constructor(
+    private _id: string,
+    private _category: ConfigCategory,
+    private _itemName: string,
+    private _brand: string,
+    private _rate: number,
+    private _marginPercent: number,
+    private _finalRate: number,
+    private _unit: ConfigUnit,
+    private _isActive: boolean,
+    private _createdAt: Date,
+    private _updatedAt: Date,
+  ) {}
+
+  static create(data: {
+    category: ConfigCategory,
+    itemName: string,
+    brand: string,
+    rate:  number,
+    marginPercent: number,
+    finalRate: number,
+    unit: ConfigUnit,
+  }): ConfigRate{
+    return new ConfigRate(
+        crypto.randomUUID(),
+        data.category,
+        data.itemName,
+        data.brand,
+        data.rate,
+        data.marginPercent,
+        data.finalRate,
+        data.unit,
+        true,
+        new Date(),
+        new Date(),
+    )
+  }
+  
+  static fromPersistence(data: IConfigRatePersistence): ConfigRate{
+    return new ConfigRate(
+      data.id,
+      data.category,
+      data.itemName,
+      data.brand,
+      Number(data.rate),
+      Number(data.marginPercent),
+      Number(data.finalRate),
+      data.unit,
+      data.isActive,
+      data.createdAt,
+      data.updatedAt,
+    );
+  }
+
+  toggleStatus() {
+    this._isActive = !this._isActive;
+    this._updatedAt = new Date();
+  }
+
+  get id() { return this._id}
+  get category() { return this._category}
+  get itemName() { return this._itemName}
+  get brand() { return this._brand}
+  get rate() { return this._rate}
+  get marginPercent() { return this._marginPercent}
+  get finalRate() { return this._finalRate}
+  get unit() { return this._unit}
+  get isActive() { return this._isActive}
+  get createdAt() { return this._createdAt}
+  get updatedAt() { return this._updatedAt}
+}
