@@ -79,6 +79,7 @@ import { SoftDeleteTabUseCase } from "../../application/use-cases/templateTab/So
 import { GetAllConfigRatesUseCase } from "../../application/use-cases/configRate/GetAllConfigRatesUseCase";
 import { ConfigRateController } from "../../presentation/api/v1/controllers/admin/ConfigRateController";
 import { ConfigRateRepository } from "../database/prisma/repositories/ConfigRateRepository";
+import { CreateConfigRateUseCase } from "../../application/use-cases/configRate/CreateConfigRateUseCase";
 
 const container = new Container();
 
@@ -168,6 +169,7 @@ container.bind(TYPES.IGetTabsByTemplateUseCase).to(GetTabsByTemplateUseCase);
 container.bind(TYPES.IGetFieldsByTabUseCase).to(GetFieldsByTabUseCase);
 
 container.bind(TYPES.IGetAllConfigRatesUseCase).to(GetAllConfigRatesUseCase);
+container.bind(TYPES.ICreateConfigRateUseCase).to(CreateConfigRateUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

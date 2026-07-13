@@ -5,7 +5,7 @@ import { BaseRepository } from "./BaseRepository";
 import { handlePrismaError } from "../errors/handlePrismaError";
 import { Deliverable } from "../../../../domain/entities/Deliverable";
 import { IDeliverableRepository } from "../../../../domain/repositories/IDeliverableRepository";
-import { DeliverableListItem } from "../../../../domain/read-models/deliverable/DeliverableMapper";
+import { DeliverableListItem } from "../../../../domain/read-models/deliverable/DeliverableListItem";
 import { PrismaDeliverableMapper } from "../mapper/PrismaDeliverableMapper";
 import { RequirementFieldDeliverableListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldDeliverableListItem";
 

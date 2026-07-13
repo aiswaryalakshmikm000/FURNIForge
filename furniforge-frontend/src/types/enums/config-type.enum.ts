@@ -1,8 +1,13 @@
-export type ConfigCategory =
-  | "FINISH"
-  | "MATERIAL"
-  | "HANDLE"
-  | "HINGE"
-  | "ACCESSORY";
+export enum ConfigCategory {
+  "FINISH" = "FINISH",
+  "MATERIAL" = "MATERIAL",
+  "HANDLE" = "HANDLE",
+  "HINGE" =  "HINGE",
+  "ACCESSORY" = "ACCESSORY",
+}
 
-export type ConfigUnit = "SQFT" | "RUNNING_LENGTH" | "PIECE";
+export enum ConfigUnit {
+  "SQFT" = "SQFT" ,
+  "RUNNING_LENGTH" = "RUNNING_LENGTH",
+   "PIECE" = "PIECE"
+}

@@ -1,8 +1,8 @@
-import type { ConfigRate } from "../../../domain/entities/ConfigRate";
+import { ConfigRateListItem } from "../../../domain/read-models/configRates/ConfigRateListItem";
 import type { ConfigRateResponseDTO } from "../../dtos/configRates/ConfigRateResponseDTO";
 
 export class ConfigRateMapper {
-  static toResponse(rate: ConfigRate): ConfigRateResponseDTO {
+  static toResponse(rate: ConfigRateListItem): ConfigRateResponseDTO {
     return {
       id: rate.id,
       category: rate.category,

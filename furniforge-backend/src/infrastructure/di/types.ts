@@ -80,6 +80,7 @@ export const TYPES = {
   IGetFieldsByTabUseCase: Symbol.for("IGetFieldsByTabUseCase"),
 
   IGetAllConfigRatesUseCase: Symbol.for("IGetAllConfigRatesUseCase"),
+  ICreateConfigRateUseCase: Symbol.for("ICreateConfigRateUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

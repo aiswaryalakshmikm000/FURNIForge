@@ -22,9 +22,10 @@ export class ConfigRate {
     brand: string,
     rate:  number,
     marginPercent: number,
-    finalRate: number,
     unit: ConfigUnit,
   }): ConfigRate{
+    const finalRate = Number(( data.rate + (data.rate * data.marginPercent) / 100).toFixed(2));
+
     return new ConfigRate(
         crypto.randomUUID(),
         data.category,
@@ -32,7 +33,7 @@ export class ConfigRate {
         data.brand,
         data.rate,
         data.marginPercent,
-        data.finalRate,
+        finalRate,
         data.unit,
         true,
         new Date(),

@@ -1,5 +1,5 @@
 import { Deliverable } from "../entities/Deliverable";
-import { DeliverableListItem } from "../read-models/deliverable/DeliverableMapper";
+import { DeliverableListItem } from "../read-models/deliverable/DeliverableListItem";
 import { RequirementFieldDeliverableListItem } from "../read-models/requirementFields/RequirementFieldDeliverableListItem";
 import { IBaseRepository } from "./IBaseRepository";
 

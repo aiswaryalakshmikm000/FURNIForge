@@ -1,483 +1,95 @@
-import { Pencil, Check, X, Trash2 } from "lucide-react";
-import { useState } from "react";
-import { StatusToggle } from "../../../shared/components/ui/statusToggle";
 import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
+import type { ConfigCategory } from "../../../types/enums/config-type.enum";
+import type { ConfigRateFormValues } from "../validation/config-rate-form.validation";
+import { ConfigRateInlineForm } from "./ConfigRateInlineForm";
 
 interface Props {
+  category: ConfigCategory;
   rates: ConfigRateResponseDTO[];
-
-  onEdit: (rate: ConfigRateResponseDTO) => void;
-
-  onToggleStatus: (rate: ConfigRateResponseDTO) => void;
-
+  onCreate: (
+    category: ConfigCategory,
+    values: ConfigRateFormValues,
+  ) => Promise<void>;
   addMode: boolean;
-
   setAddMode: (value: boolean) => void;
+  isCreating: boolean;
 }
 
-export const ConfigRateTable = ({
+const headerCls = "text-[10px] text-muted-foreground font-sans uppercase tracking-wider";
+
+export function ConfigRateTable({
+  category,
   rates,
-  onEdit,
-  onToggleStatus,
+  onCreate,
   addMode,
   setAddMode,
-}: Props) => {
-  const [editId, setEditId] = useState<string | null>(null);
-
-  const [draft, setDraft] = useState<ConfigRateResponseDTO | null>(null);
-
-  const startEdit = (rate: ConfigRateResponseDTO) => {
-    setEditId(rate.id);
-
-    setDraft({ ...rate });
-  };
-
-  const cancelEdit = () => {
-    setEditId(null);
-
-    setDraft(null);
-  };
-
-  const saveEdit = () => {
-    if (!draft) return;
-
-    onEdit(draft);
-
-    setEditId(null);
-
-    setDraft(null);
-  };
-
+  isCreating,
+}: Props) {
   return (
-    <div className="bg-card">
-      {/* HEADER */}
-
-      <div
-        className="
-grid
-grid-cols-[2fr_1.3fr_110px_90px_100px_120px_60px_70px]
-gap-4
-items-center
-border-b
-border-border
-px-6
-py-4
-text-[11px]
-uppercase
-tracking-wider
-text-muted-foreground
-font-sans
-"
-      >
-        <span>Item</span>
-
-        <span>Brand</span>
-
-        <span className="text-right">Rate</span>
-
-        <span className="text-right">Margin</span>
-
-        <span>Unit</span>
-
-        <span className="text-right">Final</span>
+    <div className="space-y-2">
+      {/* Header */}
+      <div className="flex items-center gap-2 pb-2 border-b border-border">
+        <span className={`flex-1 ${headerCls}`}>Item</span>
+        <span className={`w-24 ${headerCls}`}>Brand</span>
+        <span className={`w-20 text-right ${headerCls}`}>Rate</span>
+        <span className={`w-16 text-right ${headerCls}`}>Margin</span>
+        <span className={`w-24 ${headerCls}`}>Unit</span>
+        <span className={`w-20 text-right ${headerCls}`}>Final</span>
+        <span className="w-20" />
       </div>
-
-      {/* EMPTY STATE */}
-
-      {rates.length === 0 && !addMode && (
-        <div
-          className="
-flex
-items-center
-justify-center
-h-40
-text-sm
-text-muted-foreground
-font-sans
-"
-        >
-          No configuration rates available.
-        </div>
-      )}
-
-      {/* DATA ROWS */}
 
       {rates.map((rate) => (
         <div
           key={rate.id}
-          className="
-grid
-grid-cols-[2fr_1.3fr_110px_90px_100px_120px_60px_70px]
-gap-4
-items-center
-px-6
-py-
-border-b
-border-border
-transition-colors
-hover:bg-muted/20
-"
-        >
-          {editId === rate.id && draft ? (
-            <>
-              <input
-                className="
-w-full
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-bg-background
-text-sm
-"
-                value={draft.itemName}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    itemName: e.target.value,
-                  })
-                }
-              />
+          className={`flex items-center gap-2 py-2 ${!rate.isActive ? "opacity-50" : ""}`} >
+          <div className="flex-1">
+            <p className="text-sm font-medium ">
+              {rate.itemName}
+            </p>
+          </div>
 
-              <input
-                className="
-w-full
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-bg-background
-text-sm
-"
-                value={draft.brand}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    brand: e.target.value,
-                  })
-                }
-              />
+          <span className="w-24 text-sm text-muted-foreground">
+            {rate.brand}
+          </span>
 
-              <input
-                type="number"
-                className="
-w-full
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-bg-background
-text-sm
-text-right
-"
-                value={draft.rate}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    rate: Number(e.target.value),
-                  })
-                }
-              />
+          <span className="w-20 text-right text-sm">₹{rate.rate}</span>
 
-              <input
-                type="number"
-                className="
-w-full
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-bg-background
-text-sm
-text-right
-"
-                value={draft.marginPercent}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    marginPercent: Number(e.target.value),
-                  })
-                }
-              />
+          <span className="w-16 text-right text-sm text-muted-foreground">
+            {rate.marginPercent}%
+          </span>
 
-              <span className="text-sm">{draft.unit}</span>
+          <span className="w-24 text-xs text-muted-foreground">
+            {rate.unit}
+          </span>
 
-              <span
-                className="
-font-bold
-text-accent
-text-right
-"
-              >
-                ₹
-                {Math.round(
-                  draft.rate + (draft.rate * draft.marginPercent) / 100,
-                )}
-              </span>
+          <span className="w-20 text-right text-sm font-bold text-accent">
+            ₹{rate.finalRate}
+          </span>
 
-              <div />
-
-              <div
-                className="
-flex
-justify-center
-gap-2
-"
-              >
-                <button
-                  onClick={saveEdit}
-                  className="
-p-1.5
-rounded-lg
-text-accent
-hover:bg-muted
-"
-                >
-                  <Check size={15} />
-                </button>
-
-                <button
-                  onClick={cancelEdit}
-                  className="
-p-1.5
-rounded-lg
-hover:bg-muted
-"
-                >
-                  <X size={15} />
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <p
-                className="
-font-medium
-text-foreground
-font-sans
-truncate
-"
-              >
-                {rate.itemName}
-              </p>
-
-              <p
-                className="
-text-sm
-text-muted-foreground
-truncate
-"
-              >
-                {rate.brand}
-              </p>
-
-              <p
-                className="
-text-sm
-text-right
-"
-              >
-                ₹{rate.rate}
-              </p>
-
-              <p
-                className="
-text-sm
-text-right
-text-muted-foreground
-"
-              >
-                {rate.marginPercent}%
-              </p>
-
-              <p
-                className="
-text-sm
-text-muted-foreground
-"
-              >
-                {rate.unit}
-              </p>
-
-              <p
-                className="
-font-bold
-text-accent
-text-right
-"
-              >
-                ₹{rate.finalRate}
-              </p>
-
-              <div
-                className="
-flex
-justify-center
-"
-              >
-                <StatusToggle
-                  isActive={rate.isActive}
-                  onClick={() => onToggleStatus(rate)}
-                />
-              </div>
-
-              <div
-                className="
-flex
-justify-center
-gap-1
-"
-              >
-                <button
-                  onClick={() => startEdit(rate)}
-                  className="
-p-2
-rounded-lg
-text-muted-foreground
-hover:bg-muted
-hover:text-accent
-"
-                >
-                  <Pencil size={15} />
-                </button>
-
-                <button
-                  className="
-p-2
-rounded-lg
-text-muted-foreground
-hover:bg-muted
-hover:text-destructive
-"
-                >
-                  <Trash2 size={15} />
-                </button>
-              </div>
-            </>
-          )}
+          <div className="w-20" />
         </div>
       ))}
 
-      {/* INLINE ADD */}
+      {/* Inline Add */}
 
       {addMode && (
-        <div
-          className="
-grid
-grid-cols-[2fr_1.3fr_110px_90px_100px_120px_60px_70px]
-gap-4
-items-center
-border-t
-border-border
-px-6
-py-5
-"
-        >
-          <input
-            placeholder="Item name"
-            className="
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-text-sm
-"
+        <div className="flex items-center gap-2 pt-3 border-t border-border ">
+          <ConfigRateInlineForm
+            isLoading={isCreating}
+            onSubmit={async (values) => {
+              await onCreate(category, values);
+              setAddMode(false);
+            }}
+            onCancel={() => setAddMode(false)}
           />
+        </div>
+      )}
 
-          <input
-            placeholder="Brand"
-            className="
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-text-sm
-"
-          />
-
-          <input
-            placeholder="Rate"
-            type="number"
-            className="
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-text-sm
-text-right
-"
-          />
-
-          <input
-            placeholder="Margin"
-            type="number"
-            className="
-px-2.5
-py-2
-rounded-lg
-border
-border-border
-text-sm
-text-right
-"
-          />
-
-          <span className="text-sm">sq.ft</span>
-
-          <span
-            className="
-font-bold
-text-accent
-text-right
-"
-          >
-            ₹0
-          </span>
-
-          <div />
-
-          <div
-            className="
-flex
-justify-center
-gap-2
-"
-          >
-            <button
-              className="
-p-1.5
-rounded-lg
-text-accent
-hover:bg-muted
-"
-              onClick={() => {
-                console.log("Create API later");
-                setAddMode(false);
-              }}
-            >
-              <Check size={15} />
-            </button>
-
-            <button
-              className="
-p-1.5
-rounded-lg
-hover:bg-muted
-"
-              onClick={() => setAddMode(false)}
-            >
-              <X size={15} />
-            </button>
-          </div>
+      {rates.length === 0 && !addMode && (
+        <div className="h-32 flex items-center justify-center text-sm text-muted-foreground ">
+          No configuration rates available.
         </div>
       )}
     </div>
   );
-};
+}

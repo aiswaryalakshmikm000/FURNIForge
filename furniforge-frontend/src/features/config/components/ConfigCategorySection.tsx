@@ -1,48 +1,63 @@
 import { Plus } from "lucide-react";
-import { Button } from "../../../shared/components/ui/button";
-import { ConfigRateTable } from "./ConfigRateTable";
-import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
 import { useState } from "react";
+
+import { Button } from "../../../shared/components/ui/button";
+
+import { ConfigRateTable } from "./ConfigRateTable";
+
+import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
+import type { ConfigCategory } from "../../../types/enums/config-type.enum";
+import type { ConfigRateFormValues } from "../validation/config-rate-form.validation";
 
 interface Props {
   title: string;
+
+  category: ConfigCategory;
+
   rates: ConfigRateResponseDTO[];
-  onEdit: (rate: ConfigRateResponseDTO) => void;
-  onToggleStatus: (rate: ConfigRateResponseDTO) => void;
+
+  onCreate: (
+    category: ConfigCategory,
+    values: ConfigRateFormValues,
+  ) => Promise<void>;
+
+  isCreating: boolean;
 }
 
-export const ConfigCategorySection = ({
+export function ConfigCategorySection({
   title,
+  category,
   rates,
-  onEdit,
-  onToggleStatus,
-}: Props) => {
+  onCreate,
+  isCreating,
+}: Props) {
   const [addMode, setAddMode] = useState(false);
 
   return (
     <section
       className="
-      bg-card 
-      rounded-2xl
-      border
-      border-border
-      shadow-warm
-      p-6
-      "
+bg-card
+rounded-2xl
+p-6
+shadow-warm
+border
+border-border
+"
     >
       <div
         className="
-        flex
-        justify-between
-        items-center
-        "
+flex
+items-center
+justify-between
+mb-5
+"
       >
         <h2
           className="
-          text-lg
-          font-display
-          font-bold
-          "
+text-lg
+font-bold
+font-display
+"
         >
           {title}
         </h2>
@@ -50,21 +65,22 @@ export const ConfigCategorySection = ({
         <Button
           variant="outline"
           size="sm"
-          className="gap-1"
+          className="gap-1 h-8 text-xs"
           onClick={() => setAddMode(true)}
         >
-          <Plus size={14} />
+          <Plus size={12} />
           Add
         </Button>
       </div>
 
       <ConfigRateTable
+        category={category}
         rates={rates}
         addMode={addMode}
         setAddMode={setAddMode}
-        onEdit={onEdit}
-        onToggleStatus={onToggleStatus}
+        onCreate={onCreate}
+        isCreating={isCreating}
       />
     </section>
   );
-};
+}

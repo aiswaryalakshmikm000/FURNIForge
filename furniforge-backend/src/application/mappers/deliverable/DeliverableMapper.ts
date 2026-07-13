@@ -1,4 +1,4 @@
-import { DeliverableListItem } from "../../../domain/read-models/deliverable/DeliverableMapper";
+import { DeliverableListItem } from "../../../domain/read-models/deliverable/DeliverableListItem";
 import type { DeliverableResponseDTO } from "../../dtos/deliverables/DeliverableResponseDTO";
 
 export class DeliverableMapper {

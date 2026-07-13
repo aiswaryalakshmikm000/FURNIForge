@@ -77,7 +77,10 @@ export const SUCCESS_MESSAGES = {
     },
 
     CONFIGRATES: {
-      FETCH_SUCCESS: "Config rates fetched successfully" 
+      FETCH_SUCCESS: "Configuration rates fetched successfully",
+      CREATED: "Configuration rate created successfully",
+      UPDATED: "Configuration rate updated successfully",
+      STATUS_UPDATED: "Configuration rate status updated successfully",
     }
   },
 
@@ -111,8 +114,7 @@ export const ERROR_MESSAGES = {
 
     PASSWORD_REQUIRED: "Password is required",
     PASSWORD_MIN_LENGTH: "Password must be at least 8 characters",
-    PASSWORD_INVALID:
-      "Password must contain uppercase, lowercase, number and min 8 chars",
+    PASSWORD_INVALID: "Password must contain uppercase, lowercase, number and min 8 chars",
 
     PHONE_ALREADY_EXISTS: "User with this phone already exists",
 
@@ -183,6 +185,11 @@ export const ERROR_MESSAGES = {
       OPTIONS_REQUIRED: "Options are required for this field type",
       OPTIONS_NOT_ALLOWED: "Options are not allowed for this field type",
       INVALID_DEFAULT_VALUE: "Default value must exist in options",
+    },
+
+    CONFIG_RATE: {
+      ALREADY_EXISTS: "Configuration item already exists in this category.",
+      NOT_FOUND: "Configuration rate not found",
     },
   },
 

@@ -1,8 +1,11 @@
-// import type { ConfigRateFormValues } from "../validation/ConfigRate-form.validation";
+import type { ConfigCategory } from "../../../types/enums/config-type.enum";
+import type { ConfigRateFormValues } from "../validation/config-rate-form.validation";
 
-// export type ConfigRateCommandDTO = ConfigRateFormValues;
+export interface ConfigRateCommandDTO extends ConfigRateFormValues {
+    category: ConfigCategory;
+}
 
 
-// export interface ConfigRateCommandResponseDTO {
-//   id: string;
-// }
+export interface ConfigRateCommandResponseDTO {
+  id: string;
+}

@@ -3,6 +3,7 @@ import { ConfigRate } from "../../../../domain/entities/ConfigRate";
 import { ConfigCategory, ConfigUnit } from "../../../../domain/enums/Config";
 
 export class PrismaConfigRateMapper {
+
   static toDomain(raw: PrismaConfigRate): ConfigRate {
     return ConfigRate.fromPersistence({
       id: raw.id,
@@ -19,7 +20,7 @@ export class PrismaConfigRateMapper {
     });
   }
 
-  static toCreatePersistence(entity: ConfigRate): Prisma.ConfigRateCreateInput {
+  static toCreatePersistence( entity: ConfigRate ): Prisma.ConfigRateCreateInput {
     return {
       id: entity.id,
       category: entity.category,
@@ -33,7 +34,7 @@ export class PrismaConfigRateMapper {
     };
   }
 
-  static toUpdatePersistence(entity: ConfigRate): Prisma.ConfigRateUpdateInput {
+  static toUpdatePersistence( entity: ConfigRate ): Prisma.ConfigRateUpdateInput {
     return {
       category: entity.category,
       itemName: entity.itemName,
@@ -45,4 +46,5 @@ export class PrismaConfigRateMapper {
       isActive: entity.isActive,
     };
   }
+
 }
