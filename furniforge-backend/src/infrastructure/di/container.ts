@@ -80,6 +80,7 @@ import { GetAllConfigRatesUseCase } from "../../application/use-cases/configRate
 import { ConfigRateController } from "../../presentation/api/v1/controllers/admin/ConfigRateController";
 import { ConfigRateRepository } from "../database/prisma/repositories/ConfigRateRepository";
 import { CreateConfigRateUseCase } from "../../application/use-cases/configRate/CreateConfigRateUseCase";
+import { UpdateConfigRateUseCase } from "../../application/use-cases/configRate/UpdateConfigRateUseCase";
 
 const container = new Container();
 
@@ -170,6 +171,7 @@ container.bind(TYPES.IGetFieldsByTabUseCase).to(GetFieldsByTabUseCase);
 
 container.bind(TYPES.IGetAllConfigRatesUseCase).to(GetAllConfigRatesUseCase);
 container.bind(TYPES.ICreateConfigRateUseCase).to(CreateConfigRateUseCase);
+container.bind(TYPES.IUpdateConfigRateUseCase).to(UpdateConfigRateUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

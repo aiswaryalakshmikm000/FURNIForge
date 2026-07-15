@@ -1,92 +1,144 @@
-import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
 import type { ConfigCategory } from "../../../types/enums/config-type.enum";
+import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
 import type { ConfigRateFormValues } from "../validation/config-rate-form.validation";
+
 import { ConfigRateInlineForm } from "./ConfigRateInlineForm";
+import { ConfigRateRow } from "./ConfigRateRow";
 
 interface Props {
   category: ConfigCategory;
   rates: ConfigRateResponseDTO[];
-  onCreate: (
-    category: ConfigCategory,
-    values: ConfigRateFormValues,
-  ) => Promise<void>;
   addMode: boolean;
   setAddMode: (value: boolean) => void;
+  editingConfigRate: ConfigRateResponseDTO | null;
+  setEditingConfigRate: (
+    value: ConfigRateResponseDTO | null
+  ) => void;
+  onCreate: (
+    category: ConfigCategory,
+    values: ConfigRateFormValues
+  ) => Promise<void>;
+  onUpdate: (
+    id: string,
+    values: ConfigRateFormValues
+  ) => Promise<void>;
+  // onToggle:(id:string)=>Promise<void>;
+  // onDelete:(id:string)=>Promise<void>;
   isCreating: boolean;
+  isUpdating: boolean;
 }
 
-const headerCls = "text-[10px] text-muted-foreground font-sans uppercase tracking-wider";
+const headerCls =
+  "text-[10px] uppercase tracking-wider text-muted-foreground font-sans";
 
 export function ConfigRateTable({
   category,
   rates,
-  onCreate,
   addMode,
   setAddMode,
+  editingConfigRate,
+  setEditingConfigRate,
+  onCreate,
+  onUpdate,
+  // onToggle,
+  // onDelete,
   isCreating,
+  isUpdating,
 }: Props) {
   return (
-    <div className="space-y-2">
+    <div className="w-full min-w-0 space-y-2">
       {/* Header */}
-      <div className="flex items-center gap-2 pb-2 border-b border-border">
-        <span className={`flex-1 ${headerCls}`}>Item</span>
-        <span className={`w-24 ${headerCls}`}>Brand</span>
-        <span className={`w-20 text-right ${headerCls}`}>Rate</span>
-        <span className={`w-16 text-right ${headerCls}`}>Margin</span>
-        <span className={`w-24 ${headerCls}`}>Unit</span>
-        <span className={`w-20 text-right ${headerCls}`}>Final</span>
-        <span className="w-20" />
+
+      <div className="flex min-w-0 items-center gap-2 border-b border-border pb-2">
+        <span className={`flex-1 min-w-0 ${headerCls}`}>
+          Item
+        </span>
+
+        <span className={`w-24 shrink-0 ${headerCls}`}>
+          Brand
+        </span>
+
+        <span className={`w-20 shrink-0 text-right ${headerCls}`}>
+          Rate
+        </span>
+
+        <span className={`w-16 shrink-0 text-right ${headerCls}`}>
+          Margin
+        </span>
+
+        <span className={`w-24 shrink-0 ${headerCls}`}>
+          Unit
+        </span>
+
+        <span className={`w-20 shrink-0 text-right ${headerCls}`}>
+          Final
+        </span>
+
+        <span className={`w-20 shrink-0 text-right ${headerCls}`}>
+          Actions
+        </span>
       </div>
 
-      {rates.map((rate) => (
-        <div
-          key={rate.id}
-          className={`flex items-center gap-2 py-2 ${!rate.isActive ? "opacity-50" : ""}`} >
-          <div className="flex-1">
-            <p className="text-sm font-medium ">
-              {rate.itemName}
-            </p>
-          </div>
+      {/* Rows */}
 
-          <span className="w-24 text-sm text-muted-foreground">
-            {rate.brand}
-          </span>
+      {rates.map((rate) => {
+        const isEditing =
+          editingConfigRate?.id === rate.id;
 
-          <span className="w-20 text-right text-sm">₹{rate.rate}</span>
+        if (isEditing) {
+          return (
+            <ConfigRateInlineForm
+              key={rate.id}
+              defaultValues={{
+                itemName: rate.itemName,
+                brand: rate.brand,
+                rate: Number(rate.rate),
+                marginPercent: Number(rate.marginPercent),
+                unit: rate.unit,
+              }}
+              isLoading={isUpdating}
+              onSubmit={async (values) => {
+                await onUpdate(rate.id, values);
+              }}
+              onCancel={() =>
+                setEditingConfigRate(null)
+              }
+            />
+          );
+        }
 
-          <span className="w-16 text-right text-sm text-muted-foreground">
-            {rate.marginPercent}%
-          </span>
+        return (
+          <ConfigRateRow
+            key={rate.id}
+            rate={rate}
+            onEdit={() => {
+              setAddMode(false);
+              setEditingConfigRate(rate);
+            }}
+            // onToggle={() => onToggle(rate.id)}
+            // onDelete={() => onDelete(rate.id)}
+          />
+        );
+      })}
 
-          <span className="w-24 text-xs text-muted-foreground">
-            {rate.unit}
-          </span>
-
-          <span className="w-20 text-right text-sm font-bold text-accent">
-            ₹{rate.finalRate}
-          </span>
-
-          <div className="w-20" />
-        </div>
-      ))}
-
-      {/* Inline Add */}
+      {/* Add */}
 
       {addMode && (
-        <div className="flex items-center gap-2 pt-3 border-t border-border ">
+        <div className="border-t border-border pt-3">
           <ConfigRateInlineForm
             isLoading={isCreating}
             onSubmit={async (values) => {
               await onCreate(category, values);
-              setAddMode(false);
             }}
             onCancel={() => setAddMode(false)}
           />
         </div>
       )}
 
+      {/* Empty */}
+
       {rates.length === 0 && !addMode && (
-        <div className="h-32 flex items-center justify-center text-sm text-muted-foreground ">
+        <div className="flex h-28 items-center justify-center text-sm text-muted-foreground">
           No configuration rates available.
         </div>
       )}

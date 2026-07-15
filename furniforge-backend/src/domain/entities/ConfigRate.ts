@@ -40,6 +40,22 @@ export class ConfigRate {
         new Date(),
     )
   }
+
+  update(data:{
+    itemName:string;
+    brand:string;
+    rate:number;
+    marginPercent:number;
+    unit:ConfigUnit;
+  }){
+    this._itemName = data.itemName;
+    this._brand = data.brand;
+    this._rate = data.rate;
+    this._marginPercent = data.marginPercent;
+    this._finalRate = Number(( data.rate + (data.rate * data.marginPercent) / 100 ).toFixed(2));
+    this._unit = data.unit;
+    this._updatedAt = new Date();
+  }
   
   static fromPersistence(data: IConfigRatePersistence): ConfigRate{
     return new ConfigRate(

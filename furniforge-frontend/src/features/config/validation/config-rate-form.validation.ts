@@ -14,10 +14,10 @@ export const configRateFormSchema = z.object({
     .min(2, "Brand must be at least 2 characters")
     .max(100, "Brand cannot exceed 100 characters"),
 
-  rate: z.number().positive("Rate must be greater than 0"),
+  rate: z.number({message: "Rate is required"}).positive("Rate must be greater than 0"),
 
   marginPercent: z
-    .number()
+    .number({message: "Margin percentage is required"})
     .min(0, "Minimum margin is 0%")
     .max(100, "Maximum margin is 100%"),
 

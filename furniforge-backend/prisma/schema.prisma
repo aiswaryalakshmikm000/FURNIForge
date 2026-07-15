@@ -148,10 +148,9 @@ model ConfigRate {
   isActive        Boolean          @default(true)
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
+  @@unique([category, itemName, brand])
   @@index([category])
   @@index([isActive])
-  @@index([itemName])
-  @@index([brand])
 }
 
 model Counter {

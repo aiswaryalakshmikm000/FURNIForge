@@ -8,7 +8,7 @@ export interface IConfigRateRepository extends IBaseRepository<ConfigRate>{
     search?: string;
   }): Promise<ConfigRateListItem[]>;
 
-  // save(configRate: ConfigRate): Promise<void>;
+  findByItemNameAndBrand( itemName: string, brand: string, category: ConfigCategory ): Promise<ConfigRate | null>;
 
-  findByItemName( itemName: string, category: ConfigCategory ): Promise<ConfigRate | null>;
+  findDuplicate( id: string, itemName: string, brand: string, category: ConfigCategory): Promise<ConfigRate | null>;
 }

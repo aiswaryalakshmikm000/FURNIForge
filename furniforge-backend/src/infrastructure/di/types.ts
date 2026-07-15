@@ -81,6 +81,7 @@ export const TYPES = {
 
   IGetAllConfigRatesUseCase: Symbol.for("IGetAllConfigRatesUseCase"),
   ICreateConfigRateUseCase: Symbol.for("ICreateConfigRateUseCase"),
+  IUpdateConfigRateUseCase: Symbol.for("IUpdateConfigRateUseCase"),
 
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),

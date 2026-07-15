@@ -3,7 +3,7 @@ import { TYPES } from "../../../infrastructure/di/types";
 import type { ICreateConfigRateUseCase } from "./interfaces/ICreateConfigRateUseCase";
 import type { IConfigRateRepository } from "../../../domain/repositories/IConfigRateRepository";
 import { ConfigRate } from "../../../domain/entities/ConfigRate";
-import type { ConfigRateFormDTO } from "../../dtos/configRates/ConfigRateFormDTO";
+import type { CreateConfigRateDTO } from "../../dtos/configRates/CreateConfigRateDTO";
 import type { ConfigRateCommandResponseDTO } from "../../dtos/configRates/ConfigRateCommandDTO";
 import { ConflictError } from "../../../domain/errors/AppError";
 import { ConfigRateCommandMapper } from "../../mappers/configRateMapper/configRateCommandMapper";
@@ -15,8 +15,8 @@ export class CreateConfigRateUseCase implements ICreateConfigRateUseCase {
     @inject(TYPES.IConfigRateRepository) private readonly _configRateRepository: IConfigRateRepository,
   ) {}
 
-  async execute(dto: ConfigRateFormDTO): Promise<ConfigRateCommandResponseDTO> {
-    const existing = await this._configRateRepository.findByItemName( dto.itemName, dto.category);
+  async execute(dto: CreateConfigRateDTO): Promise<ConfigRateCommandResponseDTO> {
+    const existing = await this._configRateRepository.findByItemNameAndBrand( dto.itemName, dto.brand, dto.category);
 
     if (existing) throw new ConflictError(ERROR_MESSAGES.ADMIN.CONFIG_RATE.ALREADY_EXISTS);
 

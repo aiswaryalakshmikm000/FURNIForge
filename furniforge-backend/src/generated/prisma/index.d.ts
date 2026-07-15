@@ -13409,6 +13409,7 @@ export namespace Prisma {
 
   export type ConfigRateWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    category_itemName_brand?: ConfigRateCategoryItemNameBrandCompoundUniqueInput
     AND?: ConfigRateWhereInput | ConfigRateWhereInput[]
     OR?: ConfigRateWhereInput[]
     NOT?: ConfigRateWhereInput | ConfigRateWhereInput[]
@@ -13422,7 +13423,7 @@ export namespace Prisma {
     isActive?: BoolFilter<"ConfigRate"> | boolean
     createdAt?: DateTimeFilter<"ConfigRate"> | Date | string
     updatedAt?: DateTimeFilter<"ConfigRate"> | Date | string
-  }, "id">
+  }, "id" | "category_itemName_brand">
 
   export type ConfigRateOrderByWithAggregationInput = {
     id?: SortOrder
@@ -15216,6 +15217,12 @@ export namespace Prisma {
     in?: $Enums.ConfigUnit[] | ListEnumConfigUnitFieldRefInput<$PrismaModel>
     notIn?: $Enums.ConfigUnit[] | ListEnumConfigUnitFieldRefInput<$PrismaModel>
     not?: NestedEnumConfigUnitFilter<$PrismaModel> | $Enums.ConfigUnit
+  }
+
+  export type ConfigRateCategoryItemNameBrandCompoundUniqueInput = {
+    category: $Enums.ConfigCategory
+    itemName: string
+    brand: string
   }
 
   export type ConfigRateCountOrderByAggregateInput = {

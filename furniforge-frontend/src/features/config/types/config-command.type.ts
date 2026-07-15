@@ -5,7 +5,9 @@ export interface ConfigRateCommandDTO extends ConfigRateFormValues {
     category: ConfigCategory;
 }
 
+export type UpdateConfigRateDTO = ConfigRateFormValues
 
 export interface ConfigRateCommandResponseDTO {
   id: string;
 }
+

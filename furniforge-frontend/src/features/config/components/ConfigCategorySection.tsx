@@ -1,72 +1,68 @@
 import { Plus } from "lucide-react";
-import { useState } from "react";
 
 import { Button } from "../../../shared/components/ui/button";
 
 import { ConfigRateTable } from "./ConfigRateTable";
 
-import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
 import type { ConfigCategory } from "../../../types/enums/config-type.enum";
+import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
 import type { ConfigRateFormValues } from "../validation/config-rate-form.validation";
 
 interface Props {
   title: string;
-
   category: ConfigCategory;
-
   rates: ConfigRateResponseDTO[];
-
+  addMode: boolean;
+  setAddMode: (value: boolean) => void;
+  editingConfigRate: ConfigRateResponseDTO | null;
+  setEditingConfigRate: (
+    value: ConfigRateResponseDTO | null
+  ) => void;
   onCreate: (
     category: ConfigCategory,
-    values: ConfigRateFormValues,
+    values: ConfigRateFormValues
   ) => Promise<void>;
-
+  onUpdate: (
+    id: string,
+    values: ConfigRateFormValues
+  ) => Promise<void>;
+  // onToggle: (id: string) => Promise<void>;
+  // onDelete: (id: string) => Promise<void>;
   isCreating: boolean;
+  isUpdating: boolean;
 }
 
 export function ConfigCategorySection({
   title,
   category,
   rates,
+  addMode,
+  setAddMode,
+  editingConfigRate,
+  setEditingConfigRate,
   onCreate,
+  onUpdate,
+  // onToggle,
+  // onDelete,
   isCreating,
+  isUpdating,
 }: Props) {
-  const [addMode, setAddMode] = useState(false);
-
   return (
-    <section
-      className="
-bg-card
-rounded-2xl
-p-6
-shadow-warm
-border
-border-border
-"
-    >
-      <div
-        className="
-flex
-items-center
-justify-between
-mb-5
-"
-      >
-        <h2
-          className="
-text-lg
-font-bold
-font-display
-"
-        >
+    <section className="w-full overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-warm">
+      <div className="mb-5 flex items-center justify-between">
+        <h2 className="font-display text-lg font-bold">
           {title}
         </h2>
 
         <Button
           variant="outline"
           size="sm"
-          className="gap-1 h-8 text-xs"
-          onClick={() => setAddMode(true)}
+          className="h-8 gap-1 text-xs shrink-0"
+          onClick={() => {
+            setEditingConfigRate(null);
+            setAddMode(true);
+          }}
+          disabled={addMode}
         >
           <Plus size={12} />
           Add
@@ -78,8 +74,14 @@ font-display
         rates={rates}
         addMode={addMode}
         setAddMode={setAddMode}
+        editingConfigRate={editingConfigRate}
+        setEditingConfigRate={setEditingConfigRate}
         onCreate={onCreate}
+        onUpdate={onUpdate}
+        // onToggle={onToggle}
+        // onDelete={onDelete}
         isCreating={isCreating}
+        isUpdating={isUpdating}
       />
     </section>
   );

@@ -26,21 +26,23 @@ export class ConfigRateRepository
     return PrismaConfigRateMapper.toUpdatePersistence(entity);
   }
 
-  // async save(configRate: ConfigRate): Promise<void> {
-  //   try {
-  //     await this.update(configRate.id, configRate);
-  //   } catch (error) {
-  //     handlePrismaError(error);
-  //   }
-  // }
-
-  async findByItemName( itemName: string, category: ConfigCategory ): Promise<ConfigRate | null> {
+  async findByItemNameAndBrand ( itemName: string, brand: string, category: ConfigCategory ): Promise<ConfigRate | null> {
     try {
       return await this.findFirst({
-        where: { itemName, category },
+        where: { itemName, brand, category },
       });
     } catch (error) {
       handlePrismaError(error);
+    }
+  }
+
+  async findDuplicate(id: string, itemName: string, brand: string, category: ConfigCategory): Promise<ConfigRate | null> {
+    try {
+      return await this.findFirst({
+        where: {id: {not: id}, category, brand, itemName}
+      })
+    } catch (error) {
+      handlePrismaError(error)
     }
   }
 

@@ -1,6 +1,6 @@
 import { ConfigRateCommandResponseDTO } from "../../../dtos/configRates/ConfigRateCommandDTO";
-import { ConfigRateFormDTO } from "../../../dtos/configRates/ConfigRateFormDTO";
+import { CreateConfigRateDTO } from "../../../dtos/configRates/CreateConfigRateDTO";
 
 export interface ICreateConfigRateUseCase {
-  execute( dto: ConfigRateFormDTO ): Promise<ConfigRateCommandResponseDTO>;
+  execute( dto: CreateConfigRateDTO ): Promise<ConfigRateCommandResponseDTO>;
 }
