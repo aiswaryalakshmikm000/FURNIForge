@@ -15,6 +15,7 @@ export class PrismaConfigRateMapper {
       finalRate: Number(raw.finalRate),
       unit: raw.unit as ConfigUnit,
       isActive: raw.isActive,
+      deletedAt: raw.deletedAt,
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt,
     });
@@ -43,6 +44,7 @@ export class PrismaConfigRateMapper {
       marginPercent: entity.marginPercent,
       finalRate: entity.finalRate,
       unit: entity.unit,
+      deletedAt: entity.deletedAt,
       isActive: entity.isActive,
     };
   }

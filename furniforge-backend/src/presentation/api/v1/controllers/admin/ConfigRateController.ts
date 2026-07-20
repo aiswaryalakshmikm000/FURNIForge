@@ -11,6 +11,8 @@ import type { ICreateConfigRateUseCase } from "../../../../../application/use-ca
 import type { UpdateConfigRateDTO } from "../../../../../application/dtos/configRates/UpdateConfigRateDTO";
 import type { IUpdateConfigRateUseCase } from "../../../../../application/use-cases/configRate/interfaces/IUpdateConfigRateUseCase";
 import type { ConfigRateCommandRequestDTO } from "../../../../../application/dtos/configRates/ConfigRateCommandDTO";
+import type { IToggleConfigRateStatusUseCase } from "../../../../../application/use-cases/configRate/interfaces/IToggleConfigRateStatusUseCase";
+import type { ISoftDeleteConfigRateUseCase } from "../../../../../application/use-cases/configRate/interfaces/ISoftDeleteConfigRateUseCase";
 
 @injectable()
 export class ConfigRateController {
@@ -18,6 +20,8 @@ export class ConfigRateController {
     @inject(TYPES.IGetAllConfigRatesUseCase) private _getAllConfigRatesUseCase: IGetAllConfigRatesUseCase,
     @inject(TYPES.ICreateConfigRateUseCase) private _createConfigRateUseCase: ICreateConfigRateUseCase,
     @inject(TYPES.IUpdateConfigRateUseCase) private _updateConfigRateUseCase: IUpdateConfigRateUseCase,
+    @inject(TYPES.IToggleConfigRateStatusUseCase) private _toggleConfigRateStatusUseCase: IToggleConfigRateStatusUseCase,
+    @inject(TYPES.ISoftDeleteConfigRateUseCase) private _softDeleteConfigRateUseCase: ISoftDeleteConfigRateUseCase,
   ) {}
 
   getAllConfigRates = async (req: Request, res: Response) => {
@@ -41,4 +45,18 @@ export class ConfigRateController {
 
     res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.CONFIGRATES.UPDATED).build())
   }
+
+  toggleStatus = async ( req: Request, res: Response) => {
+    const params = req.params as ConfigRateCommandRequestDTO;
+    const result = await this._toggleConfigRateStatusUseCase.execute(params);
+
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.CONFIGRATES.STATUS_UPDATED).build())
+  };
+
+  softDelete = async ( req: Request, res: Response ) => {
+    const params = req.params as ConfigRateCommandRequestDTO;
+    const result = await this._softDeleteConfigRateUseCase.execute(params);
+
+    res.status(HttpStatusCode.OK).json(ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.CONFIGRATES.DELETED ).build())
+  };
 }

@@ -1,9 +1,6 @@
 import { Plus } from "lucide-react";
-
 import { Button } from "../../../shared/components/ui/button";
-
 import { ConfigRateTable } from "./ConfigRateTable";
-
 import type { ConfigCategory } from "../../../types/enums/config-type.enum";
 import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
 import type { ConfigRateFormValues } from "../validation/config-rate-form.validation";
@@ -15,19 +12,13 @@ interface Props {
   addMode: boolean;
   setAddMode: (value: boolean) => void;
   editingConfigRate: ConfigRateResponseDTO | null;
-  setEditingConfigRate: (
-    value: ConfigRateResponseDTO | null
-  ) => void;
-  onCreate: (
-    category: ConfigCategory,
-    values: ConfigRateFormValues
-  ) => Promise<void>;
-  onUpdate: (
-    id: string,
-    values: ConfigRateFormValues
-  ) => Promise<void>;
-  // onToggle: (id: string) => Promise<void>;
-  // onDelete: (id: string) => Promise<void>;
+  setEditingConfigRate: ( value: ConfigRateResponseDTO | null ) => void;
+  onCreate: ( category: ConfigCategory, values: ConfigRateFormValues ) => Promise<void>;
+  onUpdate: ( id: string, values: ConfigRateFormValues ) => Promise<void>;
+  onToggle: (id: string) => Promise<void>;
+  togglingId: string | null;
+  onDelete: (id: string) => Promise<void>;
+  deletingId: string | null;
   isCreating: boolean;
   isUpdating: boolean;
 }
@@ -42,8 +33,10 @@ export function ConfigCategorySection({
   setEditingConfigRate,
   onCreate,
   onUpdate,
-  // onToggle,
-  // onDelete,
+  onToggle,
+  togglingId,
+  onDelete,
+  deletingId,
   isCreating,
   isUpdating,
 }: Props) {
@@ -78,8 +71,10 @@ export function ConfigCategorySection({
         setEditingConfigRate={setEditingConfigRate}
         onCreate={onCreate}
         onUpdate={onUpdate}
-        // onToggle={onToggle}
-        // onDelete={onDelete}
+        onToggle={onToggle}
+        togglingId={togglingId}
+        onDelete={onDelete}
+        deletingId={deletingId}
         isCreating={isCreating}
         isUpdating={isUpdating}
       />

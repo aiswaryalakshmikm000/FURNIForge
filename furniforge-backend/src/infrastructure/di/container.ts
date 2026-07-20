@@ -81,6 +81,8 @@ import { ConfigRateController } from "../../presentation/api/v1/controllers/admi
 import { ConfigRateRepository } from "../database/prisma/repositories/ConfigRateRepository";
 import { CreateConfigRateUseCase } from "../../application/use-cases/configRate/CreateConfigRateUseCase";
 import { UpdateConfigRateUseCase } from "../../application/use-cases/configRate/UpdateConfigRateUseCase";
+import { ToggleConfigRateStatusUseCase } from "../../application/use-cases/configRate/ToggleConfigRateStatusUseCase";
+import { SoftDeleteConfigRateUseCase } from "../../application/use-cases/configRate/SoftDeleteConfigRateUseCase";
 
 const container = new Container();
 
@@ -172,6 +174,8 @@ container.bind(TYPES.IGetFieldsByTabUseCase).to(GetFieldsByTabUseCase);
 container.bind(TYPES.IGetAllConfigRatesUseCase).to(GetAllConfigRatesUseCase);
 container.bind(TYPES.ICreateConfigRateUseCase).to(CreateConfigRateUseCase);
 container.bind(TYPES.IUpdateConfigRateUseCase).to(UpdateConfigRateUseCase);
+container.bind(TYPES.IToggleConfigRateStatusUseCase).to(ToggleConfigRateStatusUseCase);
+container.bind(TYPES.ISoftDeleteConfigRateUseCase).to(SoftDeleteConfigRateUseCase);
 
 // Controller
 container.bind(TYPES.AuthController).to(AuthController);

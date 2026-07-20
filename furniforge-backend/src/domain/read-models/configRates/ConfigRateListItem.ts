@@ -10,5 +10,6 @@ export interface ConfigRateListItem {
     finalRate: number;
     unit: ConfigUnit;
     isActive: boolean;
+    deletedAt: Date | null
     createdAt: Date;
 }

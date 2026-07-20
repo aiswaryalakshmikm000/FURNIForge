@@ -1,17 +1,14 @@
-import {
-  Pencil,
-  ToggleLeft,
-  ToggleRight,
-  Trash2,
-} from "lucide-react";
-
+import { Loader2Icon, Pencil, Trash2 } from "lucide-react";
 import type { ConfigRateResponseDTO } from "../types/get-all-config-rates.type";
-
+import { getConfigUnitLabel } from "../../../shared/utils/config-unit-label";
+import { StatusToggle } from "../../../shared/components/ui/statusToggle";
 interface Props {
   rate: ConfigRateResponseDTO;
   onEdit: () => void;
   onToggle?: () => void;
   onDelete?: () => void;
+  isToggling: boolean;
+  isDeleting: boolean;
 }
 
 export function ConfigRateRow({
@@ -19,6 +16,8 @@ export function ConfigRateRow({
   onEdit,
   onToggle,
   onDelete,
+  isToggling,
+  isDeleting,
 }: Props) {
   return (
     <div
@@ -53,47 +52,43 @@ export function ConfigRateRow({
       {/* Unit */}
 
       <div className="w-24 shrink-0 truncate text-xs text-muted-foreground">
-        {rate.unit}
+        {getConfigUnitLabel(rate.unit)}
       </div>
 
       {/* Final */}
 
       <div className="w-20 shrink-0 text-right text-sm font-bold text-accent">
-        ₹{Number(rate.finalRate).toFixed(2)}
+        ₹{Math.round(Number(rate.finalRate)).toLocaleString("en-IN")}
       </div>
 
       {/* Actions */}
 
-      <div className="w-20 shrink-0 flex justify-end gap-1">
-        <button
-          type="button"
+      <div className="w-32 shrink-0 flex items-center justify-end gap-1">
+        <StatusToggle 
+          isActive={rate.isActive} 
+          disabled={ isToggling || !!rate.deletedAt} 
           onClick={onToggle}
-          className="rounded-lg p-1.5 hover:bg-muted"
-        >
-          {rate.isActive ? (
-            <ToggleRight
-              size={14}
-              className="text-accent"
-            />
-          ) : (
-            <ToggleLeft size={14} />
-          )}
-        </button>
+        />
 
         <button
           type="button"
           onClick={onEdit}
-          className="rounded-lg p-1.5 hover:bg-muted hover:text-accent"
+          disabled={!rate.isActive || !!rate.deletedAt}
+          className="rounded-lg p-1.5 hover:bg-muted hover:text-accent disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          <Pencil size={12} />
+          <Pencil size={12} className="pointer-events-none" />
         </button>
 
         <button
           type="button"
           onClick={onDelete}
-          className="rounded-lg p-1.5 hover:bg-muted hover:text-destructive"
+          disabled={isDeleting || !rate.isActive || !!rate.deletedAt}
+          className="rounded-lg p-1.5 hover:bg-muted hover:text-destructive disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          <Trash2 size={12} />
+          {isDeleting ? ( <Loader2Icon size={12} className="animate-spin" />
+    ) : (
+        <Trash2 size={12} className="pointer-events-none"/>
+    )}
         </button>
       </div>
     </div>

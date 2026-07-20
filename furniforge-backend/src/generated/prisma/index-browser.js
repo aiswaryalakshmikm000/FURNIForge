@@ -233,6 +233,7 @@ exports.Prisma.ConfigRateScalarFieldEnum = {
   finalRate: 'finalRate',
   unit: 'unit',
   isActive: 'isActive',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

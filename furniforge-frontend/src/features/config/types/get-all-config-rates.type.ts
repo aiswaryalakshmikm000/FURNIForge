@@ -14,6 +14,7 @@ export interface ConfigRateResponseDTO {
   finalRate: number;
   unit: ConfigUnit;
   isActive: boolean;
+  deletedAt: Date;
   createdAt: string;
 }
 

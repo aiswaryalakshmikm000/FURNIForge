@@ -10,6 +10,7 @@ export interface IConfigRatePersistence {
   finalRate: number;
   unit: ConfigUnit;
   isActive: boolean;
+  deletedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -62,9 +62,7 @@ export class DeliverableRepository extends BaseRepository< Deliverable, PrismaDe
     sortOrder: "asc" | "desc";
   }): Promise<DeliverableListItem[]> {
     try {
-      const where: Prisma.DeliverableWhereInput = {
-        deletedAt: null,
-      };
+      const where: Prisma.DeliverableWhereInput = {};
 
       if (params.search) {
         where.OR = [

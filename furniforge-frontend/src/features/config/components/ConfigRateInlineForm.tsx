@@ -88,9 +88,7 @@ export function ConfigRateInlineForm({
         />
 
         {errors.itemName && (
-          <p className="mt-1 text-xs text-destructive">
-            {errors.itemName.message}
-          </p>
+          <p className="mt-1 text-xs text-destructive"> {errors.itemName.message} </p>
         )}
       </div>
 
@@ -104,9 +102,7 @@ export function ConfigRateInlineForm({
         />
 
         {errors.brand && (
-          <p className="mt-1 text-xs text-destructive">
-            {errors.brand.message}
-          </p>
+          <p className="mt-1 text-xs text-destructive"> {errors.brand.message} </p>
         )}
       </div>
 
@@ -122,9 +118,7 @@ export function ConfigRateInlineForm({
         />
 
         {errors.rate && (
-          <p className="mt-1 text-xs text-destructive">
-            {errors.rate.message}
-          </p>
+          <p className="mt-1 text-xs text-destructive"> {errors.rate.message} </p>
         )}
       </div>
 
@@ -140,9 +134,7 @@ export function ConfigRateInlineForm({
         />
 
         {errors.marginPercent && (
-          <p className="mt-1 text-xs text-destructive">
-            {errors.marginPercent.message}
-          </p>
+          <p className="mt-1 text-xs text-destructive"> {errors.marginPercent.message} </p>
         )}
       </div>
 
@@ -164,9 +156,7 @@ export function ConfigRateInlineForm({
         </select>
 
         {errors.unit && (
-          <p className="mt-1 text-xs text-destructive">
-            {errors.unit.message}
-          </p>
+          <p className="mt-1 text-xs text-destructive"> {errors.unit.message} </p>
         )}
       </div>
 
@@ -193,8 +183,8 @@ export function ConfigRateInlineForm({
           type="button"
           onClick={onCancel}
           disabled={isLoading}
-          className="rounded-lg p-1.5 hover:bg-muted"
-        >
+          className="rounded-lg p-1.5 hover:bg-muted" 
+          >
           <X size={14} />
         </button>
       </div>

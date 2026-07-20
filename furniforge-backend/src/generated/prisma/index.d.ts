@@ -10248,6 +10248,7 @@ export namespace Prisma {
     finalRate: Decimal | null
     unit: $Enums.ConfigUnit | null
     isActive: boolean | null
+    deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10262,6 +10263,7 @@ export namespace Prisma {
     finalRate: Decimal | null
     unit: $Enums.ConfigUnit | null
     isActive: boolean | null
+    deletedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10276,6 +10278,7 @@ export namespace Prisma {
     finalRate: number
     unit: number
     isActive: number
+    deletedAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10304,6 +10307,7 @@ export namespace Prisma {
     finalRate?: true
     unit?: true
     isActive?: true
+    deletedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10318,6 +10322,7 @@ export namespace Prisma {
     finalRate?: true
     unit?: true
     isActive?: true
+    deletedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10332,6 +10337,7 @@ export namespace Prisma {
     finalRate?: true
     unit?: true
     isActive?: true
+    deletedAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10433,6 +10439,7 @@ export namespace Prisma {
     finalRate: Decimal
     unit: $Enums.ConfigUnit
     isActive: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: ConfigRateCountAggregateOutputType | null
@@ -10466,6 +10473,7 @@ export namespace Prisma {
     finalRate?: boolean
     unit?: boolean
     isActive?: boolean
+    deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["configRate"]>
@@ -10480,6 +10488,7 @@ export namespace Prisma {
     finalRate?: boolean
     unit?: boolean
     isActive?: boolean
+    deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["configRate"]>
@@ -10494,6 +10503,7 @@ export namespace Prisma {
     finalRate?: boolean
     unit?: boolean
     isActive?: boolean
+    deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["configRate"]>
@@ -10508,11 +10518,12 @@ export namespace Prisma {
     finalRate?: boolean
     unit?: boolean
     isActive?: boolean
+    deletedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ConfigRateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "category" | "itemName" | "brand" | "rate" | "marginPercent" | "finalRate" | "unit" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["configRate"]>
+  export type ConfigRateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "category" | "itemName" | "brand" | "rate" | "marginPercent" | "finalRate" | "unit" | "isActive" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["configRate"]>
 
   export type $ConfigRatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ConfigRate"
@@ -10527,6 +10538,7 @@ export namespace Prisma {
       finalRate: Prisma.Decimal
       unit: $Enums.ConfigUnit
       isActive: boolean
+      deletedAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["configRate"]>
@@ -10961,6 +10973,7 @@ export namespace Prisma {
     readonly finalRate: FieldRef<"ConfigRate", 'Decimal'>
     readonly unit: FieldRef<"ConfigRate", 'ConfigUnit'>
     readonly isActive: FieldRef<"ConfigRate", 'Boolean'>
+    readonly deletedAt: FieldRef<"ConfigRate", 'DateTime'>
     readonly createdAt: FieldRef<"ConfigRate", 'DateTime'>
     readonly updatedAt: FieldRef<"ConfigRate", 'DateTime'>
   }
@@ -12466,6 +12479,7 @@ export namespace Prisma {
     finalRate: 'finalRate',
     unit: 'unit',
     isActive: 'isActive',
+    deletedAt: 'deletedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -13389,6 +13403,7 @@ export namespace Prisma {
     finalRate?: DecimalFilter<"ConfigRate"> | Decimal | DecimalJsLike | number | string
     unit?: EnumConfigUnitFilter<"ConfigRate"> | $Enums.ConfigUnit
     isActive?: BoolFilter<"ConfigRate"> | boolean
+    deletedAt?: DateTimeNullableFilter<"ConfigRate"> | Date | string | null
     createdAt?: DateTimeFilter<"ConfigRate"> | Date | string
     updatedAt?: DateTimeFilter<"ConfigRate"> | Date | string
   }
@@ -13403,6 +13418,7 @@ export namespace Prisma {
     finalRate?: SortOrder
     unit?: SortOrder
     isActive?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -13421,6 +13437,7 @@ export namespace Prisma {
     finalRate?: DecimalFilter<"ConfigRate"> | Decimal | DecimalJsLike | number | string
     unit?: EnumConfigUnitFilter<"ConfigRate"> | $Enums.ConfigUnit
     isActive?: BoolFilter<"ConfigRate"> | boolean
+    deletedAt?: DateTimeNullableFilter<"ConfigRate"> | Date | string | null
     createdAt?: DateTimeFilter<"ConfigRate"> | Date | string
     updatedAt?: DateTimeFilter<"ConfigRate"> | Date | string
   }, "id" | "category_itemName_brand">
@@ -13435,6 +13452,7 @@ export namespace Prisma {
     finalRate?: SortOrder
     unit?: SortOrder
     isActive?: SortOrder
+    deletedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ConfigRateCountOrderByAggregateInput
@@ -13457,6 +13475,7 @@ export namespace Prisma {
     finalRate?: DecimalWithAggregatesFilter<"ConfigRate"> | Decimal | DecimalJsLike | number | string
     unit?: EnumConfigUnitWithAggregatesFilter<"ConfigRate"> | $Enums.ConfigUnit
     isActive?: BoolWithAggregatesFilter<"ConfigRate"> | boolean
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"ConfigRate"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ConfigRate"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ConfigRate"> | Date | string
   }
@@ -14248,6 +14267,7 @@ export namespace Prisma {
     finalRate: Decimal | DecimalJsLike | number | string
     unit: $Enums.ConfigUnit
     isActive?: boolean
+    deletedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14262,6 +14282,7 @@ export namespace Prisma {
     finalRate: Decimal | DecimalJsLike | number | string
     unit: $Enums.ConfigUnit
     isActive?: boolean
+    deletedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14276,6 +14297,7 @@ export namespace Prisma {
     finalRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unit?: EnumConfigUnitFieldUpdateOperationsInput | $Enums.ConfigUnit
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14290,6 +14312,7 @@ export namespace Prisma {
     finalRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unit?: EnumConfigUnitFieldUpdateOperationsInput | $Enums.ConfigUnit
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14304,6 +14327,7 @@ export namespace Prisma {
     finalRate: Decimal | DecimalJsLike | number | string
     unit: $Enums.ConfigUnit
     isActive?: boolean
+    deletedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14318,6 +14342,7 @@ export namespace Prisma {
     finalRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unit?: EnumConfigUnitFieldUpdateOperationsInput | $Enums.ConfigUnit
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14332,6 +14357,7 @@ export namespace Prisma {
     finalRate?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     unit?: EnumConfigUnitFieldUpdateOperationsInput | $Enums.ConfigUnit
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15235,6 +15261,7 @@ export namespace Prisma {
     finalRate?: SortOrder
     unit?: SortOrder
     isActive?: SortOrder
+    deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15255,6 +15282,7 @@ export namespace Prisma {
     finalRate?: SortOrder
     unit?: SortOrder
     isActive?: SortOrder
+    deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15269,6 +15297,7 @@ export namespace Prisma {
     finalRate?: SortOrder
     unit?: SortOrder
     isActive?: SortOrder
+    deletedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }

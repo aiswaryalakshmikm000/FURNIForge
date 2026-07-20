@@ -19,5 +19,7 @@ const controller = container.get<ConfigRateController>( TYPES.ConfigRateControll
 router.get("/config-rates", authMiddleware, authorizeRoles(UserRole.ADMIN), validateQuery(GetAllConfigRatesQuerySchema), asyncHandler(controller.getAllConfigRates))
 router.post("/config-rates", authMiddleware, authorizeRoles(UserRole.ADMIN), validateBody(ConfigRateFormDTOSchema), asyncHandler(controller.createConfigRate) );
 router.put("/config-rates/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(ConfigRateCommandParamsSchema), validateBody(UpdateConfigRateDTOSchema), asyncHandler(controller.updateConfigRate));
+router.patch("/config-rates/:id/status", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(ConfigRateCommandParamsSchema), asyncHandler(controller.toggleStatus));
+router.patch("/config-rates/:id/soft-delete", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(ConfigRateCommandParamsSchema), asyncHandler(controller.softDelete));
 
 export default router;

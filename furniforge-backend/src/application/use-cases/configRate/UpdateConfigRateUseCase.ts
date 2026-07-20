@@ -20,8 +20,12 @@ export class UpdateConfigRateUseCase implements IUpdateConfigRateUseCase{
     if (!configRate) throw new NotFoundError(ERROR_MESSAGES.ADMIN.CONFIG_RATE.NOT_FOUND);
 
     const duplicate = await this._configRateRepository.findDuplicate(configRate.id, dto.itemName, dto.brand, configRate.category);
-    if (duplicate) throw new ConflictError(ERROR_MESSAGES.ADMIN.CONFIG_RATE.ALREADY_EXISTS);
-
+    if (duplicate && duplicate.id !== params.id) {
+      if(duplicate.deletedAt) {
+        throw new ConflictError(ERROR_MESSAGES.ADMIN.CONFIG_RATE.DELETED_ALREADY_EXISTS);
+      }
+      throw new ConflictError( ERROR_MESSAGES.ADMIN.CONFIG_RATE.ALREADY_EXISTS);
+    }
     configRate.update({
       itemName: dto.itemName,
       brand: dto.brand,

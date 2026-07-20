@@ -70,6 +70,7 @@ export class ConfigRateRepository
           finalRate: true,
           unit: true,
           isActive: true,
+          deletedAt: true,
           createdAt: true,
         },
       });
@@ -84,6 +85,7 @@ export class ConfigRateRepository
         finalRate: Number(row.finalRate),
         unit: row.unit as ConfigUnit,
         isActive: row.isActive,
+        deletedAt: row.deletedAt,
         createdAt: row.createdAt,
       }));
     } catch (error) {

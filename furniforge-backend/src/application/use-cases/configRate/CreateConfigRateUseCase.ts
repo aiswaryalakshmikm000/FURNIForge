@@ -18,7 +18,15 @@ export class CreateConfigRateUseCase implements ICreateConfigRateUseCase {
   async execute(dto: CreateConfigRateDTO): Promise<ConfigRateCommandResponseDTO> {
     const existing = await this._configRateRepository.findByItemNameAndBrand( dto.itemName, dto.brand, dto.category);
 
-    if (existing) throw new ConflictError(ERROR_MESSAGES.ADMIN.CONFIG_RATE.ALREADY_EXISTS);
+    if (existing) {
+      if(existing.deletedAt) {
+        existing.restore();
+
+        const restored = await this._configRateRepository.update(existing.id, existing);
+        return ConfigRateCommandMapper.toResponse(restored);
+      }
+      throw new ConflictError(ERROR_MESSAGES.ADMIN.CONFIG_RATE.ALREADY_EXISTS);
+    }
 
     const configRate = ConfigRate.create({
       category: dto.category,

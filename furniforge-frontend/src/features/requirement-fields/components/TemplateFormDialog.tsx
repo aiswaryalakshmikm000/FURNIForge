@@ -1,20 +1,11 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "../../../shared/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from "../../../shared/components/ui/alert-dialog";
 import { Button } from "../../../shared/components/ui/button";
 import { Input } from "../../../shared/components/ui/input";
 import { FormField } from "../../../shared/components/common/forms/form-field";
-import {
-  templateFormSchema,
-  type TemplateFormValues,
-} from "../validation/template-form.validation";
+import { templateFormSchema, type TemplateFormValues } from "../validation/template-form.validation";
 
 interface Props {
   open: boolean;

@@ -81,6 +81,7 @@ export const SUCCESS_MESSAGES = {
       CREATED: "Configuration rate created successfully",
       UPDATED: "Configuration rate updated successfully",
       STATUS_UPDATED: "Configuration rate status updated successfully",
+      DELETED: "Configuration deleted successfully",
     }
   },
 
@@ -167,7 +168,7 @@ export const ERROR_MESSAGES = {
     },
 
     TEMPLATE: {
-      DELETED_ALREADY_EXISTS: "An archived template with this name already exists. Please restore it instead.",
+      DELETED_ALREADY_EXISTS: "An archived template with this name already exists. Please restore it first",
       ALREADY_EXISTS: "Template with this name already exists",
       NOT_FOUND: "Template not found",
     },
@@ -188,8 +189,10 @@ export const ERROR_MESSAGES = {
     },
 
     CONFIG_RATE: {
-      ALREADY_EXISTS: "Configuration item already exists in this category.",
+      ALREADY_EXISTS: "Configuration item already exists in this category",
+      DELETED_ALREADY_EXISTS: "Deleted config rate with same name already exists. Restore it first",
       NOT_FOUND: "Configuration rate not found",
+      DELETE_BANNED: "Deleted configuration rates cannot be activated"
     },
   },
 

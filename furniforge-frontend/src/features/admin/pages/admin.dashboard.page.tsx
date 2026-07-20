@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { DollarSign, Package, UserPlus, CreditCard, AlertTriangle, TrendingUp, Star} from "lucide-react";
-
 import { StatCard } from "../../dashboard/components/admin-stat-card";
 import { SectionCard } from "../../../shared/components/common/section-card";
 import { RevenueChart } from "../../dashboard/components/admin-revenue-chart";
