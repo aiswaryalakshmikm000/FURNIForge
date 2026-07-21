@@ -1,7 +1,7 @@
 import type { IOtpService } from "../../domain/services/IOtpservice";
 import type { IOTPRepository } from "../../domain/repositories/IOTPRepository";
 import { OtpToken } from "../../domain/entities/OtpToken";
-import { BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError";
+import { AppError, BadRequestError, TooManyRequestsError } from "../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../infrastructure/config/messages";
 import { env } from "../../infrastructure/config/env";
 import { injectable, inject } from "inversify";
@@ -40,11 +40,11 @@ export class OtpService implements IOtpService {
 
     await this._otpRepository.save(otpToken, this._TTL);
 
-    console.log("Saved OTP:", otpToken);
-    console.log("User OTP Key:", `otp:user:${userId}`);
-    console.log("User OTP Key:", `otp:${otpToken.otpId}`);
-    console.log("Code Key:", `otp:code:${email}:${otpCode}`);
-    console.log("TTL:", `otp:user:${userId}`);
+    // console.log("Saved OTP:", otpToken);
+    // console.log("User OTP Key:", `otp:user:${userId}`);
+    // console.log("User OTP Key:", `otp:${otpToken.otpId}`);
+    // console.log("Code Key:", `otp:code:${email}:${otpCode}`);
+    // console.log("TTL:", `otp:user:${userId}`);
 
     return otpToken;
   }
@@ -58,7 +58,7 @@ export class OtpService implements IOtpService {
     }
 
     if (existing.email !== email) {
-      throw new BadRequestError("Invalid OTP request");
+      throw new BadRequestError(ERROR_MESSAGES.AUTH.INVALID_OTP);
     }
 
     if (existing.isExpired()) {
@@ -67,14 +67,16 @@ export class OtpService implements IOtpService {
 
     try {
       existing.verify(inputOtp);
-    } catch (err: any) {
-
-      await this._otpRepository.update(existing);
+    } catch (err: unknown) {
 
       if(err instanceof TooManyRequestsError){
         await this._otpRepository.delete(existing)
+      } else {
+         await this._otpRepository.update(existing);
       }
-      err.meta = { remainingAttempts: existing.remainingAttempts }
+      if (err instanceof AppError) {
+        err.meta = { remainingAttempts: existing.remainingAttempts }
+      }
       throw err;
     }
     

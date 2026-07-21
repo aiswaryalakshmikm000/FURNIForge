@@ -37,7 +37,7 @@ export class EmailService implements IEmailService {
       );
     } catch (error) {
       if (axios.isAxiosError(error)) {
-            this._logger.error("Brevo API Error:", {response: error.response?.data, message: error.message});
+            this._logger.error("Brevo API Error:", {status: error.response?.status, response: error.response?.data, message: error.message});
         } else {
             this._logger.error("Unknown Error:", {error});
         }
