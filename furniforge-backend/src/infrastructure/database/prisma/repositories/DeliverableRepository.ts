@@ -10,7 +10,7 @@ import { PrismaDeliverableMapper } from "../mapper/PrismaDeliverableMapper";
 import { RequirementFieldDeliverableListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldDeliverableListItem";
 
 @injectable()
-export class DeliverableRepository extends BaseRepository< Deliverable, PrismaDeliverable, Prisma.DeliverableCreateInput, Prisma.DeliverableUpdateInput > implements IDeliverableRepository {
+export class DeliverableRepository extends BaseRepository< Deliverable, PrismaDeliverable, Prisma.DeliverableCreateInput, Prisma.DeliverableUpdateInput,  Prisma.DeliverableFindFirstArgs, Prisma.DeliverableFindManyArgs, Prisma.DeliverableWhereInput > implements IDeliverableRepository {
   protected model = prisma.deliverable;
 
   protected toDomain(raw: PrismaDeliverable): Deliverable {

@@ -10,7 +10,7 @@ import { ITemplateRepository } from "../../../../domain/repositories/ITemplateRe
 import { RequirementFieldTemplateListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldTemplateListItem";
 
 @injectable()
-export class TemplateRepository extends BaseRepository< Template, PrismaTemplate, Prisma.TemplateCreateInput, Prisma.TemplateUpdateInput > implements ITemplateRepository {
+export class TemplateRepository extends BaseRepository< Template, PrismaTemplate, Prisma.TemplateCreateInput, Prisma.TemplateUpdateInput,  Prisma.TemplateFindFirstArgs, Prisma.TemplateFindManyArgs, Prisma.TemplateWhereInput > implements ITemplateRepository {
   protected model = prisma.template;
 
   protected toDomain(raw: PrismaTemplate): Template {

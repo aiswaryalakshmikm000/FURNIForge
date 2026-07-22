@@ -1,8 +1,9 @@
 import { Field } from "../entities/Field";
 import { RequirementFieldFieldListItem } from "../read-models/requirementFields/RequirementFieldFieldListItem";
 import { IBaseRepository } from "./IBaseRepository";
+import { Prisma } from "../../generated/prisma";
 
-export interface IFieldRepository extends IBaseRepository<Field> {
+export interface IFieldRepository extends IBaseRepository<Field, Prisma.TemplateFieldWhereInput, Prisma.TemplateFieldFindManyArgs> {
 
   findByTabAndLabel( tabId: string, label: string ): Promise<Field | null>;
 

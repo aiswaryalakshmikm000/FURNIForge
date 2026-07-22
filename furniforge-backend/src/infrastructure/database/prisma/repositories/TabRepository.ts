@@ -9,7 +9,7 @@ import { handlePrismaError } from "../errors/handlePrismaError";
 import { RequirementFieldTabListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldTabListItem"
 
 @injectable()
-export class TabRepository extends BaseRepository< Tab, PrismaTab, Prisma.TemplateTabCreateInput, Prisma.TemplateTabUpdateInput > implements ITabRepository {
+export class TabRepository extends BaseRepository< Tab, PrismaTab, Prisma.TemplateTabCreateInput, Prisma.TemplateTabUpdateInput,  Prisma.TemplateTabFindFirstArgs, Prisma.TemplateTabFindManyArgs, Prisma.TemplateTabWhereInput > implements ITabRepository {
   protected model = prisma.templateTab;
 
   protected toDomain( raw: PrismaTab ): Tab {

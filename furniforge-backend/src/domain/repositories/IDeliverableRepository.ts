@@ -2,8 +2,9 @@ import { Deliverable } from "../entities/Deliverable";
 import { DeliverableListItem } from "../read-models/deliverable/DeliverableListItem";
 import { RequirementFieldDeliverableListItem } from "../read-models/requirementFields/RequirementFieldDeliverableListItem";
 import { IBaseRepository } from "./IBaseRepository";
+import { Prisma } from "../../generated/prisma";
 
-export interface IDeliverableRepository extends IBaseRepository<Deliverable> {
+export interface IDeliverableRepository extends IBaseRepository<Deliverable, Prisma.DeliverableWhereInput, Prisma.DeliverableFindManyArgs> {
 
   findAllDeliverableRows(params: {
     skip: number;

@@ -10,8 +10,7 @@ import { handlePrismaError } from "../errors/handlePrismaError";
 import { ConfigRateListItem } from "../../../../domain/read-models/configRates/ConfigRateListItem";
 
 @injectable()
-export class ConfigRateRepository
-  extends BaseRepository< ConfigRate, PrismaConfigRate, Prisma.ConfigRateCreateInput, Prisma.ConfigRateUpdateInput> implements IConfigRateRepository {
+export class ConfigRateRepository extends BaseRepository< ConfigRate, PrismaConfigRate, Prisma.ConfigRateCreateInput, Prisma.ConfigRateUpdateInput,  Prisma.ConfigRateFindFirstArgs, Prisma.ConfigRateFindManyArgs, Prisma.ConfigRateWhereInput> implements IConfigRateRepository {
   protected model = prisma.configRate;
 
   protected toDomain(raw: PrismaConfigRate): ConfigRate {

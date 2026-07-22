@@ -1,16 +1,31 @@
 import type { IBaseRepository } from "../../../../domain/repositories/IBaseRepository";
 import { handlePrismaError } from "../errors/handlePrismaError";
 
-export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInput> implements IBaseRepository <TDomain> {
+export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInput, TFindFirstArgs, TFindManyArgs, TWhereInput> implements IBaseRepository <TDomain, TWhereInput, TFindManyArgs> {
   protected abstract model: {
     create(args: { data: TCreateInput }): Promise<TPrisma>;
-    findUnique(args: any): Promise<TPrisma | null>; 
-    findFirst(args?: any): Promise<TPrisma | null>;
-    findMany(args?: any): Promise<TPrisma[]>; 
-    update(args: { where: any; data: TUpdateInput }): Promise<TPrisma>;
-    delete(args: { where: any }): Promise<TPrisma>;
-    count(args: { where?: any }): Promise<number>;
-  };
+
+    findUnique(args: {
+        where: { id: string };
+    }): Promise<TPrisma | null>;
+
+    findFirst(args?: TFindFirstArgs): Promise<TPrisma | null>;
+
+    findMany(args?: TFindManyArgs): Promise<TPrisma[]>;
+
+    update(args: {
+        where: { id: string };
+        data: TUpdateInput;
+    }): Promise<TPrisma>;
+
+    delete(args: {
+        where: { id: string };
+    }): Promise<TPrisma>;
+
+    count(args: {
+        where?: TWhereInput;
+    }): Promise<number>;
+};
 
   protected abstract toDomain(raw: TPrisma): TDomain;
   protected abstract toCreate(entity: TDomain): TCreateInput;
@@ -36,7 +51,7 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
     }
   }
 
-  async findFirst(params?: any): Promise<TDomain | null> {
+  async findFirst(params?: TFindFirstArgs): Promise<TDomain | null> {
     try {
       const raw = await this.model.findFirst(params);
       return raw ? this.toDomain(raw) : null;
@@ -45,11 +60,10 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
     }
   }
 
-  async findAll(params?: any): Promise<TDomain[]> {
+  async findAll(params?: TFindManyArgs): Promise<TDomain[]> {
     try {
       const raws = await this.model.findMany(params);
       return raws.map((raw) => this.toDomain(raw));
-
     } catch (error) {
       handlePrismaError(error);
     }
@@ -74,11 +88,10 @@ export abstract class BaseRepository <TDomain, TPrisma, TCreateInput, TUpdateInp
     }
   }
 
-  async exists(where: any): Promise<boolean> {
+  async exists(where: TWhereInput): Promise<boolean> {
     try {
       const count = await this.model.count({ where });
       return count > 0;
-
     } catch (error) {
       handlePrismaError(error);
     }

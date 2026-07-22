@@ -2,8 +2,9 @@ import { Template } from "../entities/Template";
 import { RequirementFieldTemplateListItem } from "../read-models/requirementFields/RequirementFieldTemplateListItem";
 import { TemplateListItem } from "../read-models/template/TemplateListItem";
 import { IBaseRepository } from "./IBaseRepository";
+import { Prisma } from "../../generated/prisma";
 
-export interface ITemplateRepository extends IBaseRepository<Template> {
+export interface ITemplateRepository extends IBaseRepository<Template, Prisma.TemplateWhereInput, Prisma.TemplateFindManyArgs> {
 
   findAllTemplateRows(params: {
     skip: number;
