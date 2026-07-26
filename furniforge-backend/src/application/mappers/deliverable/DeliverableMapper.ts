@@ -2,9 +2,7 @@ import { DeliverableListItem } from "../../../domain/read-models/deliverable/Del
 import type { DeliverableResponseDTO } from "../../dtos/deliverables/DeliverableResponseDTO";
 
 export class DeliverableMapper {
-  static toResponse(
-    deliverable: DeliverableListItem,
-  ): DeliverableResponseDTO {
+  static toResponse( deliverable: DeliverableListItem ): DeliverableResponseDTO {
     return {
       id: deliverable.id,
       name: deliverable.name,

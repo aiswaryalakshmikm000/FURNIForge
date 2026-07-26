@@ -3,6 +3,7 @@ import { DeliverableListItem } from "../read-models/deliverable/DeliverableListI
 import { RequirementFieldDeliverableListItem } from "../read-models/requirementFields/RequirementFieldDeliverableListItem";
 import { IBaseRepository } from "./IBaseRepository";
 import { Prisma } from "../../generated/prisma";
+import { DeliverableOptionsListItem } from "../read-models/deliverable/DeliverableOptionsListItem";
 
 export interface IDeliverableRepository extends IBaseRepository<Deliverable, Prisma.DeliverableWhereInput, Prisma.DeliverableFindManyArgs> {
 
@@ -23,4 +24,8 @@ export interface IDeliverableRepository extends IBaseRepository<Deliverable, Pri
   findByName(name: string): Promise<Deliverable | null>;
 
   findRequirementFieldDeliverables( search?: string ): Promise<RequirementFieldDeliverableListItem[]>;
+
+  findActiveDeliverableOptions(): Promise<DeliverableOptionsListItem[]>;
+
+  findManyByNames(names: string[]): Promise<DeliverableOptionsListItem[]>;
 }

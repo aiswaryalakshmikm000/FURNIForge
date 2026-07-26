@@ -43,6 +43,7 @@ export const API_ENDPOINTS = {
       SOFT_DELETE: (id: string) => `/admin/deliverables/${id}/soft-delete`,
       DELETE: (id: string) => `/admin/deliverables/${id}`,
       TOGGLE_STATUS: (id: string) => `/admin/deliverables/${id}/toggle-status`,
+      OPTIONS: "/admin/deliverables/options",
     },
 
     REQUIREMENT_FIELDS :{

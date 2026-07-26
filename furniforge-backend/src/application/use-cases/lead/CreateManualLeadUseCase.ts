@@ -13,11 +13,13 @@ import { env } from "../../../infrastructure/config/env";
 import type { CreateLeadDTO } from "../../dtos/lead/CreateLeadDTO";
 import { LeadCommandMapper } from "../../mappers/lead/LeadCommandMapper";
 import type { LeadCommandResponseDTO } from "../../dtos/lead/LeadCommandResponseDTO";
+import type { IDeliverableRepository } from "../../../domain/repositories/IDeliverableRepository";
 
 @injectable()
 export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
   constructor(
     @inject(TYPES.ILeadRepository) private _leadRepository: ILeadRepository,
+    @inject(TYPES.IDeliverableRepository) private _deliverableRepository: IDeliverableRepository,
     @inject(TYPES.IUserRepository) private _userRepository: IUserRepository,
     @inject(TYPES.ITokenService) private _tokenService: ITokenService,
     @inject(TYPES.IEmailService) private _emailService: IEmailService,
@@ -62,6 +64,8 @@ export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
     const seq = await this._leadRepository.getNextLeadSequence();
     const leadRegNo = generateRegNo({ prefix: "LEAD", sequence: seq });
 
+    const deliverables = await this._deliverableRepository.findManyByNames(dto.projectsInterestedIn);
+
     const lead = Lead.create({
       leadRegNo,
       name: dto.name,
@@ -70,7 +74,7 @@ export class CreateManualLeadUseCase implements ICreateManualLeadUseCase {
       location: dto.location,
       source: dto.source,
       clientId,
-      projectsInterestedIn: dto.projectsInterestedIn,
+      projectsInterestedIn: deliverables.map(d => d.name),
       packageType: dto.packageType,
     });
 

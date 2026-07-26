@@ -20,8 +20,8 @@ import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog"
 import { useDeleteLead } from "../../lead/hooks/use-delete-lead";
 import { useUpdateLead } from "../../lead/hooks/use-update-lead";
 import { PremiumLoader } from "../../../shared/components/common/loader";
-
-export const DEFAULT_DELIVERABLES = [ "Sofa", "TV unit", "Bed"];
+import { useGetDeliverableOptions } from "../../deliverables/hooks/use-get-deliverable-options";
+import type { UpdateLeadDTO } from "../../lead/types/lead-form.type";
 
 export default function AdminLeadsPage() {
   const [page, setPage] = useState(1);
@@ -46,6 +46,9 @@ export default function AdminLeadsPage() {
   const { mutateAsync: createLead, isPending :isAddingLead } = useCreateLead();
   const { mutateAsync: deleteLead } = useDeleteLead();
   const { mutateAsync: updateLead, isPending: isUpdatingLead } = useUpdateLead();
+  const {data: deliverableData} = useGetDeliverableOptions();
+
+  const deliverables = deliverableData?.data?.deliverables ?? [];
 
   const { data, isLoading } = useGetAllLeads({
     page,
@@ -192,12 +195,13 @@ export default function AdminLeadsPage() {
             value: deliverableFilter,
             options: [
               { label: "All", value: "All" },
-              ...DEFAULT_DELIVERABLES.map((item) => ({
-                label: item,
-                value: item,
+              ...deliverables.map((item) => ({
+                label: item.name,
+                value: item.name,
               })),
             ],
             onChange: (value) => {
+              console.log("Selected deliverable:", value);
               setDeliverableFilter(value || "All");
               setPage(1);
             },
@@ -280,7 +284,7 @@ export default function AdminLeadsPage() {
         mode="create"
         open={addLeadOpen}
         onOpenChange={setAddLeadOpen}
-        deliverables={DEFAULT_DELIVERABLES}
+        deliverables={deliverables.map(item => item.name)}
         isLoading= {isAddingLead}
         onSubmit={async(data) => {await createLead({...data, email: data.email!})}}
       />
@@ -289,7 +293,7 @@ export default function AdminLeadsPage() {
         mode="edit"
         open={editOpen}
         onOpenChange={setEditOpen}
-        deliverables={DEFAULT_DELIVERABLES}
+        deliverables={deliverables.map(item => item.name)}
         isLoading= {isUpdatingLead}
         initialData={ leadToEdit ? {
                 name: leadToEdit.name,
@@ -303,7 +307,13 @@ export default function AdminLeadsPage() {
         
         onSubmit={async(data) => {
           if(!leadToEdit) return;
-          const {email, ...payload} = data;
+          const payload: UpdateLeadDTO = { 
+            name: data.name, 
+            phone: data.phone, 
+            location: data.location, 
+            source: data.source, 
+            packageType: data.packageType, 
+            projectsInterestedIn: data.projectsInterestedIn };
           await updateLead ({leadId: leadToEdit.id, payload})
         }}
       />

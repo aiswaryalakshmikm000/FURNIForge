@@ -83,6 +83,7 @@ import { CreateConfigRateUseCase } from "../../application/use-cases/configRate/
 import { UpdateConfigRateUseCase } from "../../application/use-cases/configRate/UpdateConfigRateUseCase";
 import { ToggleConfigRateStatusUseCase } from "../../application/use-cases/configRate/ToggleConfigRateStatusUseCase";
 import { SoftDeleteConfigRateUseCase } from "../../application/use-cases/configRate/SoftDeleteConfigRateUseCase";
+import { GetDeliverableOptionsUseCase } from "../../application/use-cases/deliverable/GetDeliverableOptionsUseCase";
 
 const container = new Container();
 
@@ -136,6 +137,7 @@ container.bind(TYPES.IAssignDesignerUseCase).to(AssignDesignerUseCase);
 container.bind(TYPES.ICreateManualLeadUseCase).to(CreateManualLeadUseCase);
 container.bind(TYPES.IDeleteLeadUseCase).to(DeleteLeadUseCase);
 container.bind(TYPES.IUpdateLeadUseCase).to(UpdateLeadUseCase);
+container.bind(TYPES.IGetDeliverableOptionsUseCase).to(GetDeliverableOptionsUseCase);
 
 container.bind(TYPES.IGetAllDesignerUseCase).to(GetAllDesignersUseCase);
 container.bind(TYPES.ICreateDesignerUseCase).to(CreateDesignerUseCase);

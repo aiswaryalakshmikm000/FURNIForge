@@ -22,5 +22,6 @@ router.patch("/deliverables/:id/toggle-status", authMiddleware, authorizeRoles(U
 router.patch("/deliverables/:id/soft-delete", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.softDeleteDeliverable) );
 router.delete( "/deliverables/:id", authMiddleware, authorizeRoles(UserRole.ADMIN), validateParams(DeliverableCommandParamsSchema), asyncHandler(controller.deleteDeliverable) ); // no hard delete needed
 router.get("/requirement-fields/deliverables", authMiddleware, authorizeRoles(UserRole.ADMIN),)
+router.get("/deliverables/options", authMiddleware, authorizeRoles(UserRole.ADMIN), asyncHandler(controller.getDeliverableOptions));
 
 export default router;
