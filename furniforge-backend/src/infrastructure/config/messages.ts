@@ -141,7 +141,7 @@ export const ERROR_MESSAGES = {
     GOOGLE_ACCOUNT: "This account was registered using Google Sign In",
     RELOAD_USER_FAILED: "Failed to reload user",
     INVALID_GOOGLE_TOKEN: "Invalid google token",
-    PASSWORD_NOT_SET: "No Password. This account uses Google Sign-In",
+    PASSWORD_NOT_SET: "Your account does not have a password yet. Please use Forgot Password to set one",
 
     TOKEN: {
       REFRESH_FAILED: "No refresh token",

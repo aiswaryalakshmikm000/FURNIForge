@@ -66,6 +66,7 @@ const VerifyResetOtpPage = () => {
       <main className="pt-16 flex items-center justify-center min-h-screen px-4">
 
         <OtpForm
+          key={cooldown}
           title="Verify OTP"
           subtitle={`Enter OTP sent to ${email}`}
           isLoading={isVerifying}
