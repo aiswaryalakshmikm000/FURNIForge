@@ -5,13 +5,13 @@ import { BaseRepository } from "./BaseRepository";
 import { handlePrismaError } from "../errors/handlePrismaError";
 import { Deliverable } from "../../../../domain/entities/Deliverable";
 import { IDeliverableRepository } from "../../../../domain/repositories/IDeliverableRepository";
-import { DeliverableListItem } from "../../../../domain/read-models/deliverable/DeliverableMapper";
+import { DeliverableListItem } from "../../../../domain/read-models/deliverable/DeliverableListItem";
 import { PrismaDeliverableMapper } from "../mapper/PrismaDeliverableMapper";
 import { RequirementFieldDeliverableListItem } from "../../../../domain/read-models/requirementFields/RequirementFieldDeliverableListItem";
+import { DeliverableOptionsListItem } from "../../../../domain/read-models/deliverable/DeliverableOptionsListItem";
 
 @injectable()
-export class DeliverableRepository
-  extends BaseRepository< Deliverable, PrismaDeliverable, Prisma.DeliverableCreateInput, Prisma.DeliverableUpdateInput > implements IDeliverableRepository {
+export class DeliverableRepository extends BaseRepository< Deliverable, PrismaDeliverable, Prisma.DeliverableCreateInput, Prisma.DeliverableUpdateInput,  Prisma.DeliverableFindFirstArgs, Prisma.DeliverableFindManyArgs, Prisma.DeliverableWhereInput > implements IDeliverableRepository {
   protected model = prisma.deliverable;
 
   protected toDomain(raw: PrismaDeliverable): Deliverable {
@@ -63,9 +63,7 @@ export class DeliverableRepository
     sortOrder: "asc" | "desc";
   }): Promise<DeliverableListItem[]> {
     try {
-      const where: Prisma.DeliverableWhereInput = {
-        deletedAt: null,
-      };
+      const where: Prisma.DeliverableWhereInput = {};
 
       if (params.search) {
         where.OR = [
@@ -153,5 +151,29 @@ export class DeliverableRepository
     } catch (error) {
       handlePrismaError(error);
     } 
+  }
+
+  async findActiveDeliverableOptions(): Promise< DeliverableOptionsListItem[] > {
+    try {
+      return await this.model.findMany({
+        where: { isActive: true, deletedAt: null },
+        select: { id: true, name: true },
+        orderBy: { name: "asc" },
+      });
+    } catch (error) {
+      handlePrismaError(error);
+    }
+  }
+
+  async findManyByNames(names: string[]): Promise<DeliverableOptionsListItem[]> {
+    try {
+      return this.model.findMany({
+        where: { name: { in: names },
+        deletedAt: null},
+        select: { id: true, name: true } 
+      });
+    } catch (error) {
+      handlePrismaError(error)
+    }
   }
 }

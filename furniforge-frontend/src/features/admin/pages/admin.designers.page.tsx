@@ -19,12 +19,20 @@ import type { DesignerCommandResponseDTO } from "../../designers/types/designer-
 import { useDeleteDesigner } from "../../designers/hooks/use-delete-designer";
 import { ConfirmDialog } from "../../../shared/components/common/confirm-dialog";
 
+type SortBy =
+  | "rating"
+  | "projects"
+  | "revenue"
+  | "createdAt"
+  | "none";
+
+
 export default function DesignersPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
   const [statusFilter, setStatusFilter] = useState("All");
-  const [sortBy, setSortBy] = useState("createdAt");
+  const [sortBy, setSortBy] = useState<SortBy>("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [openModal, setOpenModal] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -48,7 +56,7 @@ export default function DesignersPage() {
           : statusFilter === "Blocked"
             ? "BLOCKED"
             : "PENDING",
-    sortBy: sortBy === "none" ? undefined : (sortBy as any),
+    sortBy: sortBy === "none" ? undefined : sortBy,
     sortOrder,
   });
 
@@ -150,7 +158,7 @@ export default function DesignersPage() {
         ]}
         sortValue={sortBy}
         onSortChange={(value) => {
-          setSortBy(value);
+          setSortBy(value as SortBy);
           setPage(1);
         }}
         sortOrder={sortOrder}
@@ -222,7 +230,7 @@ export default function DesignersPage() {
         onSubmit={async (data) => {
           if (!designerToEdit) return;
 
-          const { email, ...payload } = data;
+          const payload = { firstName: data.firstName, lastName: data.lastName, phone: data.phone };
 
           await updateDesigner({
             designerId: designerToEdit.id,

@@ -10,8 +10,7 @@ import { LeadListItem } from "../../../../domain/read-models/lead/LeadListItems"
 import { handlePrismaError } from "../errors/handlePrismaError";
 
 @injectable()
-export class LeadRepository
-  extends BaseRepository< Lead, PrismaLead, Prisma.LeadCreateInput, Prisma.LeadUpdateInput > implements ILeadRepository {
+export class LeadRepository extends BaseRepository< Lead, PrismaLead, Prisma.LeadCreateInput, Prisma.LeadUpdateInput,  Prisma.LeadFindFirstArgs, Prisma.LeadFindManyArgs, Prisma.LeadWhereInput > implements ILeadRepository {
   protected model = prisma.lead;
 
   protected toDomain(raw: PrismaLead): Lead {

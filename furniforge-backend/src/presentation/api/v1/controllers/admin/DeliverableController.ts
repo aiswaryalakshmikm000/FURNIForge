@@ -14,6 +14,7 @@ import type { IToggleDeliverableStatusUseCase } from "../../../../../application
 import type { IUpdateDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IUpdateDeliverableUseCase";
 import type { ISoftDeleteDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/ISoftDeleteDeliverableUseCase";
 import type { IDeleteDeliverableUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IDeleteDeliverableUseCase";
+import type { IGetDeliverableOptionsUseCase } from "../../../../../application/use-cases/deliverable/interfaces/IGetDeliverableOptionsUseCase";
 
 @injectable()
 export class DeliverableController {
@@ -24,6 +25,7 @@ export class DeliverableController {
     @inject(TYPES.IUpdateDeliverableUseCase) private _updateDeliverableUseCase: IUpdateDeliverableUseCase,
     @inject(TYPES.ISoftDeleteDeliverableUseCase) private _softDeleteDeliverableUseCase: ISoftDeleteDeliverableUseCase,
     @inject(TYPES.IDeleteDeliverableUseCase) private _deleteDeliverableUseCase: IDeleteDeliverableUseCase,
+    @inject(TYPES.IGetDeliverableOptionsUseCase) private _getDeliverableOptionsUseCase: IGetDeliverableOptionsUseCase,
   ) {}
   
 
@@ -68,5 +70,11 @@ export class DeliverableController {
     const result = await this._deleteDeliverableUseCase.execute( params );
 
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.DELETED ).build())
+  };
+
+  getDeliverableOptions = async ( _req: Request, res: Response ) => {
+  const result = await this._getDeliverableOptionsUseCase.execute();
+  
+  res.status(HttpStatusCode.OK).json(ResponseBuilder.success(result, SUCCESS_MESSAGES.ADMIN.DELIVERABLES.FETCH_SUCCESS).build());
   };
 }

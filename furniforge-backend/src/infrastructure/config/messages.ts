@@ -74,6 +74,14 @@ export const SUCCESS_MESSAGES = {
       TEMPLATES_FETCH_SUCCESS: "Templates fetched successfully",
       TABS_FETCH_SUCCESS: "Tabs fetched successfully",
       FIELDS_FETCH_SUCCESS: "Fields fetched successfully",
+    },
+
+    CONFIGRATES: {
+      FETCH_SUCCESS: "Configuration rates fetched successfully",
+      CREATED: "Configuration rate created successfully",
+      UPDATED: "Configuration rate updated successfully",
+      STATUS_UPDATED: "Configuration rate status updated successfully",
+      DELETED: "Configuration deleted successfully",
     }
   },
 
@@ -107,8 +115,7 @@ export const ERROR_MESSAGES = {
 
     PASSWORD_REQUIRED: "Password is required",
     PASSWORD_MIN_LENGTH: "Password must be at least 8 characters",
-    PASSWORD_INVALID:
-      "Password must contain uppercase, lowercase, number and min 8 chars",
+    PASSWORD_INVALID: "Password must contain uppercase, lowercase, number and min 8 chars",
 
     PHONE_ALREADY_EXISTS: "User with this phone already exists",
 
@@ -134,7 +141,7 @@ export const ERROR_MESSAGES = {
     GOOGLE_ACCOUNT: "This account was registered using Google Sign In",
     RELOAD_USER_FAILED: "Failed to reload user",
     INVALID_GOOGLE_TOKEN: "Invalid google token",
-    PASSWORD_NOT_SET: "No Password. This account uses Google Sign-In",
+    PASSWORD_NOT_SET: "Your account does not have a password yet. Please use Forgot Password to set one",
 
     TOKEN: {
       REFRESH_FAILED: "No refresh token",
@@ -161,7 +168,7 @@ export const ERROR_MESSAGES = {
     },
 
     TEMPLATE: {
-      DELETED_ALREADY_EXISTS: "An archived template with this name already exists. Please restore it instead.",
+      DELETED_ALREADY_EXISTS: "An archived template with this name already exists. Please restore it first",
       ALREADY_EXISTS: "Template with this name already exists",
       NOT_FOUND: "Template not found",
     },
@@ -179,6 +186,13 @@ export const ERROR_MESSAGES = {
       OPTIONS_REQUIRED: "Options are required for this field type",
       OPTIONS_NOT_ALLOWED: "Options are not allowed for this field type",
       INVALID_DEFAULT_VALUE: "Default value must exist in options",
+    },
+
+    CONFIG_RATE: {
+      ALREADY_EXISTS: "Configuration item already exists in this category",
+      DELETED_ALREADY_EXISTS: "Deleted config rate with same name already exists. Restore it first",
+      NOT_FOUND: "Configuration rate not found",
+      DELETE_BANNED: "Deleted configuration rates cannot be activated"
     },
   },
 

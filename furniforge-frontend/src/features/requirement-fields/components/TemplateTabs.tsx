@@ -168,8 +168,9 @@ export function RequirementTemplateTabs({
                     }
                   >
                     <StatusToggle
-                      onClick={() => onToggleTabStatus(activeTab)}
                       isActive={activeTab.isActive}
+                      disabled={templateDisabled}
+                      onClick={() => onToggleTabStatus(activeTab)}
                     />
                   </div>
 

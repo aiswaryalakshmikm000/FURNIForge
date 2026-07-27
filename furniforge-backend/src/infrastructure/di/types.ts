@@ -12,6 +12,7 @@ export const TYPES = {
   ITemplateRepository: Symbol.for("ITemplateRepository"),
   ITabRepository: Symbol.for("ITabRepository"),
   IFieldRepository: Symbol.for("IFieldRepository"),
+  IConfigRateRepository: Symbol.for("IConfigRateRepository"),
 
   IPasswordService: Symbol.for("IPasswordService"),
   IOtpService: Symbol.for("IOtpService"),
@@ -43,6 +44,7 @@ export const TYPES = {
   ICreateManualLeadUseCase: Symbol.for("ICreateManualLeadUseCase"),
   IDeleteLeadUseCase: Symbol.for("IDeleteLeadUseCase"),
   IUpdateLeadUseCase: Symbol.for("IUpdateLeadUseCase"),
+  IGetDeliverableOptionsUseCase: Symbol.for("IGetDeliverableOptionsUseCase"),
   
   IGetAllDesignerUseCase: Symbol.for("IGetAllDesignerUseCase"),
   ICreateDesignerUseCase: Symbol.for("ICreateDesignerUseCase"),
@@ -78,6 +80,12 @@ export const TYPES = {
   IGetTabsByTemplateUseCase: Symbol.for("IGetTabsByTemplateUseCase"),
   IGetFieldsByTabUseCase: Symbol.for("IGetFieldsByTabUseCase"),
 
+  IGetAllConfigRatesUseCase: Symbol.for("IGetAllConfigRatesUseCase"),
+  ICreateConfigRateUseCase: Symbol.for("ICreateConfigRateUseCase"),
+  IUpdateConfigRateUseCase: Symbol.for("IUpdateConfigRateUseCase"),
+  IToggleConfigRateStatusUseCase: Symbol.for("IToggleConfigRateStatusUseCase"),
+  ISoftDeleteConfigRateUseCase: Symbol.for("ISoftDeleteConfigRateUseCase"),
+
   AuthController: Symbol.for("AuthController"),
   LeadController: Symbol.for("LeadController"),
   DesignerController: Symbol.for("DesignerController"),
@@ -86,4 +94,5 @@ export const TYPES = {
   TabController: Symbol.for("TabController"),
   FieldController: Symbol.for("FieldController"),
   RequirementFieldController: Symbol.for("RequirementFieldController"),
+  ConfigRateController: Symbol.for("ConfigRateController"),
 };

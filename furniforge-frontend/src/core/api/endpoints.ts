@@ -43,6 +43,7 @@ export const API_ENDPOINTS = {
       SOFT_DELETE: (id: string) => `/admin/deliverables/${id}/soft-delete`,
       DELETE: (id: string) => `/admin/deliverables/${id}`,
       TOGGLE_STATUS: (id: string) => `/admin/deliverables/${id}/toggle-status`,
+      OPTIONS: "/admin/deliverables/options",
     },
 
     REQUIREMENT_FIELDS :{
@@ -72,6 +73,14 @@ export const API_ENDPOINTS = {
       CREATE: "/admin/fields",
       UPDATE: (id: string) => `/admin/fields/${id}`,
       SOFT_DELETE: (id: string) => `/admin/fields/${id}/soft-delete`,
+    },
+
+    CONFIG_RATES: {
+      GET_ALL_CONFIG_RATES: "/admin/config-rates",
+      CREATE: "/admin/config-rates",
+      UPDATE: (id: string) => `/admin/config-rates/${id}`,
+      SOFT_DELETE: (id: string) => `/admin/config-rates/${id}/soft-delete`,
+      TOGGLE_STATUS: (id: string) => `/admin/config-rates/${id}/status`,
     }
     
   },

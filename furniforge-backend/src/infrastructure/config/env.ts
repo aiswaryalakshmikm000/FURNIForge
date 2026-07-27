@@ -22,7 +22,7 @@ const envSchema = z.object({
   OTP_RESEND_DELAY: z.string().default("30"),
   OTP_MAX_ATTEMPTS: z.string().default("3"),
 
-  RATE_LIMIT_WINDOW_MS: z.string().default("900000"), // 15 min
+  RATE_LIMIT_WINDOW_MS: z.string().default("900000"),
   RATE_LIMIT_MAX: z.string().default("100"),
 
   AUTH_RATE_LIMIT_WINDOW_MS: z.string().default("900000"),
@@ -55,8 +55,10 @@ const envSchema = z.object({
 const parsedEnv = envSchema.safeParse(process.env)
 
 if (!parsedEnv.success) {
+  // eslint-disable-next-line no-console
   console.error("Invalid environment variables")
   parsedEnv.error.issues.forEach((err) => {
+    // eslint-disable-next-line no-console
     console.error(`${err.path.join(".")}: ${err.message}`)
   })
   process.exit(1)

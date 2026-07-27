@@ -33,18 +33,14 @@ export const OtpForm = ({
   const canResend = timer <= 0;
 
   useEffect(() => {
-  setTimer(Math.max(0, resendDelay));
-}, [resendDelay]);
+    if (timer <= 0) return;
 
-useEffect(() => {
-  if (timer <= 0) return;
+    const interval = setInterval(() => {
+      setTimer((prev) => Math.max(prev - 1, 0));
+    }, 1000);
 
-  const interval = setInterval(() => {
-    setTimer((prev) => Math.max(prev - 1, 0));
-  }, 1000);
-
-  return () => clearInterval(interval);
-}, [timer]);
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const pasteData = e.clipboardData.getData("text").trim();

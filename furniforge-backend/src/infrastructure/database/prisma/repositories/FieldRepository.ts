@@ -10,7 +10,7 @@ import { RequirementFieldFieldListItem } from "../../../../domain/read-models/re
 import { FieldType } from "../../../../domain/enums/FieldType";
 
 @injectable()
-export class FieldRepository extends BaseRepository< Field, PrismaField, Prisma.TemplateFieldCreateInput, Prisma.TemplateFieldUpdateInput > implements IFieldRepository {
+export class FieldRepository extends BaseRepository< Field, PrismaField, Prisma.TemplateFieldCreateInput, Prisma.TemplateFieldUpdateInput,  Prisma.TemplateFieldFindFirstArgs, Prisma.TemplateFieldFindManyArgs, Prisma.TemplateFieldWhereInput > implements IFieldRepository {
   protected model = prisma.templateField;
 
   protected toDomain(raw: PrismaField): Field {

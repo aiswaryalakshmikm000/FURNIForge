@@ -11,7 +11,7 @@ import { InternalServerError } from "../../../../domain/errors/AppError";
 import { ERROR_MESSAGES } from "../../../config/messages";
 
 @injectable()
-export class DesignerRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput > implements IDesignerRepository {
+export class DesignerRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput,  Prisma.UserFindFirstArgs, Prisma.UserFindManyArgs, Prisma.UserWhereInput > implements IDesignerRepository {
   protected model = prisma.user;
 
   protected toDomain(raw: PrismaUser): User {

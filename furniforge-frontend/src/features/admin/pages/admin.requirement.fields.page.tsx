@@ -34,38 +34,27 @@ export default function AdminRequirementFieldsPage() {
   const [showInfo, setShowInfo] = useState(false);
   const [search, setSearch] = useState("");
   const [nextDisplayOrder, setNextDisplayOrder] = useState(1);
-  const [expandedDeliverableId, setExpandedDeliverableId] = useState<
-    string | null
-  >(null);
+  const [expandedDeliverableId, setExpandedDeliverableId] = useState< string | null >(null);
   const [createTemplateOpen, setCreateTemplateOpen] = useState(false);
   const [createTabOpen, setCreateTabOpen] = useState(false);
 
-  const [selectedDeliverableId, setSelectedDeliverableId] = useState<
-    string | null
-  >(null);
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>(
-    null,
-  );
+  const [selectedDeliverableId, setSelectedDeliverableId] = useState< string | null >(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string | null>( null );
 
   const [editTemplateOpen, setEditTemplateOpen] = useState(false);
-  const [templateToEdit, setTemplateToEdit] =
-    useState<RequirementFieldTemplateResponseDTO | null>(null);
+  const [templateToEdit, setTemplateToEdit] = useState<RequirementFieldTemplateResponseDTO | null>(null);
 
   const [softDeleteOpen, setSoftDeleteOpen] = useState(false);
-  const [templateToDelete, setTemplateToDelete] =
-    useState<RequirementFieldTemplateResponseDTO | null>(null);
+  const [templateToDelete, setTemplateToDelete] = useState<RequirementFieldTemplateResponseDTO | null>(null);
 
   const [editTabOpen, setEditTabOpen] = useState(false);
-  const [tabToEdit, setTabToEdit] =
-    useState<RequirementFieldTabResponseDTO | null>(null);
+  const [tabToEdit, setTabToEdit] = useState<RequirementFieldTabResponseDTO | null>(null);
 
   const [softDeleteTabOpen, setSoftDeleteTabOpen] = useState(false);
-  const [tabToDelete, setTabToDelete] =
-    useState<RequirementFieldTabResponseDTO | null>(null);
+  const [tabToDelete, setTabToDelete] = useState<RequirementFieldTabResponseDTO | null>(null);
 
   const [softDeleteFieldOpen, setSoftDeleteFieldOpen] = useState(false);
-  const [fieldToDelete, setFieldToDelete] =
-    useState<RequirementFieldResponseDTO | null>(null);
+  const [fieldToDelete, setFieldToDelete] = useState<RequirementFieldResponseDTO | null>(null);
   
   const debouncedSearch = useDebounce(search, 500);
 
@@ -77,26 +66,19 @@ export default function AdminRequirementFieldsPage() {
   const activeDeliverableId =
     expandedDeliverableId ?? deliverables[0]?.id ?? null;
 
-  const { mutateAsync: createTemplate, isPending: isCreatingTemplate } =
-    useCreateTemplate();
-  const { mutateAsync: updateTemplate, isPending: isUpdatingTemplate } =
-    useUpdateTemplate();
-  const { mutateAsync: softDeleteTemplate, isPending: isSoftDeletingTemplate } =
-    useSoftDeleteTemplate();
+  const { mutateAsync: createTemplate, isPending: isCreatingTemplate } = useCreateTemplate();
+  const { mutateAsync: updateTemplate, isPending: isUpdatingTemplate } = useUpdateTemplate();
+  const { mutateAsync: softDeleteTemplate, isPending: isSoftDeletingTemplate } = useSoftDeleteTemplate();
   const { mutateAsync: toggleTemplateStatus } = useToggleTemplateStatus();
 
   const { mutateAsync: createTab, isPending: isCreatingTab } = useCreateTab();
   const { mutateAsync: updateTab, isPending: isUpdatingTab } = useUpdateTab();
   const { mutateAsync: toggleTabStatus } = useToggleTabStatus();
-  const { mutateAsync: softDeleteTab, isPending: isSoftDeletingTab } =
-    useSoftDeleteTab();
+  const { mutateAsync: softDeleteTab, isPending: isSoftDeletingTab } = useSoftDeleteTab();
 
-  const { mutateAsync: createField, isPending: isCreatingField } =
-    useCreateField();
-  const { mutateAsync: updateField, isPending: isUpdatingField } =
-    useUpdateField();
-  const { mutateAsync: softDeleteField, isPending: isSoftDeletingField } =
-    useSoftDeleteField();
+  const { mutateAsync: createField, isPending: isCreatingField } = useCreateField();
+  const { mutateAsync: updateField, isPending: isUpdatingField } = useUpdateField();
+  const { mutateAsync: softDeleteField, isPending: isSoftDeletingField } = useSoftDeleteField();
 
   const handleAddTemplate = (deliverableId: string) => {
     setSelectedDeliverableId(deliverableId);

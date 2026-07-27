@@ -30,9 +30,9 @@ export class PendingUserService implements IPendingUserService {
 
     await this._pendingUserRepository.save(pendingUser.email, pendingUser, this._TTL);
 
-    console.log("PEnding user:", `GET pending:user:${data.email}`)
-    console.log("PEnding user:", `TTL pending:user:${data.email}`)
-    console.log("TEMPUSERID:", `GET pending:user:${pendingUser.tempUserId}`)
+    // console.log("PEnding user:", `GET pending:user:${data.email}`)
+    // console.log("PEnding user:", `TTL pending:user:${data.email}`)
+    // console.log("TEMPUSERID:", `GET pending:user:${pendingUser.tempUserId}`)
 
     return { tempUserId: pendingUser.tempUserId, email: pendingUser.email };
   }

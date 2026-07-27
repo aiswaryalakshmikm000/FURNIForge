@@ -26,7 +26,7 @@ export const APP_ROUTES = {
     DELIVERABLES: "/admin/deliverables",
     REQUIREMENT_FIELDS: "/admin/requirement-fields",
     MESSAGES: "/admin/messages",
-    SETTINGS: "/admin/config",
+    SETTINGS: "/admin/settings",
   },
 
   CLIENT: {

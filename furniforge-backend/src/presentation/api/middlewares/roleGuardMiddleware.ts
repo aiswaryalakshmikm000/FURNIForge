@@ -9,7 +9,6 @@ export const authorizeRoles = (...allowedRoles: UserRole[]) => {
       const user = req.user;
 
       if (!user) {
-        console.log("sdfdsf")
         throw new UnauthorizedError();
       }
 

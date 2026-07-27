@@ -47,7 +47,6 @@ export class TabController {
 
   softDeleteTab = async ( req: Request, res: Response ) => {
     const params = req.params as TabCommandRequestDTO;
-    console.log(params)
     await this._softDeleteTabUseCase.execute(params);
 
     res.status(HttpStatusCode.OK).json( ResponseBuilder.success( null, SUCCESS_MESSAGES.ADMIN.TABS.DELETED ).build());

@@ -32,9 +32,6 @@ export class UpdateFieldUseCase implements IUpdateFieldUseCase {
         throw new BadRequestError( ERROR_MESSAGES.ADMIN.FIELD.LABEL_ALREADY_EXISTS );
       }
 
-      console.log("Old Label:", field.label);
-console.log("New Label:", dto.label);
-
       fieldKey = generateFieldKey(dto.label);
 
       const existingFieldKey = await this.fieldRepository.findByTabAndFieldKey(

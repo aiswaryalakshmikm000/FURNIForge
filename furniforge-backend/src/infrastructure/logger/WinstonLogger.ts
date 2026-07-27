@@ -5,8 +5,9 @@ import { env } from "../../infrastructure/config/env";
 
 const { combine, timestamp, printf, colorize } = winston.format;
 
-const logFormat = printf(({ level, message, timestamp }) => {
-  return `[${timestamp}] ${level}: ${message}`;
+const logFormat = printf(({ level, message, timestamp, ...meta }) => {
+  const metaString = Object.keys(meta).length > 0 ? ` ${JSON.stringify(meta, null, 2)}` : "";
+  return `[${timestamp}] ${level}: ${message}${metaString}`;
 });
 
 const transportConsole = new winston.transports.Console({

@@ -14,17 +14,18 @@ const VerifyEmailPage = () => {
   useEffect(() => {
     if (!token) return;
     mutate({ token });
-  }, [token]);
+  }, [token, mutate]);
 
   useEffect(() => {
     if (!isSuccess || !data) return;
 
     const res = data.data;
     sessionManager.setResetToken(res.resetToken);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       navigate(`${APP_ROUTES.AUTH.RESET_PASSWORD}?mode=create`);
     }, 1500);
-  }, [isSuccess, data]);
+    return () => clearTimeout(timer);
+  }, [isSuccess, data, navigate]);
 
   return (
     <div className="flex items-center justify-center h-screen">

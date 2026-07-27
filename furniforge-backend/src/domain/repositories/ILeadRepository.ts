@@ -1,8 +1,9 @@
 import { IBaseRepository } from "./IBaseRepository";
 import { Lead } from "../entities/Lead";
 import { LeadListItem } from "../read-models/lead/LeadListItems";
+import { Prisma } from "../../generated/prisma";
 
-export interface ILeadRepository extends IBaseRepository<Lead> {
+export interface ILeadRepository extends IBaseRepository<Lead, Prisma.LeadWhereInput, Prisma.LeadFindManyArgs> {
   findByLeadRegNo(leadRegNo: string): Promise<Lead | null>;
 
   getNextLeadSequence(): Promise<number>;

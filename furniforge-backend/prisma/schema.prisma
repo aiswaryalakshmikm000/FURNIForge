@@ -127,19 +127,41 @@ model TemplateField {
 }
 
 model RequestFieldValue {
-  id        String        @id @default(uuid())
+  id        String                 @id @default(uuid())
   requestId String
   fieldId   String
   field     TemplateField @relation(fields: [fieldId], references: [id])
   value     Json
-  createdAt DateTime      @default(now())
+  createdAt DateTime               @default(now())
   @@index([fieldId])
+}
+
+model ConfigRate {
+  id              String           @id @default(uuid())
+  category        ConfigCategory
+  itemName        String
+  brand           String
+  rate            Decimal          @db.Decimal(10,2)
+  marginPercent   Decimal          @db.Decimal(5,2)
+  finalRate       Decimal          @db.Decimal(10,2)
+  unit            ConfigUnit
+  isActive        Boolean          @default(true)
+  deletedAt       DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  @@unique([category, itemName, brand])
+  @@index([category])
+  @@index([isActive])
 }
 
 model Counter {
   id    String @id
   value Int
 }
+
+
+
+
 
 enum Role {
   ADMIN
@@ -181,4 +203,19 @@ enum FieldType {
   IMAGE
   EMAIL
   PHONE
+}
+
+enum ConfigCategory {
+  FINISH
+  MATERIAL
+  HANDLE
+  HINGE
+  ACCESSORY
+}
+
+
+enum ConfigUnit {
+  SQFT
+  RUNNING_LENGTH
+  PIECE
 }

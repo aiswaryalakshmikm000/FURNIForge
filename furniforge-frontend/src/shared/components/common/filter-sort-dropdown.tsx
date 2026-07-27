@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  SlidersHorizontal,
-  Search,
-  X,
-  ArrowUp,
-  ArrowDown,
-} from "lucide-react";
+import { SlidersHorizontal, Search, X, ArrowUp, ArrowDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export interface FilterOption {

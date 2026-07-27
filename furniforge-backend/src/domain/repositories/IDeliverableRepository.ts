@@ -1,9 +1,11 @@
 import { Deliverable } from "../entities/Deliverable";
-import { DeliverableListItem } from "../read-models/deliverable/DeliverableMapper";
+import { DeliverableListItem } from "../read-models/deliverable/DeliverableListItem";
 import { RequirementFieldDeliverableListItem } from "../read-models/requirementFields/RequirementFieldDeliverableListItem";
 import { IBaseRepository } from "./IBaseRepository";
+import { Prisma } from "../../generated/prisma";
+import { DeliverableOptionsListItem } from "../read-models/deliverable/DeliverableOptionsListItem";
 
-export interface IDeliverableRepository extends IBaseRepository<Deliverable> {
+export interface IDeliverableRepository extends IBaseRepository<Deliverable, Prisma.DeliverableWhereInput, Prisma.DeliverableFindManyArgs> {
 
   findAllDeliverableRows(params: {
     skip: number;
@@ -22,4 +24,8 @@ export interface IDeliverableRepository extends IBaseRepository<Deliverable> {
   findByName(name: string): Promise<Deliverable | null>;
 
   findRequirementFieldDeliverables( search?: string ): Promise<RequirementFieldDeliverableListItem[]>;
+
+  findActiveDeliverableOptions(): Promise<DeliverableOptionsListItem[]>;
+
+  findManyByNames(names: string[]): Promise<DeliverableOptionsListItem[]>;
 }

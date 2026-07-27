@@ -1,8 +1,9 @@
 import { IBaseRepository } from "./IBaseRepository";
 import { User } from "../entities/User";
 import { DesignerListItem } from "../read-models/designer/DesignerListItem";
+import { Prisma } from "../../generated/prisma";
 
-export interface IDesignerRepository extends IBaseRepository<User> {
+export interface IDesignerRepository extends IBaseRepository<User, Prisma.UserWhereInput, Prisma.UserFindManyArgs> {
 
   getNextDesignerSequence(): Promise<number>;
 

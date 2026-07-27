@@ -9,7 +9,7 @@ import { handlePrismaError } from "../errors/handlePrismaError";
 import { DesignerOptionItem } from "../../../../domain/read-models/designer/DesignerOptionItem";
 
 @injectable()
-export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput > implements IUserRepository
+export class UserRepository extends BaseRepository< User, PrismaUser, Prisma.UserCreateInput, Prisma.UserUpdateInput, Prisma.UserFindFirstArgs, Prisma.UserFindManyArgs, Prisma.UserWhereInput> implements IUserRepository
 {
   protected model = prisma.user;
 

@@ -14,6 +14,7 @@ const LeadsPage = lazy(() => import("../../../features/admin/pages/admin.leads.p
 const DesignerPage = lazy(() => import("../../../features/admin/pages/admin.designers.page"));
 const DeliverablePage = lazy(() => import("../../../features/admin/pages/admin.deliverables.pages"));
 const RequirementFieldPage = lazy(() => import("../../../features/admin/pages/admin.requirement.fields.page"));
+const ConfigRatePage = lazy(() => import("../../../features/admin/pages/admin.config.page"));
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -32,6 +33,7 @@ export const adminRoutes: RouteObject[] = [
         {path: APP_ROUTES.ADMIN.DESIGNERS, element: <DesignerPage/>},
         {path: APP_ROUTES.ADMIN.DELIVERABLES, element: <DeliverablePage/>},
         {path: APP_ROUTES.ADMIN.REQUIREMENT_FIELDS, element: <RequirementFieldPage/>},
+        {path: APP_ROUTES.ADMIN.SETTINGS, element: <ConfigRatePage/>},
     ],
   },
 ];
